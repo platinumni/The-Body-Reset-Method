@@ -4,20 +4,20 @@ import { formatPrice } from "../services/products";
 // Email templates. Plain, readable HTML with inline styles (email apps ignore stylesheets),
 // plus a text version for every email.
 
-const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+export const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
-function wrap(siteName: string, bodyHtml: string): string {
+export function wrap(siteName: string, bodyHtml: string, footerHtml = ""): string {
   return `<!doctype html><html><body style="margin:0;background:#f4efe6;font-family:Arial,Helvetica,sans-serif;color:#1d2621">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:32px 16px">
 <table role="presentation" width="100%" style="max-width:560px;background:#fbf8f2;border:1px solid #ddd3c3;border-radius:14px" cellpadding="0" cellspacing="0">
 <tr><td style="padding:28px 28px 8px;font-family:Georgia,serif;font-size:20px">${esc(siteName)}</td></tr>
 <tr><td style="padding:8px 28px 28px;font-size:16px;line-height:1.6">${bodyHtml}</td></tr>
 </table>
-<p style="font-size:12px;color:#6d756f;margin-top:16px">Education and movement coaching, not medical advice.</p>
+<p style="font-size:12px;color:#6d756f;margin-top:16px">Education and movement coaching, not medical advice.${footerHtml}</p>
 </td></tr></table></body></html>`;
 }
 
-const button = (href: string, label: string) =>
+export const button = (href: string, label: string) =>
   `<p style="margin:24px 0"><a href="${esc(href)}" style="background:#1d2621;color:#f4efe6;padding:14px 22px;border-radius:999px;text-decoration:none;font-weight:bold;display:inline-block">${esc(label)}</a></p>`;
 
 export type OrderEmailInput = {

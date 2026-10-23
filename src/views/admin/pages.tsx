@@ -15,7 +15,7 @@ import { AdminLayout, Confirm, StatusPill, type AdminMeta } from "./layout";
 const money = (p: number | null | undefined) => (p == null ? "No price" : formatPrice(p));
 const when = (iso: string | null | undefined) => (iso ? iso.replace("T", " ").slice(0, 16) : "—");
 
-export function DashboardPage(props: { meta: AdminMeta; n: DashboardNumbers }) {
+export function DashboardPage(props: { meta: AdminMeta; n: DashboardNumbers; usage: import("../../services/automation").Usage }) {
   const { n } = props;
   const todo: { text: string; href: string }[] = [];
   if (n.onSale === 0) todo.push({ text: "Nothing is on sale yet: set a price and put a programme on sale.", href: "/admin/programmes" });
@@ -58,6 +58,7 @@ export function DashboardPage(props: { meta: AdminMeta; n: DashboardNumbers }) {
       ) : (
         <p class="notice notice-ok">All clear.</p>
       )}
+      <UsageBox u={props.usage} />
     </AdminLayout>
   );
 }
@@ -884,6 +885,197 @@ export function AffiliatesAdminPage(props: {
         </table>
       </div>
       {!props.affiliates.length && <p class="muted">No affiliates yet.</p>}
+    </AdminLayout>
+  );
+}
+
+export function UsageBox(props: { u: import("../../services/automation").Usage }) {
+  const { u } = props;
+  const pct = (a: number, b: number) => Math.min(100, Math.round((a / b) * 100));
+  const row = (label: string, used: number, limit: number) => {
+    const p = pct(used, limit);
+    return (
+      <li>
+        <div class="row-between">
+          <span>{label}</span>
+          <span class={p >= 80 ? "warn-text" : "muted"}>
+            {used.toLocaleString("en-GB")} of {limit.toLocaleString("en-GB")} ({p}%)
+          </span>
+        </div>
+        <div class="progress">
+          <span class={`progress-bar w-${Math.round(p / 5) * 5}${p >= 80 ? " is-warn" : ""}`} />
+        </div>
+      </li>
+    );
+  };
+  return (
+    <div class="card">
+      <h2 class="h3">Usage this month ({u.month})</h2>
+      <ul class="usage-list">
+        {row("Emails sent (Resend plan)", u.emailsSent, u.emailLimit)}
+        {row("Page views (Cloudflare plan)", u.pageViews, u.requestLimit)}
+      </ul>
+      <p class="small muted">You're emailed automatically if anything passes 80%. No paid AI is used, so there's no AI cost.</p>
+    </div>
+  );
+}
+
+export function CampaignsPage(props: { meta: AdminMeta; campaigns: import("../../services/campaigns").Campaign[]; audience: number }) {
+  return (
+    <AdminLayout meta={props.meta}>
+      <h1>Email campaigns</h1>
+      <p class="muted">
+        One-off emails to members who opted in to news: <strong>{props.audience}</strong> people right now. Every email has a one-click unsubscribe.
+      </p>
+      <form method="post" action="/admin/campaigns" class="card inline-form">
+        <CsrfField token={props.meta.csrfToken} />
+        <div class="field">
+          <label for="c-subject">Subject</label>
+          <input id="c-subject" name="subject" type="text" maxlength={200} required />
+        </div>
+        <button class="btn btn-primary btn-small" type="submit">
+          Start a new email
+        </button>
+      </form>
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Status</th>
+              <th>Sent to</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.campaigns.map((c) => (
+              <tr>
+                <td>
+                  <a href={`/admin/campaigns/${c.id}`}>{c.subject}</a>
+                </td>
+                <td>
+                  <StatusPill status={c.status} />
+                </td>
+                <td>{c.status === "sent" ? c.recipients : "—"}</td>
+                <td>{when(c.sent_at ?? c.created_at)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </AdminLayout>
+  );
+}
+
+export function CampaignEditPage(props: { meta: AdminMeta; campaign: import("../../services/campaigns").Campaign; audience: number; adminEmail: string }) {
+  const c = props.campaign;
+  const locked = c.status !== "draft";
+  return (
+    <AdminLayout meta={props.meta}>
+      <p class="small">
+        <a href="/admin/campaigns">← Campaigns</a>
+      </p>
+      <h1>
+        {c.subject} <StatusPill status={c.status} />
+      </h1>
+      <div class="editor-grid">
+        <div>
+          {locked ? (
+            <p class="notice">Sent to {c.recipients} people on {when(c.sent_at)}. Sent emails can't be changed.</p>
+          ) : (
+            <form method="post" action={`/admin/campaigns/${c.id}`} class="card">
+              <CsrfField token={props.meta.csrfToken} />
+              <div class="field">
+                <label for="subject">Subject</label>
+                <input id="subject" name="subject" type="text" value={c.subject} maxlength={200} required />
+              </div>
+              <div class="field">
+                <label for="body">Message</label>
+                <textarea id="body" name="body" rows={14}>
+                  {c.body}
+                </textarea>
+                <p class="hint">Same formatting as programme sections. A button to the website and the unsubscribe link are added automatically.</p>
+              </div>
+              <button class="btn btn-primary btn-small" type="submit">
+                Save draft
+              </button>
+            </form>
+          )}
+          {!locked && (
+            <div class="card">
+              <form method="post" action={`/admin/campaigns/${c.id}/test`}>
+                <CsrfField token={props.meta.csrfToken} />
+                <p>Send yourself a test first ({props.adminEmail}).</p>
+                <button class="btn btn-ghost btn-small" type="submit">
+                  Send test to me
+                </button>
+              </form>
+              <form method="post" action={`/admin/campaigns/${c.id}/send`} class="send-form">
+                <CsrfField token={props.meta.csrfToken} />
+                <Confirm label={`Send this to all ${props.audience} subscribers now. It can only be sent once.`} />
+                <button class="btn btn-primary btn-small" type="submit" disabled={props.audience === 0}>
+                  Send to {props.audience} subscribers
+                </button>
+              </form>
+            </div>
+          )}
+        </div>
+        <aside class="card preview">
+          <p class="eyebrow">Preview</p>
+          <h2>{c.subject}</h2>
+          <div class="prose">
+            <RichText source={c.body} />
+          </div>
+        </aside>
+      </div>
+    </AdminLayout>
+  );
+}
+
+export function LaunchPage(props: { meta: AdminMeta; checks: import("../../services/launch").Check[]; placeholders: { path: string; items: string[] }[] }) {
+  const done = props.checks.filter((c) => c.ok).length;
+  const total = props.placeholders.reduce((t, p) => t + p.items.length, 0);
+  return (
+    <AdminLayout meta={props.meta}>
+      <h1>Launch checklist</h1>
+      <p class="muted">
+        {done} of {props.checks.length} checks done · {total} placeholder(s) left on public pages.
+      </p>
+      <div class="card">
+        <ul class="check-list">
+          {props.checks.map((c) => (
+            <li class={c.ok ? "ok" : "todo"}>
+              <span aria-hidden="true">{c.ok ? "✓" : "○"}</span>
+              <div>
+                <strong>{c.label}</strong>
+                {!c.ok && <p class="small muted">{c.fix}</p>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="card">
+        <h2 class="h3">Placeholders still waiting for your words</h2>
+        {total === 0 ? (
+          <p class="notice notice-ok">None left.</p>
+        ) : (
+          props.placeholders
+            .filter((p) => p.items.length)
+            .map((p) => (
+              <div class="field">
+                <a href={p.path} target="_blank" rel="noopener">
+                  {p.path}
+                </a>
+                <ul class="small">
+                  {p.items.map((i) => (
+                    <li>{i}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+        )}
+        <p class="small muted">Most wording can be changed in Site wording. Legal pages need a final review, then I'll remove their draft notes.</p>
+      </div>
     </AdminLayout>
   );
 }

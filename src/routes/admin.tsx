@@ -27,6 +27,10 @@ import {
   type LessonInput,
 } from "../services/admin-content";
 import { affiliateSettings, listAffiliatesAdmin, recordPayout, saveAffiliateSettings, setAffiliateStatus } from "../services/affiliates";
+import { usageThisMonth } from "../services/automation";
+import { findPlaceholders, launchChecks } from "../services/launch";
+import { sitemapPaths } from "./public";
+import { getCampaign, listCampaigns, marketingAudience, saveCampaign, sendCampaign, sendCampaignTest } from "../services/campaigns";
 import { dashboardNumbers, getOrderDetail, grantAccess, listCustomers, listOrders, revokeOrderAccess, toCsv, userIdByEmail } from "../services/admin-ops";
 import { listAudit, recordAudit } from "../services/audit";
 import { backupDatabase, listBackups } from "../services/backup";
@@ -40,6 +44,9 @@ import type { AdminMeta } from "../views/admin/layout";
 import {
   ActivityPage,
   AffiliatesAdminPage,
+  CampaignEditPage,
+  CampaignsPage,
+  LaunchPage,
   BackupsPage,
   CustomersPage,
   DashboardPage,
@@ -73,6 +80,8 @@ const FLASHES: Record<string, string> = {
   backup: "Backup complete.",
   payout: "Payout recorded. Their commission is marked as paid.",
   nopayout: "Nothing to pay: the amount owed is below the minimum.",
+  tested: "Test email sent to you. Check your inbox.",
+  sent: "Campaign sent.",
 };
 const meta = (c: Context<AppEnv>, title: string, extra: Partial<AdminMeta> = {}) => adminMeta(c, title, { flash: FLASHES[c.req.query("done") ?? ""] ?? null, ...extra });
 const back = (c: Context<AppEnv>, path: string, done: keyof typeof FLASHES) => c.redirect(`${path}${path.includes("?") ? "&" : "?"}done=${done}`, 303);
@@ -81,7 +90,7 @@ const idParam = (c: Context<AppEnv>, name = "id") => {
   return Number.isInteger(n) && n > 0 ? n : 0;
 };
 
-adminRoutes.get("/admin", async (c) => c.html(<DashboardPage meta={meta(c, "Dashboard")} n={await dashboardNumbers(c.env.DB)} />));
+adminRoutes.get("/admin", async (c) => c.html(<DashboardPage meta={meta(c, "Dashboard")} n={await dashboardNumbers(c.env.DB)} usage={await usageThisMonth(c.env.DB)} />));
 
 // --- Programmes and bundles ---
 
@@ -356,4 +365,52 @@ adminRoutes.post("/admin/affiliates/:id/payout", async (c) => {
 adminRoutes.post("/admin/affiliates/:id/status", async (c) => {
   await setAffiliateStatus(c.env.DB, idParam(c), (await c.req.parseBody()).status === "active" ? "active" : "suspended", actor(c));
   return back(c, "/admin/affiliates", "saved");
+});
+
+// --- Email campaigns ---
+
+adminRoutes.get("/admin/campaigns", async (c) =>
+  c.html(<CampaignsPage meta={meta(c, "Email campaigns")} campaigns={await listCampaigns(c.env.DB)} audience={(await marketingAudience(c.env.DB)).length} />),
+);
+
+adminRoutes.post("/admin/campaigns", async (c) => {
+  const id = await saveCampaign(c.env.DB, null, { subject: String((await c.req.parseBody()).subject ?? ""), body: "" }, actor(c));
+  return id ? back(c, `/admin/campaigns/${id}`, "created") : c.redirect("/admin/campaigns", 303);
+});
+
+adminRoutes.get("/admin/campaigns/:id", async (c) => {
+  const campaign = await getCampaign(c.env.DB, idParam(c));
+  if (!campaign) return c.notFound();
+  return c.html(<CampaignEditPage meta={meta(c, campaign.subject)} campaign={campaign} audience={(await marketingAudience(c.env.DB)).length} adminEmail={c.get("user")!.email} />);
+});
+
+adminRoutes.post("/admin/campaigns/:id", async (c) => {
+  const form = await c.req.parseBody();
+  const id = await saveCampaign(c.env.DB, idParam(c), { subject: String(form.subject ?? ""), body: String(form.body ?? "") }, actor(c));
+  return id ? back(c, `/admin/campaigns/${id}`, "saved") : c.redirect(`/admin/campaigns/${idParam(c)}`, 303);
+});
+
+adminRoutes.post("/admin/campaigns/:id/test", async (c) => {
+  const campaign = await getCampaign(c.env.DB, idParam(c));
+  if (!campaign) return c.notFound();
+  await sendCampaignTest(c.env, campaign, c.get("user")!.email);
+  return back(c, `/admin/campaigns/${campaign.id}`, "tested");
+});
+
+adminRoutes.post("/admin/campaigns/:id/send", async (c) => {
+  const id = idParam(c);
+  if ((await c.req.parseBody()).confirm !== "yes") return c.redirect(`/admin/campaigns/${id}`, 303);
+  await sendCampaign(c.env, id, actor(c));
+  return back(c, `/admin/campaigns/${id}`, "sent");
+});
+
+// --- Launch checklist ---
+
+adminRoutes.get("/admin/launch", async (c) => {
+  // Render each public page as a logged-out visitor would see it, and list leftover placeholders.
+  const { app } = await import("../index");
+  const placeholders = await Promise.all(
+    sitemapPaths().map(async (path) => ({ path, items: findPlaceholders(await (await app.request(path, {}, c.env)).text()) })),
+  );
+  return c.html(<LaunchPage meta={meta(c, "Launch checklist")} checks={await launchChecks(c.env)} placeholders={placeholders} />);
 });

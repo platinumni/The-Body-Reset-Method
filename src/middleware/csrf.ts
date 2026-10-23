@@ -16,7 +16,8 @@ const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
 export const csrfCookieName = (env: Env) => (isDevelopment(env) ? "brm_csrf" : "__Host-brm_csrf");
 
 // Server-to-server callbacks (e.g. Stripe) are authenticated by their own signature instead.
-const EXEMPT_PREFIXES = ["/webhooks/"];
+// "/unsubscribe" is authenticated by a signed token, and mail apps POST to it directly (RFC 8058 one-click).
+const EXEMPT_PREFIXES = ["/webhooks/", "/unsubscribe"];
 
 export const csrf = createMiddleware<AppEnv>(async (c, next) => {
   if (EXEMPT_PREFIXES.some((p) => c.req.path.startsWith(p))) return next();

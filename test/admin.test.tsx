@@ -320,3 +320,13 @@ describe("system pages", () => {
     }
   });
 });
+
+describe("launch checklist", () => {
+  it("lists missing keys and the placeholders left on public pages", async () => {
+    const html = await (await admin.c.get("/admin/launch")).text();
+    expect(html).toContain("Stripe webhook secret is set");
+    expect(html).toContain("Site address is the real domain");
+    expect(html).toContain("Flagship price");
+    expect(html).toContain("/legal/terms");
+  });
+});

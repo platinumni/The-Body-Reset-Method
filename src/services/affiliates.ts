@@ -128,17 +128,18 @@ export async function cancelCommissionForOrder(db: D1Database, orderId: number):
   return "cancelled";
 }
 
-/** Daily job: commission whose hold period has passed becomes owed. */
-export async function releaseHeldCommissions(db: D1Database, now = new Date()): Promise<number> {
-  const res = await db
+/** Daily job: commission whose hold period has passed becomes owed. Returns what was released. */
+export async function releaseHeldCommissions(db: D1Database, now = new Date()): Promise<{ affiliate_id: number; amount_pence: number }[]> {
+  const { results } = await db
     .prepare(
       `UPDATE commissions SET status = 'approved', updated_at = datetime('now')
        WHERE status = 'pending' AND available_at <= ?1
-         AND EXISTS (SELECT 1 FROM orders o WHERE o.id = commissions.order_id AND o.status = 'paid')`,
+         AND EXISTS (SELECT 1 FROM orders o WHERE o.id = commissions.order_id AND o.status = 'paid')
+       RETURNING affiliate_id, amount_pence`,
     )
     .bind(now.toISOString())
-    .run();
-  return res.meta.changes;
+    .all<{ affiliate_id: number; amount_pence: number }>();
+  return results;
 }
 
 export type AffiliateSummary = { clicks: number; sales: number; pending: number; approved: number; paid: number };

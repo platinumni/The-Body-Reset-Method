@@ -11,9 +11,11 @@ import { authRoutes } from "./routes/auth";
 import { pageMeta } from "./routes/meta";
 import { publicRoutes } from "./routes/public";
 import { referralRoutes } from "./routes/referrals";
+import { unsubscribeRoutes } from "./routes/unsubscribe";
 import { shopRoutes } from "./routes/shop";
 import { backupDatabase } from "./services/backup";
 import { releaseHeldCommissions } from "./services/affiliates";
+import { adminEmails, checkUsage, notifyReleasedCommission, sendCheckIns, sendMorningReport, sendSetupReminders } from "./services/automation";
 import { pruneRateLimits } from "./services/rate-limit";
 import { isBot, recordStat } from "./services/stats";
 import { NotFoundPage, ServerErrorPage } from "./views/errors";
@@ -42,6 +44,7 @@ app.route("/", assetRoutes);
 app.route("/", publicRoutes);
 app.route("/", shopRoutes);
 app.route("/", referralRoutes);
+app.route("/", unsubscribeRoutes);
 app.route("/", authRoutes);
 app.route("/", accountRoutes);
 app.route("/", adminLoginRoutes);
@@ -55,17 +58,34 @@ app.onError((err, c) => {
 });
 
 export const WEEKLY_CRON = "0 3 * * SUN";
-export const DAILY_CRON = "0 4 * * *";
+export const DAILY_CRON = "0 6 * * *";
 
-/** Scheduled jobs. Weekly (Sunday 03:00 UTC): backup + housekeeping. Daily (04:00 UTC): release held commission. */
+/**
+ * Scheduled jobs.
+ *  Weekly (Sunday 03:00 UTC): database backup + housekeeping.
+ *  Daily (06:00 UTC, 6–7am UK): release held commission, reminders and check-ins,
+ *  usage watch, then the owner's morning report. Each step runs even if another fails.
+ */
 export async function scheduled(controller: ScheduledController, env: Env): Promise<void> {
   if (controller.cron === WEEKLY_CRON) {
     await backupDatabase(env.DB, env.BACKUPS, "weekly");
     await pruneRateLimits(env.DB);
   }
   if (controller.cron === DAILY_CRON) {
-    const released = await releaseHeldCommissions(env.DB);
-    if (released) console.log("Released held commission", { released });
+    const steps: [string, () => Promise<unknown>][] = [
+      ["commission", async () => notifyReleasedCommission(env, await releaseHeldCommissions(env.DB))],
+      ["setup-reminders", () => sendSetupReminders(env)],
+      ["check-ins", () => sendCheckIns(env)],
+      ["usage", async () => checkUsage(env, await adminEmails(env.DB))],
+      ["morning-report", () => sendMorningReport(env)],
+    ];
+    for (const [name, run] of steps) {
+      try {
+        console.log("Daily job", { name, result: await run() });
+      } catch (err) {
+        console.error("Daily job failed", { name, err: String(err) });
+      }
+    }
   }
 }
 

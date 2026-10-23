@@ -3,6 +3,8 @@
 These are things only you can do. None of them block the build until go-live unless marked.
 
 ## Soon
+- [ ] **Log in to test admin** with the invite link Claude sent (it lasts 24 hours; ask for a new one any time). Set up your authenticator app and save the backup codes.
+- [ ] **Send your Lower Body programme content** (voice notes, text, YouTube links, photos). Claude writes it up and builds it in as drafts for you to check.
 - [ ] **Voice note: further packages.** List the programmes, which ones are bundles or add-ons, and rough prices. Prices stay placeholders until you confirm them.
 - [ ] **Buy the domain.** Tell me which one. Connecting it takes about 15 minutes at go-live.
 - [ ] **Stripe account** (free) at stripe.com. You only need test mode for now. Steps are in `docs/STRIPE_SETUP.md`. Turn on PayPal under Settings → Payment methods if you want customers to have it as an option.
@@ -14,6 +16,7 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Real proof, when you have it:** testimonials from real members (with their permission), and the real member count. These replace any temptation to estimate numbers.
 
 ## Before go-live
+- [ ] Follow `docs/GO_LIVE.md`. Admin → **Launch checklist** shows what's left.
 - [ ] **ICO data protection fee** (about £52 a year): ico.org.uk/fee
 - [ ] **Trademark check** on "The Body Regeneration Method" (UK IPO search, free): gov.uk/search-for-trademark
 - [ ] **Insurance:** professional indemnity / public liability that covers online coaching.

@@ -1,6 +1,6 @@
 # Handover — The Body Regeneration Method
 
-_Last updated: 2026-10-23, after Step 6 (Affiliates)._
+_Last updated: 2026-10-23, after Step 7 (Automation). **The build (Steps 1–7) is complete on the test site.**_
 
 ## What this is
 This is a worldwide (mainly UK) website selling online movement programmes by the owner, a coach.
@@ -116,5 +116,19 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Account deletion** pauses the link, and the data export includes affiliate data.
 - `/legal/affiliate-terms` covers one level, #ad disclosure, no health claims, no brand bidding and suspension.
 
+**Step 7: Automation (done 2026-10-23)**
+- **Migration 0006:** campaigns, campaign_sends (never twice), automation_sent (each automatic email once).
+- **Daily cron** `0 6 * * *` (6–7am UK). Each step is isolated, so one failing doesn't stop the rest:
+  1. release held commission and email the affiliates,
+  2. account-setup reminder (2 days after paying, once),
+  3. 7-day check-in tips email (once),
+  4. usage watch (email to admins at 80% of the email limit, default 3,000 a month, or the page-view limit; once a month),
+  5. the **morning report** to every admin: yesterday's sales, members and views, plus a needs-attention list.
+- **No paid AI is used.** The report is built from the database, so the AI cost is £0.
+- **Campaigns** (Admin → Email campaigns): draft, preview, send a test to self, send once to everyone whose latest marketing consent is yes. Sent in Resend batches of 100, with List-Unsubscribe and List-Unsubscribe-Post (one-click) headers.
+- **Unsubscribe:** `/unsubscribe?e=&t=` uses an HMAC token keyed on `ADMIN_ENC_KEY` and is CSRF-exempt, so mail apps can POST to it. It records an append-only consent row.
+- **Dashboard usage box.** **Admin → Launch checklist** lists missing keys and settings, plus every `[PLACEHOLDER]` left on public pages.
+- **No approval queue:** nothing on this site changes content automatically. All content changes are made by the owner or Claude as drafts, and the owner publishes them. Add one if an automatic content job is ever introduced.
+
 ## Next step
-**Step 7: Automation.** The owner's go-ahead covers Steps 3–7 on staging.
+**Step 8 (content)** and **Step 9 (go live)**: see `docs/GO_LIVE.md` and `docs/CONTENT_WORKFLOW.md`.

@@ -9,10 +9,12 @@ const NAV = [
   { href: "/admin/customers", label: "Customers" },
   { href: "/admin/affiliates", label: "Affiliates" },
   { href: "/admin/wording", label: "Site wording" },
+  { href: "/admin/campaigns", label: "Email campaigns" },
   { href: "/admin/stats", label: "Stats" },
   { href: "/admin/activity", label: "Activity" },
   { href: "/admin/backups", label: "Backups" },
   { href: "/admin/emails", label: "Emails" },
+  { href: "/admin/launch", label: "Launch checklist" },
 ];
 
 export type AdminMeta = { title: string; path: string; csrfToken: string; email?: string; isTestSite: boolean; flash?: string | null; error?: string | null };
