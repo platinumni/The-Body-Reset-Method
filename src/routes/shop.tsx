@@ -7,6 +7,7 @@ import { isDevelopment } from "../env";
 import { clientIp, rateLimit } from "../middleware/rate-limit";
 import { BASKET_COOKIE, loadBasket, parseBasket, serializeBasket } from "../services/basket";
 import { sendEmail } from "../services/email";
+import { recordStat } from "../services/stats";
 import {
   attachCheckoutSession,
   createPendingOrder,
@@ -47,6 +48,7 @@ shopRoutes.post("/basket/add", async (c) => {
   const basket = await loadBasket(c.env.DB, [...current, slug]);
   // Only keep what's genuinely on sale.
   saveBasket(c, basket.items.map((i) => i.slug));
+  if (basket.items.some((i) => i.slug === slug) && !current.includes(slug)) await recordStat(c.env.DB, "add_to_basket", slug);
   return c.redirect("/basket", 303);
 });
 
@@ -82,6 +84,7 @@ shopRoutes.post("/checkout", rateLimit("checkout", 10, 600), async (c) => {
       cancelUrl: `${c.env.SITE_URL}/basket`,
     });
     await attachCheckoutSession(c.env.DB, order.id, session.id);
+    await recordStat(c.env.DB, "checkout_started");
     return c.redirect(session.url, 303);
   } catch (err) {
     console.error("Stripe checkout failed", { order: order.public_id, err: String(err) });
@@ -115,6 +118,7 @@ shopRoutes.post("/webhooks/stripe", async (c) => {
       if (obj.payment_status !== "paid") break; // slower payment methods confirm later
       const result = await markOrderPaid(c.env.DB, obj as PaidSession);
       if (result.outcome === "paid") {
+        await recordStat(c.env.DB, "purchase");
         const lines = await getOrderLines(c.env.DB, result.order.id);
         await sendEmail(
           c.env,

@@ -1,6 +1,6 @@
 # Handover — The Body Regeneration Method
 
-_Last updated: 2026-10-23, after Step 4 (Members area)._
+_Last updated: 2026-10-23, after Step 5 (Admin)._
 
 ## What this is
 This is a worldwide (mainly UK) website selling online movement programmes by the owner, a coach.
@@ -82,5 +82,26 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Reader** (`/account/programmes/:slug?tab=full|quick`): only for owners with an unrevoked entitlement, and only published lessons. It has a "read this first" notice, contents, YouTube nocookie embeds, images via `/media/*` (owners only, R2 `MEDIA` bucket), and mark-as-done.
 - **Lesson text** uses a safe mini-format (`src/lib/markdown.tsx` → JSX, never raw HTML): `##` headings, `-` lists, `1.` numbered, `>` key points, `**bold**`, `*italic*`, `[links](https://…)`.
 
+**Step 5: Admin (done 2026-10-23)**
+- **Migration 0004:** admin_mfa (encrypted TOTP secret + last used step), admin_backup_codes (hashed), login_challenges, revisions (undo history), daily_stats (anonymous), and `sessions.mfa_verified`.
+- **Admin login** `/admin/login`:
+  - password → 5-minute challenge cookie → 6-digit authenticator code or a one-time backup code.
+  - First login: QR code plus a tap-to-add link for phones → confirm a code → 10 backup codes shown once.
+  - Admin sessions last 12 hours, and `requireAdmin` needs `role = admin` **and** `mfa_verified = 1`.
+  - Non-admins get a 404.
+  - `/login` refuses admins.
+- **Creating an admin:** `bash scripts/admin-invite.sh staging owner@email` prints a single-use 24-hour setup link (and ends any existing sessions for that person).
+- **`ADMIN_ENC_KEY` (secret, set on staging):** it encrypts authenticator secrets. **Never change it**, or admins must re-enrol. If it's lost: clear that admin's `admin_mfa` row (via `wrangler d1 execute`) and they re-enrol at next login.
+- **Pages:**
+  - Dashboard (sales 7/30 days, members, needs-attention list).
+  - Programmes: create programmes or bundles, title, price, status, order, bundle contents, duplicate, history and restore.
+  - Lesson editor: tab, status, title, text with format help, YouTube link, image upload (type-sniffed, 5 MB, R2), live preview, move up/down, duplicate, history and restore.
+  - Orders: search, detail with consents, refund via Stripe (confirm tick), remove access, give free access (£0 GIFT order plus email).
+  - Customers: search, CSV (formula-injection safe), delete account.
+  - Site wording: homepage headline and intro, coach name and story, programme short descriptions, FAQs (Q:/A: format). Saved in `settings`, every change revisioned. `[PLACEHOLDER: …]` text stays highlighted.
+  - Stats: 30-day views, top pages, shop steps. Counted server-side with no cookies or IPs; bots and admin excluded.
+  - Activity log, Backups (with "Back up now"), Emails.
+- **Every admin action** writes to `audit_log`.
+
 ## Next step
-**Step 5: Admin.** The owner's go-ahead covers Steps 3–7 on staging.
+**Step 6: Affiliates.** The owner's go-ahead covers Steps 3–7 on staging.

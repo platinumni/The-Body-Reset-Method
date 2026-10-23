@@ -4,11 +4,14 @@ interface Env {
   STRIPE_SECRET_KEY?: string;
   STRIPE_WEBHOOK_SECRET?: string;
   RESEND_API_KEY?: string;
+  /** 32 random bytes, base64: encrypts admin authenticator secrets. */
+  ADMIN_ENC_KEY?: string;
 }
 declare namespace Cloudflare {
   interface Env {
     STRIPE_SECRET_KEY?: string;
     STRIPE_WEBHOOK_SECRET?: string;
     RESEND_API_KEY?: string;
+    ADMIN_ENC_KEY?: string;
   }
 }

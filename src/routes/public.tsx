@@ -1,10 +1,11 @@
 import { Hono } from "hono";
-import { COACH, NOT_FOR, PRINCIPLES, WHO_FOR, type Copy } from "../content/site";
+import { NOT_FOR, PRINCIPLES, WHO_FOR, type Copy } from "../content/site";
+import { loadSiteContent } from "../services/site-content";
 import type { AppEnv } from "../env";
 import { isProduction } from "../env";
 import { getCookie } from "hono/cookie";
 import { BASKET_COOKIE, parseBasket } from "../services/basket";
-import { getCatalogueEntry, listCatalogue, listFaqs, programmesWithPages } from "../services/catalogue";
+import { getCatalogueEntry, listCatalogue, programmesWithPages } from "../services/catalogue";
 import { databaseIsHealthy } from "../services/health";
 import { HomePage } from "../views/home";
 import { LEGAL_PAGES, LegalPage, type LegalSlug } from "../views/legal";
@@ -15,9 +16,12 @@ export const publicRoutes = new Hono<AppEnv>();
 
 const plain = (copy: Copy) => (typeof copy === "string" ? copy : `[PLACEHOLDER: ${copy.placeholder}]`);
 
-publicRoutes.get("/", async (c) =>
-  c.html(
+publicRoutes.get("/", async (c) => {
+  const content = await loadSiteContent(c.env.DB);
+  return c.html(
     <HomePage
+      headline={content.headline}
+      lede={content.lede}
       meta={pageMeta(c, {
         title: `${c.env.SITE_NAME}: release the tension, rebuild from the ground up`,
         description: "Release the tension, stop forcing and learn to love your body again. Movement programmes built from the ground up, starting with the feet.",
@@ -32,8 +36,8 @@ publicRoutes.get("/", async (c) =>
       whoFor={WHO_FOR}
       notFor={NOT_FOR}
     />,
-  ),
-);
+  );
+});
 
 publicRoutes.get("/method", (c) =>
   c.html(
@@ -87,18 +91,19 @@ publicRoutes.get("/programmes/:slug", async (c) => {
   );
 });
 
-publicRoutes.get("/about", (c) =>
-  c.html(
+publicRoutes.get("/about", async (c) => {
+  const content = await loadSiteContent(c.env.DB);
+  return c.html(
     <AboutPage
       meta={pageMeta(c, { title: "About the coach", description: "The coach behind The Body Regeneration Method and why the method exists.", path: "/about" })}
-      coachName={COACH.name}
-      story={COACH.story}
+      coachName={content.coachName}
+      story={content.coachStory}
     />,
-  ),
-);
+  );
+});
 
-publicRoutes.get("/faq", (c) => {
-  const faqs = listFaqs();
+publicRoutes.get("/faq", async (c) => {
+  const faqs = (await loadSiteContent(c.env.DB)).faqs;
   return c.html(
     <FaqPage
       meta={pageMeta(c, {

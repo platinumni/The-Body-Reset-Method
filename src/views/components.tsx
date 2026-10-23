@@ -4,7 +4,12 @@ import type { Copy, Principle, Stage } from "../content/site";
 /** Renders confirmed text as-is and unconfirmed text as a clearly marked placeholder. */
 export function Text(props: { copy: Copy }) {
   const { copy } = props;
-  if (typeof copy === "string") return <>{copy}</>;
+  if (typeof copy === "string") {
+    // Owner-edited text may still contain "[PLACEHOLDER: …]" markers; keep them highlighted.
+    const parts = copy.split(/(\[PLACEHOLDER:[^\]]*\])/);
+    if (parts.length === 1) return <>{copy}</>;
+    return <>{parts.map((p) => (p.startsWith("[PLACEHOLDER:") ? <mark class="placeholder" data-placeholder="true">{p}</mark> : p))}</>;
+  }
   return (
     <mark class="placeholder" data-placeholder="true">
       [PLACEHOLDER: {copy.placeholder}]

@@ -1,10 +1,9 @@
 import type { Principle } from "../content/site";
 import type { CatalogueEntry } from "../services/catalogue";
-import { PHILOSOPHY } from "../content/site";
 import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
 import { Layout, type PageMeta } from "./layout";
 
-export function HomePage(props: { meta: PageMeta; principles: Principle[]; programmes: CatalogueEntry[]; whoFor: string[]; notFor: string[] }) {
+export function HomePage(props: { meta: PageMeta; headline: string[]; lede: string; principles: Principle[]; programmes: CatalogueEntry[]; whoFor: string[]; notFor: string[] }) {
   const flagship = props.programmes.find((p) => p.flagship);
   const others = props.programmes.filter((p) => !p.flagship);
   return (
@@ -13,11 +12,11 @@ export function HomePage(props: { meta: PageMeta; principles: Principle[]; progr
         <div class="wrap hero-inner">
           <p class="eyebrow">The Body Regeneration Method</p>
           <h1>
-            {PHILOSOPHY.headline.map((line, i) => (
+            {props.headline.map((line, i) => (
               <span class={`hero-line hero-line-${i + 1}`}>{line}</span>
             ))}
           </h1>
-          <p class="lede">{PHILOSOPHY.lede}</p>
+          <p class="lede">{props.lede}</p>
           <div class="actions">
             {flagship && <Button href={`/programmes/${flagship.slug}`}>Explore Lower Body Regeneration</Button>}
             <Button href="/method" variant="ghost">

@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/platinumni/The-Body-Reset-Method#readme",
   "dependencies": {
-    "hono": "^4.13.13"
+    "hono": "^4.13.13",
+    "uqr": "^0.1.3"
   },
   "devDependencies": {
     "@cloudflare/vitest-plugin": "^1.4.7",

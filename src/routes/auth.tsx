@@ -36,6 +36,7 @@ authRoutes.post("/account/setup", rateLimit("setup", 10, 900), async (c) => {
 
   const user = await completeSetup(c.env.DB, token, { name: String(form.name ?? ""), password });
   if (!user) return render(null, 200);
+  if (user.role === "admin") return c.redirect("/admin/login?setup=1", 303); // two-step login next
   await startSession(c, user);
   return c.redirect("/account?welcome=1", 303);
 });

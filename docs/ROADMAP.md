@@ -9,8 +9,8 @@ Times are realistic / worst case, including waiting for the owner's "CH".
 | 2 | Look and public pages | ✅ Done 2026-10-23 | — |
 | 3 | Shop: packages, bundles, basket and add-ons, Stripe checkout, receipts | ✅ Done 2026-10-23 (live test awaits Stripe keys) | — |
 | 4 | Members area: account from email link, My Programmes, Full Programme and Quick Run-Through tabs | ✅ Done 2026-10-23 | — |
-| 5 | Admin: two-step login, programme editor, orders, customers, refunds, logs, backups, stats | ⏳ Next | 4 / 9 days |
-| 6 | Affiliates: share links, tracking, commission, payouts | — | 3 / 6 days |
+| 5 | Admin: two-step login, programme editor, orders, customers, refunds, logs, backups, stats | ✅ Done 2026-10-23 | — |
+| 6 | Affiliates: share links, tracking, commission, payouts | ⏳ Next | 3 / 6 days |
 | 7 | Automation: email sequences, morning report, usage watch, approvals | — | 2 / 5 days |
 | 8 | Content: owner's programmes loaded (via voice notes → drafts → approval) | — | Depends on owner |
 | 9 | Go live: domain, Stripe live, real test purchase and refund, and a check that no `[PLACEHOLDER]` remains | — | 1 / 3 days |
