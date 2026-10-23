@@ -40,8 +40,10 @@ describe("every sitemap page", () => {
 describe("homepage content", () => {
   it("shows the philosophy and all six principles in order", async () => {
     const html = await (await get("/")).text();
-    expect(html).toContain("Release the tension.");
+    expect(html).toContain("Let go of the tension,");
     expect(html).toContain("Learn to love your body again.");
+    expect(html).toContain("never quite trust yourself in a balanced position");
+    expect(html).toContain("Everything starts at the feet");
     const positions = PRINCIPLES.map((p) => html.indexOf(`<h3>${p.title}</h3>`));
     expect(positions.every((p) => p > 0)).toBe(true);
     expect([...positions].sort((a, b) => a - b)).toEqual(positions);

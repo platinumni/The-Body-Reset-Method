@@ -28,7 +28,7 @@ export function parseFaqText(text: string): Faq[] {
 }
 
 export const WORDING: WordingField[] = [
-  { key: "home.headline", label: "Homepage headline", help: "Up to three short lines, one per line. The third line shows in italic.", multiline: true, defaultValue: PHILOSOPHY.headline.join("\n") },
+  { key: "home.headline", label: "Homepage headline", help: "One or two lines. The second line shows in italic.", multiline: true, defaultValue: PHILOSOPHY.headline.join("\n") },
   { key: "home.lede", label: "Homepage intro sentence", help: "Shown under the headline.", multiline: true, defaultValue: PHILOSOPHY.lede },
   { key: "coach.name", label: "Coach name", help: "Shown on the About page.", multiline: false, defaultValue: copyText(COACH.name) },
   { key: "coach.story", label: "Coach story", help: "Your story in your own words. Leave a blank line between paragraphs.", multiline: true, defaultValue: COACH.story.map(copyText).filter(Boolean).join("\n\n") },

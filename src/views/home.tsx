@@ -1,4 +1,4 @@
-import type { Principle } from "../content/site";
+import { FOUNDATION, WHY, type Principle } from "../content/site";
 import type { CatalogueEntry } from "../services/catalogue";
 import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
 import { Layout, type PageMeta } from "./layout";
@@ -28,21 +28,21 @@ export function HomePage(props: { meta: PageMeta; headline: string[]; lede: stri
 
       <section class="band band-quiet">
         <div class="wrap narrow">
-          <SectionHead eyebrow="Why it's different" title="Most of us were never taught how to move." />
-          <p class="prose-lg">
-            Years of gripping, bracing and pushing through leave the body working harder than it needs to. We compensate, we tighten, and we force
-            ourselves into positions, and we call it training.
-          </p>
-          <p class="prose-lg">
-            This method takes a different route. Before building strength, you learn to recognise the tension you're holding and let go of the effort
-            you don't need. Then you build back, from the ground up.
-          </p>
+          <SectionHead eyebrow="The philosophy" title={WHY.title} />
+          {WHY.paragraphs.map((p) => (
+            <p class="prose-lg">{p}</p>
+          ))}
         </div>
       </section>
 
       <section class="band" aria-labelledby="principles-title">
         <div class="wrap">
-          <SectionHead eyebrow="The method" id="principles-title" title="Six principles, one direction" intro="Every programme follows the same path." />
+          <SectionHead
+            eyebrow="The method"
+            id="principles-title"
+            title="Six principles, one direction"
+            intro="Every programme follows the same six principles, in the same order, with each one building on the last."
+          />
           <PrinciplesGrid principles={props.principles} />
           <p class="center">
             <a href="/method">More about the method →</a>
@@ -54,8 +54,10 @@ export function HomePage(props: { meta: PageMeta; headline: string[]; lede: stri
         <section class="band band-feature" aria-labelledby="flagship-title">
           <div class="wrap split">
             <div>
-              <SectionHead eyebrow="Flagship programme" id="flagship-title" title={flagship.title} intro="It starts from the ground up, with the feet." />
-              <p>{flagship.short}</p>
+              <SectionHead eyebrow="Flagship programme" id="flagship-title" title={flagship.title} intro={FOUNDATION.title} />
+              {FOUNDATION.paragraphs.map((p) => (
+                <p>{p}</p>
+              ))}
               <p class="price-line">
                 <Text copy={flagship.displayPrice} />
               </p>
@@ -89,8 +91,8 @@ export function HomePage(props: { meta: PageMeta; headline: string[]; lede: stri
 
       <section class="band cta">
         <div class="wrap narrow center">
-          <h2>Start where you meet the ground.</h2>
-          <p class="prose-lg">Release first. Then rebuild.</p>
+          <h2>Learn to love your body again.</h2>
+          <p class="prose-lg">Release what you've been holding on to, and rebuild from the ground up.</p>
           {flagship && <Button href={`/programmes/${flagship.slug}`}>Explore {flagship.title}</Button>}
         </div>
       </section>

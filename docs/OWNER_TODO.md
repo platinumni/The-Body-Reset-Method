@@ -11,6 +11,8 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Check the test site wording** and reply with changes. Every yellow highlight is a placeholder waiting for your words.
 - [ ] **Access length** (e.g. lifetime) and **equipment needed** (if any), for the FAQ and terms.
 
+- [ ] **Real proof, when you have it:** testimonials from real members (with their permission), and the real member count. These replace any temptation to estimate numbers.
+
 ## Before go-live
 - [ ] **ICO data protection fee** (about £52 a year): ico.org.uk/fee
 - [ ] **Trademark check** on "The Body Regeneration Method" (UK IPO search, free): gov.uk/search-for-trademark

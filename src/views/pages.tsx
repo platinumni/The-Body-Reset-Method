@@ -1,4 +1,4 @@
-import type { Copy, Faq, Principle } from "../content/site";
+import { FOUNDATION, WHY, type Copy, type Faq, type Principle } from "../content/site";
 import type { CatalogueEntry } from "../services/catalogue";
 import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
 import { CsrfField, Layout, type PageMeta } from "./layout";
@@ -20,24 +20,32 @@ export function MethodPage(props: { meta: PageMeta; principles: Principle[] }) {
     <Layout meta={props.meta}>
       <PageHero
         eyebrow="The method"
-        title="Release first. Then rebuild."
-        lede="Most training adds more effort. This method starts by taking away the effort you don't need: the tension, the gripping, the forcing and the control."
+        title="Release first, then rebuild"
+        lede="Most training asks you to add more effort. This method starts by taking away the effort you don't need: the tension, the gripping, the forcing and the constant need for control."
       />
+      <section class="band band-quiet">
+        <div class="wrap narrow">
+          <SectionHead title={WHY.title} />
+          {WHY.paragraphs.map((p) => (
+            <p class="prose-lg">{p}</p>
+          ))}
+        </div>
+      </section>
       <section class="band">
         <div class="wrap">
-          <SectionHead title="The six principles" intro="Every programme moves through the same six stages, in this order." />
+          <SectionHead title="The six principles" intro="Every programme moves through the same six principles, in this order." />
           <PrinciplesGrid principles={props.principles} />
         </div>
       </section>
-      <section class="band band-quiet">
+      <section class="band">
         <div class="wrap narrow">
           <SectionHead title="Why the order matters" />
           <p class="prose-lg">
-            Strength built on top of tension and compensation just strengthens the compensation. So the method begins with awareness and release, then
-            reconnects you with how your body actually feels and moves, and only then builds strength. Finally, it takes those changes out into everyday
-            life.
+            Strength built on top of tension and compensation simply makes the compensation stronger. So the method begins with awareness and release.
+            It then reconnects you with how your body actually feels and moves, and only then builds strength. The final step takes those changes out
+            into everyday life and into more demanding activity.
           </p>
-          <p class="prose-lg">The full teaching behind each principle is inside the programmes.</p>
+          <p class="prose-lg">The full teaching behind each principle, and how to apply it, is inside the programmes.</p>
           <Button href="/programmes">See the programmes</Button>
         </div>
       </section>
@@ -84,7 +92,12 @@ export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry
       {p.stages && (
         <section class="band">
           <div class="wrap split">
-            <SectionHead title="From the ground up" intro="Each stage builds on the one below it." />
+            <div>
+              <SectionHead title={FOUNDATION.title} intro="Each stage builds on the one below it." />
+              {FOUNDATION.paragraphs.map((p) => (
+                <p>{p}</p>
+              ))}
+            </div>
             <GroundUp stages={p.stages} />
           </div>
         </section>

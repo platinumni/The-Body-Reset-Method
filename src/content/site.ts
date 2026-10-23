@@ -9,8 +9,29 @@ export const placeholder = (note: string): Placeholder => ({ placeholder: note }
 export type Copy = string | Placeholder;
 
 export const PHILOSOPHY = {
-  headline: ["Release the tension.", "Release the force.", "Learn to love your body again."],
-  lede: "A ground-up movement method. It starts where you meet the ground, your feet, and rebuilds how you stand, walk and move, one layer at a time.",
+  headline: ["Let go of the tension,", "and rediscover how your body is meant to move."],
+  lede:
+    "Most of us spend years gripping, bracing and forcing our way through movement without ever noticing. The Body Regeneration Method teaches you to recognise where you're holding on, release it, and rebuild strength and balance from the ground up, starting with your feet.",
+};
+
+/** The "why" behind the method, used on the homepage and the method page. */
+export const WHY = {
+  title: "Most of us were never taught how to move. We learned how to hold on.",
+  paragraphs: [
+    "Over years of sitting, rushing, training hard and pushing through, the body learns to protect itself. It grips through the feet, braces through the knees and tightens around the hips. It happens so gradually that most people never realise they're doing it.",
+    "That holding comes at a cost. When muscles are always working to keep you safe, they can't do the job they're there for. Certain positions stop being available to you, simple movements start to feel like effort, and you never quite trust yourself in a balanced position. Training harder on top of that only makes the pattern stronger.",
+    "The Body Regeneration Method works the other way round. First you learn to recognise where you're gripping and forcing. Then you learn to let go of that unnecessary effort without losing the stability you genuinely need, and rebuild coordination, strength and balance on a foundation you can trust.",
+    "There's nothing mystical about it. It's a practical, step-by-step approach to movement that anyone can learn, whatever their age or starting point.",
+  ],
+};
+
+/** Why the flagship starts at the feet. */
+export const FOUNDATION = {
+  title: "Everything starts at the feet",
+  paragraphs: [
+    "Your feet are the foundation for every step you take. When your arches and toes aren't doing their job, the ankles, knees and hips above them have to compensate, and the whole body learns to hold on.",
+    "That's why Lower Body Regeneration begins at the ground and works upwards, one stage at a time. And the effect doesn't stop at the hips: because everything above is built on what happens below, the work you do on your feet shapes how your whole body stands, walks and moves.",
+  ],
 };
 
 export type Principle = { n: number; title: string; summary: string };
@@ -25,10 +46,10 @@ export const PRINCIPLES: Principle[] = [
 ];
 
 export const WHO_FOR: string[] = [
-  "People who have moved in compensating ways for years and want to rebuild properly, from the ground up.",
-  "Older adults who haven't trained before, or who are coming back to movement.",
-  "Anyone tired of forcing their body into positions who wants a calmer, more aware way to build strength.",
-  "People who have tried physiotherapy or other treatments for years without lasting change, and are ready for a different approach.",
+  "Anyone who has moved in compensating ways for years and wants to rebuild properly, from the ground up.",
+  "Older adults who have never trained, or who are returning to movement after time away.",
+  "People who are tired of forcing their body into positions and want a calmer, more aware way to build strength.",
+  "People who have tried physiotherapy or other approaches for years without lasting change, and are ready for something different.",
 ];
 
 export const NOT_FOR: string[] = [
@@ -55,29 +76,29 @@ export const PROGRAMMES: Programme[] = [
   {
     slug: "lower-body-regeneration",
     title: "Lower Body Regeneration",
-    short: "The flagship programme. It builds from your feet up: arches and toes, Achilles and calves, knees, then hips.",
+    short: "Our flagship programme rebuilds the way you move from the ground up: from the arches and toes, through the Achilles, calves and knees, to the hips.",
     status: "available",
     flagship: true,
     price: placeholder("Flagship price"),
     access: placeholder("How long buyers keep access (e.g. lifetime)"),
     stages: [
-      { title: "Feet, arches & toes", summary: "Learn to use your arches and toes properly. This is the foundation everything else stands on." },
-      { title: "Achilles & calves", summary: "Train the Achilles and calf muscles on top of a foot that's now doing its job." },
-      { title: "Knees", summary: "Bring awareness and control to the knee joints, without forcing them into position." },
-      { title: "Hips", summary: "Stabilise the hips, so the whole lower body works together." },
+      { title: "Feet, arches & toes", summary: "Learn to use your arches and toes as they're meant to work, so your feet support you instead of gripping. Everything else stands on this." },
+      { title: "Achilles & calves", summary: "Build strength and control through the Achilles and calves, on top of feet that now support you properly." },
+      { title: "Knees", summary: "Bring awareness and control to the knees, so they can bend and move freely instead of being forced into position." },
+      { title: "Hips", summary: "Stabilise the hips so the whole lower body works as one connected system, and carry that stability up through the rest of you." },
     ],
     includes: [
-      "The Full Programme: the complete teaching, philosophy first, then every stage and exercise. Read it in full before you start, ideally a few times.",
-      "The Quick Run-Through: the key points of each stage, to keep beside you while you train.",
-      "Video demonstrations of the exercises.",
+      "The Full Programme: the complete teaching, with the philosophy first and then every stage and exercise explained. We recommend reading it in full before you begin, ideally more than once.",
+      "The Quick Run-Through: the key points from each stage, to keep beside you while you train.",
+      "Video demonstrations of the exercises, so you can see exactly how each one should look and feel.",
       "Your own members' area, where your programmes are always waiting for you.",
     ],
   },
-  { slug: "upper-body", title: "Upper Body", short: "The same principles, applied to the shoulders, arms and upper back.", status: "coming-soon", price: placeholder("Price") },
-  { slug: "hips", title: "Hips", short: "A focused programme for hip awareness, release and stability.", status: "coming-soon", price: placeholder("Price") },
-  { slug: "breathwork-regulation", title: "Breathwork & Regulation", short: "Breath and nervous-system regulation to support release and recovery.", status: "coming-soon", price: placeholder("Price") },
-  { slug: "full-body", title: "Full Body", short: "The whole method, brought together head to toe.", status: "coming-soon", price: placeholder("Price") },
-  { slug: "stretching", title: "Stretching", short: "Open stretching programmes for the upper body, lower body and full body.", status: "coming-soon", price: placeholder("Price") },
+  { slug: "upper-body", title: "Upper Body", short: "The same principles applied to the shoulders, arms and upper back, where so many of us hold tension.", status: "coming-soon", price: placeholder("Price") },
+  { slug: "hips", title: "Hips", short: "A focused programme to release tension around the hips and build lasting stability.", status: "coming-soon", price: placeholder("Price") },
+  { slug: "breathwork-regulation", title: "Breathwork & Regulation", short: "Learn to use your breath to settle the body, support release and recover well.", status: "coming-soon", price: placeholder("Price") },
+  { slug: "full-body", title: "Full Body", short: "The complete method brought together, from head to toe.", status: "coming-soon", price: placeholder("Price") },
+  { slug: "stretching", title: "Stretching", short: "Gentle, open stretching programmes for the upper body, lower body and full body.", status: "coming-soon", price: placeholder("Price") },
 ];
 
 export type Faq = { q: string; a: Copy[] };

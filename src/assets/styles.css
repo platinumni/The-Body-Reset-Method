@@ -149,10 +149,9 @@ p { margin: 0 0 1rem; }
 
 /* Hero */
 .hero { padding: clamp(4rem, 14vw, 9rem) 0 clamp(3.5rem, 10vw, 7rem); background: radial-gradient(130% 75% at 50% 115%, var(--accent-soft), transparent 70%); }
-.hero h1 { max-width: 15ch; }
+.hero h1 { max-width: 20ch; font-size: clamp(2.3rem, 6.4vw, 4.1rem); }
 .hero-line { display: block; }
-.hero-line-2 { color: var(--ink-soft); }
-.hero-line-3 { font-style: italic; color: var(--accent); }
+.hero-line-2, .hero-line-3 { font-style: italic; color: var(--accent); }
 .page-hero { padding: clamp(3rem, 10vw, 6rem) 0 1rem; }
 .page-hero h1 { font-size: clamp(2.2rem, 7vw, 3.8rem); }
 

@@ -5,6 +5,15 @@ Source: the owner's own words (voice note, 2026-10-23). Use this wording; don't 
 ## The philosophy
 Release the tension, the forcing and the control, and learn to love your body again. The homepage hints at this. Buyers get the full teaching.
 
+## The philosophy in fuller words (owner, 2026-10-23)
+- Release the tension and the forcing. Identify the spots where you're gripping and holding on.
+- That holding stops the body accessing certain positions and fundamentals of movement, so you never truly trust yourself in a balanced position.
+- It's practical and universal, **not "woo-woo"**.
+- The flagship starts at the feet, but the effect goes up through the whole body. Even stage one (feet, toes and arches) affects how you move everywhere.
+
+## Claims we won't make
+- **"Helped thousands of people worldwide."** The owner asked for this, but confirmed it isn't true yet, so it's not used: it would be a misleading claim under ASA/CAP, CMA and DMCC Act rules. Use real member numbers and real testimonials once they exist.
+
 ## The six principles
 1. **Recognise.** Become aware of tension, gripping, compensation and habitual patterns.
 2. **Release.** Learn to let go of unnecessary muscular effort without losing useful stability.
