@@ -13,6 +13,7 @@ export function pageMeta(c: Context<AppEnv>, m: Pick<PageMeta, "title" | "descri
     noindex: !isProduction(c.env),
     isTestSite: !isProduction(c.env),
     basketCount: parseBasket(getCookie(c, BASKET_COOKIE)).length,
+    loggedIn: !!c.get("user"),
     ...m,
   };
 }

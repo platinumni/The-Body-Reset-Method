@@ -11,6 +11,7 @@ export type PageMeta = {
   noindex?: boolean;
   isTestSite?: boolean;
   basketCount?: number;
+  loggedIn?: boolean;
   jsonLd?: Record<string, unknown>[];
 };
 
@@ -35,7 +36,8 @@ export function Layout(props: { meta: PageMeta; children: Child }) {
   const { meta } = props;
   const canonical = new URL(meta.path, meta.siteUrl).toString();
   const fullTitle = meta.path === "/" ? meta.title : `${meta.title} | ${meta.siteName}`;
-  const navLinks = NAV.map((n) => (
+  const nav = [...NAV, meta.loggedIn ? { href: "/account", label: "My account" } : { href: "/login", label: "Log in" }];
+  const navLinks = nav.map((n) => (
     <a href={n.href} aria-current={isCurrent(n.href, meta.path) ? "page" : undefined}>
       {n.label}
     </a>

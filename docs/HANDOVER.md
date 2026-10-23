@@ -1,6 +1,6 @@
 # Handover — The Body Regeneration Method
 
-_Last updated: 2026-10-23, after Step 3 (Shop)._
+_Last updated: 2026-10-23, after Step 4 (Members area)._
 
 ## What this is
 This is a worldwide (mainly UK) website selling online movement programmes by the owner, a coach.
@@ -23,6 +23,7 @@ This is a worldwide (mainly UK) website selling online movement programmes by th
 | Cloudflare account | Owner's account `0db80beb5c1fff6eaf82105bdd1c543d` (shared with Platinum NI; don't touch `platinumni*`) |
 | Test database | D1 `bodyregen-staging` |
 | Test backups | R2 `bodyregen-backups-staging` |
+| Test images | R2 `bodyregen-media-staging` |
 
 ## How to work on it
 ```bash
@@ -67,5 +68,19 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Secrets needed:** `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `RESEND_API_KEY`. Without them, checkout shows "not switched on yet" and emails are logged as skipped. Owner steps: `docs/STRIPE_SETUP.md`.
 - **A product is only buyable** when `status = 'on_sale'` AND `price_pence` is set. Real prices come from the owner.
 
+**Step 4: Members area (done 2026-10-23)**
+- **Migration 0003:** `programme_lessons` (tab `full` or `quick`, position, title, body, YouTube id, image key, status) and `lesson_progress`.
+- **Auth** (`src/routes/auth.tsx`, `src/services/accounts.ts`):
+  - `/account/setup?token=` creates the account from the emailed link (single use, 7 days), marks the email verified and links all programmes bought with that email.
+  - `/login` is rate limited per IP and per email, with the same timing for unknown emails.
+  - `/logout`.
+  - `/forgot` always gives the same answer. It sends a reset link (1 hour) to members, or a fresh setup link to buyers without an account.
+  - `/reset` logs out all other devices.
+  - **Admins can't log in here.** They're sent to `/admin/login`, which has two-step login (Step 5).
+- **Session cookie:** `__Host-brm_session`, 30 days, `loadUser` on every request (DB hit only when the cookie exists).
+- **Account** (`/account`): My Programmes with progress, marketing on/off (an append-only consent record each time), change password (logs out other devices), download my data (JSON), delete account (password confirm: personal details wiped, access revoked, orders kept 6 years for tax, audit logged).
+- **Reader** (`/account/programmes/:slug?tab=full|quick`): only for owners with an unrevoked entitlement, and only published lessons. It has a "read this first" notice, contents, YouTube nocookie embeds, images via `/media/*` (owners only, R2 `MEDIA` bucket), and mark-as-done.
+- **Lesson text** uses a safe mini-format (`src/lib/markdown.tsx` → JSX, never raw HTML): `##` headings, `-` lists, `1.` numbered, `>` key points, `**bold**`, `*italic*`, `[links](https://…)`.
+
 ## Next step
-**Step 4: Members area.** The owner's go-ahead covers Steps 3–7 on staging.
+**Step 5: Admin.** The owner's go-ahead covers Steps 3–7 on staging.

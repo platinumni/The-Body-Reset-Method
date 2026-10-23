@@ -1,8 +1,11 @@
 import { Hono } from "hono";
 import type { AppEnv } from "./env";
+import { loadUser } from "./middleware/auth";
 import { csrf } from "./middleware/csrf";
 import { securityHeaders } from "./middleware/security";
+import { accountRoutes } from "./routes/account";
 import { assetRoutes } from "./routes/assets";
+import { authRoutes } from "./routes/auth";
 import { pageMeta } from "./routes/meta";
 import { publicRoutes } from "./routes/public";
 import { shopRoutes } from "./routes/shop";
@@ -14,10 +17,13 @@ export const app = new Hono<AppEnv>();
 
 app.use("*", securityHeaders);
 app.use("*", csrf);
+app.use("*", loadUser); // only queries the database when a login cookie is present
 
 app.route("/", assetRoutes);
 app.route("/", publicRoutes);
 app.route("/", shopRoutes);
+app.route("/", authRoutes);
+app.route("/", accountRoutes);
 
 app.notFound((c) => c.html(<NotFoundPage meta={pageMeta(c, { title: "Page not found", description: "Page not found.", path: c.req.path, noindex: true })} />, 404));
 

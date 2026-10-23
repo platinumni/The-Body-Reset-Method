@@ -10,7 +10,7 @@ Claude builds it in.
 
 ## Steps
 1. **Owner sends** the title, what it's for, the sections and exercises, YouTube links and images. Rough is fine.
-2. **Claude drafts** the programme in the standard structure:
+2. **Claude writes it up professionally in the owner's voice**, keeping their meaning and adding no claims they didn't make, then drafts the programme in the standard structure:
    - **Overview:** sales-page summary, who it's for and not for, what's included. The philosophy is hinted at, not given away.
    - **Full Programme:** the complete teaching, philosophy first, then each stage and exercise with video, images, cues and common mistakes.
    - **Quick Run-Through:** key highlighted points for each stage.

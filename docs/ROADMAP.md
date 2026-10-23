@@ -8,8 +8,8 @@ Times are realistic / worst case, including waiting for the owner's "CH".
 | 1 | Foundation: test site, security, checks, deploy and backups, docs | ✅ Done 2026-10-23 | — |
 | 2 | Look and public pages | ✅ Done 2026-10-23 | — |
 | 3 | Shop: packages, bundles, basket and add-ons, Stripe checkout, receipts | ✅ Done 2026-10-23 (live test awaits Stripe keys) | — |
-| 4 | Members area: account from email link, My Programmes, Full Programme and Quick Run-Through tabs | ⏳ Next | 3 / 7 days |
-| 5 | Admin: two-step login, programme editor, orders, customers, refunds, logs, backups, stats | — | 4 / 9 days |
+| 4 | Members area: account from email link, My Programmes, Full Programme and Quick Run-Through tabs | ✅ Done 2026-10-23 | — |
+| 5 | Admin: two-step login, programme editor, orders, customers, refunds, logs, backups, stats | ⏳ Next | 4 / 9 days |
 | 6 | Affiliates: share links, tracking, commission, payouts | — | 3 / 6 days |
 | 7 | Automation: email sequences, morning report, usage watch, approvals | — | 2 / 5 days |
 | 8 | Content: owner's programmes loaded (via voice notes → drafts → approval) | — | Depends on owner |
