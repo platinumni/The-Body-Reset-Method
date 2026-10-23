@@ -13,7 +13,7 @@ export async function listOrders(db: D1Database, search = "", limit = 100): Prom
   const q = `%${search.trim().toLowerCase()}%`;
   const { results } = await db
     .prepare(
-      `SELECT o.id, o.public_id, o.email, o.name, o.status, o.total_pence, o.currency, o.stripe_session_id, o.stripe_payment_intent, o.ref_code,
+      `SELECT o.id, o.public_id, o.email, o.name, o.status, o.total_pence, o.amount_paid_pence, o.currency, o.stripe_session_id, o.stripe_payment_intent, o.ref_code,
               o.marketing_opt_in, o.created_at, o.paid_at,
               (SELECT GROUP_CONCAT(title, ', ') FROM order_items WHERE order_id = o.id) AS items
        FROM orders o
@@ -123,8 +123,8 @@ export type DashboardNumbers = {
 
 export async function dashboardNumbers(db: D1Database): Promise<DashboardNumbers> {
   const one = <T,>(sql: string) => db.prepare(sql).first<T>();
-  const s7 = await one<{ count: number; pence: number }>("SELECT COUNT(*) AS count, COALESCE(SUM(total_pence), 0) AS pence FROM orders WHERE status = 'paid' AND total_pence > 0 AND paid_at > datetime('now', '-7 days')");
-  const s30 = await one<{ count: number; pence: number }>("SELECT COUNT(*) AS count, COALESCE(SUM(total_pence), 0) AS pence FROM orders WHERE status = 'paid' AND total_pence > 0 AND paid_at > datetime('now', '-30 days')");
+  const s7 = await one<{ count: number; pence: number }>("SELECT COUNT(*) AS count, COALESCE(SUM(COALESCE(amount_paid_pence, total_pence)), 0) AS pence FROM orders WHERE status = 'paid' AND total_pence > 0 AND paid_at > datetime('now', '-7 days')");
+  const s30 = await one<{ count: number; pence: number }>("SELECT COUNT(*) AS count, COALESCE(SUM(COALESCE(amount_paid_pence, total_pence)), 0) AS pence FROM orders WHERE status = 'paid' AND total_pence > 0 AND paid_at > datetime('now', '-30 days')");
   return {
     sales7: s7 ?? { count: 0, pence: 0 },
     sales30: s30 ?? { count: 0, pence: 0 },

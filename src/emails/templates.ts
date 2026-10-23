@@ -27,6 +27,8 @@ export type OrderEmailInput = {
   orderRef: string;
   lines: { title: string; pence: number }[];
   totalPence: number;
+  /** Amount taken off by a discount code, if any. */
+  discountPence?: number;
   currency: string;
   /** Link to create an account, or null if they already have one. */
   setupUrl: string | null;
@@ -43,6 +45,7 @@ export function orderConfirmationEmail(i: OrderEmailInput): Email {
     i.siteName,
     `<p>${esc(hello)}</p><p>Thank you for your order. Payment received.</p>
 <table role="presentation" width="100%" style="border-top:1px solid #ddd3c3;border-bottom:1px solid #ddd3c3;margin:16px 0">${rows}
+${i.discountPence ? `<tr><td style="padding:6px 0">Discount</td><td align="right">-${formatPrice(i.discountPence, i.currency)}</td></tr>` : ""}
 <tr><td style="padding:8px 0;font-weight:bold">Total</td><td align="right" style="font-weight:bold">${formatPrice(i.totalPence, i.currency)}</td></tr></table>
 <p style="font-size:14px;color:#4b5750">Order reference: ${esc(i.orderRef)}</p>${action}
 <p>Before you start, read the Full Programme all the way through, ideally a few times. Everything else builds on it.</p>`,
@@ -53,6 +56,7 @@ export function orderConfirmationEmail(i: OrderEmailInput): Email {
     "Thank you for your order. Payment received.",
     "",
     ...i.lines.map((l) => `${l.title}: ${formatPrice(l.pence, i.currency)}`),
+    ...(i.discountPence ? [`Discount: -${formatPrice(i.discountPence, i.currency)}`] : []),
     `Total: ${formatPrice(i.totalPence, i.currency)}`,
     `Order reference: ${i.orderRef}`,
     "",

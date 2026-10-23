@@ -1,9 +1,11 @@
 import { Hono } from "hono";
 import type { AppEnv } from "../env";
+import clientJs from "../assets/client";
 import favicon from "../assets/favicon.svg";
 import frauncesItalic from "../assets/fonts/fraunces-latin-wght-italic.woff2";
 import fraunces from "../assets/fonts/fraunces-latin-wght-normal.woff2";
 import inter from "../assets/fonts/inter-latin-wght-normal.woff2";
+import ogImage from "../assets/og.png";
 import styles from "../assets/styles.css";
 
 // Static files bundled into the Worker. URLs carry a content hash (?v=...) so
@@ -18,10 +20,12 @@ function hash(data: string | ArrayBuffer): string {
 
 const FILES = {
   "/styles.css": { body: styles, type: "text/css; charset=utf-8" },
+  "/app.js": { body: clientJs, type: "text/javascript; charset=utf-8" },
   "/favicon.svg": { body: favicon, type: "image/svg+xml" },
   "/fonts/fraunces.woff2": { body: fraunces, type: "font/woff2" },
   "/fonts/fraunces-italic.woff2": { body: frauncesItalic, type: "font/woff2" },
   "/fonts/inter.woff2": { body: inter, type: "font/woff2" },
+  "/og.png": { body: ogImage, type: "image/png" },
 } as const;
 
 export type AssetPath = keyof typeof FILES;

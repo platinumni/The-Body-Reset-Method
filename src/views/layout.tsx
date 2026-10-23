@@ -1,6 +1,8 @@
+import { raw } from "hono/html";
 import type { Child } from "hono/jsx";
 import { CSRF_FIELD } from "../middleware/csrf";
 import { assetUrl } from "../routes/assets";
+import { SignupDialog, type OfferCopy } from "./marketing";
 
 export type PageMeta = {
   title: string;
@@ -12,6 +14,9 @@ export type PageMeta = {
   isTestSite?: boolean;
   basketCount?: number;
   loggedIn?: boolean;
+  ogType?: "website" | "article";
+  /** Set on marketing pages: renders the sign-up pop-up (opened by /app.js). */
+  signup?: { csrfToken: string; offer: OfferCopy };
   /** Set when a visitor arrives from a share link and hasn't chosen yet. */
   referralPrompt?: { code: string; back: string; csrfToken: string };
   jsonLd?: Record<string, unknown>[];
@@ -20,6 +25,7 @@ export type PageMeta = {
 const NAV = [
   { href: "/method", label: "The Method" },
   { href: "/programmes", label: "Programmes" },
+  { href: "/guides", label: "Guides" },
   { href: "/about", label: "About" },
   { href: "/faq", label: "FAQ" },
 ];
@@ -46,7 +52,9 @@ export function Layout(props: { meta: PageMeta; children: Child }) {
     </a>
   ));
   return (
-    <html lang="en-GB">
+    <>
+      {raw("<!DOCTYPE html>")}
+      <html lang="en-GB">
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -54,7 +62,12 @@ export function Layout(props: { meta: PageMeta; children: Child }) {
         <meta name="description" content={meta.description} />
         <link rel="canonical" href={canonical} />
         {meta.noindex && <meta name="robots" content="noindex, nofollow" />}
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content={meta.ogType ?? "website"} />
+        <meta property="og:image" content={new URL("/og.png", meta.siteUrl).toString()} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="en_GB" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta property="og:site_name" content={meta.siteName} />
         <meta property="og:title" content={fullTitle} />
         <meta property="og:description" content={meta.description} />
@@ -64,6 +77,7 @@ export function Layout(props: { meta: PageMeta; children: Child }) {
         <link rel="icon" href={assetUrl("/favicon.svg")} type="image/svg+xml" />
         <link rel="preload" href="/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin="" />
         <link rel="stylesheet" href={assetUrl("/styles.css")} />
+        {meta.signup && <script src={assetUrl("/app.js")} defer />}
         {meta.jsonLd?.map((ld) => (
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld).replace(/</g, "\\u003c") }} />
         ))}
@@ -120,6 +134,7 @@ export function Layout(props: { meta: PageMeta; children: Child }) {
           </div>
         </header>
         <main id="main">{props.children}</main>
+        {meta.signup && <SignupDialog csrfToken={meta.signup.csrfToken} offer={meta.signup.offer} />}
         <footer class="site-footer">
           <div class="wrap footer-inner">
             <div>
@@ -141,7 +156,8 @@ export function Layout(props: { meta: PageMeta; children: Child }) {
           </p>
         </footer>
       </body>
-    </html>
+      </html>
+    </>
   );
 }
 

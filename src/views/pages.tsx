@@ -2,6 +2,8 @@ import { FOUNDATION, WHY, type Copy, type Faq, type Principle } from "../content
 import type { CatalogueEntry } from "../services/catalogue";
 import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
 import { CsrfField, Layout, type PageMeta } from "./layout";
+import { HowItWorks, IS_THIS_YOU, SignupBox, StickyBuy, Testimonials, TrustStrip, type OfferCopy } from "./marketing";
+import type { Testimonial } from "../services/site-content";
 
 function PageHero(props: { eyebrow: string; title: string; lede?: string }) {
   return (
@@ -84,15 +86,46 @@ export function ProgrammesPage(props: { meta: PageMeta; programmes: CatalogueEnt
   );
 }
 
-export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry; whoFor: string[]; notFor: string[]; csrfToken: string; inBasket: boolean; trackRecord: string }) {
+export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry; whoFor: string[]; notFor: string[]; csrfToken: string; inBasket: boolean; trackRecord: string; testimonials: Testimonial[]; offer: OfferCopy; faqs: Faq[] }) {
   const p = props.programme;
   return (
     <Layout meta={props.meta}>
       <PageHero eyebrow={p.flagship ? "Flagship programme" : "Programme"} title={p.title} lede={p.short} />
-      {p.flagship && (
-        <div class="wrap narrow">
-          <p class="track-record">{props.trackRecord}</p>
+      <div class="wrap narrow">
+        {p.flagship && <p class="track-record">{props.trackRecord}</p>}
+        <div class="hero-buy">
+          <p class="price-line large">
+            <Text copy={p.displayPrice} />
+          </p>
+          {p.onSale ? (
+            props.inBasket ? (
+              <Button href="/basket">In your basket: view basket</Button>
+            ) : (
+              <form method="post" action="/basket/add">
+                <CsrfField token={props.csrfToken} />
+                <input type="hidden" name="slug" value={p.slug} />
+                <button class="btn btn-primary" type="submit">
+                  Add to basket
+                </button>
+              </form>
+            )
+          ) : (
+            <Button href="#signup">Get launch news</Button>
+          )}
         </div>
+        <TrustStrip />
+      </div>
+      {p.flagship && (
+        <section class="band band-quiet">
+          <div class="wrap narrow">
+            <SectionHead eyebrow="Is this you?" title="If any of these sound familiar, this programme was made for you" />
+            <ul class="ticks large">
+              {IS_THIS_YOU.map((t) => (
+                <li>{t}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
       )}
       {p.stages && (
         <section class="band">
@@ -126,6 +159,13 @@ export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry
           </div>
         </section>
       )}
+      <Testimonials items={props.testimonials} />
+      <section class="band">
+        <div class="wrap">
+          <SectionHead title="How it works" />
+          <HowItWorks />
+        </div>
+      </section>
       <section class="band">
         <div class="wrap">
           <SectionHead title="Is it right for you?" />
@@ -158,6 +198,28 @@ export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry
           <p class="small muted">No account needed to buy. After payment we email you a link to set up your members' area.</p>
         </div>
       </section>
+      <section class="band band-quiet">
+        <div class="wrap narrow">
+          <SectionHead title="Questions" />
+          <div class="faqs">
+            {props.faqs.slice(0, 4).map((f) => (
+              <details class="faq">
+                <summary>{f.q}</summary>
+                {f.a.map((a) => (
+                  <p>
+                    <Text copy={a} />
+                  </p>
+                ))}
+              </details>
+            ))}
+          </div>
+          <p>
+            <a href="/faq">All questions →</a>
+          </p>
+        </div>
+      </section>
+      <SignupBox csrfToken={props.csrfToken} offer={props.offer} source="programme" />
+      <StickyBuy title={p.title} price={p.onSale && typeof p.displayPrice === "string" ? p.displayPrice : null} csrfToken={props.csrfToken} slug={p.slug} inBasket={props.inBasket} />
     </Layout>
   );
 }

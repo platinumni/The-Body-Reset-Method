@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { DAILY_CRON, WEEKLY_CRON } from "./cron";
 import type { AppEnv } from "./env";
 import { loadUser } from "./middleware/auth";
 import { csrf } from "./middleware/csrf";
@@ -10,6 +11,7 @@ import { assetRoutes } from "./routes/assets";
 import { authRoutes } from "./routes/auth";
 import { pageMeta } from "./routes/meta";
 import { publicRoutes } from "./routes/public";
+import { marketingRoutes } from "./routes/marketing";
 import { referralRoutes } from "./routes/referrals";
 import { unsubscribeRoutes } from "./routes/unsubscribe";
 import { shopRoutes } from "./routes/shop";
@@ -17,6 +19,7 @@ import { backupDatabase } from "./services/backup";
 import { releaseHeldCommissions } from "./services/affiliates";
 import { adminEmails, checkUsage, notifyReleasedCommission, sendCheckIns, sendMorningReport, sendSetupReminders } from "./services/automation";
 import { pruneRateLimits } from "./services/rate-limit";
+import { loadSiteContent } from "./services/site-content";
 import { isBot, recordStat } from "./services/stats";
 import { NotFoundPage, ServerErrorPage } from "./views/errors";
 
@@ -25,6 +28,13 @@ export const app = new Hono<AppEnv>();
 app.use("*", securityHeaders);
 app.use("*", csrf);
 app.use("*", loadUser); // only queries the database when a login cookie is present
+
+// Owner-edited wording for public pages, loaded once per request.
+const NO_CONTENT = ["/admin", "/webhooks", "/fonts", "/styles.css", "/favicon", "/app.js", "/og.png", "/health", "/media", "/r/"];
+app.use("*", async (c, next) => {
+  if (c.req.method === "GET" && !NO_CONTENT.some((p) => c.req.path.startsWith(p))) c.set("siteContent", await loadSiteContent(c.env.DB));
+  await next();
+});
 
 // Anonymous page-view counts for public pages (no cookies, no IPs, bots ignored).
 const UNCOUNTED = ["/admin", "/account", "/media", "/webhooks", "/checkout", "/reset", "/health", "/fonts", "/styles.css", "/favicon"];
@@ -44,6 +54,7 @@ app.route("/", assetRoutes);
 app.route("/", publicRoutes);
 app.route("/", shopRoutes);
 app.route("/", referralRoutes);
+app.route("/", marketingRoutes);
 app.route("/", unsubscribeRoutes);
 app.route("/", authRoutes);
 app.route("/", accountRoutes);
@@ -57,8 +68,6 @@ app.onError((err, c) => {
   return c.html(<ServerErrorPage meta={pageMeta(c, { title: "Something went wrong", description: "Error.", path: c.req.path, noindex: true })} />, 500);
 });
 
-export const WEEKLY_CRON = "0 3 * * SUN";
-export const DAILY_CRON = "0 6 * * *";
 
 /**
  * Scheduled jobs.

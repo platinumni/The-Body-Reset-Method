@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { NOT_FOR, PRINCIPLES, WHO_FOR, type Copy } from "../content/site";
+import { GUIDES } from "../content/guides";
 import { loadSiteContent } from "../services/site-content";
 import type { AppEnv } from "../env";
 import { isProduction } from "../env";
@@ -16,16 +17,22 @@ export const publicRoutes = new Hono<AppEnv>();
 
 const plain = (copy: Copy) => (typeof copy === "string" ? copy : `[PLACEHOLDER: ${copy.placeholder}]`);
 
+const content = async (c: Parameters<typeof pageMeta>[0]) => c.get("siteContent") ?? (await loadSiteContent(c.env.DB));
+
 publicRoutes.get("/", async (c) => {
-  const content = await loadSiteContent(c.env.DB);
+  const site = await content(c);
   return c.html(
     <HomePage
-      headline={content.headline}
-      lede={content.lede}
-      trackRecord={content.trackRecord}
+      headline={site.headline}
+      lede={site.lede}
+      trackRecord={site.trackRecord}
+      testimonials={site.testimonials}
+      offer={site.offer}
+      csrfToken={c.get("csrfToken")}
       meta={pageMeta(c, {
-        title: `${c.env.SITE_NAME}: release the tension, rebuild from the ground up`,
-        description: "Release the tension, stop forcing and learn to love your body again. Movement programmes built from the ground up, starting with the feet.",
+        title: `${c.env.SITE_NAME}: online movement programmes from the ground up`,
+        description:
+          "Release the tension and gripping your body holds on to, and rebuild strength and balance from the ground up, starting with your feet. Online programmes you can follow at home.",
         path: "/",
         jsonLd: [
           { "@context": "https://schema.org", "@type": "Organization", name: c.env.SITE_NAME, url: c.env.SITE_URL },
@@ -56,7 +63,11 @@ publicRoutes.get("/method", (c) =>
 publicRoutes.get("/programmes", async (c) =>
   c.html(
     <ProgrammesPage
-      meta={pageMeta(c, { title: "Programmes", description: "Movement programmes built from the ground up, starting with the flagship Lower Body Regeneration.", path: "/programmes" })}
+      meta={pageMeta(c, {
+        title: "Online movement programmes: lower body, hips, upper body and more",
+        description: "Online movement programmes built from the ground up, starting with Lower Body Regeneration: feet, arches and toes, calves, knees and hips.",
+        path: "/programmes",
+      })}
       programmes={await listCatalogue(c.env.DB)}
     />,
   ),
@@ -66,11 +77,15 @@ publicRoutes.get("/programmes/:slug", async (c) => {
   const programme = await getCatalogueEntry(c.env.DB, c.req.param("slug"));
   if (!programme || programme.status !== "available") return c.notFound();
   const path = `/programmes/${programme.slug}`;
+  const site = await content(c);
+  const url = new URL(path, c.env.SITE_URL).toString();
   return c.html(
     <ProgrammePage
       meta={pageMeta(c, {
-        title: programme.title,
-        description: programme.short,
+        title: programme.flagship ? `${programme.title}: feet, calves, knees and hips programme` : programme.title,
+        description: programme.flagship
+          ? "An online lower body programme that starts with your feet, arches and toes, then works up through the Achilles, calves, knees and hips. Release tension, then rebuild strength and balance."
+          : programme.short,
         path,
         jsonLd: [
           {
@@ -78,8 +93,30 @@ publicRoutes.get("/programmes/:slug", async (c) => {
             "@type": "Course",
             name: programme.title,
             description: programme.short,
-            url: new URL(path, c.env.SITE_URL).toString(),
+            url,
             provider: { "@type": "Organization", name: c.env.SITE_NAME, url: c.env.SITE_URL },
+            ...(programme.onSale && programme.product?.price_pence
+              ? {
+                  offers: {
+                    "@type": "Offer",
+                    price: (programme.product.price_pence / 100).toFixed(2),
+                    priceCurrency: programme.product.currency.toUpperCase(),
+                    availability: "https://schema.org/InStock",
+                    category: "Paid",
+                    url,
+                  },
+                  hasCourseInstance: { "@type": "CourseInstance", courseMode: "Online", courseWorkload: "Self-paced" },
+                }
+              : {}),
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: new URL("/", c.env.SITE_URL).toString() },
+              { "@type": "ListItem", position: 2, name: "Programmes", item: new URL("/programmes", c.env.SITE_URL).toString() },
+              { "@type": "ListItem", position: 3, name: programme.title, item: url },
+            ],
           },
         ],
       })}
@@ -88,24 +125,27 @@ publicRoutes.get("/programmes/:slug", async (c) => {
       notFor={NOT_FOR}
       csrfToken={c.get("csrfToken")}
       inBasket={parseBasket(getCookie(c, BASKET_COOKIE)).includes(programme.slug)}
-      trackRecord={(await loadSiteContent(c.env.DB)).trackRecord}
+      trackRecord={site.trackRecord}
+      testimonials={site.testimonials}
+      offer={site.offer}
+      faqs={site.faqs}
     />,
   );
 });
 
 publicRoutes.get("/about", async (c) => {
-  const content = await loadSiteContent(c.env.DB);
+  const site = await content(c);
   return c.html(
     <AboutPage
       meta={pageMeta(c, { title: "About the coach", description: "The coach behind The Body Regeneration Method and why the method exists.", path: "/about" })}
-      coachName={content.coachName}
-      story={content.coachStory}
+      coachName={site.coachName}
+      story={site.coachStory}
     />,
   );
 });
 
 publicRoutes.get("/faq", async (c) => {
-  const faqs = (await loadSiteContent(c.env.DB)).faqs;
+  const faqs = (await content(c)).faqs;
   return c.html(
     <FaqPage
       meta={pageMeta(c, {
@@ -148,6 +188,8 @@ export function sitemapPaths(): string[] {
     "/method",
     "/programmes",
     ...programmesWithPages().map((p) => `/programmes/${p.slug}`),
+    "/guides",
+    ...GUIDES.map((g) => `/guides/${g.slug}`),
     "/about",
     "/faq",
     ...Object.keys(LEGAL_PAGES).map((s) => `/legal/${s}`),

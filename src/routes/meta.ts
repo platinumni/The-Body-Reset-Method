@@ -16,6 +16,7 @@ export function pageMeta(c: Context<AppEnv>, m: Pick<PageMeta, "title" | "descri
     basketCount: parseBasket(getCookie(c, BASKET_COOKIE)).length,
     loggedIn: !!c.get("user"),
     referralPrompt: referralPrompt(c),
+    signup: signupFor(c),
     ...m,
   };
 }
@@ -26,4 +27,12 @@ function referralPrompt(c: Context<AppEnv>): PageMeta["referralPrompt"] {
   const url = new URL(c.req.url);
   url.searchParams.delete("ref");
   return { code, back: url.pathname + url.search, csrfToken: c.get("csrfToken") };
+}
+
+// Pages where the sign-up pop-up may appear (never on checkout, account, legal or admin pages).
+const SIGNUP_PAGES = [/^\/$/, /^\/method$/, /^\/programmes(\/|$)/, /^\/guides(\/|$)/, /^\/about$/, /^\/faq$/];
+
+function signupFor(c: Context<AppEnv>): PageMeta["signup"] {
+  if (c.get("user") || !SIGNUP_PAGES.some((re) => re.test(c.req.path))) return undefined;
+  return { csrfToken: c.get("csrfToken"), offer: c.get("siteContent")?.offer ?? null };
 }

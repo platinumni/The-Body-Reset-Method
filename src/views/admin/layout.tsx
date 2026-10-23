@@ -1,3 +1,4 @@
+import { raw } from "hono/html";
 import type { Child } from "hono/jsx";
 import { assetUrl } from "../../routes/assets";
 import { CsrfField } from "../layout";
@@ -23,7 +24,9 @@ export function AdminLayout(props: { meta: AdminMeta; children: Child; bare?: bo
   const { meta } = props;
   const current = (href: string) => (href === "/admin" ? meta.path === "/admin" : meta.path.startsWith(href));
   return (
-    <html lang="en-GB">
+    <>
+      {raw("<!DOCTYPE html>")}
+      <html lang="en-GB">
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -87,7 +90,8 @@ export function AdminLayout(props: { meta: AdminMeta; children: Child; bare?: bo
           {props.children}
         </main>
       </body>
-    </html>
+      </html>
+    </>
   );
 }
 

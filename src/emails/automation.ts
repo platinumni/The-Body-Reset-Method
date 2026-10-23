@@ -59,3 +59,37 @@ export function morningReportEmail(i: { siteName: string; to: string; report: Mo
   ].join("\n");
   return { to: i.to, template: "morning_report", subject: r.todo.length ? `Morning report: ${r.todo.length} thing(s) to look at` : "Morning report: all clear", html, text };
 }
+
+export type Offer = { headline: string; code: string | null; details: string | null };
+
+export function confirmSignupEmail(i: { siteName: string; to: string; url: string }): Email {
+  const html = wrap(i.siteName, `<p>Please confirm you'd like to hear from us about new programmes, guides and offers.</p>${button(i.url, "Yes, sign me up")}<p style="font-size:14px;color:#4b5750">If you didn't ask for this, ignore this email and you won't hear from us.</p>`);
+  return { to: i.to, template: "signup_confirm", subject: "Please confirm your email", html, text: `Please confirm you'd like to hear from us:\n${i.url}\n\nIf you didn't ask for this, ignore this email.` };
+}
+
+export function welcomeEmail(i: { siteName: string; to: string; offer: Offer | null; siteUrl: string; unsubscribeUrl: string | null }): Email {
+  const offerHtml = i.offer
+    ? `<div style="background:#e9d9c4;border-radius:10px;padding:16px;margin:16px 0"><p style="margin:0 0 6px"><strong>${esc(i.offer.headline)}</strong></p>${i.offer.code ? `<p style="margin:0 0 6px">Use code <strong style="font-size:18px;letter-spacing:1px">${esc(i.offer.code)}</strong> at checkout.</p>` : ""}${i.offer.details ? `<p style="margin:0;font-size:13px">${esc(i.offer.details)}</p>` : ""}</div>`
+    : "";
+  const footer = i.unsubscribeUrl ? `<br><a href="${esc(i.unsubscribeUrl)}" style="color:#6d756f">Unsubscribe</a>` : "";
+  const html = wrap(
+    i.siteName,
+    `<p>Welcome, and thank you for signing up.</p><p>The Body Regeneration Method is built on one idea: before you build strength, learn to let go of the tension and forcing your body has been holding on to. Everything starts from the ground up, with your feet.</p>${offerHtml}${button(`${i.siteUrl}/programmes/lower-body-regeneration`, "Explore Lower Body Regeneration")}<p>While you're here, our <a href="${esc(i.siteUrl)}/guides" style="color:#8b5e34">free guides</a> explain the thinking behind the method.</p><p>We'll only email you with things worth reading: new programmes, guides and the occasional offer.</p>`,
+    footer,
+  );
+  const text = [
+    "Welcome, and thank you for signing up.",
+    "",
+    i.offer ? `${i.offer.headline}${i.offer.code ? `\nUse code ${i.offer.code} at checkout.` : ""}${i.offer.details ? `\n${i.offer.details}` : ""}\n` : "",
+    `Explore Lower Body Regeneration: ${i.siteUrl}/programmes/lower-body-regeneration`,
+    i.unsubscribeUrl ? `\nUnsubscribe: ${i.unsubscribeUrl}` : "",
+  ].join("\n");
+  return {
+    to: i.to,
+    template: "signup_welcome",
+    subject: i.offer ? `Welcome: ${i.offer.headline}` : "Welcome to The Body Regeneration Method",
+    html,
+    text,
+    headers: i.unsubscribeUrl ? { "List-Unsubscribe": `<${i.unsubscribeUrl}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" } : undefined,
+  };
+}

@@ -11,7 +11,7 @@ import type { Child } from "hono/jsx";
 
 function inline(text: string): Child[] {
   const out: Child[] = [];
-  const re = /\*\*([^*]+)\*\*|\*([^*]+)\*|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+  const re = /\*\*([^*]+)\*\*|\*([^*]+)\*|\[([^\]]+)\]\(((?:https?:\/\/|\/(?!\/))[^\s)]+)\)/g;
   let last = 0;
   for (let m = re.exec(text); m; m = re.exec(text)) {
     if (m.index > last) out.push(text.slice(last, m.index));
@@ -19,9 +19,13 @@ function inline(text: string): Child[] {
     else if (m[2]) out.push(<em>{m[2]}</em>);
     else if (m[3] && m[4])
       out.push(
-        <a href={m[4]} rel="noopener noreferrer" target="_blank">
-          {m[3]}
-        </a>,
+        m[4].startsWith("/") ? (
+          <a href={m[4]}>{m[3]}</a>
+        ) : (
+          <a href={m[4]} rel="noopener noreferrer" target="_blank">
+            {m[3]}
+          </a>
+        ),
       );
     last = re.lastIndex;
   }
@@ -63,15 +67,17 @@ export function parseBlocks(src: string): Block[] {
   return blocks;
 }
 
-export function RichText(props: { source: string }) {
+/** level 2 = articles (## becomes <h2>); level 3 = inside a lesson that already has its own <h2>. */
+export function RichText(props: { source: string; level?: 2 | 3 }) {
+  const top = props.level ?? 3;
   return (
     <>
       {parseBlocks(props.source).map((b) => {
         switch (b.kind) {
           case "h2":
-            return <h3 class="rt-h2">{inline(b.text)}</h3>;
+            return top === 2 ? <h2 class="rt-h2">{inline(b.text)}</h2> : <h3 class="rt-h2">{inline(b.text)}</h3>;
           case "h3":
-            return <h4 class="rt-h3">{inline(b.text)}</h4>;
+            return top === 2 ? <h3 class="rt-h3">{inline(b.text)}</h3> : <h4 class="rt-h3">{inline(b.text)}</h4>;
           case "quote":
             return (
               <aside class="key-point">

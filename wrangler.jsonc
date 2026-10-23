@@ -11,7 +11,7 @@
   // CSS, SVG and font files are bundled into the Worker (served by src/routes/assets.ts).
   "rules": [
     { "type": "Text", "globs": ["**/*.css", "**/*.svg"], "fallthrough": true },
-    { "type": "Data", "globs": ["**/*.woff2"], "fallthrough": true }
+    { "type": "Data", "globs": ["**/*.woff2", "**/*.png"], "fallthrough": true }
   ],
   "observability": { "enabled": true },
   "vars": {

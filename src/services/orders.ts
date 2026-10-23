@@ -13,6 +13,8 @@ export type Order = {
   name: string | null;
   status: "pending" | "paid" | "refunded" | "expired";
   total_pence: number;
+  /** After any discount code; null until paid. */
+  amount_paid_pence: number | null;
   currency: string;
   stripe_session_id: string | null;
   stripe_payment_intent: string | null;
@@ -22,7 +24,7 @@ export type Order = {
   paid_at: string | null;
 };
 
-const ORDER_COLUMNS = "id, public_id, email, name, status, total_pence, currency, stripe_session_id, stripe_payment_intent, ref_code, marketing_opt_in, created_at, paid_at";
+const ORDER_COLUMNS = "id, public_id, email, name, status, total_pence, amount_paid_pence, currency, stripe_session_id, stripe_payment_intent, ref_code, marketing_opt_in, created_at, paid_at";
 
 export type ConsentAnswers = Record<ConsentKind, boolean>;
 
@@ -63,6 +65,8 @@ export type PaidSession = {
   id: string;
   client_reference_id?: string | null;
   amount_total?: number | null;
+  /** Before discounts. Stripe always sends this for Checkout sessions. */
+  amount_subtotal?: number | null;
   currency?: string | null;
   payment_intent?: string | null;
   customer_details?: { email?: string | null; name?: string | null; address?: { country?: string | null } | null } | null;
@@ -85,8 +89,11 @@ export async function markOrderPaid(db: D1Database, session: PaidSession): Promi
   if (!order) return { outcome: "not-found" };
   if (order.status !== "pending") return { outcome: "already-processed" };
   // Never grant access if Stripe charged a different amount from the order we created.
-  if (session.amount_total !== order.total_pence || (session.currency ?? "").toLowerCase() !== order.currency) {
-    console.error("Payment amount mismatch", { order: order.public_id, expected: order.total_pence, got: session.amount_total });
+  // The price before any discount code must match our order, and the amount paid can't exceed it.
+  const subtotal = session.amount_subtotal ?? session.amount_total;
+  const paid = session.amount_total;
+  if (subtotal !== order.total_pence || paid == null || paid < 0 || paid > order.total_pence || (session.currency ?? "").toLowerCase() !== order.currency) {
+    console.error("Payment amount mismatch", { order: order.public_id, expected: order.total_pence, subtotal, paid });
     return { outcome: "mismatch" };
   }
   const email = session.customer_details?.email?.toLowerCase().trim();
@@ -104,10 +111,10 @@ export async function markOrderPaid(db: D1Database, session: PaidSession): Promi
   const updated = await db.batch([
     db
       .prepare(
-        `UPDATE orders SET status = 'paid', email = ?1, name = ?2, country = ?3, stripe_payment_intent = ?4, stripe_session_id = ?5, paid_at = datetime('now')
+        `UPDATE orders SET status = 'paid', email = ?1, name = ?2, country = ?3, stripe_payment_intent = ?4, stripe_session_id = ?5, amount_paid_pence = ?7, paid_at = datetime('now')
          WHERE id = ?6 AND status = 'pending'`,
       )
-      .bind(email, session.customer_details?.name ?? null, session.customer_details?.address?.country ?? null, session.payment_intent ?? null, session.id, order.id),
+      .bind(email, session.customer_details?.name ?? null, session.customer_details?.address?.country ?? null, session.payment_intent ?? null, session.id, order.id, paid),
     ...[...programmeIds].map((pid) =>
       db
         .prepare("INSERT INTO entitlements (email, user_id, product_id, order_id) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (order_id, product_id) DO NOTHING")
@@ -125,7 +132,7 @@ export async function markOrderPaid(db: D1Database, session: PaidSession): Promi
   if (!updated[0]?.meta.changes) return { outcome: "already-processed" };
 
   const setupToken = user?.password_hash ? null : await createEmailToken(db, "setup", email, order.id);
-  return { outcome: "paid", order: { ...order, status: "paid", email }, email, setupToken };
+  return { outcome: "paid", order: { ...order, status: "paid", email, amount_paid_pence: paid }, email, setupToken };
 }
 
 /** Full refund: mark the order refunded and remove the access it granted (kept for history, never deleted). */

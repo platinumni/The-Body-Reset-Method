@@ -27,6 +27,22 @@ export function parseFaqText(text: string): Faq[] {
     .filter((f): f is Faq => f !== null);
 }
 
+export type Testimonial = { quote: string; who: string };
+
+export function parseTestimonials(text: string): Testimonial[] {
+  return text
+    .replace(/\r\n?/g, "\n")
+    .split(/\n\s*\n/)
+    .map((block) => {
+      const lines = block.split("\n").map((l) => l.trim()).filter(Boolean);
+      const whoLine = lines.findIndex((l) => /^[-–—]\s*/.test(l));
+      if (whoLine <= 0) return null;
+      const quote = lines.slice(0, whoLine).join(" ").replace(/^["“]|["”]$/g, "");
+      return { quote, who: lines[whoLine]!.replace(/^[-–—]\s*/, "") };
+    })
+    .filter((t): t is Testimonial => t !== null);
+}
+
 export const WORDING: WordingField[] = [
   { key: "home.headline", label: "Homepage headline", help: "One or two lines. The second line shows in italic.", multiline: true, defaultValue: PHILOSOPHY.headline.join("\n") },
   { key: "home.lede", label: "Homepage intro sentence", help: "Shown under the headline.", multiline: true, defaultValue: PHILOSOPHY.lede },
@@ -34,6 +50,10 @@ export const WORDING: WordingField[] = [
   { key: "coach.name", label: "Coach name", help: "Shown on the About page.", multiline: false, defaultValue: copyText(COACH.name) },
   { key: "coach.story", label: "Coach story", help: "Your story in your own words. Leave a blank line between paragraphs.", multiline: true, defaultValue: COACH.story.map(copyText).filter(Boolean).join("\n\n") },
   ...PROGRAMMES.map((p) => ({ key: `programme.${p.slug}.short`, label: `${p.title}: short description`, help: "One or two sentences, used on cards and the programme page.", multiline: true, defaultValue: p.short })),
+  { key: "offer.headline", label: "Sign-up offer: headline (optional)", help: "e.g. '10% off your first programme'. Leave empty for no offer. Create the matching code in Stripe → Product catalogue → Coupons.", multiline: false, defaultValue: "" },
+  { key: "offer.code", label: "Sign-up offer: discount code", help: "Exactly as created in Stripe, e.g. WELCOME10. Sent in the welcome email.", multiline: false, defaultValue: "" },
+  { key: "offer.details", label: "Sign-up offer: small print (optional)", help: "e.g. 'One use per customer. Ends 31 December.'", multiline: false, defaultValue: "" },
+  { key: "testimonials", label: "Testimonials (real ones only, with permission)", help: "One per block: the quote on the first line, then a line starting with a dash for who said it, e.g. '- Sarah, Belfast'. Leave a blank line between them. The section only appears once there's at least one.", multiline: true, defaultValue: "" },
   { key: "faqs", label: "FAQs", help: FAQ_FORMAT_HELP, multiline: true, defaultValue: faqsToText(FAQS) },
 ];
 
@@ -48,6 +68,8 @@ export type SiteContent = {
   trackRecord: string;
   coachName: Copy;
   coachStory: Copy[];
+  offer: { headline: string; code: string | null; details: string | null } | null;
+  testimonials: Testimonial[];
   faqs: Faq[];
   programmeShort: (slug: string, fallback: string) => string;
 };
@@ -65,6 +87,8 @@ export async function loadSiteContent(db: D1Database): Promise<SiteContent> {
     trackRecord: get("home.track_record") ?? TRACK_RECORD,
     coachName: get("coach.name") ?? COACH.name ?? placeholder("Coach name"),
     coachStory: story?.length ? story : COACH.story,
+    offer: get("offer.headline") ? { headline: get("offer.headline")!, code: get("offer.code"), details: get("offer.details") } : null,
+    testimonials: parseTestimonials(get("testimonials") ?? ""),
     faqs: faqs?.length ? faqs : FAQS,
     programmeShort: (slug, fallback) => get(`programme.${slug}.short`) ?? fallback,
   };

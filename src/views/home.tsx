@@ -2,8 +2,10 @@ import { FOUNDATION, WHY, type Principle } from "../content/site";
 import type { CatalogueEntry } from "../services/catalogue";
 import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
 import { Layout, type PageMeta } from "./layout";
+import { HowItWorks, SignupBox, Testimonials, TrustStrip, type OfferCopy } from "./marketing";
+import type { Testimonial } from "../services/site-content";
 
-export function HomePage(props: { meta: PageMeta; headline: string[]; lede: string; trackRecord: string; principles: Principle[]; programmes: CatalogueEntry[]; whoFor: string[]; notFor: string[] }) {
+export function HomePage(props: { meta: PageMeta; headline: string[]; lede: string; trackRecord: string; testimonials: Testimonial[]; offer: OfferCopy; csrfToken: string; principles: Principle[]; programmes: CatalogueEntry[]; whoFor: string[]; notFor: string[] }) {
   const flagship = props.programmes.find((p) => p.flagship);
   const others = props.programmes.filter((p) => !p.flagship);
   return (
@@ -17,13 +19,14 @@ export function HomePage(props: { meta: PageMeta; headline: string[]; lede: stri
             ))}
           </h1>
           <p class="lede">{props.lede}</p>
-          <p class="track-record">{props.trackRecord}</p>
           <div class="actions">
             {flagship && <Button href={`/programmes/${flagship.slug}`}>Explore Lower Body Regeneration</Button>}
             <Button href="/method" variant="ghost">
               The six principles
             </Button>
           </div>
+          <p class="track-record">{props.trackRecord}</p>
+          <TrustStrip />
         </div>
       </section>
 
@@ -69,6 +72,15 @@ export function HomePage(props: { meta: PageMeta; headline: string[]; lede: stri
         </section>
       )}
 
+      <section class="band" aria-labelledby="how-title">
+        <div class="wrap">
+          <SectionHead eyebrow="How it works" id="how-title" title="Start today, at your own pace" />
+          <HowItWorks />
+        </div>
+      </section>
+
+      <Testimonials items={props.testimonials} />
+
       <section class="band" aria-labelledby="for-title">
         <div class="wrap">
           <SectionHead eyebrow="Is it for you?" id="for-title" title="Who the method is for" />
@@ -89,6 +101,8 @@ export function HomePage(props: { meta: PageMeta; headline: string[]; lede: stri
           </ul>
         </div>
       </section>
+
+      <SignupBox csrfToken={props.csrfToken} offer={props.offer} source="home" />
 
       <section class="band cta">
         <div class="wrap narrow center">

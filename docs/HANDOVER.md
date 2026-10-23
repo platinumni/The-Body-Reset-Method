@@ -130,5 +130,24 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Dashboard usage box.** **Admin → Launch checklist** lists missing keys and settings, plus every `[PLACEHOLDER]` left on public pages.
 - **No approval queue:** nothing on this site changes content automatically. All content changes are made by the owner or Claude as drafts, and the owner publishes them. Add one if an automatic content job is ever introduced.
 
+**Final build: marketing and SEO (2026-10-23)**
+- **Migration 0007:** `subscribers` (double opt-in sign-ups) and `orders.amount_paid_pence`.
+- **Discount codes:** Stripe Checkout has `allow_promotion_codes`. The owner creates coupons in Stripe. The webhook checks `amount_subtotal` = order total and paid ≤ total, then stores the paid amount. Commission and dashboard sales use the paid amount, and the receipt shows a discount line.
+- **Sign-up** (`src/routes/marketing.tsx`, `src/services/subscribers.ts`):
+  - `POST /subscribe` has a honeypot, rate limits and the same answer for every address.
+  - It sends a confirmation email. `/subscribe/confirm` records the marketing consent and sends the welcome email (offer code if set, plus a guides link).
+- **Pop-up:** a `<dialog>` rendered on marketing pages for logged-out visitors, opened by `/app.js` (`src/assets/client.ts`, the site's only JS) after 25 seconds or 55% of the page, once per visitor (localStorage). It works without JS too, through the inline `SignupBox`.
+- **Owner-editable** (Site wording): offer headline, code and small print (empty means no offer), and testimonials (a section shows only when there's at least one).
+- **Conversion sections** (`src/views/marketing.tsx`): trust strip, how it works, "Is this you?" (flagship), buy block under the programme hero, FAQ teaser, and a sticky phone buy bar.
+- **SEO:**
+  - `/guides` plus 3 guide articles (`src/content/guides.ts`, drafted by Claude for owner review), with Article and BreadcrumbList data.
+  - Course `offers` when on sale.
+  - Keyword titles and descriptions.
+  - `og:image` (`/og.png`, 1200×630, made from the brand) and a Twitter large card.
+  - Guides in the sitemap and the nav.
+- **Bugs fixed:**
+  1. String constants exported from `src/index.tsx` stopped the real Workers runtime from starting (from Step 6). They're moved to `src/cron.ts`, and `test/entry.test.ts` guards against it.
+  2. Pages had no `<!DOCTYPE html>` (quirks mode). Both layouts now emit it, and a test checks.
+
 ## Next step
 **Step 8 (content)** and **Step 9 (go live)**: see `docs/GO_LIVE.md` and `docs/CONTENT_WORKFLOW.md`.

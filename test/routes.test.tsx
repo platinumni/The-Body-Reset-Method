@@ -94,3 +94,10 @@ describe("scheduled jobs", () => {
     expect(await env.DB.prepare("SELECT COUNT(*) AS n FROM backups WHERE kind = 'weekly' AND status = 'ok'").first("n")).toBe(before + 1);
   });
 });
+
+describe("standards mode", () => {
+  it("every page starts with a doctype (otherwise browsers use quirks mode)", async () => {
+    for (const p of ["/", "/faq", "/no-such-page", "/admin/login"]) expect((await get(p)).headers.get("Content-Type")).toContain("text/html");
+    for (const p of ["/", "/faq", "/no-such-page", "/admin/login"]) expect(await (await get(p)).text(), p).toMatch(/^<!DOCTYPE html>/);
+  });
+});

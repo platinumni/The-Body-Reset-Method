@@ -398,7 +398,7 @@ export function OrdersPage(props: { meta: AdminMeta; orders: OrderListRow[]; q: 
                 <td>{when(o.paid_at ?? o.created_at)}</td>
                 <td>{o.email ?? "—"}</td>
                 <td>{o.items}</td>
-                <td>{money(o.total_pence)}</td>
+                <td>{money(o.amount_paid_pence ?? o.total_pence)}</td>
                 <td>
                   <StatusPill status={o.status} />
                 </td>

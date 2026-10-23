@@ -57,6 +57,8 @@ export async function createCheckoutSession(secretKey: string, req: CheckoutRequ
       cancel_url: req.cancelUrl,
       line_items: lineItems,
       billing_address_collection: "auto",
+      // Lets customers enter discount codes the owner creates in Stripe (e.g. WELCOME10).
+      allow_promotion_codes: true,
       metadata: { order_public_id: req.orderPublicId },
       payment_intent_data: { metadata: { order_public_id: req.orderPublicId } },
     },

@@ -12,6 +12,7 @@ Times are realistic / worst case, including waiting for the owner's "CH".
 | 5 | Admin: two-step login, programme editor, orders, customers, refunds, logs, backups, stats | ✅ Done 2026-10-23 | — |
 | 6 | Affiliates: share links, tracking, commission, payouts | ✅ Done 2026-10-23 | — |
 | 7 | Automation: email sequences, morning report, usage watch, campaigns, launch checklist | ✅ Done 2026-10-23 | — |
+| 7b | Marketing and SEO: sign-up pop-up (double opt-in), offers and discount codes, conversion sections, 3 guides, rich results, share image | ✅ Done 2026-10-23 | — |
 | 8 | Content: owner's programmes loaded (via voice notes → drafts → approval) | ⏳ Next (owner sends content) | Depends on owner |
 | 9 | Go live: domain, Stripe live, real test purchase and refund, and a check that no `[PLACEHOLDER]` remains | — | 1 / 3 days |
 

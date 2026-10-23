@@ -103,13 +103,19 @@ export async function recordAffiliateClick(db: D1Database, affiliateId: number, 
  * Called when an order is paid. Creates commission if the order carried a valid
  * referral code, the programme is open, and the buyer isn't the affiliate themselves.
  */
-export async function createCommissionForOrder(db: D1Database, order: { id: number; ref_code: string | null; total_pence: number }, buyerEmail: string): Promise<boolean> {
-  if (!order.ref_code || order.total_pence <= 0) return false;
+export async function createCommissionForOrder(
+  db: D1Database,
+  order: { id: number; ref_code: string | null; total_pence: number; amount_paid_pence?: number | null },
+  buyerEmail: string,
+): Promise<boolean> {
+  // Commission is a share of what the customer actually paid (after any discount code).
+  const base = order.amount_paid_pence ?? order.total_pence;
+  if (!order.ref_code || base <= 0) return false;
   const affiliate = await activeAffiliateByCode(db, order.ref_code);
   if (!affiliate || affiliate.email.toLowerCase() === buyerEmail.toLowerCase()) return false; // no self-referral
   const settings = await affiliateSettings(db);
   if (settings.ratePercent == null) return false;
-  const amount = Math.floor((order.total_pence * settings.ratePercent) / 100);
+  const amount = Math.floor((base * settings.ratePercent) / 100);
   if (amount <= 0) return false;
   const availableAt = new Date(Date.now() + settings.holdDays * 86_400_000).toISOString();
   const res = await db

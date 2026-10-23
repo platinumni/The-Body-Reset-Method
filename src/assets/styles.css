@@ -396,3 +396,50 @@ body.admin { background: var(--bg); }
 .check-list li.todo > span { color: var(--warn); }
 .check-list p { margin: .2rem 0 0; }
 .track-record { display: inline-block; margin: 1.25rem 0 0; padding: .55rem 1rem; border-left: 3px solid var(--sage); background: color-mix(in srgb, var(--sage-soft) 70%, transparent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--ink); font-weight: 500; font-size: .98rem; }
+
+/* Marketing sections */
+.trust-strip { list-style: none; padding: 0; margin: 1.75rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; font-size: .88rem; color: var(--ink-soft); }
+.trust-strip li { display: flex; align-items: center; gap: .4rem; }
+.trust-strip li::before { content: "✓"; color: var(--sage); font-weight: 700; }
+.how-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.25rem; }
+@media (min-width: 52rem) { .how-steps { grid-template-columns: repeat(3, 1fr); } }
+.how-step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+.how-n { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--ink); color: var(--bg); font-family: var(--font-display); margin-bottom: .9rem; }
+.how-step p { color: var(--ink-soft); margin: 0; }
+.testimonials { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.25rem; }
+@media (min-width: 52rem) { .testimonials { grid-template-columns: repeat(2, 1fr); } }
+.testimonial blockquote { margin: 0; font-family: var(--font-display); font-size: 1.2rem; line-height: 1.45; }
+.testimonial-who { color: var(--muted); font-size: .9rem; margin: .75rem 0 0; }
+.signup-band { background: var(--ink); color: var(--bg); }
+.signup-band .eyebrow { color: var(--accent-soft); }
+.signup-band .prose-lg, .signup-band .muted { color: color-mix(in srgb, var(--bg) 78%, transparent); }
+.signup-band a { color: var(--accent-soft); }
+@media (prefers-color-scheme: dark) { .signup-band { background: var(--surface); color: var(--ink); } .signup-band .prose-lg, .signup-band .muted { color: var(--ink-soft); } }
+.signup-form { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; margin: 1.5rem auto 1rem; max-width: 32rem; }
+.signup-form input[type="email"] { flex: 1 1 14rem; }
+.signup-band .signup-form .btn-primary { background: var(--accent); color: var(--accent-ink); }
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.signup-dialog { border: 0; border-radius: var(--radius); padding: 2rem 1.5rem 1.5rem; max-width: 28rem; width: calc(100% - 2rem); background: var(--surface); color: var(--ink); box-shadow: 0 20px 60px rgb(0 0 0 / 25%); text-align: center; }
+.signup-dialog::backdrop { background: rgb(20 26 23 / 55%); }
+.signup-dialog h2 { font-size: 1.8rem; }
+.dialog-close-form { position: absolute; top: .5rem; right: .5rem; margin: 0; }
+.dialog-close { background: none; border: 0; font-size: 1.75rem; line-height: 1; width: 2.75rem; height: 2.75rem; border-radius: 50%; color: var(--ink-soft); }
+.dialog-close:hover { background: var(--bg-quiet); }
+.hero-buy { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.5rem; }
+.hero-buy .price-line { margin: 0; }
+.sticky-buy { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .75rem var(--gutter) calc(.75rem + env(safe-area-inset-bottom)); background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -6px 20px rgb(0 0 0 / 8%); }
+.sticky-buy div { display: grid; line-height: 1.25; }
+.sticky-buy span { color: var(--ink-soft); font-size: .9rem; }
+.sticky-buy form { margin: 0; }
+body:has(.sticky-buy) .site-footer { padding-bottom: 6rem; }
+@media (min-width: 52rem) { .sticky-buy { display: none; } body:has(.sticky-buy) .site-footer { padding-bottom: 1.5rem; } }
+.guide-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.25rem; }
+@media (min-width: 52rem) { .guide-list { grid-template-columns: repeat(3, 1fr); } }
+.guide-card h2 a { color: var(--ink); text-decoration: none; }
+.guide-card h2 a:hover { text-decoration: underline; }
+.breadcrumbs { margin-bottom: 1rem; color: var(--muted); }
+.article-title { font-size: clamp(2rem, 6vw, 3.2rem); }
+.article-body { padding-bottom: 3rem; font-size: 1.1rem; }
+.article-body h2 { font-size: clamp(1.5rem, 4vw, 1.9rem); margin-top: 2.25rem; }
+.sticky-buy .btn { white-space: nowrap; flex: none; }
+.hero .actions { margin-top: 1.5rem; }

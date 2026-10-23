@@ -1,6 +1,7 @@
 import { env } from "cloudflare:workers";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { app, DAILY_CRON, scheduled } from "../src/index";
+import { DAILY_CRON } from "../src/cron";
+import { app, scheduled } from "../src/index";
 import { hashPassword } from "../src/lib/crypto";
 import { createCommissionForOrder, recordPayout, saveAffiliateSettings } from "../src/services/affiliates";
 import { signWebhook } from "../src/services/payments/stripe";

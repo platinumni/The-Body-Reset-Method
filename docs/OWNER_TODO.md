@@ -16,6 +16,10 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Keep evidence for "thousands"** (group sizes, messages, screenshots) in case it's ever challenged.
 - [ ] **Testimonials:** collect real quotes from people you've helped, with their permission (first name and town is fine), and no medical-cure claims.
 
+- [ ] **Read the 3 new guides** (`/guides` on the test site) and tell Claude any changes. They're in your voice, built from your philosophy.
+- [ ] **Decide on a sign-up offer** (optional), e.g. 10% off the first programme. Create the code in Stripe, then add the headline and code in Admin → Site wording.
+- [ ] **Testimonials:** paste real ones into Admin → Site wording (or send them to Claude) and the section appears automatically.
+
 ## Before go-live
 - [ ] Follow `docs/GO_LIVE.md`. Admin → **Launch checklist** shows what's left.
 - [ ] **ICO data protection fee** (about £52 a year): ico.org.uk/fee

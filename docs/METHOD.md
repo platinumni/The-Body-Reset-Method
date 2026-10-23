@@ -18,6 +18,9 @@ Release the tension, the forcing and the control, and learn to love your body ag
 - Testimonials must be real, used with permission, and must not claim medical cures.
 - **Wording chosen (option 1):** "Shared freely with thousands of people around the world for years. Now available as a complete programme." It's shown on the homepage and the flagship page, and is editable in Admin → Site wording.
 
+## Guides
+- The three articles in `src/content/guides.ts` were drafted by Claude from this file, **for owner review**. They're education only, with no medical claims and no statistics.
+
 ## The six principles
 1. **Recognise.** Become aware of tension, gripping, compensation and habitual patterns.
 2. **Release.** Learn to let go of unnecessary muscular effort without losing useful stability.

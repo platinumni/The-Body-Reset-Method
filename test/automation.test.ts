@@ -1,6 +1,7 @@
 import { env } from "cloudflare:workers";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { app, DAILY_CRON, scheduled } from "../src/index";
+import { DAILY_CRON } from "../src/cron";
+import { app, scheduled } from "../src/index";
 import { buildMorningReport, checkUsage, sendCheckIns, sendMorningReport, sendSetupReminders } from "../src/services/automation";
 import { marketingAudience, saveCampaign, sendCampaign, unsubscribeUrl } from "../src/services/campaigns";
 import { productId } from "./helpers";

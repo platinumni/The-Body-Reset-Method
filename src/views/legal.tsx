@@ -41,6 +41,10 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
             for payouts.
           </li>
           <li>
+            <strong>If you sign up for news:</strong> your email address, where on the site you signed up, and when you confirmed. We only add you once
+            you've clicked the confirmation link we email you.
+          </li>
+          <li>
             <strong>Security information:</strong> IP address and browser details, used to keep accounts secure and block abuse.
           </li>
         </ul>
@@ -167,6 +171,11 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
         <p>
           If you arrive through a member's share link, we ask before remembering who referred you. If you say yes, a cookie (<code>brm_ref</code>) holds
           their code for 30 days so they can be thanked if you buy. If you say no, nothing is stored. You can also type a member's code at checkout instead.
+        </p>
+        <h2>Remembering the sign-up pop-up</h2>
+        <p>
+          If a sign-up box pops up and you close it or sign up, your browser remembers that (in "local storage", not a cookie) so it doesn't keep
+          appearing. It stays on your device and is never sent to us.
         </p>
         <h2>Videos</h2>
         <p>
