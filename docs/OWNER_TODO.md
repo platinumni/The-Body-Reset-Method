@@ -3,7 +3,7 @@
 These are things only you can do. None of them block the build until go-live unless marked.
 
 ## Soon
-- [ ] **Log in to test admin** with the invite link Claude sent (it lasts 24 hours; ask for a new one any time). Set up your authenticator app and save the backup codes.
+- [ ] *(Optional)* **Test-site admin login.** The owner chose to wait until the live site, which gets its own admin login at go-live. Claude shows drafts as screenshots or preview links until then.
 - [ ] **Send your Lower Body programme content** (voice notes, text, YouTube links, photos). Claude writes it up and builds it in as drafts for you to check.
 - [ ] **Voice note: further packages.** List the programmes, which ones are bundles or add-ons, and rough prices. Prices stay placeholders until you confirm them.
 - [ ] **Buy the domain.** Tell me which one. Connecting it takes about 15 minutes at go-live.
