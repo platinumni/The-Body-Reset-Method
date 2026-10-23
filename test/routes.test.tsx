@@ -9,7 +9,7 @@ describe("public pages", () => {
     const res = await get("/");
     expect(res.status).toBe(200);
     const html = await res.text();
-    expect(html).toContain("<title>The Body Regeneration Method</title>");
+    expect(html).toMatch(/<title>The Body Regeneration Method: [^<]+<\/title>/);
     expect(html).toContain('name="description"');
     expect(html).toContain('rel="canonical"');
     expect(html).toContain("application/ld+json");
@@ -30,7 +30,9 @@ describe("public pages", () => {
   it("sitemap lists the homepage", async () => {
     const res = await get("/sitemap.xml");
     expect(res.headers.get("Content-Type")).toContain("application/xml");
-    expect(await res.text()).toContain("<loc>http://localhost:8787/</loc>");
+    const xml = await res.text();
+    expect(xml).toContain("<loc>http://localhost:8787/</loc>");
+    expect(xml).toContain("<loc>http://localhost:8787/programmes/lower-body-regeneration</loc>");
   });
 });
 

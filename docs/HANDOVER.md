@@ -1,6 +1,6 @@
 # Handover — The Body Regeneration Method
 
-_Last updated: 2026-10-23, after Step 1 (Foundation)._
+_Last updated: 2026-10-23, after Step 2 (Look and public pages)._
 
 ## What this is
 This is a worldwide (mainly UK) website selling online movement programmes by the owner, a coach.
@@ -43,7 +43,16 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Search engines:** robots.txt and sitemap. The test site is noindex.
 - **Pages:** holding homepage, 404 and error pages, `/health`. CSS and the favicon are bundled into the Worker (`src/assets/`, served with content-hash URLs). We don't use Workers Static Assets, because asset uploads fail through the cloud session's proxy.
 - **Deploying:** deploy script (checks → backup → migrate → deploy → health check) and a bundle script.
-- **Tests:** 34 in the Workers runtime plus 7 for the migration check.
+- **Tests:** 35 in the Workers runtime plus 7 for the migration check.
+
+**Step 2: Look and public pages (done 2026-10-23)**
+- **Design system** (`src/assets/styles.css`): warm, earthy palette with light and dark mode. Self-hosted Fraunces (display) and Inter (body) fonts. No JavaScript. The mobile menu and FAQs use `<details>`.
+- **Pages:** `/`, `/method`, `/programmes`, `/programmes/lower-body-regeneration`, `/about`, `/faq`, and `/legal/{privacy,terms,cookies,refunds,health-disclaimer}`.
+- **Content** lives in `src/content/site.ts`, wording from the owner (see `docs/METHOD.md`), read through `src/services/catalogue.ts`. It moves to the database in Step 5.
+- **Placeholders:** `placeholder("…")` renders a yellow `[PLACEHOLDER: …]` mark. The test site shows a "Test site: not live" banner.
+- **Search engines:** unique titles, descriptions and canonicals; Organization, WebSite, Course and FAQPage structured data; a sitemap of all pages.
+- **Legal pages** are drafts, marked for owner and solicitor review.
+- **Tests:** 71 in the Workers runtime plus 7 for the migration check. They cover every page, the strict CSP (no inline styles or scripts) and the structured data.
 
 ## Next step
-**Step 2: Look and public pages** (see `docs/ROADMAP.md`). Waiting on the owner's voice note about further packages.
+**Step 3: Shop** (see `docs/ROADMAP.md`). This needs the owner's PayPal Business account (sandbox keys for testing).

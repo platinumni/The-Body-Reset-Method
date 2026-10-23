@@ -9,6 +9,7 @@ export function pageMeta(c: Context<AppEnv>, m: Pick<PageMeta, "title" | "descri
     siteName: c.env.SITE_NAME,
     siteUrl: c.env.SITE_URL,
     noindex: !isProduction(c.env),
+    isTestSite: !isProduction(c.env),
     ...m,
   };
 }

@@ -6,14 +6,14 @@ Times are realistic / worst case, including waiting for the owner's "CH".
 |---|---|---|---|
 | 0 | Decisions: name, payments, structure | ✅ Done 2026-10-23 | — |
 | 1 | Foundation: test site, security, checks, deploy and backups, docs | ✅ Done 2026-10-23 | — |
-| 2 | Look and public pages | ⏳ Next | 3 / 6 days |
-| 3 | Shop: packages, bundles, basket and add-ons, PayPal checkout, receipts | — | 3 / 7 days |
+| 2 | Look and public pages | ✅ Done 2026-10-23 | — |
+| 3 | Shop: packages, bundles, basket and add-ons, PayPal checkout, receipts | ⏳ Next | 3 / 7 days |
 | 4 | Members area: account from email link, My Programmes, Full Programme and Quick Run-Through tabs | — | 3 / 7 days |
 | 5 | Admin: two-step login, programme editor, orders, customers, refunds, logs, backups, stats | — | 4 / 9 days |
 | 6 | Affiliates: share links, tracking, commission, payouts | — | 3 / 6 days |
 | 7 | Automation: email sequences, morning report, usage watch, approvals | — | 2 / 5 days |
 | 8 | Content: owner's programmes loaded (via voice notes → drafts → approval) | — | Depends on owner |
-| 9 | Go live: domain, PayPal live, real test purchase and refund | — | 1 / 3 days |
+| 9 | Go live: domain, PayPal live, real test purchase and refund, and a check that no `[PLACEHOLDER]` remains | — | 1 / 3 days |
 
 ## Step details
 **Step 2: Look and public pages**

@@ -8,8 +8,11 @@
   "main": "src/index.tsx",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
-  // CSS and SVG files are bundled into the Worker as text (served by src/routes/assets.ts).
-  "rules": [{ "type": "Text", "globs": ["**/*.css", "**/*.svg"], "fallthrough": true }],
+  // CSS, SVG and font files are bundled into the Worker (served by src/routes/assets.ts).
+  "rules": [
+    { "type": "Text", "globs": ["**/*.css", "**/*.svg"], "fallthrough": true },
+    { "type": "Data", "globs": ["**/*.woff2"], "fallthrough": true }
+  ],
   "observability": { "enabled": true },
   "vars": {
     "APP_ENV": "development",

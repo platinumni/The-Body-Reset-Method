@@ -1,0 +1,251 @@
+import type { Child } from "hono/jsx";
+import { placeholder } from "../content/site";
+import { Text } from "./components";
+import { Layout, type PageMeta } from "./layout";
+
+// Draft legal pages. Every page carries a "draft" placeholder until the owner (ideally
+// with a solicitor) has reviewed it. Business details are placeholders.
+
+const BUSINESS = placeholder("Business or trading name");
+const ADDRESS = placeholder("Business postal address");
+const EMAIL = placeholder("Contact email address");
+const UPDATED = "23 October 2026";
+
+export type LegalSlug = "privacy" | "terms" | "cookies" | "refunds" | "health-disclaimer";
+
+export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string; body: () => Child }> = {
+  privacy: {
+    title: "Privacy policy",
+    description: "How we collect, use and protect your personal information.",
+    body: () => (
+      <>
+        <h2>Who we are</h2>
+        <p>
+          This website is run by <Text copy={BUSINESS} />, <Text copy={ADDRESS} />. We are the "controller" of your personal information. Contact us at{" "}
+          <Text copy={EMAIL} />. ICO registration number: <Text copy={placeholder("ICO registration number")} />.
+        </p>
+        <h2>What we collect</h2>
+        <ul>
+          <li>
+            <strong>When you buy:</strong> your name, email address, country and what you bought. Payment is handled by PayPal. We never see or store your
+            card details.
+          </li>
+          <li>
+            <strong>Your account:</strong> your email address, name, password (stored only in scrambled "hashed" form) and your progress through your programmes.
+          </li>
+          <li>
+            <strong>Your choices:</strong> a record of the boxes you tick, such as agreeing to the terms or choosing to receive marketing emails.
+          </li>
+          <li>
+            <strong>If you share your affiliate link:</strong> your referral code, the sales it brings in, the commission owed, and the PayPal email address we
+            pay you at.
+          </li>
+          <li>
+            <strong>Security information:</strong> IP address and browser details, used to keep accounts secure and block abuse.
+          </li>
+        </ul>
+        <p>
+          <strong>We do not collect health information.</strong> Before buying, you tick a box to confirm you have read the health guidance. We record that
+          you ticked it, nothing about your health.
+        </p>
+        <h2>Why we use it (our lawful basis)</h2>
+        <ul>
+          <li>
+            <strong>To provide what you bought</strong> (contract): giving you access, your account and service emails.
+          </li>
+          <li>
+            <strong>To meet legal duties</strong> (legal obligation): keeping sales records for tax.
+          </li>
+          <li>
+            <strong>To keep the site safe</strong> (legitimate interests): security, fraud prevention and fixing problems.
+          </li>
+          <li>
+            <strong>Marketing emails</strong> (consent): only if you opt in. Every email has a one-click unsubscribe.
+          </li>
+        </ul>
+        <h2>Who we share it with</h2>
+        <p>We never sell your information. We use these trusted services to run the site:</p>
+        <ul>
+          <li>Cloudflare: website hosting and database.</li>
+          <li>PayPal: taking payments and paying affiliate commission.</li>
+          <li>Resend: sending emails.</li>
+          <li>YouTube (Google): programme videos, embedded in privacy-enhanced mode. YouTube may set cookies once you press play.</li>
+        </ul>
+        <p>
+          Some of these providers process data outside the UK, for example in the USA. Where they do, the transfer is protected by UK adequacy regulations
+          or approved contract terms.
+        </p>
+        <h2>How long we keep it</h2>
+        <ul>
+          <li>Sales records: 6 years, as UK tax law requires.</li>
+          <li>Your account: until you delete it.</li>
+          <li>Marketing consent: until you unsubscribe. We keep a record that you did, so we don't email you again.</li>
+          <li>Security logs: up to 12 months.</li>
+        </ul>
+        <h2>Your rights</h2>
+        <p>
+          You can ask to see, correct, download or delete your information, object to or restrict how we use it, and withdraw consent at any time. You'll be
+          able to download or delete your data yourself from your account page, or you can email us. If you're unhappy with how we handle your information,
+          you can complain to the Information Commissioner's Office (ico.org.uk, 0303 123 1113).
+        </p>
+      </>
+    ),
+  },
+  terms: {
+    title: "Terms of sale and use",
+    description: "The terms that apply when you buy and use our programmes.",
+    body: () => (
+      <>
+        <h2>About these terms</h2>
+        <p>
+          These terms apply when you buy from or use this website, which is run by <Text copy={BUSINESS} />, <Text copy={ADDRESS} />. Contact:{" "}
+          <Text copy={EMAIL} />.
+        </p>
+        <h2>What you're buying</h2>
+        <p>
+          Our programmes are digital content: written teaching, images and video. When you buy, you get a personal, non-transferable licence to use the
+          programme for your own use. Access lasts <Text copy={placeholder("Access length, e.g. for as long as the website operates")} />.
+        </p>
+        <h2>Please don't share</h2>
+        <p>
+          Your account is for you only. Please don't share your login or copy, record, resell or publish the programme content. We may suspend accounts that
+          do.
+        </p>
+        <h2>Prices and payment</h2>
+        <p>
+          Prices are shown at checkout in <Text copy={placeholder("Currency, e.g. GBP (£)")} />, including any taxes that apply. Payment is taken by PayPal
+          when you order.
+        </p>
+        <h2>Your right to cancel</h2>
+        <p>
+          If you're a consumer in the UK or EU, you normally have 14 days to cancel a digital purchase. At checkout, you can ask for immediate access to your
+          programme. If you do, and you confirm you understand, you lose that 14-day right once access begins. See our <a href="/legal/refunds">refund policy</a>.
+        </p>
+        <h2>Your health and safety</h2>
+        <p>
+          The programmes are education and movement coaching, not medical treatment. Please read the <a href="/legal/health-disclaimer">health disclaimer</a>{" "}
+          before you start. You take part at your own risk, and should stop if anything causes pain.
+        </p>
+        <h2>Our responsibility to you</h2>
+        <p>
+          We provide the programmes with reasonable care and skill. Nothing in these terms limits our liability where it would be unlawful to do so, including
+          for death or personal injury caused by our negligence, or for fraud. Otherwise, our total liability to you is limited to the amount you paid.
+        </p>
+        <h2>Affiliate programme</h2>
+        <p>
+          Customers can share a personal link and earn commission on sales made through it. Separate affiliate terms apply, and will be shown when you
+          activate your link.
+        </p>
+        <h2>Law</h2>
+        <p>
+          These terms are governed by the law of Northern Ireland. If you live elsewhere in the UK or in the EU, you keep the protection of your local consumer
+          laws and can bring a claim in your local courts.
+        </p>
+      </>
+    ),
+  },
+  cookies: {
+    title: "Cookie policy",
+    description: "The small number of cookies we use, and why.",
+    body: () => (
+      <>
+        <p>We don't use advertising or tracking cookies, and we don't use third-party analytics. We only use cookies the site needs in order to work.</p>
+        <h2>Cookies we use</h2>
+        <ul>
+          <li>
+            <strong>Form security</strong> (<code>__Host-brm_csrf</code>): stops other websites submitting forms in your name. It lasts until you close your
+            browser.
+          </li>
+          <li>
+            <strong>Login</strong> (members only): keeps you logged in to your account for up to 30 days, or until you log out.
+          </li>
+          <li>
+            <strong>Basket:</strong> remembers what's in your basket.
+          </li>
+        </ul>
+        <h2>Referral links</h2>
+        <p>If you arrive through a customer's share link, we'll ask before remembering who referred you, so they can receive credit.</p>
+        <h2>Videos</h2>
+        <p>
+          Programme videos are hosted on YouTube in privacy-enhanced mode. YouTube may set cookies once you press play. See Google's privacy policy for details.
+        </p>
+      </>
+    ),
+  },
+  refunds: {
+    title: "Refund policy",
+    description: "Cancellations and refunds for digital programmes.",
+    body: () => (
+      <>
+        <h2>Our policy</h2>
+        <p>
+          <Text copy={placeholder("Refund policy, e.g. no refunds once access has started, or a 14-day satisfaction guarantee")} />
+        </p>
+        <h2>Your legal rights</h2>
+        <p>
+          If you're a consumer in the UK or EU, you can cancel within 14 days of buying unless you asked for immediate access and confirmed that you'd lose
+          the right to cancel once access began.
+        </p>
+        <p>
+          Whatever the policy above, if a programme is faulty or not as described, you have rights under the Consumer Rights Act 2015, including a repair,
+          replacement or refund.
+        </p>
+        <h2>How to ask</h2>
+        <p>
+          Email <Text copy={EMAIL} /> with your order email address. Refunds go back to your original payment method through PayPal.
+        </p>
+      </>
+    ),
+  },
+  "health-disclaimer": {
+    title: "Health disclaimer",
+    description: "Important safety information. Please read before starting any programme.",
+    body: () => (
+      <>
+        <p>
+          <strong>The Body Regeneration Method is education and movement coaching.</strong> It is not medical advice, diagnosis, treatment or physiotherapy,
+          and it does not replace advice from your doctor or physiotherapist.
+        </p>
+        <h2>Check with a professional first if you</h2>
+        <ul>
+          <li>have a recent or significant injury, such as a torn muscle, tendon or ligament</li>
+          <li>have a condition currently being treated by a physiotherapist or doctor</li>
+          <li>are pregnant or have recently given birth</li>
+          <li>have had recent surgery</li>
+          <li>have a heart condition, high blood pressure, dizziness or balance problems</li>
+          <li>have pain without a known cause</li>
+        </ul>
+        <h2>While you train</h2>
+        <ul>
+          <li>Work within your limits. The method is about releasing effort, not forcing.</li>
+          <li>Stop if anything causes pain, dizziness or discomfort beyond normal effort, and get advice before continuing.</li>
+          <li>Use a safe, clear space and stable support where an exercise needs it.</li>
+        </ul>
+        <p>
+          You take part at your own risk. Results vary from person to person, and we make no promise of any particular result.
+        </p>
+      </>
+    ),
+  },
+};
+
+export function LegalPage(props: { meta: PageMeta; slug: LegalSlug }) {
+  const page = LEGAL_PAGES[props.slug];
+  return (
+    <Layout meta={props.meta}>
+      <section class="page-hero">
+        <div class="wrap narrow">
+          <p class="eyebrow">Legal</p>
+          <h1>{page.title}</h1>
+          <p class="small muted">Last updated {UPDATED}</p>
+          <p>
+            <Text copy={placeholder("Draft wording: owner and solicitor to review before launch")} />
+          </p>
+        </div>
+      </section>
+      <section class="band">
+        <div class="wrap narrow prose">{page.body()}</div>
+      </section>
+    </Layout>
+  );
+}

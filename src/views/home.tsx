@@ -1,23 +1,98 @@
+import type { Principle, Programme } from "../content/site";
+import { PHILOSOPHY } from "../content/site";
+import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
 import { Layout, type PageMeta } from "./layout";
 
-// Holding homepage for the foundation step. The full design comes in Step 2.
-// Wording is drawn from the owner's own description of the philosophy; no claims or figures.
-export function HomePage(props: { meta: PageMeta }) {
+export function HomePage(props: { meta: PageMeta; principles: Principle[]; programmes: Programme[]; whoFor: string[]; notFor: string[] }) {
+  const flagship = props.programmes.find((p) => p.flagship);
+  const others = props.programmes.filter((p) => !p.flagship);
   return (
     <Layout meta={props.meta}>
       <section class="hero">
-        <p class="eyebrow">Coming soon</p>
-        <h1>
-          Release the tension.
-          <br />
-          Stop forcing.
-          <br />
-          Learn to trust your body again.
-        </h1>
-        <p class="lede">
-          A ground-up approach to movement, starting with your feet. The flagship Lower Body programme works up from your
-          arches and toes to your calves, knees and hips.
-        </p>
+        <div class="wrap hero-inner">
+          <p class="eyebrow">The Body Regeneration Method</p>
+          <h1>
+            {PHILOSOPHY.headline.map((line, i) => (
+              <span class={`hero-line hero-line-${i + 1}`}>{line}</span>
+            ))}
+          </h1>
+          <p class="lede">{PHILOSOPHY.lede}</p>
+          <div class="actions">
+            {flagship && <Button href={`/programmes/${flagship.slug}`}>Explore Lower Body Regeneration</Button>}
+            <Button href="/method" variant="ghost">
+              The six principles
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-quiet">
+        <div class="wrap narrow">
+          <SectionHead eyebrow="Why it's different" title="Most of us were never taught how to move." />
+          <p class="prose-lg">
+            Years of gripping, bracing and pushing through leave the body working harder than it needs to. We compensate, we tighten, and we force
+            ourselves into positions, and we call it training.
+          </p>
+          <p class="prose-lg">
+            This method takes a different route. Before building strength, you learn to recognise the tension you're holding and let go of the effort
+            you don't need. Then you build back, from the ground up.
+          </p>
+        </div>
+      </section>
+
+      <section class="band" aria-labelledby="principles-title">
+        <div class="wrap">
+          <SectionHead eyebrow="The method" id="principles-title" title="Six principles, one direction" intro="Every programme follows the same path." />
+          <PrinciplesGrid principles={props.principles} />
+          <p class="center">
+            <a href="/method">More about the method →</a>
+          </p>
+        </div>
+      </section>
+
+      {flagship?.stages && (
+        <section class="band band-feature" aria-labelledby="flagship-title">
+          <div class="wrap split">
+            <div>
+              <SectionHead eyebrow="Flagship programme" id="flagship-title" title={flagship.title} intro="It starts from the ground up, with the feet." />
+              <p>{flagship.short}</p>
+              <p class="price-line">
+                <Text copy={flagship.price} />
+              </p>
+              <Button href={`/programmes/${flagship.slug}`}>See what's inside</Button>
+            </div>
+            <GroundUp stages={[...flagship.stages]} />
+          </div>
+        </section>
+      )}
+
+      <section class="band" aria-labelledby="for-title">
+        <div class="wrap">
+          <SectionHead eyebrow="Is it for you?" id="for-title" title="Who the method is for" />
+          <ForNotFor forList={props.whoFor} notFor={props.notFor} />
+        </div>
+      </section>
+
+      <section class="band band-quiet" aria-labelledby="more-title">
+        <div class="wrap">
+          <SectionHead eyebrow="Coming soon" id="more-title" title="More programmes on the way" intro="Each one is built on the same six principles." />
+          <ul class="programme-chips">
+            {others.map((p) => (
+              <li>
+                <strong>{p.title}</strong>
+                <span>{p.short}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="band cta">
+        <div class="wrap narrow center">
+          <h2>Start where you meet the ground.</h2>
+          <p class="prose-lg">Release first. Then rebuild.</p>
+          {flagship && <Button href={`/programmes/${flagship.slug}`}>Explore {flagship.title}</Button>}
+        </div>
       </section>
     </Layout>
   );
