@@ -83,3 +83,12 @@ describe("static files", () => {
     expect(res.headers.get("Cache-Control")).toBe("public, max-age=300");
   });
 });
+
+describe("scheduled jobs", () => {
+  it("weekly cron backs up the database", async () => {
+    const { scheduled } = await import("../src/index");
+    const before = (await env.DB.prepare("SELECT COUNT(*) AS n FROM backups").first<number>("n")) ?? 0;
+    await scheduled({ cron: "0 3 * * SUN", scheduledTime: Date.now(), noRetry() {} } as ScheduledController, env);
+    expect(await env.DB.prepare("SELECT COUNT(*) AS n FROM backups WHERE kind = 'weekly' AND status = 'ok'").first("n")).toBe(before + 1);
+  });
+});

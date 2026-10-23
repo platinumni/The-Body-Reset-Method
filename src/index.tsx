@@ -26,7 +26,7 @@ app.onError((err, c) => {
 
 /** Scheduled jobs. Weekly (Sunday 03:00 UTC): database backup + housekeeping. */
 export async function scheduled(controller: ScheduledController, env: Env): Promise<void> {
-  if (controller.cron === "0 3 * * 0") {
+  if (controller.cron === "0 3 * * SUN") {
     await backupDatabase(env.DB, env.BACKUPS, "weekly");
     await pruneRateLimits(env.DB);
   }

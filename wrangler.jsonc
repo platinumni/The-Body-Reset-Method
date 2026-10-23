@@ -20,7 +20,7 @@
     { "binding": "DB", "database_name": "bodyregen-dev", "database_id": "00000000-0000-0000-0000-000000000000", "migrations_dir": "migrations" }
   ],
   "r2_buckets": [{ "binding": "BACKUPS", "bucket_name": "bodyregen-backups-dev" }],
-  "triggers": { "crons": ["0 3 * * 0"] },
+  "triggers": { "crons": ["0 3 * * SUN"] },
 
   "env": {
     "staging": {
@@ -35,7 +35,7 @@
         { "binding": "DB", "database_name": "bodyregen-staging", "database_id": "21f8e44a-bae4-499a-bacc-7417d7efebe5", "migrations_dir": "migrations" }
       ],
       "r2_buckets": [{ "binding": "BACKUPS", "bucket_name": "bodyregen-backups-staging" }],
-      "triggers": { "crons": ["0 3 * * 0"] }
+      "triggers": { "crons": ["0 3 * * SUN"] }
     }
     // "production" is added at go-live (Step 9), once the domain is bought and you give the go-ahead.
   }
