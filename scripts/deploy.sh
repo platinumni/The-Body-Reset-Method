@@ -6,6 +6,8 @@
 #
 # Needs CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in the environment
 # (in a Claude cloud session the proxy supplies the token; never commit it).
+# Claude cloud sessions can't reach *.workers.dev, so there set SKIP_HEALTH_CHECK=1
+# and have the owner open /health on their phone instead.
 set -euo pipefail
 
 ENV="${1:-}"
@@ -62,6 +64,9 @@ step "5/6 Deploy code"
 $WR deploy --env "$ENV" --tag "$COMMIT" --message "Deploy $COMMIT"
 
 step "6/6 Health check"
+if [ "${SKIP_HEALTH_CHECK:-}" = 1 ]; then
+  echo "⚠  Health check skipped (SKIP_HEALTH_CHECK=1). Open $URL/health in a browser to confirm."; exit 0
+fi
 for i in 1 2 3 4 5; do
   if curl -fsS "$URL/health" | grep -q '"ok":true'; then echo "✓ $URL is up and its database answers."; exit 0; fi
   sleep $((i * 2))

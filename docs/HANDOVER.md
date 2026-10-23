@@ -33,6 +33,7 @@ npm run deploy:staging
 npm run bundle       # code backup file in bundles/
 ```
 In a Claude cloud session, Cloudflare auth comes through the proxy. Set `CLOUDFLARE_API_TOKEN=proxy-injected` and `CLOUDFLARE_ACCOUNT_ID=0db80beb5c1fff6eaf82105bdd1c543d` before running wrangler.
+The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm run deploy:staging` and ask the owner to open `/health`.
 
 ## What's built
 **Step 1 — Foundation (done 2026-10-23)**
