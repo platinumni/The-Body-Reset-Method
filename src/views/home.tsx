@@ -3,7 +3,7 @@ import type { CatalogueEntry } from "../services/catalogue";
 import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
 import { Layout, type PageMeta } from "./layout";
 
-export function HomePage(props: { meta: PageMeta; headline: string[]; lede: string; principles: Principle[]; programmes: CatalogueEntry[]; whoFor: string[]; notFor: string[] }) {
+export function HomePage(props: { meta: PageMeta; headline: string[]; lede: string; trackRecord: string; principles: Principle[]; programmes: CatalogueEntry[]; whoFor: string[]; notFor: string[] }) {
   const flagship = props.programmes.find((p) => p.flagship);
   const others = props.programmes.filter((p) => !p.flagship);
   return (
@@ -17,6 +17,7 @@ export function HomePage(props: { meta: PageMeta; headline: string[]; lede: stri
             ))}
           </h1>
           <p class="lede">{props.lede}</p>
+          <p class="track-record">{props.trackRecord}</p>
           <div class="actions">
             {flagship && <Button href={`/programmes/${flagship.slug}`}>Explore Lower Body Regeneration</Button>}
             <Button href="/method" variant="ghost">

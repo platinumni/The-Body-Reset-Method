@@ -13,7 +13,7 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Check the test site wording** and reply with changes. Every yellow highlight is a placeholder waiting for your words.
 - [ ] **Access length** (e.g. lifetime) and **equipment needed** (if any), for the FAQ and terms.
 
-- [ ] **Track record wording:** pick option 1, 2 or 3, and keep simple evidence for any number you use (group sizes, messages).
+- [ ] **Keep evidence for "thousands"** (group sizes, messages, screenshots) in case it's ever challenged.
 - [ ] **Testimonials:** collect real quotes from people you've helped, with their permission (first name and town is fine), and no medical-cure claims.
 
 ## Before go-live

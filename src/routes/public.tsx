@@ -22,6 +22,7 @@ publicRoutes.get("/", async (c) => {
     <HomePage
       headline={content.headline}
       lede={content.lede}
+      trackRecord={content.trackRecord}
       meta={pageMeta(c, {
         title: `${c.env.SITE_NAME}: release the tension, rebuild from the ground up`,
         description: "Release the tension, stop forcing and learn to love your body again. Movement programmes built from the ground up, starting with the feet.",
@@ -87,6 +88,7 @@ publicRoutes.get("/programmes/:slug", async (c) => {
       notFor={NOT_FOR}
       csrfToken={c.get("csrfToken")}
       inBasket={parseBasket(getCookie(c, BASKET_COOKIE)).includes(programme.slug)}
+      trackRecord={(await loadSiteContent(c.env.DB)).trackRecord}
     />,
   );
 });

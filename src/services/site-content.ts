@@ -1,4 +1,4 @@
-import { COACH, FAQS, PHILOSOPHY, PROGRAMMES, placeholder, type Copy, type Faq } from "../content/site";
+import { COACH, FAQS, PHILOSOPHY, PROGRAMMES, TRACK_RECORD, placeholder, type Copy, type Faq } from "../content/site";
 import { recordAudit } from "./audit";
 import type { Actor } from "./admin-content";
 import { saveRevisionStmt } from "./revisions";
@@ -30,6 +30,7 @@ export function parseFaqText(text: string): Faq[] {
 export const WORDING: WordingField[] = [
   { key: "home.headline", label: "Homepage headline", help: "One or two lines. The second line shows in italic.", multiline: true, defaultValue: PHILOSOPHY.headline.join("\n") },
   { key: "home.lede", label: "Homepage intro sentence", help: "Shown under the headline.", multiline: true, defaultValue: PHILOSOPHY.lede },
+  { key: "home.track_record", label: "Track record line", help: "Shown under the homepage intro and on the flagship page. Only use numbers you can back up.", multiline: false, defaultValue: TRACK_RECORD },
   { key: "coach.name", label: "Coach name", help: "Shown on the About page.", multiline: false, defaultValue: copyText(COACH.name) },
   { key: "coach.story", label: "Coach story", help: "Your story in your own words. Leave a blank line between paragraphs.", multiline: true, defaultValue: COACH.story.map(copyText).filter(Boolean).join("\n\n") },
   ...PROGRAMMES.map((p) => ({ key: `programme.${p.slug}.short`, label: `${p.title}: short description`, help: "One or two sentences, used on cards and the programme page.", multiline: true, defaultValue: p.short })),
@@ -44,6 +45,7 @@ export async function loadSettings(db: D1Database): Promise<Map<string, string>>
 export type SiteContent = {
   headline: string[];
   lede: string;
+  trackRecord: string;
   coachName: Copy;
   coachStory: Copy[];
   faqs: Faq[];
@@ -60,6 +62,7 @@ export async function loadSiteContent(db: D1Database): Promise<SiteContent> {
   return {
     headline: headline?.length ? headline : PHILOSOPHY.headline,
     lede: get("home.lede") ?? PHILOSOPHY.lede,
+    trackRecord: get("home.track_record") ?? TRACK_RECORD,
     coachName: get("coach.name") ?? COACH.name ?? placeholder("Coach name"),
     coachStory: story?.length ? story : COACH.story,
     faqs: faqs?.length ? faqs : FAQS,

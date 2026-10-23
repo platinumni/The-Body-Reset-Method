@@ -84,11 +84,16 @@ export function ProgrammesPage(props: { meta: PageMeta; programmes: CatalogueEnt
   );
 }
 
-export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry; whoFor: string[]; notFor: string[]; csrfToken: string; inBasket: boolean }) {
+export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry; whoFor: string[]; notFor: string[]; csrfToken: string; inBasket: boolean; trackRecord: string }) {
   const p = props.programme;
   return (
     <Layout meta={props.meta}>
       <PageHero eyebrow={p.flagship ? "Flagship programme" : "Programme"} title={p.title} lede={p.short} />
+      {p.flagship && (
+        <div class="wrap narrow">
+          <p class="track-record">{props.trackRecord}</p>
+        </div>
+      )}
       {p.stages && (
         <section class="band">
           <div class="wrap split">

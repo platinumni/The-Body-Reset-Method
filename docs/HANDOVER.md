@@ -103,7 +103,7 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - Activity log, Backups (with "Back up now"), Emails.
 - **Every admin action** writes to `audit_log`.
 
-**Wording pass (2026-10-23):** fuller, more professional copy. The philosophy text is in `WHY`, the flagship "everything starts at the feet" text is in `FOUNDATION` (`src/content/site.ts`), and the headline is now two lines. The "helped thousands worldwide" line is awaiting the owner's choice of wording. The owner has delivered the method free for years; a number may be used if they can back it up (see `docs/METHOD.md`).
+**Wording pass (2026-10-23):** fuller, more professional copy. The philosophy text is in `WHY`, the flagship "everything starts at the feet" text is in `FOUNDATION` (`src/content/site.ts`), and the headline is now two lines. A track record line (option 1, "Shared freely with thousands of people around the world for years…") is on the homepage and the flagship page (`TRACK_RECORD`, editable as `home.track_record`). The owner keeps the evidence (see `docs/METHOD.md`).
 
 **Step 6: Affiliates (done 2026-10-23)**
 - **Migration 0005:** affiliates, affiliate_clicks (anonymous daily counts), payouts, commissions (one per order).

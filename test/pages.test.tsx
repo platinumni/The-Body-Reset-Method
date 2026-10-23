@@ -44,6 +44,7 @@ describe("homepage content", () => {
     expect(html).toContain("Learn to love your body again.");
     expect(html).toContain("never quite trust yourself in a balanced position");
     expect(html).toContain("Everything starts at the feet");
+    expect(html).toContain("Shared freely with thousands of people around the world for years.");
     const positions = PRINCIPLES.map((p) => html.indexOf(`<h3>${p.title}</h3>`));
     expect(positions.every((p) => p > 0)).toBe(true);
     expect([...positions].sort((a, b) => a - b)).toEqual(positions);

@@ -14,6 +14,9 @@ export const PHILOSOPHY = {
     "Most of us spend years gripping, bracing and forcing our way through movement without ever noticing. The Body Regeneration Method teaches you to recognise where you're holding on, release it, and rebuild strength and balance from the ground up, starting with your feet.",
 };
 
+/** Owner-confirmed track record (2026-10-23). Keep evidence for the number (see docs/METHOD.md). */
+export const TRACK_RECORD = "Shared freely with thousands of people around the world for years. Now available as a complete programme.";
+
 /** The "why" behind the method, used on the homepage and the method page. */
 export const WHY = {
   title: "Most of us were never taught how to move. We learned how to hold on.",

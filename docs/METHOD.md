@@ -16,7 +16,7 @@ Release the tension, the forcing and the control, and learn to love your body ag
 - **Correction:** an earlier note here wrongly said the "thousands worldwide" claim wasn't true. That was a misreading of the owner's message.
 - Any number published (e.g. "thousands") must be one the owner can **back up if challenged** (CAP Code 3.7): group sizes, messages, rough records. The owner keeps that evidence.
 - Testimonials must be real, used with permission, and must not claim medical cures.
-- Wording option chosen: [OWNER TO CONFIRM: 1 "thousands worldwide", 2 "people around the world for years" (no number), or 3 plus an Army background line].
+- **Wording chosen (option 1):** "Shared freely with thousands of people around the world for years. Now available as a complete programme." It's shown on the homepage and the flagship page, and is editable in Admin → Site wording.
 
 ## The six principles
 1. **Recognise.** Become aware of tension, gripping, compensation and habitual patterns.

@@ -395,3 +395,4 @@ body.admin { background: var(--bg); }
 .check-list li.ok > span { color: var(--sage); }
 .check-list li.todo > span { color: var(--warn); }
 .check-list p { margin: .2rem 0 0; }
+.track-record { display: inline-block; margin: 1.25rem 0 0; padding: .55rem 1rem; border-left: 3px solid var(--sage); background: color-mix(in srgb, var(--sage-soft) 70%, transparent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--ink); font-weight: 500; font-size: .98rem; }
