@@ -13,7 +13,8 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Check the test site wording** and reply with changes. Every yellow highlight is a placeholder waiting for your words.
 - [ ] **Access length** (e.g. lifetime) and **equipment needed** (if any), for the FAQ and terms.
 
-- [ ] **Real proof, when you have it:** testimonials from real members (with their permission), and the real member count. These replace any temptation to estimate numbers.
+- [ ] **Track record wording:** pick option 1, 2 or 3, and keep simple evidence for any number you use (group sizes, messages).
+- [ ] **Testimonials:** collect real quotes from people you've helped, with their permission (first name and town is fine), and no medical-cure claims.
 
 ## Before go-live
 - [ ] Follow `docs/GO_LIVE.md`. Admin → **Launch checklist** shows what's left.

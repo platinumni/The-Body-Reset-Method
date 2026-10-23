@@ -11,8 +11,12 @@ Release the tension, the forcing and the control, and learn to love your body ag
 - It's practical and universal, **not "woo-woo"**.
 - The flagship starts at the feet, but the effect goes up through the whole body. Even stage one (feet, toes and arches) affects how you move everywhere.
 
-## Claims we won't make
-- **"Helped thousands of people worldwide."** The owner asked for this, but confirmed it isn't true yet, so it's not used: it would be a misleading claim under ASA/CAP, CMA and DMCC Act rules. Use real member numbers and real testimonials once they exist.
+## Track record (owner, 2026-10-23)
+- The owner has delivered the method **free of charge for years**: mainly in the UK, plus friends, family and groups worldwide (contacts from their British Army days and online groups).
+- **Correction:** an earlier note here wrongly said the "thousands worldwide" claim wasn't true. That was a misreading of the owner's message.
+- Any number published (e.g. "thousands") must be one the owner can **back up if challenged** (CAP Code 3.7): group sizes, messages, rough records. The owner keeps that evidence.
+- Testimonials must be real, used with permission, and must not claim medical cures.
+- Wording option chosen: [OWNER TO CONFIRM: 1 "thousands worldwide", 2 "people around the world for years" (no number), or 3 plus an Army background line].
 
 ## The six principles
 1. **Recognise.** Become aware of tension, gripping, compensation and habitual patterns.
