@@ -7,13 +7,13 @@ Times are realistic / worst case, including waiting for the owner's "CH".
 | 0 | Decisions: name, payments, structure | ✅ Done 2026-10-23 | — |
 | 1 | Foundation: test site, security, checks, deploy and backups, docs | ✅ Done 2026-10-23 | — |
 | 2 | Look and public pages | ✅ Done 2026-10-23 | — |
-| 3 | Shop: packages, bundles, basket and add-ons, PayPal checkout, receipts | ⏳ Next | 3 / 7 days |
-| 4 | Members area: account from email link, My Programmes, Full Programme and Quick Run-Through tabs | — | 3 / 7 days |
+| 3 | Shop: packages, bundles, basket and add-ons, Stripe checkout, receipts | ✅ Done 2026-10-23 (live test awaits Stripe keys) | — |
+| 4 | Members area: account from email link, My Programmes, Full Programme and Quick Run-Through tabs | ⏳ Next | 3 / 7 days |
 | 5 | Admin: two-step login, programme editor, orders, customers, refunds, logs, backups, stats | — | 4 / 9 days |
 | 6 | Affiliates: share links, tracking, commission, payouts | — | 3 / 6 days |
 | 7 | Automation: email sequences, morning report, usage watch, approvals | — | 2 / 5 days |
 | 8 | Content: owner's programmes loaded (via voice notes → drafts → approval) | — | Depends on owner |
-| 9 | Go live: domain, PayPal live, real test purchase and refund, and a check that no `[PLACEHOLDER]` remains | — | 1 / 3 days |
+| 9 | Go live: domain, Stripe live, real test purchase and refund, and a check that no `[PLACEHOLDER]` remains | — | 1 / 3 days |
 
 ## Step details
 **Step 2: Look and public pages**
@@ -25,7 +25,7 @@ Times are realistic / worst case, including waiting for the owner's "CH".
 **Step 3: Shop**
 - Programme catalogue, packages and bundles.
 - A basket with add-on suggestions.
-- PayPal checkout, server-verified via webhook.
+- Stripe Checkout, server-verified via webhook.
 - Order records.
 - Health declaration and the "start now, waive 14-day cancellation" tick boxes.
 - Receipt and "create your account" emails (Resend).
@@ -48,7 +48,7 @@ Times are realistic / worst case, including waiting for the owner's "CH".
 - Every customer gets a share link. Visits are tracked with a first-party cookie set only on affiliate links (disclosed).
 - Commission on sales, held until the refund window passes.
 - An affiliate dashboard.
-- Payouts: a monthly owner-approved list, with PayPal Payouts automation once PayPal approves it.
+- Payouts: a monthly owner-approved list (bank transfer or PayPal), with possible Stripe Connect automation later.
 - Affiliate terms with the duty to label posts as ads.
 
 **Step 7: Automation**

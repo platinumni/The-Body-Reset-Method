@@ -1,6 +1,6 @@
 # Handover — The Body Regeneration Method
 
-_Last updated: 2026-10-23, after Step 2 (Look and public pages)._
+_Last updated: 2026-10-23, after Step 3 (Shop)._
 
 ## What this is
 This is a worldwide (mainly UK) website selling online movement programmes by the owner, a coach.
@@ -12,7 +12,7 @@ This is a worldwide (mainly UK) website selling online movement programmes by th
   - **Quick Run-Through:** key points.
 - **Content:** text, YouTube video links and the owner's images.
 - **Affiliates:** customers can share a personal link and earn commission. One level only.
-- **Payments:** PayPal. See `docs/DECISIONS.md`.
+- **Payments:** Stripe Checkout (card, Apple Pay, Google Pay, PayPal via Stripe). See `docs/DECISIONS.md`.
 
 ## Where things are
 | What | Where |
@@ -54,5 +54,18 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Legal pages** are drafts, marked for owner and solicitor review.
 - **Tests:** 71 in the Workers runtime plus 7 for the migration check. They cover every page, the strict CSP (no inline styles or scripts) and the structured data.
 
+**Step 3: Shop (done 2026-10-23)**
+- **Migration 0002:** products (seeded with the six programmes, **no prices**, all draft), bundle_items, orders, order_items, entitlements, email_tokens, stripe_events, email_log.
+- **Basket:** a cookie holding product slugs only (`src/services/basket.ts`). Prices always come from the DB. Add-on suggestions skip programmes already inside a basket bundle.
+- **Checkout** (`src/routes/shop.tsx`): three required tick boxes (health declaration, terms, immediate access / waiver of the 14-day right) plus optional marketing. The wording and version are in `src/content/consents.ts`. A pending order is created, then the shopper goes to Stripe Checkout (`src/services/payments/stripe.ts`, plain fetch, idempotency keys).
+- **Webhook** `/webhooks/stripe`:
+  - Signature verified, with a 5-minute replay window. CSRF-exempt.
+  - Events are deduplicated.
+  - The amount must match the order.
+  - On payment: order paid, entitlements granted by email (linked to the user if one exists), consents recorded, a setup link created (7 days), and a confirmation email sent (Resend, logged in `email_log`).
+  - A full refund revokes access. Expired sessions are marked.
+- **Secrets needed:** `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `RESEND_API_KEY`. Without them, checkout shows "not switched on yet" and emails are logged as skipped. Owner steps: `docs/STRIPE_SETUP.md`.
+- **A product is only buyable** when `status = 'on_sale'` AND `price_pence` is set. Real prices come from the owner.
+
 ## Next step
-**Step 3: Shop** (see `docs/ROADMAP.md`). This needs the owner's PayPal Business account (sandbox keys for testing).
+**Step 4: Members area.** The owner's go-ahead covers Steps 3–7 on staging.

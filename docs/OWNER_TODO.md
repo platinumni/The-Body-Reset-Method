@@ -5,18 +5,17 @@ These are things only you can do. None of them block the build until go-live unl
 ## Soon
 - [ ] **Voice note: further packages.** List the programmes, which ones are bundles or add-ons, and rough prices. Prices stay placeholders until you confirm them.
 - [ ] **Buy the domain.** Tell me which one. Connecting it takes about 15 minutes at go-live.
-- [ ] **PayPal Business account.** If you have one, great. In Step 3 I'll tell you exactly which developer keys to create. You'll add them to Cloudflare yourself or via me, never in chat.
+- [ ] **Stripe account** (free) at stripe.com. You only need test mode for now. Steps are in `docs/STRIPE_SETUP.md`. Turn on PayPal under Settings → Payment methods if you want customers to have it as an option.
 - [ ] **Affiliate commission %.** For example 20% or 30% of the sale. This stays a placeholder until you decide.
 - [ ] **Your coach story and photos.** A short bio, your own journey (in your words), and any photos or images.
 - [ ] **Check the test site wording** and reply with changes. Every yellow highlight is a placeholder waiting for your words.
-- [ ] **Confirm the safety list.** I added "pregnant or recently given birth", "recent surgery", "heart condition, high blood pressure, dizziness or balance problems" and "pain without a known cause" as standard precautions. Keep them, or change them?
-- [ ] **Clarify one line from your voice note:** "If you've tried loads of physios for years and nothing's working…". Is that someone the method IS for? It's left out until you confirm.
 - [ ] **Access length** (e.g. lifetime) and **equipment needed** (if any), for the FAQ and terms.
 
 ## Before go-live
 - [ ] **ICO data protection fee** (about £52 a year): ico.org.uk/fee
 - [ ] **Trademark check** on "The Body Regeneration Method" (UK IPO search, free): gov.uk/search-for-trademark
 - [ ] **Insurance:** professional indemnity / public liability that covers online coaching.
+- [ ] **Stripe: activate live payments** (business details and bank account) before go-live.
 - [ ] **Accountant question:** EU VAT on digital sales to EU customers (it applies from the first EU sale). Ask whether to register for the "non-Union OSS" or limit EU sales. UK VAT only kicks in over £90k turnover.
 - [ ] **Email sending:** a Resend account (or reuse the Platinum NI one) and verify the new domain.
 - [ ] **Solicitor review** of the terms, refund and health disclaimer pages (recommended, not required).

@@ -15,7 +15,11 @@ const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
 /** "__Host-" cookies must be Secure, which local http dev can't do. */
 export const csrfCookieName = (env: Env) => (isDevelopment(env) ? "brm_csrf" : "__Host-brm_csrf");
 
+// Server-to-server callbacks (e.g. Stripe) are authenticated by their own signature instead.
+const EXEMPT_PREFIXES = ["/webhooks/"];
+
 export const csrf = createMiddleware<AppEnv>(async (c, next) => {
+  if (EXEMPT_PREFIXES.some((p) => c.req.path.startsWith(p))) return next();
   const name = csrfCookieName(c.env);
   let token = getCookie(c, name);
 

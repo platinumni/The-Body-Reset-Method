@@ -1,9 +1,10 @@
-import type { Principle, Programme } from "../content/site";
+import type { Principle } from "../content/site";
+import type { CatalogueEntry } from "../services/catalogue";
 import { PHILOSOPHY } from "../content/site";
 import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
 import { Layout, type PageMeta } from "./layout";
 
-export function HomePage(props: { meta: PageMeta; principles: Principle[]; programmes: Programme[]; whoFor: string[]; notFor: string[] }) {
+export function HomePage(props: { meta: PageMeta; principles: Principle[]; programmes: CatalogueEntry[]; whoFor: string[]; notFor: string[] }) {
   const flagship = props.programmes.find((p) => p.flagship);
   const others = props.programmes.filter((p) => !p.flagship);
   return (
@@ -57,7 +58,7 @@ export function HomePage(props: { meta: PageMeta; principles: Principle[]; progr
               <SectionHead eyebrow="Flagship programme" id="flagship-title" title={flagship.title} intro="It starts from the ground up, with the feet." />
               <p>{flagship.short}</p>
               <p class="price-line">
-                <Text copy={flagship.price} />
+                <Text copy={flagship.displayPrice} />
               </p>
               <Button href={`/programmes/${flagship.slug}`}>See what's inside</Button>
             </div>

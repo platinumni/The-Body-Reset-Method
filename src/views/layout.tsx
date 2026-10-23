@@ -10,6 +10,7 @@ export type PageMeta = {
   siteUrl: string;
   noindex?: boolean;
   isTestSite?: boolean;
+  basketCount?: number;
   jsonLd?: Record<string, unknown>[];
 };
 
@@ -82,6 +83,11 @@ export function Layout(props: { meta: PageMeta; children: Child }) {
             <nav class="nav-desktop" aria-label="Main">
               {navLinks}
             </nav>
+            {!!meta.basketCount && (
+              <a class="basket-link" href="/basket" aria-label={`Basket, ${meta.basketCount} item${meta.basketCount === 1 ? "" : "s"}`}>
+                Basket <span class="basket-count">{meta.basketCount}</span>
+              </a>
+            )}
             <details class="nav-mobile">
               <summary aria-label="Menu">
                 <span class="burger" aria-hidden="true" />

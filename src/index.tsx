@@ -5,6 +5,7 @@ import { securityHeaders } from "./middleware/security";
 import { assetRoutes } from "./routes/assets";
 import { pageMeta } from "./routes/meta";
 import { publicRoutes } from "./routes/public";
+import { shopRoutes } from "./routes/shop";
 import { backupDatabase } from "./services/backup";
 import { pruneRateLimits } from "./services/rate-limit";
 import { NotFoundPage, ServerErrorPage } from "./views/errors";
@@ -16,6 +17,7 @@ app.use("*", csrf);
 
 app.route("/", assetRoutes);
 app.route("/", publicRoutes);
+app.route("/", shopRoutes);
 
 app.notFound((c) => c.html(<NotFoundPage meta={pageMeta(c, { title: "Page not found", description: "Page not found.", path: c.req.path, noindex: true })} />, 404));
 

@@ -27,7 +27,7 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
         <h2>What we collect</h2>
         <ul>
           <li>
-            <strong>When you buy:</strong> your name, email address, country and what you bought. Payment is handled by PayPal. We never see or store your
+            <strong>When you buy:</strong> your name, email address, country and what you bought. Payment is handled by Stripe. We never see or store your
             card details.
           </li>
           <li>
@@ -37,8 +37,8 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
             <strong>Your choices:</strong> a record of the boxes you tick, such as agreeing to the terms or choosing to receive marketing emails.
           </li>
           <li>
-            <strong>If you share your affiliate link:</strong> your referral code, the sales it brings in, the commission owed, and the PayPal email address we
-            pay you at.
+            <strong>If you share your affiliate link:</strong> your referral code, the sales it brings in, the commission owed, and the payment details you give us
+            for payouts.
           </li>
           <li>
             <strong>Security information:</strong> IP address and browser details, used to keep accounts secure and block abuse.
@@ -67,7 +67,7 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
         <p>We never sell your information. We use these trusted services to run the site:</p>
         <ul>
           <li>Cloudflare: website hosting and database.</li>
-          <li>PayPal: taking payments and paying affiliate commission.</li>
+          <li>Stripe: taking payments (and PayPal, if you choose to pay with it).</li>
           <li>Resend: sending emails.</li>
           <li>YouTube (Google): programme videos, embedded in privacy-enhanced mode. YouTube may set cookies once you press play.</li>
         </ul>
@@ -113,7 +113,7 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
         </p>
         <h2>Prices and payment</h2>
         <p>
-          Prices are shown at checkout in <Text copy={placeholder("Currency, e.g. GBP (£)")} />, including any taxes that apply. Payment is taken by PayPal
+          Prices are shown at checkout in <Text copy={placeholder("Currency, e.g. GBP (£)")} />, including any taxes that apply. Payment is taken by Stripe
           when you order.
         </p>
         <h2>Your right to cancel</h2>
@@ -192,7 +192,7 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
         </p>
         <h2>How to ask</h2>
         <p>
-          Email <Text copy={EMAIL} /> with your order email address. Refunds go back to your original payment method through PayPal.
+          Email <Text copy={EMAIL} /> with your order email address. Refunds go back to your original payment method.
         </p>
       </>
     ),

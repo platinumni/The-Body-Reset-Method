@@ -2,7 +2,18 @@
 
 Newest first. Each entry has the decision, why, and how to undo it.
 
-## 2026-10-23: Payments via PayPal direct
+## 2026-10-23: Payments switched to Stripe (replaces PayPal direct)
+- **Decision:** Stripe Checkout, the hosted payment page. Customers pay by card, Apple Pay, Google Pay, or PayPal, which is enabled inside Stripe.
+- **Why:** the owner asked. It's cheaper for UK cards (about 1.5% + 20p, against about 2.9% + 30p), quick to set up, has a full test mode, and its multi-item checkout suits the basket. Stripe Tax (optional, about 0.5% per sale) can calculate EU VAT later.
+- **Affiliate payouts:** a monthly owner-approved list paid by bank transfer or PayPal. Stripe Connect automation is possible later.
+- **Undo:** payment code sits in `src/services/payments/stripe.ts`, so only one module changes.
+
+## 2026-10-23: Owner approvals
+- Safety wording on the "not for" list and health disclaimer: **approved** by the owner.
+- Added to "who it's for": people who have tried physiotherapy for years without lasting change.
+- The owner gave a go-ahead for Steps 3–7 to run back to back on the **test site only**. Going live still needs a separate go-ahead.
+
+## 2026-10-23: Payments via PayPal direct (superseded by Stripe, same day)
 - **Decision:** PayPal Checkout. Customers can pay with PayPal or a card through PayPal, without a PayPal account.
 - **Why:** the owner asked for the cheapest and easiest option. It's mainly UK, starting small. PayPal is about 2.9% plus 30p per UK sale, against about 5% plus 50p for a "merchant of record" (Paddle, Lemon Squeezy), and the owner can start straight away.
 - **Trade-off:** the owner handles tax. No UK VAT until £90k turnover. EU VAT applies from the first EU sale (see the accountant question in `OWNER_TODO.md`).

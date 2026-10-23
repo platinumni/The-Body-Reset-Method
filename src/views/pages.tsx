@@ -1,6 +1,7 @@
-import type { Copy, Faq, Principle, Programme } from "../content/site";
+import type { Copy, Faq, Principle } from "../content/site";
+import type { CatalogueEntry } from "../services/catalogue";
 import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
-import { Layout, type PageMeta } from "./layout";
+import { CsrfField, Layout, type PageMeta } from "./layout";
 
 function PageHero(props: { eyebrow: string; title: string; lede?: string }) {
   return (
@@ -44,7 +45,7 @@ export function MethodPage(props: { meta: PageMeta; principles: Principle[] }) {
   );
 }
 
-export function ProgrammesPage(props: { meta: PageMeta; programmes: Programme[] }) {
+export function ProgrammesPage(props: { meta: PageMeta; programmes: CatalogueEntry[] }) {
   return (
     <Layout meta={props.meta}>
       <PageHero eyebrow="Programmes" title="Start from the ground up" lede="Begin with the flagship. Further programmes build on it." />
@@ -59,7 +60,7 @@ export function ProgrammesPage(props: { meta: PageMeta; programmes: Programme[] 
                 {p.status === "available" ? (
                   <>
                     <p class="price-line">
-                      <Text copy={p.price} />
+                      <Text copy={p.displayPrice} />
                     </p>
                     <Button href={`/programmes/${p.slug}`}>See what's inside</Button>
                   </>
@@ -75,7 +76,7 @@ export function ProgrammesPage(props: { meta: PageMeta; programmes: Programme[] 
   );
 }
 
-export function ProgrammePage(props: { meta: PageMeta; programme: Programme; whoFor: string[]; notFor: string[] }) {
+export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry; whoFor: string[]; notFor: string[]; csrfToken: string; inBasket: boolean }) {
   const p = props.programme;
   return (
     <Layout meta={props.meta}>
@@ -117,11 +118,25 @@ export function ProgrammePage(props: { meta: PageMeta; programme: Programme; who
         <div class="wrap narrow center">
           <h2>{p.title}</h2>
           <p class="price-line large">
-            <Text copy={p.price} />
+            <Text copy={p.displayPrice} />
           </p>
-          <p class="btn btn-primary is-disabled" aria-disabled="true">
-            Checkout opens soon
-          </p>
+          {p.onSale ? (
+            props.inBasket ? (
+              <Button href="/basket">In your basket: view basket</Button>
+            ) : (
+              <form method="post" action="/basket/add">
+                <CsrfField token={props.csrfToken} />
+                <input type="hidden" name="slug" value={p.slug} />
+                <button class="btn btn-primary" type="submit">
+                  Add to basket
+                </button>
+              </form>
+            )
+          ) : (
+            <p class="btn btn-primary is-disabled" aria-disabled="true">
+              Checkout opens soon
+            </p>
+          )}
           <p class="small muted">No account needed to buy. After payment we email you a link to set up your members' area.</p>
         </div>
       </section>

@@ -17,7 +17,8 @@
   "vars": {
     "APP_ENV": "development",
     "SITE_NAME": "The Body Regeneration Method",
-    "SITE_URL": "http://localhost:8787"
+    "SITE_URL": "http://localhost:8787",
+    "EMAIL_FROM": "The Body Regeneration Method <onboarding@resend.dev>"
   },
   "d1_databases": [
     { "binding": "DB", "database_name": "bodyregen-dev", "database_id": "00000000-0000-0000-0000-000000000000", "migrations_dir": "migrations" }
@@ -32,7 +33,9 @@
       "vars": {
         "APP_ENV": "staging",
         "SITE_NAME": "The Body Regeneration Method",
-        "SITE_URL": "https://bodyregen-staging.michaeljmarden.workers.dev"
+        "SITE_URL": "https://bodyregen-staging.michaeljmarden.workers.dev",
+        // Resend's shared test sender: only delivers to the Resend account owner's own address.
+        "EMAIL_FROM": "The Body Regeneration Method <onboarding@resend.dev>"
       },
       "d1_databases": [
         { "binding": "DB", "database_name": "bodyregen-staging", "database_id": "21f8e44a-bae4-499a-bacc-7417d7efebe5", "migrations_dir": "migrations" }

@@ -2,7 +2,9 @@ import { Hono } from "hono";
 import { COACH, NOT_FOR, PRINCIPLES, WHO_FOR, type Copy } from "../content/site";
 import type { AppEnv } from "../env";
 import { isProduction } from "../env";
-import { getProgramme, listFaqs, listProgrammes, programmesWithPages } from "../services/catalogue";
+import { getCookie } from "hono/cookie";
+import { BASKET_COOKIE, parseBasket } from "../services/basket";
+import { getCatalogueEntry, listCatalogue, listFaqs, programmesWithPages } from "../services/catalogue";
 import { databaseIsHealthy } from "../services/health";
 import { HomePage } from "../views/home";
 import { LEGAL_PAGES, LegalPage, type LegalSlug } from "../views/legal";
@@ -13,7 +15,7 @@ export const publicRoutes = new Hono<AppEnv>();
 
 const plain = (copy: Copy) => (typeof copy === "string" ? copy : `[PLACEHOLDER: ${copy.placeholder}]`);
 
-publicRoutes.get("/", (c) =>
+publicRoutes.get("/", async (c) =>
   c.html(
     <HomePage
       meta={pageMeta(c, {
@@ -26,7 +28,7 @@ publicRoutes.get("/", (c) =>
         ],
       })}
       principles={PRINCIPLES}
-      programmes={listProgrammes()}
+      programmes={await listCatalogue(c.env.DB)}
       whoFor={WHO_FOR}
       notFor={NOT_FOR}
     />,
@@ -46,17 +48,17 @@ publicRoutes.get("/method", (c) =>
   ),
 );
 
-publicRoutes.get("/programmes", (c) =>
+publicRoutes.get("/programmes", async (c) =>
   c.html(
     <ProgrammesPage
       meta={pageMeta(c, { title: "Programmes", description: "Movement programmes built from the ground up, starting with the flagship Lower Body Regeneration.", path: "/programmes" })}
-      programmes={listProgrammes()}
+      programmes={await listCatalogue(c.env.DB)}
     />,
   ),
 );
 
-publicRoutes.get("/programmes/:slug", (c) => {
-  const programme = getProgramme(c.req.param("slug"));
+publicRoutes.get("/programmes/:slug", async (c) => {
+  const programme = await getCatalogueEntry(c.env.DB, c.req.param("slug"));
   if (!programme || programme.status !== "available") return c.notFound();
   const path = `/programmes/${programme.slug}`;
   return c.html(
@@ -79,6 +81,8 @@ publicRoutes.get("/programmes/:slug", (c) => {
       programme={programme}
       whoFor={WHO_FOR}
       notFor={NOT_FOR}
+      csrfToken={c.get("csrfToken")}
+      inBasket={parseBasket(getCookie(c, BASKET_COOKIE)).includes(programme.slug)}
     />,
   );
 });

@@ -28,6 +28,7 @@ export const WHO_FOR: string[] = [
   "People who have moved in compensating ways for years and want to rebuild properly, from the ground up.",
   "Older adults who haven't trained before, or who are coming back to movement.",
   "Anyone tired of forcing their body into positions who wants a calmer, more aware way to build strength.",
+  "People who have tried physiotherapy or other treatments for years without lasting change, and are ready for a different approach.",
 ];
 
 export const NOT_FOR: string[] = [
@@ -88,7 +89,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "Who is the method for?",
-    a: ["People who have moved in compensating ways for years, older adults who haven't trained, and anyone who wants to stop forcing their body and rebuild from the ground up."],
+    a: ["People who have moved in compensating ways for years, older adults who haven't trained, people who've tried physiotherapy for years without lasting change, and anyone who wants to stop forcing their body and rebuild from the ground up."],
   },
   {
     q: "Is it suitable if I have an injury?",
@@ -105,8 +106,8 @@ export const FAQS: Faq[] = [
   { q: "How long do I keep access?", a: [placeholder("Access length, e.g. lifetime access to programmes you've bought")] },
   { q: "Do I need any equipment?", a: [placeholder("Equipment needed, if any")] },
   {
-    q: "Do I need a PayPal account to pay?",
-    a: ["No. Checkout is through PayPal, and in most countries you can pay by debit or credit card without a PayPal account."],
+    q: "How can I pay?",
+    a: ["Checkout is handled securely by Stripe. You can pay by debit or credit card, Apple Pay or Google Pay, and PayPal where available. We never see your card details."],
   },
   {
     q: "Can I buy more than one programme?",
