@@ -1,5 +1,6 @@
 import type { Context } from "hono";
 import { getCookie } from "hono/cookie";
+import { CODE_PATTERN, REF_COOKIE } from "../services/affiliates";
 import { BASKET_COOKIE, parseBasket } from "../services/basket";
 import type { AppEnv } from "../env";
 import { isProduction } from "../env";
@@ -14,6 +15,15 @@ export function pageMeta(c: Context<AppEnv>, m: Pick<PageMeta, "title" | "descri
     isTestSite: !isProduction(c.env),
     basketCount: parseBasket(getCookie(c, BASKET_COOKIE)).length,
     loggedIn: !!c.get("user"),
+    referralPrompt: referralPrompt(c),
     ...m,
   };
+}
+
+function referralPrompt(c: Context<AppEnv>): PageMeta["referralPrompt"] {
+  const code = c.req.query("ref")?.toLowerCase();
+  if (!code || !CODE_PATTERN.test(code) || getCookie(c, REF_COOKIE)) return undefined;
+  const url = new URL(c.req.url);
+  url.searchParams.delete("ref");
+  return { code, back: url.pathname + url.search, csrfToken: c.get("csrfToken") };
 }

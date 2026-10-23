@@ -5,6 +5,7 @@ import { orderConfirmationEmail } from "../emails/templates";
 import type { AppEnv } from "../env";
 import { isDevelopment } from "../env";
 import { clientIp, rateLimit } from "../middleware/rate-limit";
+import { activeAffiliateByCode, cancelCommissionForOrder, createCommissionForOrder, REF_COOKIE } from "../services/affiliates";
 import { BASKET_COOKIE, loadBasket, parseBasket, serializeBasket } from "../services/basket";
 import { sendEmail } from "../services/email";
 import { recordStat } from "../services/stats";
@@ -39,7 +40,7 @@ const basketMeta = (c: Context<AppEnv>, count: number) =>
 
 shopRoutes.get("/basket", async (c) => {
   const basket = await loadBasket(c.env.DB, basketSlugs(c));
-  return c.html(<BasketPage meta={basketMeta(c, basket.items.length)} basket={basket} csrfToken={c.get("csrfToken")} checkoutReady={!!c.env.STRIPE_SECRET_KEY} />);
+  return c.html(<BasketPage meta={basketMeta(c, basket.items.length)} basket={basket} csrfToken={c.get("csrfToken")} checkoutReady={!!c.env.STRIPE_SECRET_KEY} refCode={getCookie(c, REF_COOKIE) ?? ""} />);
 });
 
 shopRoutes.post("/basket/add", async (c) => {
@@ -69,12 +70,16 @@ shopRoutes.post("/checkout", rateLimit("checkout", 10, 600), async (c) => {
   if (missing.length || !ready) {
     const errors = missing.length ? ["Please tick each of the required boxes to continue."] : [];
     return c.html(
-      <BasketPage meta={basketMeta(c, basket.items.length)} basket={basket} csrfToken={c.get("csrfToken")} errors={errors} ticked={consents as Record<ConsentKind, boolean>} checkoutReady={ready} />,
+      <BasketPage meta={basketMeta(c, basket.items.length)} basket={basket} csrfToken={c.get("csrfToken")} errors={errors} ticked={consents as Record<ConsentKind, boolean>} checkoutReady={ready} refCode={String(form.ref ?? "")} />,
       ready ? 422 : 503,
     );
   }
 
-  const order = await createPendingOrder(c.env.DB, { items: basket.items, consents, ip: clientIp(c.req.raw) });
+  // Referral: a code typed at checkout wins over the remembered link.
+  const typedRef = String(form.ref ?? "").trim().toLowerCase();
+  const refCandidate = typedRef || getCookie(c, REF_COOKIE) || "";
+  const refCode = refCandidate && (await activeAffiliateByCode(c.env.DB, refCandidate)) ? refCandidate : null;
+  const order = await createPendingOrder(c.env.DB, { items: basket.items, consents, refCode, ip: clientIp(c.req.raw) });
   try {
     const session = await createCheckoutSession(c.env.STRIPE_SECRET_KEY!, {
       orderPublicId: order.public_id,
@@ -89,7 +94,7 @@ shopRoutes.post("/checkout", rateLimit("checkout", 10, 600), async (c) => {
   } catch (err) {
     console.error("Stripe checkout failed", { order: order.public_id, err: String(err) });
     return c.html(
-      <BasketPage meta={basketMeta(c, basket.items.length)} basket={basket} csrfToken={c.get("csrfToken")} errors={["Payment couldn't be started just now. Please try again in a minute."]} ticked={consents as Record<ConsentKind, boolean>} checkoutReady={ready} />,
+      <BasketPage meta={basketMeta(c, basket.items.length)} basket={basket} csrfToken={c.get("csrfToken")} errors={["Payment couldn't be started just now. Please try again in a minute."]} ticked={consents as Record<ConsentKind, boolean>} checkoutReady={ready} refCode={String(form.ref ?? "")} />,
       502,
     );
   }
@@ -119,6 +124,7 @@ shopRoutes.post("/webhooks/stripe", async (c) => {
       const result = await markOrderPaid(c.env.DB, obj as PaidSession);
       if (result.outcome === "paid") {
         await recordStat(c.env.DB, "purchase");
+        await createCommissionForOrder(c.env.DB, result.order, result.email);
         const lines = await getOrderLines(c.env.DB, result.order.id);
         await sendEmail(
           c.env,
@@ -144,7 +150,12 @@ shopRoutes.post("/webhooks/stripe", async (c) => {
       break;
     case "charge.refunded":
       // Only a full refund removes access; partial refunds keep it.
-      if (obj.refunded === true && obj.payment_intent) await markOrderRefunded(c.env.DB, String(obj.payment_intent));
+      if (obj.refunded === true && obj.payment_intent) {
+        const refunded = await markOrderRefunded(c.env.DB, String(obj.payment_intent));
+        if (refunded && (await cancelCommissionForOrder(c.env.DB, refunded.id)) === "already-paid") {
+          console.warn("Refunded order's commission was already paid out", { order: refunded.public_id });
+        }
+      }
       break;
   }
   await recordStripeEvent(c.env.DB, event.id, event.type);

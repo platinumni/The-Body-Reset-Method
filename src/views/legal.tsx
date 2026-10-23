@@ -11,7 +11,7 @@ const ADDRESS = placeholder("Business postal address");
 const EMAIL = placeholder("Contact email address");
 const UPDATED = "23 October 2026";
 
-export type LegalSlug = "privacy" | "terms" | "cookies" | "refunds" | "health-disclaimer";
+export type LegalSlug = "privacy" | "terms" | "cookies" | "refunds" | "health-disclaimer" | "affiliate-terms";
 
 export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string; body: () => Child }> = {
   privacy: {
@@ -163,8 +163,11 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
             <strong>Basket:</strong> remembers what's in your basket.
           </li>
         </ul>
-        <h2>Referral links</h2>
-        <p>If you arrive through a customer's share link, we'll ask before remembering who referred you, so they can receive credit.</p>
+        <h2>Referral links (only if you agree)</h2>
+        <p>
+          If you arrive through a member's share link, we ask before remembering who referred you. If you say yes, a cookie (<code>brm_ref</code>) holds
+          their code for 30 days so they can be thanked if you buy. If you say no, nothing is stored. You can also type a member's code at checkout instead.
+        </p>
         <h2>Videos</h2>
         <p>
           Programme videos are hosted on YouTube in privacy-enhanced mode. YouTube may set cookies once you press play. See Google's privacy policy for details.
@@ -193,6 +196,52 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
         <h2>How to ask</h2>
         <p>
           Email <Text copy={EMAIL} /> with your order email address. Refunds go back to your original payment method.
+        </p>
+      </>
+    ),
+  },
+  "affiliate-terms": {
+    title: "Affiliate terms",
+    description: "The rules for members who share their link and earn commission.",
+    body: () => (
+      <>
+        <p>
+          These terms apply if you join our affiliate programme from your account page. They sit alongside our <a href="/legal/terms">terms of sale</a>.
+        </p>
+        <h2>How it works</h2>
+        <ul>
+          <li>You get a personal share link and code. When someone buys through it, you earn the commission rate shown on your account page at the time of the sale.</li>
+          <li>
+            <strong>One level only.</strong> You earn on sales made through your own link. You don't earn on sales made by people you referred, or
+            through their links.
+          </li>
+          <li>Commission is held for the period shown on your account page, in case of refunds. A refunded sale earns no commission.</li>
+          <li>
+            Owed commission is paid monthly to the payout email you give us, once it reaches the minimum shown in your account. You're responsible for
+            any tax due on what you earn.
+          </li>
+          <li>You can't earn commission on your own purchases.</li>
+        </ul>
+        <h2>When you share</h2>
+        <ul>
+          <li>
+            <strong>Always make it clear you earn from the link</strong>, for example with "#ad" or "I earn commission if you buy through this link". This
+            is required by UK advertising rules (and similar rules elsewhere, such as the US FTC's).
+          </li>
+          <li>
+            Share your honest experience. <strong>Don't make health or medical claims</strong>, such as saying the method cures, treats or fixes any
+            condition or pain, and don't invent results.
+          </li>
+          <li>No spam, no fake reviews, and no pretending to be us or speaking on our behalf.</li>
+          <li>Don't bid on our name in paid search ads.</li>
+        </ul>
+        <h2>Ending or pausing</h2>
+        <p>
+          You can stop sharing at any time. We may pause or end your link if these terms are broken, or change or close the programme with notice. Commission
+          already owed for genuine, unrefunded sales will still be paid.
+        </p>
+        <p>
+          <Text copy={placeholder("Owner to confirm: commission rate, hold period and minimum payout are set in admin")} />
         </p>
       </>
     ),

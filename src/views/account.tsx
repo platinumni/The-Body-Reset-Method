@@ -2,6 +2,7 @@ import { RichText } from "../lib/markdown";
 import { youtubeEmbedUrl } from "../lib/youtube";
 import type { Lesson, OwnedProgramme, Tab } from "../services/library";
 import type { SessionUser } from "../services/sessions";
+import { AffiliateCard } from "./affiliate";
 import { Button } from "./components";
 import { CsrfField, Layout, type PageMeta } from "./layout";
 
@@ -11,6 +12,7 @@ export function AccountPage(props: {
   user: SessionUser;
   programmes: OwnedProgramme[];
   marketing: boolean;
+  affiliate: Parameters<typeof AffiliateCard>[0];
   notice?: string | null;
   error?: string | null;
 }) {
@@ -69,6 +71,8 @@ export function AccountPage(props: {
 
       <section class="band band-quiet">
         <div class="wrap account-grid">
+          <AffiliateCard {...props.affiliate} />
+
           <div class="card">
             <h2 class="h3">Your details</h2>
             <p>

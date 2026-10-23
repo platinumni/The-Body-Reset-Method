@@ -141,6 +141,9 @@ export async function exportUserData(db: D1Database, userId: number): Promise<Re
     progress: await q("SELECT l.title, lp.completed_at FROM lesson_progress lp JOIN programme_lessons l ON l.id = lp.lesson_id WHERE lp.user_id = ?1", userId),
     emailsSent: await q("SELECT template, subject, status, created_at FROM email_log WHERE to_email = ?1 ORDER BY id", user.email),
     loginSessions: await q("SELECT created_at, last_seen_at, expires_at, revoked_at FROM sessions WHERE user_id = ?1 ORDER BY id", userId),
+    affiliate: await q("SELECT code, status, payout_email, created_at FROM affiliates WHERE user_id = ?1", userId),
+    commissions: await q("SELECT c.amount_pence, c.status, c.created_at FROM commissions c JOIN affiliates a ON a.id = c.affiliate_id WHERE a.user_id = ?1 ORDER BY c.id", userId),
+    payouts: await q("SELECT p.amount_pence, p.method, p.created_at FROM payouts p JOIN affiliates a ON a.id = p.affiliate_id WHERE a.user_id = ?1 ORDER BY p.id", userId),
   };
 }
 
@@ -155,6 +158,8 @@ export async function deleteAccount(db: D1Database, userId: number, actor: { use
     db.prepare("INSERT INTO consents (user_id, email, kind, granted, wording_version, source) VALUES (?1, ?2, 'marketing_email', 0, ?3, 'account-deleted')").bind(userId, user.email, CHECKOUT_CONSENTS.marketing_email.version),
     db.prepare("UPDATE entitlements SET revoked_at = COALESCE(revoked_at, datetime('now')) WHERE user_id = ?1 OR email = ?2").bind(userId, user.email),
     db.prepare("DELETE FROM lesson_progress WHERE user_id = ?1").bind(userId),
+    // Their share link stops working; any commission already owed stays on record for the owner to settle.
+    db.prepare("UPDATE affiliates SET status = 'suspended', updated_at = datetime('now') WHERE user_id = ?1").bind(userId),
     db.prepare("UPDATE sessions SET revoked_at = COALESCE(revoked_at, datetime('now')), ip = NULL, user_agent = NULL WHERE user_id = ?1").bind(userId),
     db.prepare("UPDATE email_tokens SET used_at = COALESCE(used_at, datetime('now')) WHERE email = ?1").bind(user.email),
     db

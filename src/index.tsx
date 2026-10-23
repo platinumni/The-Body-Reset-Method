@@ -10,8 +10,10 @@ import { assetRoutes } from "./routes/assets";
 import { authRoutes } from "./routes/auth";
 import { pageMeta } from "./routes/meta";
 import { publicRoutes } from "./routes/public";
+import { referralRoutes } from "./routes/referrals";
 import { shopRoutes } from "./routes/shop";
 import { backupDatabase } from "./services/backup";
+import { releaseHeldCommissions } from "./services/affiliates";
 import { pruneRateLimits } from "./services/rate-limit";
 import { isBot, recordStat } from "./services/stats";
 import { NotFoundPage, ServerErrorPage } from "./views/errors";
@@ -39,6 +41,7 @@ app.use("*", async (c, next) => {
 app.route("/", assetRoutes);
 app.route("/", publicRoutes);
 app.route("/", shopRoutes);
+app.route("/", referralRoutes);
 app.route("/", authRoutes);
 app.route("/", accountRoutes);
 app.route("/", adminLoginRoutes);
@@ -51,11 +54,18 @@ app.onError((err, c) => {
   return c.html(<ServerErrorPage meta={pageMeta(c, { title: "Something went wrong", description: "Error.", path: c.req.path, noindex: true })} />, 500);
 });
 
-/** Scheduled jobs. Weekly (Sunday 03:00 UTC): database backup + housekeeping. */
+export const WEEKLY_CRON = "0 3 * * SUN";
+export const DAILY_CRON = "0 4 * * *";
+
+/** Scheduled jobs. Weekly (Sunday 03:00 UTC): backup + housekeeping. Daily (04:00 UTC): release held commission. */
 export async function scheduled(controller: ScheduledController, env: Env): Promise<void> {
-  if (controller.cron === "0 3 * * SUN") {
+  if (controller.cron === WEEKLY_CRON) {
     await backupDatabase(env.DB, env.BACKUPS, "weekly");
     await pruneRateLimits(env.DB);
+  }
+  if (controller.cron === DAILY_CRON) {
+    const released = await releaseHeldCommissions(env.DB);
+    if (released) console.log("Released held commission", { released });
   }
 }
 

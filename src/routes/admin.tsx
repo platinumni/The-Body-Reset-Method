@@ -26,6 +26,7 @@ import {
   type Actor,
   type LessonInput,
 } from "../services/admin-content";
+import { affiliateSettings, listAffiliatesAdmin, recordPayout, saveAffiliateSettings, setAffiliateStatus } from "../services/affiliates";
 import { dashboardNumbers, getOrderDetail, grantAccess, listCustomers, listOrders, revokeOrderAccess, toCsv, userIdByEmail } from "../services/admin-ops";
 import { listAudit, recordAudit } from "../services/audit";
 import { backupDatabase, listBackups } from "../services/backup";
@@ -38,6 +39,7 @@ import { statsSummary } from "../services/stats";
 import type { AdminMeta } from "../views/admin/layout";
 import {
   ActivityPage,
+  AffiliatesAdminPage,
   BackupsPage,
   CustomersPage,
   DashboardPage,
@@ -69,6 +71,8 @@ const FLASHES: Record<string, string> = {
   granted: "Access given, and they've been emailed.",
   deleted: "Account deleted.",
   backup: "Backup complete.",
+  payout: "Payout recorded. Their commission is marked as paid.",
+  nopayout: "Nothing to pay: the amount owed is below the minimum.",
 };
 const meta = (c: Context<AppEnv>, title: string, extra: Partial<AdminMeta> = {}) => adminMeta(c, title, { flash: FLASHES[c.req.query("done") ?? ""] ?? null, ...extra });
 const back = (c: Context<AppEnv>, path: string, done: keyof typeof FLASHES) => c.redirect(`${path}${path.includes("?") ? "&" : "?"}done=${done}`, 303);
@@ -323,4 +327,33 @@ adminRoutes.post("/admin/backups", async (c) => {
   await backupDatabase(c.env.DB, c.env.BACKUPS, "manual");
   await recordAudit(c.env.DB, { ...actorAudit(c), action: "backup.manual" });
   return back(c, "/admin/backups", "backup");
+});
+
+// --- Affiliates ---
+
+async function renderAffiliates(c: Context<AppEnv>, error?: string) {
+  return c.html(
+    <AffiliatesAdminPage meta={meta(c, "Affiliates", { error: error ?? null })} settings={await affiliateSettings(c.env.DB)} affiliates={await listAffiliatesAdmin(c.env.DB)} />,
+    error ? 422 : 200,
+  );
+}
+
+adminRoutes.get("/admin/affiliates", (c) => renderAffiliates(c));
+
+adminRoutes.post("/admin/affiliates/settings", async (c) => {
+  const form = await c.req.parseBody();
+  const error = await saveAffiliateSettings(c.env.DB, { rate: String(form.rate ?? ""), holdDays: String(form.hold_days ?? "30"), minPayout: String(form.min_payout ?? "10") }, actor(c));
+  return error ? renderAffiliates(c, error) : back(c, "/admin/affiliates", "saved");
+});
+
+adminRoutes.post("/admin/affiliates/:id/payout", async (c) => {
+  const form = await c.req.parseBody();
+  if (form.confirm !== "yes") return c.redirect("/admin/affiliates", 303);
+  const paid = await recordPayout(c.env.DB, idParam(c), { method: form.method === "bank" ? "bank" : "paypal", reference: String(form.reference ?? "") }, actor(c));
+  return back(c, "/admin/affiliates", paid ? "payout" : "nopayout");
+});
+
+adminRoutes.post("/admin/affiliates/:id/status", async (c) => {
+  await setAffiliateStatus(c.env.DB, idParam(c), (await c.req.parseBody()).status === "active" ? "active" : "suspended", actor(c));
+  return back(c, "/admin/affiliates", "saved");
 });

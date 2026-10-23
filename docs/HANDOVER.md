@@ -1,6 +1,6 @@
 # Handover — The Body Regeneration Method
 
-_Last updated: 2026-10-23, after Step 5 (Admin)._
+_Last updated: 2026-10-23, after Step 6 (Affiliates)._
 
 ## What this is
 This is a worldwide (mainly UK) website selling online movement programmes by the owner, a coach.
@@ -103,5 +103,18 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - Activity log, Backups (with "Back up now"), Emails.
 - **Every admin action** writes to `audit_log`.
 
+**Wording pass (2026-10-23):** fuller, more professional copy. The philosophy text is in `WHY`, the flagship "everything starts at the feet" text is in `FOUNDATION` (`src/content/site.ts`), and the headline is now two lines. The requested "helped thousands worldwide" claim was **not** used, because it isn't true yet (see `docs/METHOD.md`).
+
+**Step 6: Affiliates (done 2026-10-23)**
+- **Migration 0005:** affiliates, affiliate_clicks (anonymous daily counts), payouts, commissions (one per order).
+- **Closed until the owner sets a rate** (Admin → Affiliates). Settings: rate %, hold days (default 30), minimum payout (default £10).
+- **Joining:** a member who owns a programme ticks the affiliate terms (a consent record is kept) and gets `/r/CODE`. The card shows visits, sales, on hold, owed and paid, plus #ad guidance and a payout email.
+- **Share link:** `/r/CODE?to=/path` counts the click and adds `?ref=`. The site then **asks** before storing the `brm_ref` cookie (30 days), because PECR requires consent. Buyers can also type a code at checkout (a typed code wins).
+- **Commission:** created when payment is confirmed. There's none for self-referral, a paused link or a closed programme. **One level only.** A refund cancels unpaid commission (already-paid commission is logged as a warning).
+- **Daily cron** `0 4 * * *` moves commission from pending to approved after the hold.
+- **Admin:** list with totals, "Record payout" once the owner has actually paid by PayPal or bank (marks the exact commissions as paid), pause or reinstate links.
+- **Account deletion** pauses the link, and the data export includes affiliate data.
+- `/legal/affiliate-terms` covers one level, #ad disclosure, no health claims, no brand bidding and suspension.
+
 ## Next step
-**Step 6: Affiliates.** The owner's go-ahead covers Steps 3–7 on staging.
+**Step 7: Automation.** The owner's go-ahead covers Steps 3–7 on staging.

@@ -2,7 +2,8 @@ import { Hono, type Context } from "hono";
 import type { AppEnv } from "../env";
 import { endSession, requireUser, startSession } from "../middleware/auth";
 import { clientIp, rateLimit } from "../middleware/rate-limit";
-import { changePassword, deleteAccount, exportUserData, marketingOptedIn, passwordProblem, setMarketing, verifyUserPassword } from "../services/accounts";
+import { affiliateSettings, affiliateSummary, getAffiliateByUser, joinAffiliateProgramme, setPayoutEmail } from "../services/affiliates";
+import { changePassword, deleteAccount, exportUserData, looksLikeEmail, marketingOptedIn, passwordProblem, setMarketing, verifyUserPassword } from "../services/accounts";
 import { canViewMedia, listLessons, listOwnedProgrammes, ownedProgrammeBySlug, setLessonDone, type Tab } from "../services/library";
 import { AccountPage, ReaderPage } from "../views/account";
 import { pageMeta } from "./meta";
@@ -18,18 +19,32 @@ const NOTICES: Record<string, string> = {
   subscribed: "You're subscribed to news and new programmes.",
   unsubscribed: "You've been unsubscribed. You'll still get emails about your orders.",
   password: "Password changed. You've been logged out on other devices.",
+  affiliate: "Your share link is ready.",
+  payout: "Payout details saved.",
 };
 
 async function renderAccount(c: Context<AppEnv>, opts: { error?: string; status?: 200 | 401 | 422 } = {}) {
   const user = c.get("user")!;
   const noticeKey = Object.keys(NOTICES).find((k) => c.req.query(k) !== undefined);
+  const programmes = await listOwnedProgrammes(c.env.DB, user.id);
+  const settings = await affiliateSettings(c.env.DB);
+  const affiliate = await getAffiliateByUser(c.env.DB, user.id);
   return c.html(
     <AccountPage
       meta={pageMeta(c, { title: "My account", description: "Your programmes and account.", path: "/account", noindex: true })}
       csrfToken={c.get("csrfToken")}
       user={user}
-      programmes={await listOwnedProgrammes(c.env.DB, user.id)}
+      programmes={programmes}
       marketing={await marketingOptedIn(c.env.DB, user.email)}
+      affiliate={{
+        csrfToken: c.get("csrfToken"),
+        ratePercent: settings.ratePercent,
+        holdDays: settings.holdDays,
+        affiliate,
+        summary: affiliate ? await affiliateSummary(c.env.DB, affiliate.id) : null,
+        link: affiliate ? `${c.env.SITE_URL}/r/${affiliate.code}` : null,
+        ownsProgramme: programmes.length > 0,
+      }}
       notice={noticeKey ? NOTICES[noticeKey] : null}
       error={opts.error ?? null}
     />,
@@ -85,6 +100,22 @@ accountRoutes.post("/account/password", rateLimit("change-password", 10, 900), a
   // changePassword logs out every session, including this one; start a fresh one here.
   await startSession(c, user);
   return c.redirect("/account?password", 303);
+});
+
+accountRoutes.post("/account/affiliate/join", async (c) => {
+  const user = c.get("user")!;
+  if ((await c.req.parseBody()).terms !== "yes") return c.redirect("/account#share", 303);
+  if ((await affiliateSettings(c.env.DB)).ratePercent == null) return c.redirect("/account#share", 303);
+  const affiliate = await joinAffiliateProgramme(c.env.DB, user);
+  return c.redirect(affiliate ? "/account?affiliate#share" : "/account#share", 303);
+});
+
+accountRoutes.post("/account/affiliate/payout", async (c) => {
+  const user = c.get("user")!;
+  const email = String((await c.req.parseBody()).payout_email ?? "").trim().toLowerCase();
+  if (email && !looksLikeEmail(email)) return renderAccount(c, { error: "That payout email doesn't look right.", status: 422 });
+  await setPayoutEmail(c.env.DB, user.id, email);
+  return c.redirect("/account?payout#share", 303);
 });
 
 accountRoutes.get("/account/export", async (c) => {

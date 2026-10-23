@@ -6,7 +6,7 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Voice note: further packages.** List the programmes, which ones are bundles or add-ons, and rough prices. Prices stay placeholders until you confirm them.
 - [ ] **Buy the domain.** Tell me which one. Connecting it takes about 15 minutes at go-live.
 - [ ] **Stripe account** (free) at stripe.com. You only need test mode for now. Steps are in `docs/STRIPE_SETUP.md`. Turn on PayPal under Settings → Payment methods if you want customers to have it as an option.
-- [ ] **Affiliate commission %.** For example 20% or 30% of the sale. This stays a placeholder until you decide.
+- [ ] **Affiliate commission %.** For example 20% or 30% of the sale. Set it yourself in **Admin → Affiliates** (the programme stays closed until you do). Also check the hold period (30 days) and the minimum payout (£10).
 - [ ] **Your coach story and photos.** A short bio, your own journey (in your words), and any photos or images.
 - [ ] **Check the test site wording** and reply with changes. Every yellow highlight is a placeholder waiting for your words.
 - [ ] **Access length** (e.g. lifetime) and **equipment needed** (if any), for the FAQ and terms.

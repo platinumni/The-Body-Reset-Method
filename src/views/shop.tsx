@@ -17,6 +17,7 @@ export function BasketPage(props: {
   errors?: string[];
   ticked?: Partial<Record<ConsentKind, boolean>>;
   checkoutReady: boolean;
+  refCode?: string;
 }) {
   const { basket } = props;
   return (
@@ -112,6 +113,10 @@ export function BasketPage(props: {
                     </div>
                   );
                 })}
+                <div class="field">
+                  <label for="ref">Recommended by a member? Their code (optional)</label>
+                  <input id="ref" name="ref" type="text" value={props.refCode ?? ""} maxlength={12} autocomplete="off" />
+                </div>
                 {props.checkoutReady ? (
                   <button class="btn btn-primary btn-wide" type="submit">
                     Continue to secure payment

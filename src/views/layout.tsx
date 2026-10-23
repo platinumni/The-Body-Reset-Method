@@ -12,6 +12,8 @@ export type PageMeta = {
   isTestSite?: boolean;
   basketCount?: number;
   loggedIn?: boolean;
+  /** Set when a visitor arrives from a share link and hasn't chosen yet. */
+  referralPrompt?: { code: string; back: string; csrfToken: string };
   jsonLd?: Record<string, unknown>[];
 };
 
@@ -28,6 +30,7 @@ const LEGAL = [
   { href: "/legal/cookies", label: "Cookies" },
   { href: "/legal/refunds", label: "Refunds" },
   { href: "/legal/health-disclaimer", label: "Health disclaimer" },
+  { href: "/legal/affiliate-terms", label: "Affiliate terms" },
 ];
 
 const isCurrent = (href: string, path: string) => path === href || path.startsWith(href + "/");
@@ -73,6 +76,24 @@ export function Layout(props: { meta: PageMeta; children: Child }) {
           <div class="test-banner" role="note">
             Test site: not live. Highlighted text is a placeholder awaiting the owner's wording.
           </div>
+        )}
+        {meta.referralPrompt && (
+          <form method="post" action="/referral" class="referral-banner" aria-label="Referral">
+            <input type="hidden" name="_csrf" value={meta.referralPrompt.csrfToken} />
+            <input type="hidden" name="code" value={meta.referralPrompt.code} />
+            <input type="hidden" name="back" value={meta.referralPrompt.back} />
+            <p>
+              A member recommended us to you. May we remember that for 30 days, so they're thanked if you buy? It's a small cookie, used for nothing else.
+            </p>
+            <div class="referral-actions">
+              <button class="btn btn-primary btn-small" type="submit" name="choice" value="yes">
+                Yes, that's fine
+              </button>
+              <button class="btn btn-ghost btn-small" type="submit" name="choice" value="no">
+                No thanks
+              </button>
+            </div>
+          </form>
         )}
         <header class="site-header">
           <div class="wrap header-inner">

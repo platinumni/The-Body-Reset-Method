@@ -785,3 +785,105 @@ export function EmailsPage(props: { meta: AdminMeta; rows: EmailLogRow[] }) {
     </AdminLayout>
   );
 }
+
+export function AffiliatesAdminPage(props: {
+  meta: AdminMeta;
+  settings: { ratePercent: number | null; holdDays: number; minPayoutPence: number };
+  affiliates: import("../../services/affiliates").AffiliateAdminRow[];
+}) {
+  const s = props.settings;
+  return (
+    <AdminLayout meta={props.meta}>
+      <h1>Affiliates</h1>
+      <p class="muted">Members share their link and earn a percentage of sales it brings in. One level only. Commission is held, then owed, then you pay it and record it here.</p>
+      <form method="post" action="/admin/affiliates/settings" class="card">
+        <CsrfField token={props.meta.csrfToken} />
+        <h2 class="h3">Settings</h2>
+        <div class="form-grid">
+          <div class="field">
+            <label for="rate">Commission (% of each sale)</label>
+            <input id="rate" name="rate" type="text" inputmode="decimal" value={s.ratePercent != null ? String(s.ratePercent) : ""} placeholder="e.g. 20" />
+            <p class="hint">{s.ratePercent == null ? "Empty = programme closed. Members see 'opening soon'." : "Changing it only affects future sales."}</p>
+          </div>
+          <div class="field">
+            <label for="hold">Hold period (days)</label>
+            <input id="hold" name="hold_days" type="number" min="0" max="365" value={String(s.holdDays)} />
+            <p class="hint">Commission waits this long in case of a refund.</p>
+          </div>
+          <div class="field">
+            <label for="min">Minimum payout (£)</label>
+            <input id="min" name="min_payout" type="text" inputmode="decimal" value={(s.minPayoutPence / 100).toFixed(2)} />
+          </div>
+        </div>
+        <button class="btn btn-primary btn-small" type="submit">
+          Save settings
+        </button>
+      </form>
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Code</th>
+              <th>Visits</th>
+              <th>Sales</th>
+              <th>On hold</th>
+              <th>Owed</th>
+              <th>Paid</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.affiliates.map((a) => (
+              <tr>
+                <td>
+                  {a.email}
+                  <br />
+                  <span class="small muted">Pay to: {a.payout_email ?? "not given yet"}</span> {a.status === "suspended" && <StatusPill status="suspended" />}
+                </td>
+                <td>
+                  <code>{a.code}</code>
+                </td>
+                <td>{a.summary.clicks}</td>
+                <td>{a.summary.sales}</td>
+                <td>{money(a.summary.pending)}</td>
+                <td>
+                  <strong>{money(a.summary.approved)}</strong>
+                </td>
+                <td>{money(a.summary.paid)}</td>
+                <td>
+                  {a.summary.approved > 0 && a.summary.approved >= s.minPayoutPence && (
+                    <details>
+                      <summary class="small">Record payout</summary>
+                      <form method="post" action={`/admin/affiliates/${a.id}/payout`}>
+                        <CsrfField token={props.meta.csrfToken} />
+                        <p class="small">First pay {money(a.summary.approved)} to {a.payout_email ?? "them"}, then record it here.</p>
+                        <select name="method">
+                          <option value="paypal">PayPal</option>
+                          <option value="bank">Bank transfer</option>
+                        </select>
+                        <input name="reference" type="text" placeholder="Reference (optional)" />
+                        <Confirm label={`I've paid ${money(a.summary.approved)}`} />
+                        <button class="btn btn-primary btn-small" type="submit">
+                          Record payout
+                        </button>
+                      </form>
+                    </details>
+                  )}
+                  <form method="post" action={`/admin/affiliates/${a.id}/status`}>
+                    <CsrfField token={props.meta.csrfToken} />
+                    <input type="hidden" name="status" value={a.status === "active" ? "suspended" : "active"} />
+                    <button class="link-button" type="submit">
+                      {a.status === "active" ? "Pause link" : "Reinstate"}
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {!props.affiliates.length && <p class="muted">No affiliates yet.</p>}
+    </AdminLayout>
+  );
+}

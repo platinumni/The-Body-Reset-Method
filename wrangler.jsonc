@@ -27,7 +27,7 @@
     { "binding": "BACKUPS", "bucket_name": "bodyregen-backups-dev" },
     { "binding": "MEDIA", "bucket_name": "bodyregen-media-dev" }
   ],
-  "triggers": { "crons": ["0 3 * * SUN"] },
+  "triggers": { "crons": ["0 3 * * SUN", "0 4 * * *"] },
 
   "env": {
     "staging": {
@@ -47,7 +47,7 @@
         { "binding": "BACKUPS", "bucket_name": "bodyregen-backups-staging" },
         { "binding": "MEDIA", "bucket_name": "bodyregen-media-staging" }
       ],
-      "triggers": { "crons": ["0 3 * * SUN"] }
+      "triggers": { "crons": ["0 3 * * SUN", "0 4 * * *"] }
     }
     // "production" is added at go-live (Step 9), once the domain is bought and you give the go-ahead.
   }
