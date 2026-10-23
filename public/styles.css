@@ -1,0 +1,47 @@
+/* The Body Regeneration Method — base styles. Full design system arrives in Step 2. */
+:root {
+  --bg: #f6f1e8;
+  --surface: #fffdf8;
+  --ink: #1f2a24;
+  --ink-soft: #4a564f;
+  --accent: #8a6a3f;
+  --line: #e2d8c6;
+  --radius: 14px;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141a17;
+    --surface: #1c2420;
+    --ink: #ece4d6;
+    --ink-soft: #b4ada0;
+    --accent: #d2b07a;
+    --line: #2e3833;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 1.0625rem/1.6 var(--font-body);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+main { flex: 1; width: 100%; max-width: 68rem; margin: 0 auto; padding: 0 1rem; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip-link { position: absolute; left: -999px; top: 0; background: var(--ink); color: var(--bg); padding: .5rem 1rem; }
+.skip-link:focus { left: 1rem; z-index: 10; }
+.site-header { padding: 1.25rem 1rem; max-width: 68rem; margin: 0 auto; width: 100%; }
+.brand { font-family: var(--font-display); font-size: 1.15rem; color: var(--ink); text-decoration: none; letter-spacing: .01em; }
+.hero { padding: clamp(3rem, 12vw, 8rem) 0; max-width: 42rem; }
+.eyebrow { text-transform: uppercase; letter-spacing: .18em; font-size: .78rem; color: var(--accent); margin: 0 0 1rem; }
+h1 { font-family: var(--font-display); font-weight: 500; line-height: 1.12; font-size: clamp(2.1rem, 7vw, 3.6rem); margin: 0 0 1.5rem; }
+.lede { font-size: 1.15rem; color: var(--ink-soft); margin: 0; }
+.message { padding: 4rem 0; }
+.site-footer { border-top: 1px solid var(--line); padding: 1.5rem 1rem; text-align: center; color: var(--ink-soft); font-size: .875rem; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

@@ -1,0 +1,40 @@
+{
+  "name": "body-regeneration-method",
+  "version": "1.0.0",
+  "description": "The Body Regeneration Method website",
+  "scripts": {
+    "dev": "wrangler dev",
+    "types": "wrangler types --strict-vars=false",
+    "typecheck": "tsc",
+    "test": "vitest run",
+    "test:scripts": "node --test scripts/*.test.mjs",
+    "check:migrations": "node scripts/check-migrations.mjs",
+    "migrations:lock": "node scripts/check-migrations.mjs --lock",
+    "check": "npm run typecheck && npm run check:migrations && npm run test:scripts && npm run test",
+    "deploy:staging": "bash scripts/deploy.sh staging",
+    "deploy:production": "bash scripts/deploy.sh production",
+    "bundle": "bash scripts/make-bundle.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/platinumni/The-Body-Reset-Method.git"
+  },
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/platinumni/The-Body-Reset-Method/issues"
+  },
+  "homepage": "https://github.com/platinumni/The-Body-Reset-Method#readme",
+  "dependencies": {
+    "hono": "^4.13.13"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.4.7",
+    "@vitest/runner": "^4.1.12",
+    "@vitest/snapshot": "^4.1.12",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.12",
+    "wrangler": "^4.152.0"
+  },
+  "private": true,
+  "type": "module"
+}

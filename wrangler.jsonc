@@ -1,0 +1,41 @@
+// The Body Regeneration Method — Cloudflare Workers config.
+// Top level = local development and tests. "staging" = test site. "production" = live site.
+// Bindings are NOT inherited by environments, so each one lists its own.
+// Secrets are never stored here: use `wrangler secret put NAME --env <env>`.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bodyregen-dev",
+  "main": "src/index.tsx",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": "./public", "binding": "ASSETS" },
+  "observability": { "enabled": true },
+  "vars": {
+    "APP_ENV": "development",
+    "SITE_NAME": "The Body Regeneration Method",
+    "SITE_URL": "http://localhost:8787"
+  },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "bodyregen-dev", "database_id": "00000000-0000-0000-0000-000000000000", "migrations_dir": "migrations" }
+  ],
+  "r2_buckets": [{ "binding": "BACKUPS", "bucket_name": "bodyregen-backups-dev" }],
+  "triggers": { "crons": ["0 3 * * 0"] },
+
+  "env": {
+    "staging": {
+      "name": "bodyregen-staging",
+      "workers_dev": true,
+      "vars": {
+        "APP_ENV": "staging",
+        "SITE_NAME": "The Body Regeneration Method",
+        "SITE_URL": "https://bodyregen-staging.michaeljmarden.workers.dev"
+      },
+      "d1_databases": [
+        { "binding": "DB", "database_name": "bodyregen-staging", "database_id": "21f8e44a-bae4-499a-bacc-7417d7efebe5", "migrations_dir": "migrations" }
+      ],
+      "r2_buckets": [{ "binding": "BACKUPS", "bucket_name": "bodyregen-backups-staging" }],
+      "triggers": { "crons": ["0 3 * * 0"] }
+    }
+    // "production" is added at go-live (Step 9), once the domain is bought and you give the go-ahead.
+  }
+}
