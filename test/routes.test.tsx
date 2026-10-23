@@ -64,3 +64,22 @@ describe("security headers", () => {
     expect((await get("/missing")).headers.get("Content-Security-Policy")).toBeTruthy();
   });
 });
+
+describe("static files", () => {
+  it("serves versioned CSS with long caching and links it from pages", async () => {
+    const html = await (await get("/")).text();
+    const href = /href="(\/styles\.css\?v=[a-z0-9]+)"/.exec(html)?.[1];
+    expect(href).toBeTruthy();
+    const res = await get(href!);
+    expect(res.status).toBe(200);
+    expect(res.headers.get("Content-Type")).toContain("text/css");
+    expect(res.headers.get("Cache-Control")).toContain("immutable");
+    expect(await res.text()).toContain("--bg");
+  });
+
+  it("serves the favicon", async () => {
+    const res = await get("/favicon.svg");
+    expect(res.headers.get("Content-Type")).toBe("image/svg+xml");
+    expect(res.headers.get("Cache-Control")).toBe("public, max-age=300");
+  });
+});

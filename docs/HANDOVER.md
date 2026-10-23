@@ -40,9 +40,9 @@ In a Claude cloud session, Cloudflare auth comes through the proxy. Set `CLOUDFL
 - **Security:** PBKDF2 password hashing, hashed session tokens, CSRF on all forms, rate limiting, strict security headers and CSP, an audit log service.
 - **Data:** first migration (users, sessions, rate limits, audit log, consents, backups, settings). Migration safety check with a lock file.
 - **Search engines:** robots.txt and sitemap. The test site is noindex.
-- **Pages:** holding homepage, 404 and error pages, `/health`.
+- **Pages:** holding homepage, 404 and error pages, `/health`. CSS and the favicon are bundled into the Worker (`src/assets/`, served with content-hash URLs). We don't use Workers Static Assets, because asset uploads fail through the cloud session's proxy.
 - **Deploying:** deploy script (checks → backup → migrate → deploy → health check) and a bundle script.
-- **Tests:** 32 in the Workers runtime plus 7 for the migration check.
+- **Tests:** 34 in the Workers runtime plus 7 for the migration check.
 
 ## Next step
 **Step 2: Look and public pages** (see `docs/ROADMAP.md`). Waiting on the owner's voice note about further packages.

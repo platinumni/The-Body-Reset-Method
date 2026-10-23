@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import type { AppEnv } from "./env";
 import { csrf } from "./middleware/csrf";
 import { securityHeaders } from "./middleware/security";
+import { assetRoutes } from "./routes/assets";
 import { pageMeta } from "./routes/meta";
 import { publicRoutes } from "./routes/public";
 import { backupDatabase } from "./services/backup";
@@ -13,6 +14,7 @@ export const app = new Hono<AppEnv>();
 app.use("*", securityHeaders);
 app.use("*", csrf);
 
+app.route("/", assetRoutes);
 app.route("/", publicRoutes);
 
 app.notFound((c) => c.html(<NotFoundPage meta={pageMeta(c, { title: "Page not found", description: "Page not found.", path: c.req.path, noindex: true })} />, 404));

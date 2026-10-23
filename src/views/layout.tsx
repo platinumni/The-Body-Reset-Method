@@ -1,5 +1,6 @@
 import type { Child } from "hono/jsx";
 import { CSRF_FIELD } from "../middleware/csrf";
+import { assetUrl } from "../routes/assets";
 
 export type PageMeta = {
   title: string;
@@ -30,8 +31,8 @@ export function Layout(props: { meta: PageMeta; children: Child }) {
         <meta property="og:description" content={meta.description} />
         <meta property="og:url" content={canonical} />
         <meta name="theme-color" content="#1f2a24" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="stylesheet" href="/styles.css" />
+        <link rel="icon" href={assetUrl("/favicon.svg")} type="image/svg+xml" />
+        <link rel="stylesheet" href={assetUrl("/styles.css")} />
         {meta.jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(meta.jsonLd).replace(/</g, "\\u003c") }} />}
       </head>
       <body>
