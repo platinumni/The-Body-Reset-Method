@@ -348,6 +348,19 @@ export function LessonEditPage(props: { meta: AdminMeta; product: Product; lesso
               </textarea>
             </div>
             <div class="field">
+              <label for="watch_for">What to watch for (tension and compensation)</label>
+              <textarea id="watch_for" name="watch_for" rows={5}>
+                {l.watch_for ?? ""}
+              </textarea>
+            </div>
+            <div class="field">
+              <label for="levels">Easier and harder versions</label>
+              <textarea id="levels" name="levels" rows={8}>
+                {l.levels ?? ""}
+              </textarea>
+              <p class="hint">Use ### Beginner, ### Intermediate and ### Advanced as headings.</p>
+            </div>
+            <div class="field">
               <label for="key_points">Key points (the short version)</label>
               <textarea id="key_points" name="key_points" rows={5}>
                 {l.key_points ?? ""}
@@ -355,7 +368,7 @@ export function LessonEditPage(props: { meta: AdminMeta; product: Product; lesso
             </div>
             <div class="form-grid">
               <div class="field">
-                <label for="recommended_time">Suggested time</label>
+                <label for="recommended_time">Advised reps, sets or time</label>
                 <input id="recommended_time" name="recommended_time" type="text" value={l.recommended_time ?? ""} maxlength={80} placeholder="e.g. 30–60 seconds" />
               </div>
               <div class="field">

@@ -1,7 +1,23 @@
-// Programme reader script (served as /reader.js): read-aloud with the device's own voice,
-// and the print button on the exercise sheet. Only loaded on those two views.
+// Programme reader script (served as /reader.js): text size, the guide's "jump to" list,
+// read-aloud with the device's own voice, and the print button on the exercise sheet.
 
 export default `(() => {
+  // Text size: remembered on this device only. The page works at the normal size without it.
+  const root = document.documentElement;
+  const clamp = (n) => Math.max(0, Math.min(3, n));
+  let size = 0;
+  try { size = clamp(Number(localStorage.getItem("brm_text_size")) || 0); } catch (e) {}
+  const applySize = () => { if (size) root.dataset.textSize = String(size); else delete root.dataset.textSize; };
+  applySize();
+  document.querySelectorAll("[data-text-size]").forEach((el) => (el.hidden = false));
+  document.querySelectorAll("[data-text-size-step]").forEach((b) => b.addEventListener("click", () => {
+    size = clamp(size + Number(b.dataset.textSizeStep));
+    applySize();
+    try { localStorage.setItem("brm_text_size", String(size)); } catch (e) {}
+  }));
+  // "Jump to": go straight away when an item is picked.
+  document.querySelectorAll("[data-autosubmit]").forEach((sel) => sel.addEventListener("change", () => sel.form && sel.form.submit()));
+  document.querySelectorAll("[data-autosubmit-button]").forEach((b) => (b.hidden = true));
   document.querySelectorAll("[data-print]").forEach((b) => b.addEventListener("click", () => window.print()));
   const buttons = [...document.querySelectorAll("[data-listen]")];
   if (!buttons.length) return;

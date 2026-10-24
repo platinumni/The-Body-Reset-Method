@@ -185,6 +185,8 @@ async function readLessonForm(c: Context<AppEnv>, existingImage: string | null):
       key_points: text("key_points", 20_000),
       recommended_time: text("recommended_time", 80),
       sheet_line: text("sheet_line", 160),
+      watch_for: text("watch_for", 20_000),
+      levels: text("levels", 50_000),
     },
   };
 }

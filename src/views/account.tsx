@@ -156,18 +156,145 @@ export function AccountPage(props: {
 
 const MODE_LABELS: Record<Mode, string> = { guide: "Full guide", listen: "Listen", points: "Key points", sheet: "Exercise sheet" };
 
-function DoneButton(props: { base: string; mode: Mode; lesson: Lesson; csrfToken: string }) {
+/** Tick (or untick) an item. In the guide, ticking moves straight on to the next page. */
+function DoneButton(props: { base: string; mode: Mode; lesson: Lesson; csrfToken: string; item?: number; next?: number | null }) {
   const l = props.lesson;
+  const moveOn = !l.done && props.next != null;
   return (
     <form method="post" action={`${props.base}/progress`} class="lesson-done">
       <CsrfField token={props.csrfToken} />
       <input type="hidden" name="lesson" value={String(l.id)} />
       <input type="hidden" name="mode" value={props.mode} />
       <input type="hidden" name="done" value={l.done ? "no" : "yes"} />
+      {props.item != null && <input type="hidden" name="item" value={String(moveOn ? props.next : props.item)} />}
       <button class={`btn btn-small ${l.done ? "btn-ghost" : "btn-primary"}`} type="submit">
-        {l.done ? "✓ Done (undo)" : "Mark as done"}
+        {l.done ? "✓ Done (undo)" : moveOn ? "Mark as done and continue →" : "Mark as done"}
       </button>
     </form>
+  );
+}
+
+/** One collapsible part of an exercise, with a drop-down arrow. */
+function Part(props: { title: string; open?: boolean; note?: string; source: string | null }) {
+  if (!props.source) return null;
+  return (
+    <details class="part" open={props.open}>
+      <summary>
+        <span class="part-title">{props.title}</span>
+      </summary>
+      <div class="part-body">
+        {props.note && <p class="part-note">{props.note}</p>}
+        <div class="prose">
+          <RichText source={props.source} />
+        </div>
+      </div>
+    </details>
+  );
+}
+
+const guideUrl = (base: string, item: number) => `${base}?mode=guide&item=${item}`;
+
+/** Previous / Next buttons and a "jump to" list, so the guide reads like pages rather than one long scroll. */
+function Pager(props: { base: string; items: Lesson[]; index: number; jump?: boolean }) {
+  const { base, items, index } = props;
+  const total = items.length;
+  return (
+    <nav class="pager" aria-label="Move through the programme">
+      <div class="pager-row">
+        {index > 1 ? (
+          <a class="btn btn-ghost pager-btn" href={guideUrl(base, index - 1)} rel="prev">
+            ← Previous
+          </a>
+        ) : (
+          <span class="pager-btn" aria-hidden="true" />
+        )}
+        <span class="pager-count">
+          {index} of {total}
+        </span>
+        {index < total ? (
+          <a class="btn btn-primary pager-btn" href={guideUrl(base, index + 1)} rel="next">
+            Next →
+          </a>
+        ) : (
+          <a class="btn btn-primary pager-btn" href={`${base}?mode=points`}>
+            Key points →
+          </a>
+        )}
+      </div>
+      <progress class="pager-progress" max={total} value={index} aria-label={`Page ${index} of ${total}`} />
+      {props.jump && (
+        <form method="get" action={base} class="pager-jump">
+          <input type="hidden" name="mode" value="guide" />
+          <label for="jump-to" class="sr-only">
+            Jump to
+          </label>
+          <select id="jump-to" name="item" data-autosubmit>
+            {groupByStage(items).map((g) => {
+              const options = g.lessons.map((l) => {
+                const n = items.indexOf(l) + 1;
+                return (
+                  <option value={String(n)} selected={n === index}>
+                    {n}. {l.title}
+                    {l.done ? " ✓" : ""}
+                  </option>
+                );
+              });
+              return g.stage ? <optgroup label={g.stage}>{options}</optgroup> : options;
+            })}
+          </select>
+          <button class="btn btn-ghost btn-small" type="submit" data-autosubmit-button>
+            Go
+          </button>
+        </form>
+      )}
+    </nav>
+  );
+}
+
+function GuideItem(props: { base: string; items: Lesson[]; index: number; csrfToken: string }) {
+  const { base, items, index } = props;
+  const l = items[index - 1]!;
+  const next = index < items.length ? index + 1 : null;
+  const media = (
+    <>
+      {l.image_key && <img class="lesson-image" src={`/media/${l.image_key}`} alt={l.image_alt ?? ""} loading="lazy" />}
+      {l.youtube_id && <DemoVideo id={l.youtube_id} title={l.title} />}
+    </>
+  );
+  return (
+    <>
+      <Pager base={base} items={items} index={index} jump />
+      {l.kind === "exercise" ? (
+        <article class="lesson exercise" id={`lesson-${l.id}`}>
+          <p class="eyebrow">{l.stage ? `${l.stage} · Exercise` : "Exercise"}</p>
+          <h2>{l.title}</h2>
+          <TimeNote time={l.recommended_time} />
+          <Part
+            title="1. Starting position"
+            open
+            note="The most important part of the movement. Take your time here, and get it right before going further."
+            source={l.starting_position}
+          />
+          <Part title="2. Conducting the exercise" open source={l.conducting} />
+          <Part title="What to watch for" source={l.watch_for} />
+          <Part title="Easier and harder versions" source={l.levels} />
+          <Part title="Key points (the short version)" source={l.key_points} />
+          {media}
+          <DoneButton base={base} mode="guide" lesson={l} csrfToken={props.csrfToken} item={index} next={next} />
+        </article>
+      ) : (
+        <article class="lesson" id={`lesson-${l.id}`}>
+          {l.stage && <p class="eyebrow">{l.stage}</p>}
+          <h2>{l.title}</h2>
+          {media}
+          <div class="prose">
+            <RichText source={l.body} />
+          </div>
+          <DoneButton base={base} mode="guide" lesson={l} csrfToken={props.csrfToken} item={index} next={next} />
+        </article>
+      )}
+      <Pager base={base} items={items} index={index} />
+    </>
   );
 }
 
@@ -205,7 +332,7 @@ function DemoVideo(props: { id: string; title: string; collapsed?: boolean }) {
 const TimeNote = (props: { time: string | null }) =>
   props.time ? (
     <p class="time-note">
-      <strong>Suggested time:</strong> {props.time}. Tune in to your body rather than the clock.
+      <strong>Advised:</strong> {props.time}. Tune in to your body rather than the clock.
     </p>
   ) : null;
 
@@ -250,7 +377,29 @@ function spokenText(l: Lesson): string {
     .join(" ");
 }
 
-export function ReaderPage(props: { meta: PageMeta; csrfToken: string; programme: { slug: string; title: string }; mode: Mode; lessons: Lesson[] }) {
+/** A small A− / A+ control. Hidden until the reader script runs, since it needs it. */
+function TextSize() {
+  return (
+    <div class="text-size no-print" data-text-size hidden>
+      <span class="small">Text size</span>
+      <button class="btn btn-ghost btn-small" type="button" data-text-size-step="-1" aria-label="Smaller text">
+        A−
+      </button>
+      <button class="btn btn-ghost btn-small" type="button" data-text-size-step="1" aria-label="Larger text">
+        A+
+      </button>
+    </div>
+  );
+}
+
+export function ReaderPage(props: {
+  meta: PageMeta;
+  csrfToken: string;
+  programme: { slug: string; title: string };
+  mode: Mode;
+  lessons: Lesson[];
+  item?: number;
+}) {
   const { programme, mode } = props;
   const base = `/account/programmes/${programme.slug}`;
   const sections = props.lessons.filter((l) => l.kind === "section");
@@ -258,6 +407,8 @@ export function ReaderPage(props: { meta: PageMeta; csrfToken: string; programme
   // Guide and Listen: written sections from the Full tab plus exercises. Key points: Quick-tab sections plus exercises.
   const forMode = (m: Mode) => props.lessons.filter((l) => l.kind === "exercise" || (m === "points" ? l.tab === "quick" : l.tab === "full"));
   const empty = <p class="notice">This part is being prepared. We'll email you when it's ready.</p>;
+  const guide = forMode("guide");
+  const index = Math.min(Math.max(1, props.item ?? 1), Math.max(1, guide.length));
 
   return (
     <Layout meta={props.meta}>
@@ -274,51 +425,14 @@ export function ReaderPage(props: { meta: PageMeta; csrfToken: string; programme
               </a>
             ))}
           </nav>
+          <TextSize />
         </div>
       </section>
-      <section class="band band-tight">
+      <section class="band band-tight reader-body">
         <div class="wrap narrow">
-          {mode !== "sheet" && <HowToUse open={mode === "guide"} />}
+          {(mode !== "guide" || index === 1) && mode !== "sheet" && <HowToUse open={mode === "guide"} />}
 
-          {mode === "guide" &&
-            (forMode("guide").length === 0
-              ? empty
-              : groupByStage(forMode("guide")).map((g) => (
-                  <>
-                    <StageHeading stage={g.stage} />
-                    {g.lessons.map((l) =>
-                      l.kind === "exercise" ? (
-                        <article class="lesson exercise" id={`lesson-${l.id}`}>
-                          <p class="eyebrow">Exercise</p>
-                          <h2>{l.title}</h2>
-                          <TimeNote time={l.recommended_time} />
-                          <h3 class="part-title">1. Starting position</h3>
-                          <p class="part-note">The most important part of the movement. Take your time here, and get it right before going further.</p>
-                          <div class="prose">
-                            <RichText source={l.starting_position ?? ""} />
-                          </div>
-                          <h3 class="part-title">2. Conducting the exercise</h3>
-                          <div class="prose">
-                            <RichText source={l.conducting ?? ""} />
-                          </div>
-                          {l.image_key && <img class="lesson-image" src={`/media/${l.image_key}`} alt={l.image_alt ?? ""} loading="lazy" />}
-                          {l.youtube_id && <DemoVideo id={l.youtube_id} title={l.title} />}
-                          <DoneButton base={base} mode={mode} lesson={l} csrfToken={props.csrfToken} />
-                        </article>
-                      ) : (
-                        <article class="lesson" id={`lesson-${l.id}`}>
-                          <h2>{l.title}</h2>
-                          {l.youtube_id && <DemoVideo id={l.youtube_id} title={l.title} />}
-                          {l.image_key && <img class="lesson-image" src={`/media/${l.image_key}`} alt={l.image_alt ?? ""} loading="lazy" />}
-                          <div class="prose">
-                            <RichText source={l.body} />
-                          </div>
-                          <DoneButton base={base} mode={mode} lesson={l} csrfToken={props.csrfToken} />
-                        </article>
-                      ),
-                    )}
-                  </>
-                )))}
+          {mode === "guide" && (guide.length === 0 ? empty : <GuideItem base={base} items={guide} index={index} csrfToken={props.csrfToken} />)}
 
           {mode === "listen" && (
             <>
@@ -357,7 +471,7 @@ export function ReaderPage(props: { meta: PageMeta; csrfToken: string; programme
                             </button>
                             <div>
                               <strong>{l.title}</strong>
-                              {l.recommended_time && <span class="small muted"> · {l.recommended_time}</span>}
+                              {l.recommended_time && <span class="small muted"> · advised {l.recommended_time}</span>}
                               <details>
                                 <summary class="small">Show the words</summary>
                                 <p class="small" id={`say-${l.id}`}>
@@ -401,6 +515,10 @@ export function ReaderPage(props: { meta: PageMeta; csrfToken: string; programme
                 </button>
               </div>
               <h2 class="sheet-title">{programme.title}: exercise sheet</h2>
+              <p class="sheet-note">
+                The movements only, without the philosophy behind them. If you're at this stage, you should already have a full understanding and
+                awareness of the movement philosophy. If anything here doesn't make sense, go back to the full guide.
+              </p>
               {exercises.length === 0
                 ? empty
                 : groupByStage(exercises).map((g) => (
@@ -410,20 +528,23 @@ export function ReaderPage(props: { meta: PageMeta; csrfToken: string; programme
                         {g.lessons.map((l) => (
                           <li>
                             <strong>{l.title}</strong>
-                            {l.recommended_time && <span class="sheet-time"> · {l.recommended_time}</span>}
+                            {l.recommended_time && <span class="sheet-time"> · advised {l.recommended_time}</span>}
                             {l.sheet_line && <span class="sheet-line">{l.sheet_line}</span>}
                           </li>
                         ))}
                       </ol>
                     </section>
                   ))}
-              <p class="sheet-foot small">Tune in to your body rather than the clock. Stop if anything causes pain.</p>
+              <p class="sheet-foot small">
+                All reps, sets and times are advised. Advised: one round a day, and not every day is needed. Tune in to your body rather than the clock,
+                and stop if anything causes pain.
+              </p>
             </div>
           )}
           {sections.length + exercises.length > 0 && mode !== "sheet" && <p class="small muted no-print">{props.lessons.filter((l) => l.done).length} of {props.lessons.length} marked as done.</p>}
         </div>
       </section>
-      {(mode === "listen" || mode === "sheet") && <script src={assetUrl("/reader.js")} defer />}
+      <script src={assetUrl("/reader.js")} defer />
     </Layout>
   );
 }

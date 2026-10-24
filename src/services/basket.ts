@@ -31,7 +31,15 @@ export async function loadBasket(db: D1Database, slugs: string[]): Promise<Baske
   const covered = new Set<number>();
   for (const item of items) for (const id of await programmesUnlockedBy(db, item)) covered.add(id);
   const inBasket = new Set(items.map((i) => i.id));
-  const addOns = (await listOnSale(db)).filter((p) => !inBasket.has(p.id) && !(p.kind === "programme" && covered.has(p.id)));
+  const onSale = await listOnSale(db);
+  const addOns: Product[] = [];
+  for (const p of onSale) {
+    if (inBasket.has(p.id)) continue;
+    // Skip anything the basket already unlocks (a programme, or a bundle of them, including free bonuses).
+    const unlocks = await programmesUnlockedBy(db, p);
+    if (unlocks.length && unlocks.every((id) => covered.has(id))) continue;
+    addOns.push(p);
+  }
 
   return {
     items,

@@ -94,13 +94,13 @@ describe("basket", () => {
   });
 
   it("suggests add-ons, but not programmes already inside a bundle in the basket", async () => {
-    await putOnSale(env.DB, "lower-body-regeneration", 4900);
+    await putOnSale(env.DB, "core", 1900);
     await putOnSale(env.DB, "hips", 2900);
     const bundle = await env.DB.prepare("INSERT INTO products (slug, title, kind, price_pence, status) VALUES ('test-bundle', 'Test Bundle', 'bundle', 6900, 'on_sale') RETURNING id").first<number>("id");
     await env.DB.prepare("INSERT INTO bundle_items (bundle_id, product_id) VALUES (?1, ?2)").bind(bundle, await productId(env.DB, "hips")).run();
 
     const client = new TestClient(shopEnv);
-    await client.post("/basket/add", { slug: "lower-body-regeneration" });
+    await client.post("/basket/add", { slug: "core" });
     let html = await (await client.get("/basket")).text();
     expect(html).toContain("Add to your order");
     expect(html).toContain("<strong>Hips</strong>");
@@ -180,8 +180,10 @@ describe("Stripe webhook", () => {
     expect(paid).toMatchObject({ status: "paid", email: `buyer-${order.public_id.toLowerCase()}@example.com`, name: "Sam Buyer", country: "GB", stripe_payment_intent: `pi_${order.public_id}` });
 
     const ents = await env.DB.prepare("SELECT * FROM entitlements WHERE order_id = ?1").bind(order.id).all<any>();
-    expect(ents.results).toHaveLength(1);
-    expect(ents.results[0].product_id).toBe(await productId(env.DB, "lower-body-regeneration"));
+    // Lower Body comes with Hips and Core free.
+    expect(ents.results.map((e) => e.product_id).sort()).toEqual(
+      [await productId(env.DB, "lower-body-regeneration"), await productId(env.DB, "hips"), await productId(env.DB, "core")].sort(),
+    );
 
     const consents = await env.DB.prepare("SELECT kind, granted FROM consents WHERE source = ?1 ORDER BY kind").bind(`checkout:${order.public_id}`).all<any>();
     expect(consents.results).toEqual([

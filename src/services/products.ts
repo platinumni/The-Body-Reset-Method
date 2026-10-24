@@ -32,14 +32,17 @@ export async function getProductsBySlugs(db: D1Database, slugs: string[]): Promi
   return results;
 }
 
-/** The programme ids a product unlocks: itself, or a bundle's contents. */
+/**
+ * The programme ids a product unlocks. A bundle unlocks its contents; a programme unlocks
+ * itself plus any free bonus programmes linked to it (e.g. Lower Body includes Hips and Core).
+ */
 export async function programmesUnlockedBy(db: D1Database, product: Pick<Product, "id" | "kind">): Promise<number[]> {
-  if (product.kind === "programme") return [product.id];
   const { results } = await db
     .prepare("SELECT bi.product_id FROM bundle_items bi JOIN products p ON p.id = bi.product_id WHERE bi.bundle_id = ?1 AND p.kind = 'programme'")
     .bind(product.id)
     .all<{ product_id: number }>();
-  return results.map((r) => r.product_id);
+  const ids = results.map((r) => r.product_id);
+  return product.kind === "programme" ? [product.id, ...ids.filter((id) => id !== product.id)] : ids;
 }
 
 export function formatPrice(pence: number, currency = "gbp"): string {

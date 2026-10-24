@@ -65,5 +65,11 @@ Spread the toes.
   assert.equal(ex.key_points, "- Less effort");
   assert.match(buildSql("x", [ex], { update: false }), /'30–60 seconds'/);
   assert.throws(() => parseLessonFile(`---\nkey: lbr-bad\ntab: full\nkind: exercise\ntitle: X\n---\nno parts`), /Starting position/);
-  assert.deepEqual(splitParts("intro ignored\n## Key points\nA"), { starting_position: null, conducting: null, key_points: "A" });
+  assert.deepEqual(splitParts("intro ignored\n## Key points\nA\n## What to watch for\nB\n## Easier and harder versions\n### Beginner\nC"), {
+    starting_position: null,
+    conducting: null,
+    watch_for: "B",
+    levels: "### Beginner\nC",
+    key_points: "A",
+  });
 });

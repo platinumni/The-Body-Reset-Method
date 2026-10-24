@@ -44,6 +44,8 @@ export type Lesson = {
   key_points: string | null;
   recommended_time: string | null;
   sheet_line: string | null;
+  watch_for: string | null;
+  levels: string | null;
   youtube_id: string | null;
   image_key: string | null;
   image_alt: string | null;
@@ -54,7 +56,7 @@ export type Lesson = {
 export async function listLessons(db: D1Database, userId: number, productId: number): Promise<Lesson[]> {
   const { results } = await db
     .prepare(
-      `SELECT l.id, l.tab, l.kind, l.stage, l.title, l.body, l.starting_position, l.conducting, l.key_points, l.recommended_time, l.sheet_line,
+      `SELECT l.id, l.tab, l.kind, l.stage, l.title, l.body, l.starting_position, l.conducting, l.key_points, l.recommended_time, l.sheet_line, l.watch_for, l.levels,
          l.youtube_id, l.image_key, l.image_alt,
          EXISTS (SELECT 1 FROM lesson_progress lp WHERE lp.user_id = ?1 AND lp.lesson_id = l.id) AS done
        FROM programme_lessons l

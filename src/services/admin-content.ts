@@ -145,12 +145,24 @@ export type ExerciseFields = {
   key_points: string | null;
   recommended_time: string | null;
   sheet_line: string | null;
+  watch_for: string | null;
+  levels: string | null;
 };
 
-export const EXERCISE_DEFAULTS: ExerciseFields = { kind: "section", stage: null, starting_position: null, conducting: null, key_points: null, recommended_time: null, sheet_line: null };
+export const EXERCISE_DEFAULTS: ExerciseFields = {
+  kind: "section",
+  stage: null,
+  starting_position: null,
+  conducting: null,
+  key_points: null,
+  recommended_time: null,
+  sheet_line: null,
+  watch_for: null,
+  levels: null,
+};
 
 const LESSON_COLS =
-  "id, product_id, tab, position, title, body, youtube_id, image_key, image_alt, status, updated_at, kind, stage, starting_position, conducting, key_points, recommended_time, sheet_line";
+  "id, product_id, tab, position, title, body, youtube_id, image_key, image_alt, status, updated_at, kind, stage, starting_position, conducting, key_points, recommended_time, sheet_line, watch_for, levels";
 
 export async function listLessonsAdmin(db: D1Database, productId: number): Promise<LessonRow[]> {
   const { results } = await db.prepare(`SELECT ${LESSON_COLS} FROM programme_lessons WHERE product_id = ?1 ORDER BY tab, position, id`).bind(productId).all<LessonRow>();
@@ -165,16 +177,16 @@ export type LessonInput = Pick<LessonRow, "tab" | "title" | "body" | "youtube_id
 
 const exerciseValues = (i: Partial<ExerciseFields>) => {
   const f = { ...EXERCISE_DEFAULTS, ...i };
-  return [f.kind, f.stage, f.starting_position, f.conducting, f.key_points, f.recommended_time, f.sheet_line] as const;
+  return [f.kind, f.stage, f.starting_position, f.conducting, f.key_points, f.recommended_time, f.sheet_line, f.watch_for, f.levels] as const;
 };
 
 export async function createLesson(db: D1Database, productId: number, input: LessonInput, actor: Actor): Promise<number> {
   const id = (await db
     .prepare(
       `INSERT INTO programme_lessons (product_id, tab, position, title, body, youtube_id, image_key, image_alt, status,
-         kind, stage, starting_position, conducting, key_points, recommended_time, sheet_line)
+         kind, stage, starting_position, conducting, key_points, recommended_time, sheet_line, watch_for, levels)
        VALUES (?1, ?2, (SELECT COALESCE(MAX(position), 0) + 1 FROM programme_lessons WHERE product_id = ?1 AND tab = ?2), ?3, ?4, ?5, ?6, ?7, ?8,
-         ?9, ?10, ?11, ?12, ?13, ?14, ?15) RETURNING id`,
+         ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17) RETURNING id`,
     )
     .bind(productId, input.tab, input.title, input.body, input.youtube_id, input.image_key ?? null, input.image_alt, input.status, ...exerciseValues(input))
     .first<number>("id"))!;
@@ -193,6 +205,7 @@ export async function updateLesson(db: D1Database, id: number, input: LessonInpu
         `UPDATE programme_lessons SET tab = ?1, title = ?2, body = ?3, youtube_id = ?4, image_key = ?5, image_alt = ?6, status = ?7,
            position = CASE WHEN tab = ?1 THEN position ELSE (SELECT COALESCE(MAX(position), 0) + 1 FROM programme_lessons WHERE product_id = ?9 AND tab = ?1) END,
            kind = ?10, stage = ?11, starting_position = ?12, conducting = ?13, key_points = ?14, recommended_time = ?15, sheet_line = ?16,
+           watch_for = ?17, levels = ?18,
            updated_at = datetime('now') WHERE id = ?8`,
       )
       .bind(input.tab, input.title, input.body, input.youtube_id, imageKey, input.image_alt, input.status, id, before.product_id, ...exerciseValues({ ...pickExercise(before), ...input })),

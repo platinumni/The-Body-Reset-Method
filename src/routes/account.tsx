@@ -65,6 +65,7 @@ accountRoutes.get("/account/programmes/:slug", async (c) => {
   const programme = await ownedProgrammeBySlug(c.env.DB, user.id, c.req.param("slug"));
   if (!programme) return c.notFound();
   const mode = readMode(c.req.query("mode") ?? c.req.query("tab"));
+  const item = Number.parseInt(c.req.query("item") ?? "1", 10);
   return c.html(
     <ReaderPage
       meta={pageMeta(c, { title: programme.title, description: programme.title, path: `/account/programmes/${programme.slug}`, noindex: true })}
@@ -72,6 +73,7 @@ accountRoutes.get("/account/programmes/:slug", async (c) => {
       programme={programme}
       mode={mode}
       lessons={await listLessons(c.env.DB, user.id, programme.id)}
+      item={Number.isFinite(item) ? item : 1}
     />,
   );
 });
@@ -84,6 +86,8 @@ accountRoutes.post("/account/programmes/:slug/progress", async (c) => {
   const lessonId = Number(form.lesson);
   const mode = readMode(String(form.mode ?? form.tab ?? ""));
   if (Number.isInteger(lessonId)) await setLessonDone(c.env.DB, user.id, programme.id, lessonId, form.done === "yes");
+  const item = Number.parseInt(String(form.item ?? ""), 10);
+  if (mode === "guide" && Number.isInteger(item) && item > 0) return c.redirect(`/account/programmes/${programme.slug}?mode=guide&item=${item}`, 303);
   return c.redirect(`/account/programmes/${programme.slug}?mode=${mode}#lesson-${lessonId}`, 303);
 });
 

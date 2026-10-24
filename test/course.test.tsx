@@ -43,6 +43,8 @@ async function fill(pid: number) {
       key_points: "- Hips level",
       recommended_time: "30–60 seconds",
       sheet_line: "Slow shift, hips level",
+      watch_for: "- Gripping the toes",
+      levels: "### Beginner\nHold a wall.\n### Advanced\nEyes closed.",
     },
     actor,
   );
@@ -51,19 +53,44 @@ async function fill(pid: number) {
 const page = (c: TestClient, mode?: string) => c.get(`/account/programmes/hips${mode ? `?mode=${mode}` : ""}`).then((r) => r.text());
 
 describe("course structure", () => {
-  it("Full guide: intro first, then each exercise as starting position → conducting → demo video", async () => {
+  it("Full guide: one item per page, intro first, then each exercise as starting position → conducting → extras", async () => {
     const { client, pid } = await setup();
     await fill(pid);
-    const html = await page(client);
-    expect(html.indexOf("Philosophy intro")).toBeLessThan(html.indexOf("Hip shift"));
-    expect(html).toContain('<h2 class="stage-heading">Stage 1: Hips</h2>');
+    const first = await page(client);
+    expect(first).toContain("Philosophy intro");
+    expect(first).not.toContain("Hip shift</h2>");
+    expect(first).toContain("1 of 2");
+    expect(first).toContain('href="/account/programmes/hips?mode=guide&amp;item=2" rel="next"');
+    expect(first).toContain("How to use this programme");
+
+    const html = await client.get("/account/programmes/hips?mode=guide&item=2").then((r) => r.text());
+    expect(html).toContain("Stage 1: Hips · Exercise");
+    expect(html).toContain("2 of 2");
+    expect(html).toContain('rel="prev"');
+    expect(html).not.toContain("How to use this programme");
     const start = html.indexOf("1. Starting position");
     expect(start).toBeGreaterThan(0);
     expect(start).toBeLessThan(html.indexOf("2. Conducting the exercise"));
+    expect(html.indexOf("2. Conducting the exercise")).toBeLessThan(html.indexOf("What to watch for"));
+    expect(html).toContain("Easier and harder versions");
     expect(html).toContain("The most important part of the movement");
-    expect(html).toContain("<strong>Suggested time:</strong> 30–60 seconds. Tune in to your body rather than the clock.");
+    expect(html).toContain("<strong>Advised:</strong> 30–60 seconds. Tune in to your body rather than the clock.");
     expect(html).toContain("This shows what the movement looks like, nothing more");
+    expect(html).toContain("data-text-size");
     expect(html).not.toContain("Intro key points"); // quick-tab sections belong to Key points
+  });
+
+  it("Full guide: out-of-range pages are clamped, and ticking an item moves on to the next", async () => {
+    const { client, pid } = await setup();
+    await fill(pid);
+    expect(await client.get("/account/programmes/hips?mode=guide&item=99").then((r) => r.text())).toContain("2 of 2");
+    expect(await client.get("/account/programmes/hips?mode=guide&item=abc").then((r) => r.text())).toContain("1 of 2");
+    const first = await page(client);
+    expect(first).toContain("Mark as done and continue →");
+    const lesson = /name="lesson" value="(\d+)"/.exec(first)![1]!;
+    const res = await client.post("/account/programmes/hips/progress", { lesson, mode: "guide", done: "yes", item: "2" });
+    expect(res.status).toBe(303);
+    expect(res.headers.get("location")).toBe("/account/programmes/hips?mode=guide&item=2");
   });
 
   it("Listen: a play button per item reading the starting position and conducting, without formatting marks", async () => {
@@ -97,6 +124,8 @@ describe("course structure", () => {
     expect(html).not.toContain("Intro key points");
     expect(html).toContain("data-print");
     expect(html).not.toContain("How to use this programme");
+    expect(html).toContain("you should already have a full understanding");
+    expect(html).toContain("advised 30–60 seconds");
   });
 
   it("old ?tab= links still work", async () => {
