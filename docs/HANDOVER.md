@@ -196,6 +196,7 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Admin:** the lesson editor has the What to watch for and Easier and harder versions fields.
 
 ## Next step
+- **2026-10-24: the course is published on staging only**, at the owner's request, so they can preview it on their phone. Their preview member account is `michaeljmarden+preview@gmail.com` (order `OWNER-PREVIEW`, £0, no payment). Their main account is the admin one, which needs 2FA. The content files still say `status: draft`, so a later `--update` import will set staging back to draft unless the files are changed to `published` first.
 - The owner reviews the course (screenshots, or drafts once admin login exists) and the YouTube links.
 - Publish the drafts on staging once the owner approves. In admin, or set `status: published` in the files and run `node scripts/import-content.mjs staging --update`.
 - Then **Step 9 (go live):** see `docs/GO_LIVE.md`.
