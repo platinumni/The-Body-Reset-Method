@@ -29,6 +29,16 @@ Copy `content/programmes/lower-body-regeneration/11-exercise-template.md`. Each 
 - **Key points:** the short version.
 - A suggested time, one line for the exercise sheet, and an optional YouTube demo link.
 
+## Owner sends the concept, Claude fleshes it out (agreed 2026-10-24)
+- The owner explains the concept in their own words and may not know the technical terms or exactly what each exercise targets.
+- Claude researches and adds:
+  - correct terminology in plain English (e.g. intrinsic foot muscles, foot tripod, proprioception),
+  - what each exercise works and why,
+  - cues and common mistakes that follow from the owner's concept.
+- **The owner's concept leads.** Claude never changes what's taught.
+- Use only well-established anatomy and movement science. No invented studies or statistics, and no medical or cure claims.
+- **Every report lists what Claude added beyond the owner's words**, so the owner can confirm or correct it quickly.
+
 ## Rules
 - Claude never invents results, testimonials or medical claims. Anything uncertain is marked `[PLACEHOLDER: …]` or `[OWNER TO CONFIRM: …]`.
 - Videos are YouTube links shown in privacy mode (youtube-nocookie). Set them to **Unlisted** on YouTube so only buyers see them on the site.
