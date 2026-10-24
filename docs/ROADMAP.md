@@ -13,6 +13,7 @@ Times are realistic / worst case, including waiting for the owner's "CH".
 | 6 | Affiliates: share links, tracking, commission, payouts | ✅ Done 2026-10-23 | — |
 | 7 | Automation: email sequences, morning report, usage watch, campaigns, launch checklist | ✅ Done 2026-10-23 | — |
 | 7b | Marketing and SEO: sign-up pop-up (double opt-in), offers and discount codes, conversion sections, 3 guides, rich results, share image | ✅ Done 2026-10-23 | — |
+| 8b | Premium AI voiceover: once content is final, owner picks a voice from samples (OpenAI-style about £2–£5 pay-as-you-go, or ElevenLabs about £10–£20 for one month, then cancel). Claude generates one audio file per section and exercise into R2; Play buttons use them, with the device voice as fallback; an "AI-generated voice" note under the player. About half a day. | Planned (end of content) | 0.5 / 1 day |
 | 8 | Content: owner's programmes loaded (via voice notes → drafts → approval) | ⏳ Next (owner sends content) | Depends on owner |
 | 9 | Go live: domain, Stripe live, real test purchase and refund, and a check that no `[PLACEHOLDER]` remains | — | 1 / 3 days |
 

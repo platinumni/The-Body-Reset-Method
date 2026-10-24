@@ -22,6 +22,8 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Decide on a sign-up offer** (optional), e.g. 10% off the first programme. Create the code in Stripe, then add the headline and code in Admin → Site wording.
 - [ ] **Testimonials:** paste real ones into Admin → Site wording (or send them to Claude) and the section appears automatically.
 
+- [ ] **When the course content is final:** choose an AI voice from samples Claude sends (a one-off cost of about £2–£20).
+
 ## Before go-live
 - [ ] Follow `docs/GO_LIVE.md`. Admin → **Launch checklist** shows what's left.
 - [ ] **ICO data protection fee** (about £52 a year): ico.org.uk/fee
