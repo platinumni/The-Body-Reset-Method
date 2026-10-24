@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { buildSql, parseLessonFile, splitParts, youtubeId } from "./import-content.mjs";
 
 const file = `---
@@ -72,4 +74,23 @@ Spread the toes.
     levels: "### Beginner\nC",
     key_points: "A",
   });
+});
+
+test("every programme file parses, exercises are complete, and the wording stays within education", () => {
+  const dir = new URL("../content/programmes/", import.meta.url).pathname;
+  const banned = /\b(cure[sd]?|heal(s|ed|ing)?|treat(s|ed|ment)?|fix(es|ed)?|lymph\w*|reflexology|DNS|dynamic neuromuscular)\b/i;
+  for (const slug of readdirSync(dir).filter((d) => statSync(join(dir, d)).isDirectory())) {
+    for (const f of readdirSync(join(dir, slug)).filter((f) => f.endsWith(".md"))) {
+      const text = readFileSync(join(dir, slug, f), "utf8");
+      const l = parseLessonFile(text, `${slug}/${f}`);
+      if (l.status === "archived") continue;
+      // "medical treatment" appears only in the disclaimer sentence.
+      assert.doesNotMatch(text.replace(/not medical treatment/gi, ""), banned, `${slug}/${f}`);
+      if (l.kind !== "exercise") continue;
+      for (const part of ["starting_position", "conducting", "watch_for", "levels", "key_points", "recommended_time", "sheet_line"]) {
+        assert.ok(l[part], `${slug}/${f} is missing ${part}`);
+      }
+      assert.match(l.levels, /### Beginner[\s\S]*### Intermediate[\s\S]*### Advanced/, `${slug}/${f} levels`);
+    }
+  }
 });

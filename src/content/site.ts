@@ -53,6 +53,20 @@ export const PRINCIPLES_DEPTH: { title: string; paragraphs: string[] }[] = [
   },
 ];
 
+/** The four stages of learning a skill. The programmes walk you through all four. */
+export const LEARNING_STAGES: { title: string; summary: string }[] = [
+  { title: "Unconsciously incompetent", summary: "You don't know you're gripping. It just feels normal." },
+  { title: "Consciously incompetent", summary: "You start to notice it. Frustrating at first, but it's real progress." },
+  { title: "Consciously competent", summary: "You can do it well, as long as you concentrate." },
+  { title: "Unconsciously competent", summary: "Your body does it by itself. This is the goal." },
+];
+
+/** Effortless action: the feeling the method is after. */
+export const EFFORTLESS = [
+  "There's an old idea from Taoism called wu wei, often translated as \"effortless action\": doing exactly what's needed, and nothing more. That's the feeling the method is after.",
+  "It isn't collapse, and it isn't laziness. You release the tension, find the muscles that should be working, and then release even those, back to the level your reflexes need. Then you learn to trust those reflexes.",
+];
+
 /** The "why" behind the method, used on the homepage and the method page. */
 export const WHY = {
   title: "Most of us were never taught how to move. We learned how to hold on.",
@@ -115,26 +129,53 @@ export const PROGRAMMES: Programme[] = [
   {
     slug: "lower-body-regeneration",
     title: "Lower Body Regeneration",
-    short: "Our flagship programme rebuilds the way you move from the ground up: from the arches and toes, through the Achilles, calves and knees, to the hips.",
+    short:
+      "Our flagship programme rebuilds the way you move from the ground up: from the feet and balance, through the shins, Achilles and calves, to the hips and knees. Comes with the Core & Hips programme free.",
     status: "available",
     flagship: true,
     price: placeholder("Flagship price"),
     access: placeholder("How long buyers keep access (e.g. lifetime)"),
     stages: [
-      { title: "Feet, arches & toes", summary: "Learn to use your arches and toes as they're meant to work, so your feet support you instead of gripping. Everything else stands on this." },
-      { title: "Achilles & calves", summary: "Build strength and control through the Achilles and calves, on top of feet that now support you properly." },
-      { title: "Knees", summary: "Bring awareness and control to the knees, so they can bend and move freely instead of being forced into position." },
-      { title: "Hips", summary: "Stabilise the hips so the whole lower body works as one connected system, and carry that stability up through the rest of you." },
+      { title: "Feet & balance", summary: "Short foot, toe yoga, toe spreading and single-leg balance. Learn the method itself, and let your feet support you instead of gripping. Everything else stands on this." },
+      { title: "Shins, Achilles & calves", summary: "Tibialis raises and calf raises: basic strength for the lower leg, built in the position you've got." },
+      { title: "Hips & knees", summary: "Glute bridge, clamshells, single-leg hinge and split squat: connect the feet to the hips, so the knees can move freely instead of being forced." },
+      { title: "Integrate", summary: "Pogo hops in two parts, first with conscious control, then letting go and trusting your reflexes. The culmination of the programme." },
     ],
     includes: [
-      "The Full Programme: the complete teaching, with the philosophy first and then every stage and exercise explained. We recommend reading it in full before you begin, ideally more than once.",
-      "The Quick Run-Through: the key points from each stage, to keep beside you while you train.",
-      "Video demonstrations of the exercises, so you can see exactly how each one should look and feel.",
+      "11 exercises across four stages. Each one has a detailed starting position, how to do it, what to watch for, and easier and harder versions, so you can start wherever you are.",
+      "The full guide, one page at a time: the philosophy first, then each exercise, with Next and Previous buttons. No endless scrolling.",
+      "Listen mode, a short Key points version, and a one-page exercise sheet you can print or keep on your phone.",
+      "Demonstration videos, so you can see what each movement looks like.",
+      "Free bonus: the complete Core & Hips programme, with 20 more exercises for the hips, the breath and the deep core.",
+      "Advised: one round a day, about 25–35 minutes while you're learning and 15–20 once you know it. Not every day is needed.",
       "Your own members' area, where your programmes are always waiting for you.",
     ],
   },
+  {
+    slug: "core-and-hips",
+    title: "Core & Hips",
+    short:
+      "Open and strengthen the hips, then rebuild the deep core from the breath up, with released, reflexive support instead of bracing. Free with Lower Body Regeneration.",
+    status: "available",
+    price: placeholder("Core & Hips price (free with Lower Body)"),
+    access: placeholder("How long buyers keep access (e.g. lifetime)"),
+    stages: [
+      { title: "Open the hips", summary: "90/90 switches, hip circles, leg swings and simple stretches. Build range off the correct pattern, without leaning or forcing." },
+      { title: "Strengthen the hips", summary: "Step hip hikes, side-lying leg raises, banded side steps and supported hip airplanes." },
+      { title: "Breath & deep core", summary: "360° breathing and simple floor positions inspired by how babies first learn to stabilise and move." },
+      { title: "The culmination", summary: "Dead bug, bird dog, front plank and side plank, done released but deep." },
+    ],
+    includes: [
+      "Two programmes in one: Hips (10 exercises) and Core (11 exercises).",
+      "Every exercise with a detailed starting position, how to do it, what to watch for, and easier and harder versions.",
+      "The same page-by-page guide, Listen mode, Key points and printable exercise sheet.",
+      "Advised: one round of each a day if you have the time, about 20 minutes each while you're learning. Do them together, alternate them, or split them across the week.",
+      "Included free with Lower Body Regeneration.",
+    ],
+  },
   { slug: "upper-body", title: "Upper Body", short: "The same principles applied to the shoulders, arms and upper back, where so many of us hold tension.", status: "coming-soon", price: placeholder("Price") },
-  { slug: "hips", title: "Hips", short: "A focused programme to release tension around the hips and build lasting stability.", status: "coming-soon", price: placeholder("Price") },
+  { slug: "hips", title: "Hips", short: "The hips half of Core & Hips on its own: open and strengthen the hips, building range off the correct pattern.", status: "coming-soon", price: placeholder("Price") },
+  { slug: "core", title: "Core", short: "The core half of Core & Hips on its own: rebuild reflexive support from the breath up, without bracing.", status: "coming-soon", price: placeholder("Price") },
   { slug: "breathwork-regulation", title: "Breathwork & Regulation", short: "Learn to use your breath to settle the body, support release and recover well.", status: "coming-soon", price: placeholder("Price") },
   { slug: "full-body", title: "Full Body", short: "The complete method brought together, from head to toe.", status: "coming-soon", price: placeholder("Price") },
   { slug: "stretching", title: "Stretching", short: "Gentle, open stretching programmes for the upper body, lower body and full body.", status: "coming-soon", price: placeholder("Price") },
@@ -145,7 +186,9 @@ export type Faq = { q: string; a: Copy[] };
 export const FAQS: Faq[] = [
   {
     q: "Where should I start?",
-    a: ["Start with the flagship, Lower Body Regeneration. Read the Full Programme all the way through before you begin, ideally a few times, so you understand the philosophy behind the training. Then use the Quick Run-Through as you practise."],
+    a: [
+      "Start with the flagship, Lower Body Regeneration, which comes with Core & Hips free. Read the full guide before you begin, ideally a few times, so you understand the philosophy behind the training. Then, as you get to know it, move on to Listen mode, the Key points and finally the one-page exercise sheet.",
+    ],
   },
   {
     q: "Who is the method for?",
@@ -157,14 +200,29 @@ export const FAQS: Faq[] = [
   },
   {
     q: "Is this medical treatment or physiotherapy?",
-    a: ["No. It's education and movement coaching. It doesn't diagnose, treat or replace advice from a doctor or physiotherapist."],
+    a: ["No. It's education and movement coaching. If you have a medical condition or an injury, check with your doctor or physiotherapist before you start."],
   },
   {
     q: "How do I get my programme after buying?",
     a: ["You don't need an account to buy. After payment we email you a link to create your account. Log in and your programmes are waiting in your members' area."],
   },
   { q: "How long do I keep access?", a: [placeholder("Access length, e.g. lifetime access to programmes you've bought")] },
-  { q: "Do I need any equipment?", a: [placeholder("Equipment needed, if any")] },
+  {
+    q: "Do I need any equipment?",
+    a: [
+      "Very little. You train barefoot, and you'll need a hard chair, a step or stair, a wall or door frame to hold, a sofa or bench, and a mat or towel. For some of the harder versions, a resistance band, a light weight or a yoga ball are useful but optional.",
+    ],
+  },
+  {
+    q: "How long does it take, and how often should I do it?",
+    a: [
+      "Everything is advised rather than fixed. We advise one round a day if you have the time: about 25–35 minutes for Lower Body while you're learning, and 15–20 minutes once you know it. You don't need to do it every day. Some people train daily because they love it, others two or three times a week, and both are fine.",
+    ],
+  },
+  {
+    q: "What do I get free with Lower Body Regeneration?",
+    a: ["The full Core & Hips programme: 10 exercises for the hips and 11 for the breath and deep core, built on the same philosophy. It appears in your members' area alongside Lower Body."],
+  },
   {
     q: "How can I pay?",
     a: ["Checkout is handled securely by Stripe. You can pay by debit or credit card, Apple Pay or Google Pay, and PayPal where available. We never see your card details."],

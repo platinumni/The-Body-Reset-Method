@@ -1,15 +1,13 @@
 # Handover — The Body Regeneration Method
 
-_Last updated: 2026-10-23, after Step 7 (Automation). **The build (Steps 1–7) is complete on the test site.**_
+_Last updated: 2026-10-24, after the full course build. **The build (Steps 1–7) and the first full course content are on the test site, as drafts.**_
 
 ## What this is
 This is a worldwide (mainly UK) website selling online movement programmes by the owner, a coach.
-- **Flagship:** Lower Body Regeneration. It works from the ground up: feet, arches and toes → Achilles and calves → knees → hip stability.
+- **Flagship:** Lower Body Regeneration. It works from the ground up: feet and balance → shins, Achilles and calves → hips and knees → integrate. It comes with **Core & Hips free**.
 - **Philosophy:** release the tension, the forcing and the control, and learn to love your body again. The homepage hints at it; buyers get the full teaching.
 - **Buying:** visitors buy without an account. Afterwards they get an emailed link to create an account, and they see only the programmes they've bought.
-- **Each programme has two tabs:**
-  - **Full Programme:** read it first, a few times.
-  - **Quick Run-Through:** key points.
+- **Each programme has four modes:** Full guide (one page at a time, with Next/Previous), Listen, Key points and a printable Exercise sheet.
 - **Content:** text, YouTube video links and the owner's images.
 - **Affiliates:** customers can share a personal link and earn commission. One level only.
 - **Payments:** Stripe Checkout (card, Apple Pay, Google Pay, PayPal via Stripe). See `docs/DECISIONS.md`.
@@ -171,5 +169,33 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Admin lesson editor** has a Type selector and all the exercise fields. The import script supports `kind: exercise`, with body parts split on `## Starting position`, `## Conducting the exercise` and `## Key points`.
 - **Content:** each stage now has an "About this stage" placeholder section. There's an exercise template in stage 1 (`11-exercise-template.md`). The old Quick-tab stage placeholders are archived.
 
+**Full course build (2026-10-24)**
+- **Migration 0010:**
+  - adds `watch_for` and `levels` to lessons;
+  - adds the **Core** programme and the **Core & Hips** bundle (Hips + Core), both draft with no price;
+  - links Hips and Core to Lower Body as **free bonuses** through `bundle_items` on the programme.
+- **How the bonus works:** `programmesUnlockedBy()` returns a programme plus its bonus items. Buying Lower Body grants three programmes. The basket won't suggest Core & Hips, Hips or Core to someone already buying Lower Body. Hips and Core can each still be sold alone later, by giving them a price and setting them on sale.
+- **Reader:**
+  - The Full guide is **paged**, one item per page (`?mode=guide&item=N`). It has big Previous/Next buttons, an "N of M" count, a progress bar and a "Jump to" list (auto-submits with JS, with a Go button without it). "Mark as done and continue →" moves to the next page.
+  - Exercise parts are drop-downs with arrows: Starting position and Conducting are open; What to watch for, Easier and harder versions, and Key points are closed.
+  - The text-size control (A−/A+) is remembered on the device (localStorage). `/reader.js` now loads in every mode.
+  - All times show as "Advised". The exercise sheet carries the note "you should already have a full understanding of the movement philosophy" and the advised one-round-a-day line.
+- **Content:** in `content/programmes/`, imported to staging as **drafts**.
+  - **Lower Body:** read this first (updated), the six principles, how to run a round, and 4 stage intros. Then 11 exercises (pogo hops split into part 1 and part 2), followed by "Strengthen and reintegrate" and "What next". The old template exercise key was reused for Short foot.
+  - **Hips:** an intro, part 1 (6 openers) and part 2 (4 strength exercises).
+  - **Core:** an intro, part 1 (7 breath and deep-core foundations), part 2 (dead bug, bird dog, front plank, side plank) and "What next".
+  - Every exercise has: starting position, conducting, what to watch for, Beginner/Intermediate/Advanced, key points, an advised time and a sheet line.
+  - A script test checks every exercise is complete and that no file uses cure/heal/treat/fix, lymphatic, reflexology or DNS wording.
+- **Website:**
+  - New stage list on the flagship.
+  - A Core & Hips page (price placeholder; parts shown as a numbered list).
+  - Hips and Core listed separately as "coming soon".
+  - On the method page: "Engage, but don't grip" (wu wei) and the four stages of learning.
+  - FAQs for equipment, time and frequency, and the free bonus.
+  - Emails and copy updated from "Full Programme / Quick Run-Through" to the four modes.
+- **Admin:** the lesson editor has the What to watch for and Easier and harder versions fields.
+
 ## Next step
-**Step 8 (content)** and **Step 9 (go live)**: see `docs/GO_LIVE.md` and `docs/CONTENT_WORKFLOW.md`.
+- The owner reviews the course (screenshots, or drafts once admin login exists) and the YouTube links.
+- Publish the drafts on staging once the owner approves. In admin, or set `status: published` in the files and run `node scripts/import-content.mjs staging --update`.
+- Then **Step 9 (go live):** see `docs/GO_LIVE.md`.

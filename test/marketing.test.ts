@@ -119,7 +119,7 @@ describe("pop-up and conversion sections", () => {
   it("flagship page has 'Is this you?', how it works, FAQs and a phone buy bar", async () => {
     const html = await (await app.request("/programmes/lower-body-regeneration", {}, env)).text();
     expect(html).toContain("Is this you?");
-    expect(html).toContain("Start with the Full Programme");
+    expect(html).toContain("Start with the full guide");
     expect(html).toContain('class="sticky-buy"');
     expect(html).toContain("All questions →");
   });

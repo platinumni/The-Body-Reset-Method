@@ -20,7 +20,7 @@ export function HowItWorks() {
   const steps = [
     { title: "Choose your programme", text: "Start with Lower Body Regeneration, the foundation for everything else. Add other programmes at checkout if you like." },
     { title: "Get instant access", text: "Pay securely, and we'll email you a link to create your account. Your programme is waiting there, on any device." },
-    { title: "Start with the Full Programme", text: "Read it through to understand the philosophy, then train with the Quick Run-Through beside you, at your own pace." },
+    { title: "Start with the full guide", text: "Read it page by page to understand the philosophy, then train with Listen mode, the Key points or the one-page exercise sheet, at your own pace." },
   ];
   return (
     <ol class="how-steps">

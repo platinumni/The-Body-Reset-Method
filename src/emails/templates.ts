@@ -48,7 +48,7 @@ export function orderConfirmationEmail(i: OrderEmailInput): Email {
 ${i.discountPence ? `<tr><td style="padding:6px 0">Discount</td><td align="right">-${formatPrice(i.discountPence, i.currency)}</td></tr>` : ""}
 <tr><td style="padding:8px 0;font-weight:bold">Total</td><td align="right" style="font-weight:bold">${formatPrice(i.totalPence, i.currency)}</td></tr></table>
 <p style="font-size:14px;color:#4b5750">Order reference: ${esc(i.orderRef)}</p>${action}
-<p>Before you start, read the Full Programme all the way through, ideally a few times. Everything else builds on it.</p>`,
+<p>Before you start, read the full guide all the way through, ideally a few times. Everything else builds on it.</p>`,
   );
   const text = [
     hello,
@@ -62,7 +62,7 @@ ${i.discountPence ? `<tr><td style="padding:6px 0">Discount</td><td align="right
     "",
     i.setupUrl ? `Create your account (link works once, lasts 7 days): ${i.setupUrl}` : `Log in to your programmes: ${i.loginUrl}`,
     "",
-    "Before you start, read the Full Programme all the way through, ideally a few times.",
+    "Before you start, read the full guide all the way through, ideally a few times.",
   ].join("\n");
   return { to: i.to, template: "order_confirmation", subject: `Your order: ${i.lines.map((l) => l.title).join(", ")}`, html, text };
 }

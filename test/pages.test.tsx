@@ -54,7 +54,8 @@ describe("homepage content", () => {
 
   it("shows the flagship ground-up stages from the feet", async () => {
     const html = await (await get("/")).text();
-    expect(html.indexOf("Feet, arches &amp; toes")).toBeLessThan(html.indexOf("Hips</h3>"));
+    expect(html.indexOf("Feet &amp; balance")).toBeGreaterThan(0);
+    expect(html.indexOf("Feet &amp; balance")).toBeLessThan(html.indexOf("Shins, Achilles &amp; calves"));
   });
 
   it("includes the who-it's-not-for safety section", async () => {

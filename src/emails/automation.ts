@@ -16,8 +16,8 @@ export function setupReminderEmail(i: { siteName: string; to: string; url: strin
 export function checkInEmail(i: { siteName: string; to: string; name: string | null; url: string }): Email {
   const hello = i.name ? `Hi ${esc(i.name)},` : "Hi,";
   const tips = [
-    "If you haven't already, read the Full Programme all the way through before you train. The philosophy behind it is what makes the exercises work.",
-    "Use the Quick Run-Through as you practise, to keep the key points in mind.",
+    "If you haven't already, read the full guide all the way through before you train. The philosophy behind it is what makes the exercises work.",
+    "Once you know the ideas, use Listen mode or the Key points as you practise, and the one-page exercise sheet when you just want the movements.",
     "Go at your own pace. The aim is to release unnecessary effort, not to force progress.",
     "Stop if anything causes pain, and get advice before continuing.",
   ];

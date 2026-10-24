@@ -15,7 +15,7 @@ accountRoutes.use("/account/*", async (c, next) => (c.req.path === "/account/set
 accountRoutes.use("/media/*", requireUser);
 
 const NOTICES: Record<string, string> = {
-  welcome: "Your account is ready. Start with the Full Programme.",
+  welcome: "Your account is ready. Start with the full guide.",
   subscribed: "You're subscribed to news and new programmes.",
   unsubscribed: "You've been unsubscribed. You'll still get emails about your orders.",
   password: "Password changed. You've been logged out on other devices.",

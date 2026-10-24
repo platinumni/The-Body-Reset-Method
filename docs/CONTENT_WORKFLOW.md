@@ -13,7 +13,7 @@ Claude builds it in.
 2. **Claude writes it up professionally in the owner's voice**, keeping their meaning and adding no claims they didn't make, then drafts the programme in the standard structure:
    - **Overview:** sales-page summary, who it's for and not for, what's included. The philosophy is hinted at, not given away.
    - **Full Programme:** the complete teaching, philosophy first, then each stage and exercise with video, images, cues and common mistakes.
-   - **Quick Run-Through:** key highlighted points for each stage.
+   - **Key points:** the short version of each exercise (the reader also has Listen mode and a one-page Exercise sheet).
    - **Price and package:** a placeholder until the owner confirms. Covers standalone, bundle or add-on.
 3. **Draft goes onto the test site** (from Step 5: as a draft in admin). Claude sends the preview link.
 4. **Owner checks** and replies with changes or "CH".
@@ -27,7 +27,7 @@ Copy `content/programmes/lower-body-regeneration/11-exercise-template.md`. Each 
 - **Starting position:** the big part.
 - **Conducting the exercise.**
 - **Key points:** the short version.
-- A suggested time, one line for the exercise sheet, and an optional YouTube demo link.
+- What to watch for (tension and compensation), Beginner / Intermediate / Advanced versions, an **advised** time or reps, one line for the exercise sheet, and an optional YouTube demo link.
 
 ## Owner sends the concept, Claude fleshes it out (agreed 2026-10-24)
 - The owner explains the concept in their own words and may not know the technical terms or exactly what each exercise targets.

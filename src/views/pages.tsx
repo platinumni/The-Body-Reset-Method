@@ -1,4 +1,4 @@
-import { FOUNDATION, PRINCIPLES_DEPTH, WHY, type Copy, type Faq, type Principle } from "../content/site";
+import { EFFORTLESS, FOUNDATION, LEARNING_STAGES, PRINCIPLES_DEPTH, WHY, type Copy, type Faq, type Principle } from "../content/site";
 import type { CatalogueEntry } from "../services/catalogue";
 import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
 import { CsrfField, Layout, type PageMeta } from "./layout";
@@ -50,6 +50,27 @@ export function MethodPage(props: { meta: PageMeta; principles: Principle[] }) {
               ))}
             </div>
           ))}
+        </div>
+      </section>
+      <section class="band">
+        <div class="wrap narrow">
+          <SectionHead title="Engage, but don't grip" />
+          {EFFORTLESS.map((p) => (
+            <p class="prose-lg">{p}</p>
+          ))}
+        </div>
+      </section>
+      <section class="band band-quiet">
+        <div class="wrap narrow">
+          <SectionHead title="The four stages of learning" intro="Every new skill passes through four stages. The programmes are built to walk you through all of them." />
+          <ol class="learning-stages">
+            {LEARNING_STAGES.map((s) => (
+              <li>
+                <strong>{s.title}</strong>
+                <span>{s.summary}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
       <section class="band">
@@ -140,7 +161,22 @@ export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry
           </div>
         </section>
       )}
-      {p.stages && (
+      {p.stages && !p.flagship && (
+        <section class="band">
+          <div class="wrap narrow">
+            <SectionHead title="What you'll work through" intro="Each part builds on the one before it." />
+            <ol class="learning-stages">
+              {p.stages.map((s) => (
+                <li>
+                  <strong>{s.title}</strong>
+                  <span>{s.summary}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
+      {p.stages && p.flagship && (
         <section class="band">
           <div class="wrap split">
             <div>
