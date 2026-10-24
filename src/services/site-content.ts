@@ -54,6 +54,7 @@ export const WORDING: WordingField[] = [
   { key: "offer.code", label: "Sign-up offer: discount code", help: "Exactly as created in Stripe, e.g. WELCOME10. Sent in the welcome email.", multiline: false, defaultValue: "" },
   { key: "offer.details", label: "Sign-up offer: small print (optional)", help: "e.g. 'One use per customer. Ends 31 December.'", multiline: false, defaultValue: "" },
   { key: "testimonials", label: "Testimonials (real ones only, with permission)", help: "One per block: the quote on the first line, then a line starting with a dash for who said it, e.g. '- Sarah, Belfast'. Leave a blank line between them. The section only appears once there's at least one.", multiline: true, defaultValue: "" },
+  { key: "contact.email", label: "Contact form: send messages to", help: "The email address that receives contact form messages, e.g. your Gmail. Until it's set (and email sending is switched on), messages are kept safely in Admin → Messages.", multiline: false, defaultValue: "" },
   { key: "faqs", label: "FAQs", help: FAQ_FORMAT_HELP, multiline: true, defaultValue: faqsToText(FAQS) },
 ];
 

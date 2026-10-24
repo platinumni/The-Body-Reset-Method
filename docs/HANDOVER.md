@@ -219,6 +219,19 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Letting go, in the body and in life** (owner, 2026-10-24): a passage in Lower Body "Read this first" (after wu wei) that runs from the wrong control, to good control, to trust (reflexes, body, the process, yourself). It's written for everyone, with no religious terms, and has a short reprise at the start of "Beyond the programme". The round time once understood (`ROUND_TIME` in `src/views/account.tsx`) shows in the How to use box and on the exercise sheet.
 - **On and off: the real skill** (owner, 2026-10-24): Lower Body "Read this first" sets out four steps: switch off the wrong control, learn the right control from the ground up, release even that, then switch it on and off at will. It's echoed in "Beyond the programme", the key points and the method page. The owner was unsure about "control and surrender", so the text uses "control and release".
 
+**Guarantee, contact form, affiliate paydays (2026-10-24)**
+- **90-day money-back guarantee** on every programme (`GUARANTEE` in `src/content/site.ts`). It appears in the trust strip, a FAQ, the refund policy and the terms. The checkout tick now ends "My 90-day money-back guarantee still applies" (consent version 2026-10-24).
+- **Contact form** at `/contact` (footer link):
+  - CSRF, a rate limit of 5 per 15 minutes, a honeypot field, and validation.
+  - **Migration 0011** adds `contact_messages`. Every message is saved and shown in **Admin → Messages** (mark as handled, audited).
+  - It also emails the address set in Site wording → "Contact form: send messages to", once `RESEND_API_KEY` exists. No address is set yet; the owner may create a new Gmail.
+  - Messages are included in the data export and deleted with the account.
+- **Affiliates:**
+  - The hold defaults to **90 days**.
+  - Payday is the **last working day of the month** of release: weekends are skipped, and so are Good Friday, Easter Monday and the late May and August bank holidays (`src/lib/paydays.ts`).
+  - The next payday shows on the affiliate card and in Admin → Affiliates. The affiliate terms are updated.
+- **On/off control:** at first conscious, then even the switch becomes unconscious (Read this first, Beyond the programme, key points).
+
 ## Next step
 - **2026-10-24: the course is published on staging only**, at the owner's request, so they can preview it on their phone. Their preview member account is `michaeljmarden+preview@gmail.com` (order `OWNER-PREVIEW`, £0, no payment). Their main account is the admin one, which needs 2FA. The content files still say `status: draft`, so a later `--update` import will set staging back to draft unless the files are changed to `published` first.
 - The owner reviews the course (screenshots, or drafts once admin login exists) and the YouTube links.

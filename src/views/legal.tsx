@@ -1,5 +1,5 @@
 import type { Child } from "hono/jsx";
-import { placeholder } from "../content/site";
+import { GUARANTEE, placeholder } from "../content/site";
 import { Text } from "./components";
 import { Layout, type PageMeta } from "./layout";
 
@@ -123,7 +123,8 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
         <h2>Your right to cancel</h2>
         <p>
           If you're a consumer in the UK or EU, you normally have 14 days to cancel a digital purchase. At checkout, you can ask for immediate access to your
-          programme. If you do, and you confirm you understand, you lose that 14-day right once access begins. See our <a href="/legal/refunds">refund policy</a>.
+          programme. If you do, and you confirm you understand, you lose that 14-day right once access begins. Our 90-day money-back guarantee still
+          applies: see our <a href="/legal/refunds">refund policy</a>.
         </p>
         <h2>Your health and safety</h2>
         <p>
@@ -191,7 +192,12 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
       <>
         <h2>Our policy</h2>
         <p>
-          <Text copy={placeholder("Refund policy, e.g. no refunds once access has started, or a 14-day satisfaction guarantee")} />
+          <strong>{GUARANTEE.title}.</strong> Every programme is covered. If it isn't for you, email us any time within 90 days of buying and we'll refund
+          you in full, whether or not you've used the programme. When the refund is made, your access to that programme ends.
+        </p>
+        <p>
+          We do recommend giving it a proper go and following the programme first. Most people start to notice how much they've been gripping from the
+          very first session.
         </p>
         <h2>Your legal rights</h2>
         <p>
@@ -204,7 +210,8 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
         </p>
         <h2>How to ask</h2>
         <p>
-          Email <Text copy={EMAIL} /> with your order email address. Refunds go back to your original payment method.
+          Email <Text copy={EMAIL} />, or use our <a href="/contact">contact form</a>, with the email address you bought with. Refunds go back to your
+          original payment method, usually within 5-10 working days.
         </p>
       </>
     ),
@@ -224,10 +231,13 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
             <strong>One level only.</strong> You earn on sales made through your own link. You don't earn on sales made by people you referred, or
             through their links.
           </li>
-          <li>Commission is held for the period shown on your account page, in case of refunds. A refunded sale earns no commission.</li>
           <li>
-            Owed commission is paid monthly to the payout email you give us, once it reaches the minimum shown in your account. You're responsible for
-            any tax due on what you earn.
+            Commission is held for 90 days after the sale, matching our 90-day money-back guarantee. A refunded sale earns no commission.
+          </li>
+          <li>
+            Once released, commission is paid on the last working day of that month to the payout email you give us, once it reaches the minimum shown in
+            your account. For example, a sale on 15 January is released on 15 April and paid on the last working day of April. You're responsible for any
+            tax due on what you earn.
           </li>
           <li>You can't earn commission on your own purchases.</li>
         </ul>
@@ -250,7 +260,7 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
           already owed for genuine, unrefunded sales will still be paid.
         </p>
         <p>
-          <Text copy={placeholder("Owner to confirm: commission rate, hold period and minimum payout are set in admin")} />
+          <Text copy={placeholder("Owner to confirm: commission rate and minimum payout are set in admin")} />
         </p>
       </>
     ),

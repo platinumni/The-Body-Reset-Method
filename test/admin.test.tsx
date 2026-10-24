@@ -330,3 +330,15 @@ describe("launch checklist", () => {
     expect(html).toContain("/legal/terms");
   });
 });
+
+describe("contact messages", () => {
+  it("shows contact form messages to the admin and marks them handled", async () => {
+    const email = `msg-${Date.now()}@example.com`;
+    const id = await env.DB.prepare("INSERT INTO contact_messages (name, email, message) VALUES ('Alex', ?1, 'Is there a guarantee?') RETURNING id").bind(email).first<number>("id");
+    const html = await (await admin.c.get("/admin/messages")).text();
+    expect(html).toContain("Is there a guarantee?");
+    expect(html).toContain(email);
+    expect((await admin.c.post(`/admin/messages/${id}/handled`, {})).status).toBe(303);
+    expect(await env.DB.prepare("SELECT handled_at IS NOT NULL AS h FROM contact_messages WHERE id = ?1").bind(id).first("h")).toBe(1);
+  });
+});

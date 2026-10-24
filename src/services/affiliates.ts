@@ -17,7 +17,7 @@ export async function affiliateSettings(db: D1Database): Promise<AffiliateSettin
   const rate = Number(s.get("affiliate.rate_percent"));
   return {
     ratePercent: Number.isFinite(rate) && rate > 0 && rate <= 90 ? rate : null,
-    holdDays: Math.max(0, Math.min(365, Math.trunc(Number(s.get("affiliate.hold_days") ?? 30)) || 0)),
+    holdDays: Math.max(0, Math.min(365, Math.trunc(Number(s.get("affiliate.hold_days") ?? 90)) || 0)),
     minPayoutPence: Math.max(0, Math.trunc(Number(s.get("affiliate.min_payout_pence") ?? 1000)) || 0),
   };
 }

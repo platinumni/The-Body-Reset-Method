@@ -51,6 +51,8 @@ So the journey has four steps:
 
 > The real skill isn't switching control off. It's finding the right control in a body that has learned the wrong patterns, and then being able to switch it on and off whenever you need it.
 
+At first you'll switch it on and off consciously. With practice, even the switch becomes unconscious: your body engages for the lift and lets go after it, without you having to decide. That's the fourth stage of learning again, unconscious competence, applied to control itself.
+
 That's what proper function looks like: a body that moves freely between control and release, and never gets stuck in either.
 
 > **Once you understand it, a full round takes about 15-20 minutes.** The first few times are slower, and that's exactly as it should be.

@@ -144,6 +144,7 @@ export async function exportUserData(db: D1Database, userId: number): Promise<Re
     newsSignup: await q("SELECT status, source, created_at, confirmed_at FROM subscribers WHERE email = ?1", user.email),
     affiliate: await q("SELECT code, status, payout_email, created_at FROM affiliates WHERE user_id = ?1", userId),
     commissions: await q("SELECT c.amount_pence, c.status, c.created_at FROM commissions c JOIN affiliates a ON a.id = c.affiliate_id WHERE a.user_id = ?1 ORDER BY c.id", userId),
+    contactMessages: await q("SELECT name, message, created_at FROM contact_messages WHERE email = ?1 ORDER BY id", user.email),
     payouts: await q("SELECT p.amount_pence, p.method, p.created_at FROM payouts p JOIN affiliates a ON a.id = p.affiliate_id WHERE a.user_id = ?1 ORDER BY p.id", userId),
   };
 }
@@ -159,6 +160,7 @@ export async function deleteAccount(db: D1Database, userId: number, actor: { use
     db.prepare("INSERT INTO consents (user_id, email, kind, granted, wording_version, source) VALUES (?1, ?2, 'marketing_email', 0, ?3, 'account-deleted')").bind(userId, user.email, CHECKOUT_CONSENTS.marketing_email.version),
     db.prepare("UPDATE entitlements SET revoked_at = COALESCE(revoked_at, datetime('now')) WHERE user_id = ?1 OR email = ?2").bind(userId, user.email),
     db.prepare("DELETE FROM lesson_progress WHERE user_id = ?1").bind(userId),
+    db.prepare("DELETE FROM contact_messages WHERE email = ?1").bind(user.email),
     // Their share link stops working; any commission already owed stays on record for the owner to settle.
     db.prepare("UPDATE affiliates SET status = 'suspended', updated_at = datetime('now') WHERE user_id = ?1").bind(userId),
     db.prepare("UPDATE sessions SET revoked_at = COALESCE(revoked_at, datetime('now')), ip = NULL, user_agent = NULL WHERE user_id = ?1").bind(userId),

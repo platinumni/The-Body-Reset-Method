@@ -1,3 +1,4 @@
+import { formatPayday, nextPayday } from "../../lib/paydays";
 import { RichText } from "../../lib/markdown";
 import type { LessonRow, ProductAdminRow } from "../../services/admin-content";
 import type { CustomerRow, DashboardNumbers, OrderListRow } from "../../services/admin-ops";
@@ -870,6 +871,9 @@ export function AffiliatesAdminPage(props: {
     <AdminLayout meta={props.meta}>
       <h1>Affiliates</h1>
       <p class="muted">Members share their link and earn a percentage of sales it brings in. One level only. Commission is held, then owed, then you pay it and record it here.</p>
+      <p>
+        <strong>Next payday:</strong> {formatPayday(nextPayday())}. Pay everything shown as owed on the last working day of each month.
+      </p>
       <form method="post" action="/admin/affiliates/settings" class="card">
         <CsrfField token={props.meta.csrfToken} />
         <h2 class="h3">Settings</h2>
@@ -882,7 +886,7 @@ export function AffiliatesAdminPage(props: {
           <div class="field">
             <label for="hold">Hold period (days)</label>
             <input id="hold" name="hold_days" type="number" min="0" max="365" value={String(s.holdDays)} />
-            <p class="hint">Commission waits this long in case of a refund.</p>
+            <p class="hint">Commission waits this long in case of a refund. Keep it at 90 or more to match the 90-day guarantee.</p>
           </div>
           <div class="field">
             <label for="min">Minimum payout (£)</label>
@@ -1149,6 +1153,42 @@ export function LaunchPage(props: { meta: AdminMeta; checks: import("../../servi
         )}
         <p class="small muted">Most wording can be changed in Site wording. Legal pages need a final review, then I'll remove their draft notes.</p>
       </div>
+    </AdminLayout>
+  );
+}
+
+export function MessagesAdminPage(props: { meta: AdminMeta; messages: import("../../services/contact").ContactMessage[]; forwardingTo: string | null }) {
+  return (
+    <AdminLayout meta={props.meta}>
+      <h1>Messages</h1>
+      <p class="muted">
+        Messages from the contact form.{" "}
+        {props.forwardingTo ? (
+          <>Each one is also emailed to {props.forwardingTo} (once email sending is switched on).</>
+        ) : (
+          <>Set the address that should receive them in Site wording ("Contact form: send messages to").</>
+        )}
+      </p>
+      {!props.messages.length && <p class="muted">No messages yet.</p>}
+      {props.messages.map((m) => (
+        <article class="card message-card">
+          <p class="small muted">
+            {m.created_at} · email: {m.email_status} {m.handled_at && <StatusPill status="handled" />}
+          </p>
+          <h2 class="h3">
+            {m.name} <a href={`mailto:${m.email}`}>{m.email}</a>
+          </h2>
+          <p class="pre-wrap">{m.message}</p>
+          {!m.handled_at && (
+            <form method="post" action={`/admin/messages/${m.id}/handled`}>
+              <CsrfField token={props.meta.csrfToken} />
+              <button class="btn btn-ghost btn-small" type="submit">
+                Mark as handled
+              </button>
+            </form>
+          )}
+        </article>
+      ))}
     </AdminLayout>
   );
 }

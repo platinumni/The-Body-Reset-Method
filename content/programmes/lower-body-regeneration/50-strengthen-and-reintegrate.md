@@ -54,5 +54,5 @@ Here are some simple bodyweight exercises to add. They come without the full gui
 - Before training or playing, a short warm-up of short foot, single-leg balance and pogo hops is plenty.
 - In anything you do, return to the same three questions: What am I gripping or forcing? Which muscles should be working? Can I do this with less effort and still stay stable?
 - When you add load or speed, expect old habits to return for a while. Allow it, then release what isn't needed, just as you've practised.
-- Heavy lifts, sprints and contact sports need control, and that's good. Switch it on for the effort, then switch it off again the moment it's done. Practise the switch, not just the strength.
+- Heavy lifts, sprints and contact sports need control, and that's good. Switch it on for the effort, then switch it off again the moment it's done. Practise the switch, not just the strength, until even the switch happens without you thinking about it.
 - The same concept lives in the way you walk, lift your children or grandchildren, swing a golf club or train a martial art. Everything starts at the feet.

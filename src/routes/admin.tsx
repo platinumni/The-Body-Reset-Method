@@ -39,11 +39,13 @@ import { refundPaymentIntent } from "../services/payments/stripe";
 import { listProducts } from "../services/products";
 import { listRevisions } from "../services/revisions";
 import { loadSettings, saveWording, WORDING } from "../services/site-content";
+import { CONTACT_EMAIL_KEY, listContactMessages, markContactHandled } from "../services/contact";
 import { statsSummary } from "../services/stats";
 import type { AdminMeta } from "../views/admin/layout";
 import {
   ActivityPage,
   AffiliatesAdminPage,
+  MessagesAdminPage,
   CampaignEditPage,
   CampaignsPage,
   LaunchPage,
@@ -361,7 +363,7 @@ adminRoutes.get("/admin/affiliates", (c) => renderAffiliates(c));
 
 adminRoutes.post("/admin/affiliates/settings", async (c) => {
   const form = await c.req.parseBody();
-  const error = await saveAffiliateSettings(c.env.DB, { rate: String(form.rate ?? ""), holdDays: String(form.hold_days ?? "30"), minPayout: String(form.min_payout ?? "10") }, actor(c));
+  const error = await saveAffiliateSettings(c.env.DB, { rate: String(form.rate ?? ""), holdDays: String(form.hold_days ?? "90"), minPayout: String(form.min_payout ?? "10") }, actor(c));
   return error ? renderAffiliates(c, error) : back(c, "/admin/affiliates", "saved");
 });
 
@@ -375,6 +377,18 @@ adminRoutes.post("/admin/affiliates/:id/payout", async (c) => {
 adminRoutes.post("/admin/affiliates/:id/status", async (c) => {
   await setAffiliateStatus(c.env.DB, idParam(c), (await c.req.parseBody()).status === "active" ? "active" : "suspended", actor(c));
   return back(c, "/admin/affiliates", "saved");
+});
+
+// --- Contact messages ---
+
+adminRoutes.get("/admin/messages", async (c) => {
+  const to = ((await loadSettings(c.env.DB)).get(CONTACT_EMAIL_KEY) ?? "").trim();
+  return c.html(<MessagesAdminPage meta={meta(c, "Messages")} messages={await listContactMessages(c.env.DB)} forwardingTo={to || null} />);
+});
+
+adminRoutes.post("/admin/messages/:id/handled", async (c) => {
+  await markContactHandled(c.env.DB, idParam(c), actor(c));
+  return back(c, "/admin/messages", "saved");
 });
 
 // --- Email campaigns ---

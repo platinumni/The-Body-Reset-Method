@@ -1,3 +1,4 @@
+import { formatPayday, nextPayday } from "../lib/paydays";
 import type { Affiliate, AffiliateSummary } from "../services/affiliates";
 import { formatPrice } from "../services/products";
 import { CsrfField } from "./layout";
@@ -91,7 +92,8 @@ export function AffiliateCard(props: {
         </ul>
       )}
       <p class="small muted">
-        You earn {props.ratePercent}% of each sale. Commission is held for {props.holdDays} days in case of refunds, then paid monthly.
+        You earn {props.ratePercent}% of each sale. Commission is held for {props.holdDays} days in case of refunds, then paid on the last working day
+        of the month it's released. Next payday: {formatPayday(nextPayday())}.
       </p>
       <aside class="key-point">
         <span class="key-point-label">When you share</span>

@@ -122,6 +122,12 @@ export const NOT_FOR: string[] = [
 
 export type Stage = { title: string; summary: string };
 
+/** The money-back guarantee (owner, 2026-10-24). Applies to every programme. */
+export const GUARANTEE = {
+  title: "90-day money-back guarantee",
+  text: "If it isn't for you, email us any time within 90 days of buying for a full refund. We do recommend giving it a proper go and following the programme. Most people start to notice how much they've been gripping from the very first session, and with a few weeks of practice many find they move more freely: lighter and more fluid.",
+};
+
 /** Shown on every programme page except the flagship (owner, 2026-10-24). */
 export const FLAGSHIP_POINTER = {
   title: "Start with the flagship",
@@ -264,6 +270,12 @@ export const FAQS: Faq[] = [
   {
     q: "What do I get free with Lower Body Regeneration?",
     a: ["The full Core & Hips programme: 10 exercises for the hips and 11 for the breath and deep core, built on the same philosophy. It appears in your members' area alongside Lower Body."],
+  },
+  {
+    q: "Is there a guarantee?",
+    a: [
+      "Yes. Every programme comes with a 90-day money-back guarantee. If it isn't for you, email us any time within 90 days of buying for a full refund. We do recommend giving it a proper go and following the programme. Most people start to notice how much they've been gripping from the very first session.",
+    ],
   },
   {
     q: "How can I pay?",

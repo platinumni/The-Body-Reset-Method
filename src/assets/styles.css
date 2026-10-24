@@ -533,3 +533,7 @@ html[data-text-size="3"] .reader-body { font-size: 1.36rem; }
 .flagship-pointer { margin: 1.5rem 0 0; border-color: var(--accent); }
 .flagship-pointer p { margin: .25rem 0 1rem; }
 .round-time { margin: .75rem 0 0; }
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.contact-form { position: relative; }
+.message-card { margin-bottom: 1rem; }
+.pre-wrap { white-space: pre-wrap; }

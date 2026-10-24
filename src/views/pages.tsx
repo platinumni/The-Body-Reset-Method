@@ -303,6 +303,58 @@ export function AboutPage(props: { meta: PageMeta; coachName: Copy; story: Copy[
   );
 }
 
+export function ContactPage(props: { meta: PageMeta; csrfToken: string; sent?: boolean; error?: string | null; values?: { name: string; email: string; message: string } }) {
+  const v = props.values ?? { name: "", email: "", message: "" };
+  return (
+    <Layout meta={props.meta}>
+      <PageHero eyebrow="Contact" title="Get in touch" lede="A question about the method or a programme? Send us a message and we'll reply by email." />
+      <section class="band">
+        <div class="wrap narrow">
+          {props.sent ? (
+            <p class="notice notice-ok" role="status">
+              Thank you. Your message has been sent, and we'll reply by email.
+            </p>
+          ) : (
+            <form method="post" action="/contact" class="card contact-form">
+              <CsrfField token={props.csrfToken} />
+              {props.error && (
+                <p class="notice notice-error" role="alert">
+                  {props.error}
+                </p>
+              )}
+              <div class="field">
+                <label for="c-name">Your name</label>
+                <input id="c-name" name="name" type="text" required maxlength={100} autocomplete="name" value={v.name} />
+              </div>
+              <div class="field">
+                <label for="c-email">Your email</label>
+                <input id="c-email" name="email" type="email" required maxlength={254} autocomplete="email" value={v.email} />
+              </div>
+              <div class="field">
+                <label for="c-message">Your message</label>
+                <textarea id="c-message" name="message" rows={6} required maxlength={5000}>
+                  {v.message}
+                </textarea>
+              </div>
+              <div class="hp" aria-hidden="true">
+                <label for="c-website">Leave this empty</label>
+                <input id="c-website" name="website" type="text" tabindex={-1} autocomplete="off" />
+              </div>
+              <button class="btn btn-primary" type="submit">
+                Send message
+              </button>
+              <p class="small muted">
+                We use your details only to reply to you. See our <a href="/legal/privacy">privacy policy</a>. This is education and movement coaching, so we
+                can't give personal medical advice.
+              </p>
+            </form>
+          )}
+        </div>
+      </section>
+    </Layout>
+  );
+}
+
 export function FaqPage(props: { meta: PageMeta; faqs: Faq[] }) {
   return (
     <Layout meta={props.meta}>

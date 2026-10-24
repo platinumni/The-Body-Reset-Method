@@ -36,4 +36,5 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Accountant question:** EU VAT on digital sales to EU customers (it applies from the first EU sale). Ask whether to register for the "non-Union OSS" or limit EU sales. UK VAT only kicks in over £90k turnover.
 - [ ] **Email sending:** a Resend account (or reuse the Platinum NI one) and verify the new domain.
 - [ ] **Solicitor review** of the terms, refund and health disclaimer pages (recommended, not required).
-- [ ] **Refund policy:** decide, e.g. no refunds after access is opened, or a 14-day satisfaction refund.
+- [x] **Refund policy:** 90-day money-back guarantee on every programme (2026-10-24).
+- [ ] **Contact email:** when you've made the Gmail for website messages, put it in Admin → Site wording → "Contact form: send messages to" (or send it to Claude). Until then, messages wait in Admin → Messages.

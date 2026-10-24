@@ -31,6 +31,7 @@ const NAV = [
 ];
 
 const LEGAL = [
+  { href: "/contact", label: "Contact" },
   { href: "/legal/privacy", label: "Privacy" },
   { href: "/legal/terms", label: "Terms" },
   { href: "/legal/cookies", label: "Cookies" },

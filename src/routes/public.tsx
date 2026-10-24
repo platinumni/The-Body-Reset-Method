@@ -10,7 +10,9 @@ import { getCatalogueEntry, listCatalogue, programmesWithPages } from "../servic
 import { databaseIsHealthy } from "../services/health";
 import { HomePage } from "../views/home";
 import { LEGAL_PAGES, LegalPage, type LegalSlug } from "../views/legal";
-import { AboutPage, FaqPage, MethodPage, ProgrammePage, ProgrammesPage } from "../views/pages";
+import { AboutPage, ContactPage, FaqPage, MethodPage, ProgrammePage, ProgrammesPage } from "../views/pages";
+import { rateLimit } from "../middleware/rate-limit";
+import { contactProblem, saveContactMessage } from "../services/contact";
 import { pageMeta } from "./meta";
 
 export const publicRoutes = new Hono<AppEnv>();
@@ -182,6 +184,22 @@ publicRoutes.get("/robots.txt", (c) =>
   c.text(isProduction(c.env) ? `User-agent: *\nAllow: /\n\nSitemap: ${c.env.SITE_URL}/sitemap.xml\n` : "User-agent: *\nDisallow: /\n"),
 );
 
+const contactMeta = (c: Parameters<typeof pageMeta>[0]) =>
+  pageMeta(c, { title: "Contact", description: "Get in touch with The Body Regeneration Method. Send us a message and we'll reply by email.", path: "/contact" });
+
+publicRoutes.get("/contact", (c) => c.html(<ContactPage meta={contactMeta(c)} csrfToken={c.get("csrfToken")} sent={c.req.query("sent") !== undefined} />));
+
+publicRoutes.post("/contact", rateLimit("contact", 5, 900), async (c) => {
+  const form = await c.req.parseBody();
+  const values = { name: String(form.name ?? "").trim(), email: String(form.email ?? "").trim(), message: String(form.message ?? "").trim() };
+  // Bots fill in the hidden field; pretend it worked.
+  if (String(form.website ?? "")) return c.redirect("/contact?sent", 303);
+  const error = contactProblem(values);
+  if (error) return c.html(<ContactPage meta={contactMeta(c)} csrfToken={c.get("csrfToken")} error={error} values={values} />, 422);
+  await saveContactMessage(c.env, values);
+  return c.redirect("/contact?sent", 303);
+});
+
 export function sitemapPaths(): string[] {
   return [
     "/",
@@ -192,6 +210,7 @@ export function sitemapPaths(): string[] {
     ...GUIDES.map((g) => `/guides/${g.slug}`),
     "/about",
     "/faq",
+    "/contact",
     ...Object.keys(LEGAL_PAGES).map((s) => `/legal/${s}`),
   ];
 }

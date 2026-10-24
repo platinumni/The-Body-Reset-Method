@@ -14,9 +14,9 @@ export const CHECKOUT_CONSENTS = {
     label: "I agree to the terms of sale and have read the privacy policy.",
   },
   immediate_access: {
-    version: "2026-10-23",
+    version: "2026-10-24",
     required: true,
-    label: "I want access straight away. I understand I lose my 14-day right to cancel once access begins.",
+    label: "I want access straight away. I understand I lose my 14-day right to cancel once access begins. My 90-day money-back guarantee still applies.",
   },
   marketing_email: {
     version: "2026-10-23",
