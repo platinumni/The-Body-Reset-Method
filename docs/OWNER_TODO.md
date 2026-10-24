@@ -8,8 +8,9 @@ These are things only you can do. None of them block the build until go-live unl
   - the exercises Claude wrote for you: tibialis raises, glute bridge, clamshells, all of Hips and Core, and the "Strengthen and reintegrate" list;
   - the toe yoga swap (four toes down, big toe up), which Claude added from your note;
   - every "What to watch for" list (Claude researched these).
+- [ ] **Confirm the "Start with the flagship" wording** on the Hips, Core, and Core & Hips pages.
 - [ ] **Watch every YouTube demo link** and tell Claude any to swap. None has been watched by a person yet.
-- [ ] **Prices:** Lower Body (you mentioned 29.99; **£ or $?**) and Core & Hips (when sold on its own). Hips and Core alone can be priced later.
+- [ ] **Prices:** Lower Body (you mentioned 29.99; **£ or $?**) and Core & Hips, Hips, and Core (each has its own buy page now).
 - [ ] **Photos:** your own phone photos of each starting position are best. AI images often get feet and toes wrong.
 - [ ] **Buy the domain.** Tell me which one. Connecting it takes about 15 minutes at go-live.
 - [ ] **Stripe account** (free) at stripe.com. You only need test mode for now. Steps are in `docs/STRIPE_SETUP.md`. Turn on PayPal under Settings → Payment methods if you want customers to have it as an option.

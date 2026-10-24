@@ -5,7 +5,7 @@ position: 16
 kind: exercise
 stage: Part 1: Breath and deep-core foundations
 title: Side-lying breath and reach
-recommended_time: 5–6 breaths each side
+recommended_time: 5 to 6 breaths each side
 sheet_line: On your side, knees bent, head supported. Breathe into the top ribs, then reach the top arm overhead.
 status: draft
 youtube: 
@@ -13,6 +13,7 @@ youtube:
 ## Starting position
 - Lie on your side with your knees and hips bent, head resting on your arm or a cushion.
 - Stack your hips and shoulders. Release the neck, jaw and shoulders.
+- **Settle in softly:** nudge gently into position, then release. Engage only what's needed, release again, and maintain. When it's right, it feels light, almost floating.
 
 ## Conducting the exercise
 - Breathe gently into the **top side of your ribs.** Feel them widen and lift with the in-breath.
@@ -33,6 +34,8 @@ Breath and reach, as above.
 
 ### Advanced
 Hold the reach overhead for 3 slow breaths, keeping everything else soft.
+
+Holding the reach while you breathe slowly is quietly demanding. Notice the urge to roll back or arch, and let it go.
 
 ## Key points
 - On your side, hips stacked.

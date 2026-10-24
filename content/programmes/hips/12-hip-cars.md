@@ -5,7 +5,7 @@ position: 12
 kind: exercise
 stage: Part 1: Open the hips
 title: Hip circles (hip CARs)
-recommended_time: 3–5 slow circles each way, each leg
+recommended_time: 3 to 5 slow circles each way, each leg
 sheet_line: Standing, holding a wall. Slow, controlled circles of the knee. No leaning. Small circles first.
 status: draft
 youtube: https://www.youtube.com/watch?v=5kM-o61Z14I
@@ -14,6 +14,7 @@ youtube: https://www.youtube.com/watch?v=5kM-o61Z14I
 - Stand tall side-on to a wall or chair, holding it lightly.
 - Find your single-leg balance on the standing leg: ankle, knee and hip in line, soft knee, toes alive but not gripping.
 - Ribs stacked over the pelvis. Release the jaw, shoulders and breath.
+- **Settle in softly:** nudge gently into position, then release. Engage only what's needed, release again, and maintain. When it's right, it feels light, almost floating.
 
 ## Conducting the exercise
 - Lift the outside knee up in front of you.
@@ -38,6 +39,8 @@ Bigger circles, as long as nothing else moves.
 
 ### Advanced
 Let go of the wall. Or do them on all fours, which is harder to cheat.
+
+Without the wall, balance and the circle compete for your attention, and the upper body will try to lean. Keep the circle small enough that nothing else needs to move.
 
 ## Key points
 - Stand tall, hold lightly.

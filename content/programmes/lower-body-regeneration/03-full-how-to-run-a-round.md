@@ -23,19 +23,21 @@ A round is one set of every exercise, in this order:
 ## What you'll need
 
 - Bare feet.
-- **A hard chair.** This matters: a soft sofa lets you slump, and the first three exercises depend on sitting tall and balanced.
+- **A hard chair.** This matters. A soft sofa lets you sink and slump, and the first three exercises depend on sitting tall and balanced.
 - A step or stair, with a banister or wall nearby.
 - A wall, door frame or pole to hold for balance.
-- A sofa, bench or chair for the back foot in the split squat.
+- A sofa, bench or sturdy chair for the back foot in the split squat.
 - A mat or towel for the floor work.
-- Optional, for the harder versions: a light weight, a resistance band.
+- Optional, for the harder versions: a light weight and a resistance band.
 
 ## Advised
 
 - One round a day, if you have the time. Not every day is needed.
-- About 8–10 reps of each, unless the exercise says otherwise.
-- If you have more time, go round again.
+- Around 8 to 10 reps of each, unless the exercise says otherwise.
+- With more time, go round again. You can skip an exercise, or linger on the ones you find most useful.
+
+These are guides, not rules. Take what serves you.
 
 ## Before each round
 
-Take a minute to stand still and notice. Where are you holding? Jaw, shoulders, breath, toes? You don't need to change anything yet. Just notice, and let go of whatever you can.
+Take a minute to stand still and simply notice. Where are you holding? The jaw, the shoulders, the breath, the toes? There's nothing to change yet. Just notice, and let go of whatever you can.

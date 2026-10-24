@@ -5,7 +5,7 @@ position: 22
 kind: exercise
 stage: Part 2: Strengthen the hips
 title: Side-lying leg raise
-recommended_time: 8–12 each side
+recommended_time: 8 to 12 each side
 sheet_line: On your side, hips stacked, top leg straight and slightly back. Lift, pause, lower slowly.
 status: draft
 youtube: https://www.youtube.com/watch?v=nn5AtZNjnIE
@@ -14,6 +14,7 @@ youtube: https://www.youtube.com/watch?v=nn5AtZNjnIE
 - Lie on your side with your bottom knee bent for support and your top leg straight.
 - **Stack the hips.** Bring the top leg slightly behind the line of your body, toes facing forward, not up.
 - Release the neck and shoulders, and breathe into the upper ribs.
+- **Settle in softly:** nudge gently into position, then release. Engage only what's needed, release again, and maintain. When it's right, it feels light, almost floating.
 
 ## Conducting the exercise
 - Lift the top leg a little way, leading with the heel.
@@ -34,6 +35,8 @@ As above, with a pause at the top.
 
 ### Advanced
 A resistance band around the ankles, or a light ankle weight.
+
+With added resistance, the hips will want to roll and the waist to hitch. Keep the movement small and clean; that is where the learning is.
 
 ## Key points
 - Hips stacked, leg slightly back.

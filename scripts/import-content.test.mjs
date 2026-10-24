@@ -86,6 +86,8 @@ test("every programme file parses, exercises are complete, and the wording stays
       if (l.status === "archived") continue;
       // "medical treatment" appears only in the disclaimer sentence.
       assert.doesNotMatch(text.replace(/not medical treatment/gi, ""), banned, `${slug}/${f}`);
+      // Number ranges are written "8 to 10", not with a dash (owner, 2026-10-24).
+      assert.doesNotMatch(text, /\d\s*–\s*\d/, `${slug}/${f} uses a dash in a number range`);
       if (l.kind !== "exercise") continue;
       for (const part of ["starting_position", "conducting", "watch_for", "levels", "key_points", "recommended_time", "sheet_line"]) {
         assert.ok(l[part], `${slug}/${f} is missing ${part}`);

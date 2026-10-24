@@ -74,7 +74,8 @@ describe("course structure", () => {
     expect(html.indexOf("2. Conducting the exercise")).toBeLessThan(html.indexOf("What to watch for"));
     expect(html).toContain("Easier and harder versions");
     expect(html).toContain("The most important part of the movement");
-    expect(html).toContain("<strong>Advised:</strong> 30–60 seconds. Tune in to your body rather than the clock.");
+    expect(html).toContain("<strong>Advised:</strong> 30–60 seconds. Tune in to your body rather than the clock, and go at your own pace.");
+    expect(html).toContain("The demonstration video is at the bottom of this page.");
     expect(html).toContain("This shows what the movement looks like, nothing more");
     expect(html).toContain("data-text-size");
     expect(html).not.toContain("Intro key points"); // quick-tab sections belong to Key points

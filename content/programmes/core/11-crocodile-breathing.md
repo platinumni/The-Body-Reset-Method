@@ -5,7 +5,7 @@ position: 11
 kind: exercise
 stage: Part 1: Breath and deep-core foundations
 title: 360° breathing (crocodile breath)
-recommended_time: 8–10 slow breaths
+recommended_time: 8 to 10 slow breaths
 sheet_line: Face down, forehead on your hands. Breathe low and wide, into the back and sides. No forcing.
 status: draft
 youtube: https://www.youtube.com/watch?v=yOSmEVxP8kI
@@ -13,6 +13,7 @@ youtube: https://www.youtube.com/watch?v=yOSmEVxP8kI
 ## Starting position
 - Lie face down with your forehead resting on your stacked hands, legs relaxed and toes turned slightly in or out, whatever is comfortable.
 - Let your whole body sink into the floor. Release the jaw, shoulders, glutes and legs.
+- **Settle in softly:** nudge gently into position, then release. Engage only what's needed, release again, and maintain. When it's right, it feels light, almost floating.
 
 ## Conducting the exercise
 - Breathe in gently through your nose. Feel your stomach press into the floor, and your **lower back and sides** rise and widen.
@@ -33,6 +34,8 @@ Direct the breath into the lower back and sides.
 
 ### Advanced
 Lengthen the out-breath, for example 4 seconds in and 6 seconds out, without any tension creeping in.
+
+Lengthening the out-breath sounds simple, but it often brings tension into the jaw, neck or stomach. Keep the breath long and the body soft.
 
 ## Key points
 - Face down, forehead on your hands.

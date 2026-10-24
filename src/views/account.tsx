@@ -269,6 +269,12 @@ function GuideItem(props: { base: string; items: Lesson[]; index: number; csrfTo
           <p class="eyebrow">{l.stage ? `${l.stage} · Exercise` : "Exercise"}</p>
           <h2>{l.title}</h2>
           <TimeNote time={l.recommended_time} />
+          {l.youtube_id && (
+            <p class="video-pointer">
+              <a href="#demo">The demonstration video is at the bottom of this page.</a> Watch it first if it helps. It shows the movement only; the real
+              value is in the starting position and the guidance.
+            </p>
+          )}
           <Part
             title="1. Starting position"
             open
@@ -312,7 +318,7 @@ function DemoVideo(props: { id: string; title: string; collapsed?: boolean }) {
     </div>
   );
   return (
-    <div class="demo">
+    <div class="demo" id="demo">
       <p class="demo-note">
         <strong>Demonstration video.</strong> This shows what the movement looks like, nothing more. The real work is in the starting position and the
         guidance, so read those first.
@@ -332,7 +338,7 @@ function DemoVideo(props: { id: string; title: string; collapsed?: boolean }) {
 const TimeNote = (props: { time: string | null }) =>
   props.time ? (
     <p class="time-note">
-      <strong>Advised:</strong> {props.time}. Tune in to your body rather than the clock.
+      <strong>Advised:</strong> {props.time}. Tune in to your body rather than the clock, and go at your own pace.
     </p>
   ) : null;
 
@@ -536,8 +542,8 @@ export function ReaderPage(props: {
                     </section>
                   ))}
               <p class="sheet-foot small">
-                All reps, sets and times are advised. Advised: one round a day, and not every day is needed. Tune in to your body rather than the clock,
-                and stop if anything causes pain.
+                All reps, sets and times are advised. Advised: one round a day, and not every day is needed. Tune in to your body rather than the clock, go at your own pace,
+                and stop if anything causes pain. This is a guide, not another system to follow.
               </p>
             </div>
           )}

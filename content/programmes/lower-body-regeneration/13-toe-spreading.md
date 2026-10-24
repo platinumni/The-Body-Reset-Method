@@ -5,40 +5,42 @@ position: 13
 kind: exercise
 stage: Stage 1: Feet and balance
 title: Toe spreading
-recommended_time: 8–10 reps
-sheet_line: Seated. Spread the toes as wide as possible, then let go of the effort you don't need.
+recommended_time: 8 to 10 reps
+sheet_line: Seated. Spread the toes as wide as you can, then release the effort you don't need.
 status: draft
 youtube: https://www.youtube.com/watch?v=v5gIyH1jRr0
 ---
 ## Starting position
-The same seated starting position again. It's worth repeating, because it really is the most important part.
+The same seated starting position again. It bears repeating, because it really is the most important part.
 
-- Barefoot. Sit on a **hard chair**, towards the front, with both feet flat on the floor.
-- **Don't brace.** Bring your spine and head up straight and your rib cage stacked over your pelvis. It doesn't matter whether you build it from the top down or the bottom up.
-- Shuffle or twist your hips on the seat until your **knees are in line with your toes**. Rotate the hips in or out a little if you need to.
-- Ribs stacked, not flared up at the front. Shoulders loose, hands resting on your knees, head straight.
-- Now notice where you're bringing tension: jaw, shoulders, stomach, thighs, toes. Release it all.
-- Release the breath too. Breathe gently 360°, into the front, sides and back of the ribs. Not deep breaths, just easy ones.
-- Find the balance point, where you're upright without holding yourself up.
+- Sit barefoot on a **hard chair**, towards the front edge, with both feet flat on the floor.
+- **Don't brace.** Gently nudge your spine and head upright, and let your rib cage settle over your pelvis. Build it from the top down or the bottom up; either works. Then release the effort it took.
+- Shuffle or rotate your hips softly on the seat until your **knees line up with your toes**. Turn the hips in or out a little if you need to, then let go.
+- Ribs softly stacked, not flared at the front. Shoulders loose, hands resting on your knees, head balanced.
+- Now notice where tension is creeping in: the jaw, shoulders, stomach, thighs, toes. Release it all.
+- Release the breath too. Let it move gently through 360°, into the front, sides and back of the ribs. Not deep breaths; easy ones.
+- Find the balance point, where you're upright without holding yourself up. When it's right, you'll feel light, almost floating.
 
 ## Conducting the exercise
-- **Spread your toes** as wide as you can, all of them, then relax them.
-- At first you'll need some control and effort to open them. That's fine. Then start to release how much you're using. Some effort will always remain; aim for the least you can.
+- **Spread your toes** as wide as they'll go, all of them, then let them soften.
+- At first you'll need some effort to open them, and that's fine. Then begin to reduce how much you're using. Some effort will always remain; your aim is the least you can get away with.
 
 ## What to watch for
-- **The little toe barely moving.** Very common. It'll come with time.
-- **The big toe pressing down** into the floor instead of moving out sideways.
+- **The little toe barely moving.** Very common. It will come with time.
+- **The big toe pressing down** into the floor instead of moving outwards.
 - **Holding the breath,** or tension creeping into the shins, knees, thighs or jaw.
 
 ## Easier and harder versions
 ### Beginner
-Just spread the toes as widely as you can, without worrying about the rest of the body.
+Spread the toes as widely as you can, without worrying about the rest of the body.
 
 ### Intermediate
-Notice where else you're carrying tension, and whether you're holding your breath. Play with it: open the toes, then release how much effort you're using. Find the most minimal amount.
+Notice where else you're carrying tension, and whether you're holding your breath. Then play with it: open the toes, and release how much effort you're using. Find the most minimal amount.
 
 ### Advanced
-Add the breath, holds and counting. For example, hold the spread for 2 seconds, then 3, then 5, then 3. Vary it, always while breathing and keeping everything else released. You can take this a long way.
+Add the breath, holds and a count. Hold the spread for 2 seconds, then 3, then 5, then 3. Vary it as you like, always breathing and keeping everything else released.
+
+As the pattern grows more complex, you'll notice how readily the breath holds and how quickly the rest of the body tries to help. That's the lesson. Keep the movement simple and the body soft while your attention is busy. You can take this a long way.
 
 ## Key points
 - Same seated start.

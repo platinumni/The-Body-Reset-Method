@@ -7,10 +7,12 @@ title: About this stage
 status: draft
 youtube: 
 ---
-Stage 1 is where you learn the method itself. The movements are small and simple on purpose: when there's very little to do, you can notice everything else you're doing that you don't need to.
+Stage 1 is where you learn the method itself.
 
-The first three exercises are done sitting on a hard chair. The starting position is the same for all three, and it's the most important thing in this stage. Take your time with it.
+The movements are small and simple on purpose. When there's very little to do, you can notice everything else you're doing that you don't need to. That noticing is the whole point.
 
-The fourth, single-leg balance, takes everything you've found into standing, and starts to train your balance and your sense of where your body is in space (proprioception).
+The first three exercises are done sitting on a hard chair, and they share the same starting position. It is the most important thing in this stage, so give it your time and your full attention.
 
-These four exercises cover the first four principles: **recognise, release, reconnect and retrain.**
+The fourth, single-leg balance, carries everything you've found into standing, and begins to train your balance and your sense of where your body is in space, known as **proprioception**.
+
+Together, these four exercises cover the first four principles: **recognise, release, reconnect and retrain.**

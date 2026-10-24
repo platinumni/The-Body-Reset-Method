@@ -1,4 +1,4 @@
-import { EFFORTLESS, FOUNDATION, LEARNING_STAGES, PRINCIPLES_DEPTH, WHY, type Copy, type Faq, type Principle } from "../content/site";
+import { EFFORTLESS, FLAGSHIP_POINTER, FOUNDATION, LEARNING_STAGES, PRINCIPLES_DEPTH, WHY, type Copy, type Faq, type Principle } from "../content/site";
 import type { CatalogueEntry } from "../services/catalogue";
 import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
 import { CsrfField, Layout, type PageMeta } from "./layout";
@@ -148,6 +148,13 @@ export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry
           )}
         </div>
         <TrustStrip />
+        {!p.flagship && (
+          <aside class="card flagship-pointer">
+            <h2 class="h3">{FLAGSHIP_POINTER.title}</h2>
+            <p>{FLAGSHIP_POINTER.text}</p>
+            <Button href="/programmes/lower-body-regeneration">See Lower Body Regeneration</Button>
+          </aside>
+        )}
       </div>
       {p.flagship && (
         <section class="band band-quiet">

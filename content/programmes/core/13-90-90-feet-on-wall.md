@@ -5,7 +5,7 @@ position: 13
 kind: exercise
 stage: Part 1: Breath and deep-core foundations
 title: 90/90 feet on the wall
-recommended_time: 8–10 slow breaths
+recommended_time: 8 to 10 slow breaths
 sheet_line: On your back, feet flat on a wall, hips and knees at 90°. Light press through the heels, breathe 360°.
 status: draft
 youtube: https://www.youtube.com/watch?v=C9ZX2TFJ3CU
@@ -14,6 +14,7 @@ youtube: https://www.youtube.com/watch?v=C9ZX2TFJ3CU
 - Lie on your back with your feet flat on a wall, hips and knees bent at 90°.
 - Arms relaxed by your sides, or one hand on your chest and one on your stomach.
 - Release the neck, jaw, shoulders and stomach.
+- **Settle in softly:** nudge gently into position, then release. Engage only what's needed, release again, and maintain. When it's right, it feels light, almost floating.
 
 ## Conducting the exercise
 - Press **lightly** through your heels into the wall. Just enough to feel the backs of your legs switch on.
@@ -35,6 +36,8 @@ A light heel press, as above.
 
 ### Advanced
 Reach one arm overhead as you breathe out, keeping the ribs down. Or lift the hips a centimetre off the floor while you breathe.
+
+Reaching or lifting while you breathe divides your attention, and the ribs will want to flare. Let each breath settle them again.
 
 ## Key points
 - Feet on the wall, 90° at hips and knees.

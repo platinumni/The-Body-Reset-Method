@@ -5,7 +5,7 @@ position: 21
 kind: exercise
 stage: Part 2: Strengthen the hips
 title: Step hip hikes
-recommended_time: 8–10 each side
+recommended_time: 8 to 10 each side
 sheet_line: Standing sideways on a step, one leg hanging. Let that hip drop, then lift it level and a little higher.
 status: draft
 youtube: https://www.youtube.com/watch?v=LF_YbQOTRJI
@@ -14,6 +14,7 @@ youtube: https://www.youtube.com/watch?v=LF_YbQOTRJI
 - Stand sideways on the edge of a step, holding a banister or wall, with one foot on the step and the other hanging off the edge.
 - Standing leg straight but not locked, foot alive but not gripping.
 - Pelvis level, ribs stacked. Release the shoulders and breath.
+- **Settle in softly:** nudge gently into position, then release. Engage only what's needed, release again, and maintain. When it's right, it feels light, almost floating.
 
 ## Conducting the exercise
 - Keeping both legs straight, let the hip of the hanging leg **drop** slowly down.
@@ -35,6 +36,8 @@ On the step, as above.
 
 ### Advanced
 Hands off the banister, or hold a light weight on the side of the hanging leg.
+
+Letting go of the banister, or adding weight, asks the standing hip to balance and work at once. Watch for the knee bending and the upper body leaning, and stay in the range you can control.
 
 ## Key points
 - Sideways on a step, one leg hanging.

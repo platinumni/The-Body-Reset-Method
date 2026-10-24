@@ -5,7 +5,7 @@ position: 12
 kind: exercise
 stage: Part 1: Breath and deep-core foundations
 title: Back-lying legs up (the 3-month position)
-recommended_time: 8–10 slow breaths
+recommended_time: 8 to 10 slow breaths
 sheet_line: On your back, hips and knees at 90°, legs relaxed in the air. Breathe 360° without bracing.
 status: draft
 youtube: https://www.youtube.com/watch?v=VQdqk9QfQ7c
@@ -14,6 +14,7 @@ youtube: https://www.youtube.com/watch?v=VQdqk9QfQ7c
 - Lie on your back and lift your legs so your hips and knees are bent at about 90°, shins parallel to the floor.
 - This position is inspired by how a baby of around three months lies on its back, before it learns to roll.
 - Let the back rest naturally on the floor. Arms relaxed by your sides. Release the neck, jaw and shoulders.
+- **Settle in softly:** nudge gently into position, then release. Engage only what's needed, release again, and maintain. When it's right, it feels light, almost floating.
 
 ## Conducting the exercise
 - Keep the legs up with as little effort as possible.
@@ -35,6 +36,8 @@ Legs up and unsupported, as above.
 
 ### Advanced
 Slowly lower one heel to tap the floor and bring it back, keeping the breath and the back exactly the same.
+
+The moment a leg moves, the back and ribs will try to help. Keep the breath and the back exactly the same, and lower the heel only as far as that allows.
 
 ## Key points
 - Hips and knees at 90°, legs up.

@@ -29,7 +29,8 @@ export const PRINCIPLES_DEPTH: { title: string; paragraphs: string[] }[] = [
     title: "Release",
     paragraphs: [
       "Release happens in layers. First you let go of the muscles that have been compensating. Then you go further, and ease the excess tension and pressure even in the muscles you do need, until you find the equilibrium point where the body is supported without being forced.",
-      "Take standing on one leg. You need steady pressure through the big toe and the little toes, the stabilising muscles working, and your hips level and square. But most of us recruit far more than that: bracing through the back, tensing the shoulders, holding the breath. Release is about keeping what the balance needs and letting go of everything else.",
+      "Take standing on one leg. The ankle, knee and hip line up, and the stacking continues all the way up the spine to the head, each part balanced softly on the one below. At first the toes grip to hold you up. That's the consciously competent stage: you're gripping, and you've got it.",
+      "Then you release even that grip, keeping it available the moment you need it. As you sway left or right, it engages too much; you let it, then release again. Gradually your balance and coordination take over, and the body settles, almost by itself, into its equilibrium point. Meanwhile, most of us are also bracing through the back, tensing the shoulders and holding the breath. Release means keeping what the balance needs and letting go of everything else.",
     ],
   },
   {
@@ -39,9 +40,15 @@ export const PRINCIPLES_DEPTH: { title: string; paragraphs: string[] }[] = [
     ],
   },
   {
-    title: "Retrain and Strengthen",
+    title: "Retrain",
     paragraphs: [
-      "The first exercises focus on recognising, releasing and reconnecting. Only once those foundations are in place does the work turn to retraining movement patterns and progressively building strength and balance on top of them.",
+      "With that new awareness, you practise simple movements with better coordination, slowly replacing old patterns with new ones until the new way feels like your own. The movements are deliberately simple, because simplicity leaves room for attention, and attention is what changes a habit.",
+    ],
+  },
+  {
+    title: "Strengthen",
+    paragraphs: [
+      "Only once the foundations are in place does the work turn to building strength and balance, progressively and patiently. Because it's built on muscles that are no longer fighting each other, and in the position you have rather than the range you wish you had, it's strength you can trust.",
     ],
   },
   {
@@ -49,6 +56,7 @@ export const PRINCIPLES_DEPTH: { title: string; paragraphs: string[] }[] = [
     paragraphs: [
       "At the advanced stages, the exercises add complexity on purpose: keeping a steady breathing pattern, counting a rhythm as you raise and lower your heels, holding your awareness on several things at once. At first, the mind finds this genuinely hard, because there's a lot for the nervous system to organise at the same time.",
       "That's the point. Known as dual-task training, it teaches your body to keep simple movements well controlled while your attention is busy elsewhere, which is exactly what everyday life asks of it.",
+      "And integration reaches far beyond the exercises. It's the same concept in the way you walk, climb the stairs, lift your children or your grandchildren, swing a golf club or train a martial art. Release what isn't needed, engage what is, and trust your body to do the rest.",
     ],
   },
 ];
@@ -95,7 +103,7 @@ export const PRINCIPLES: Principle[] = [
   { n: 3, title: "Reconnect", summary: "Rediscover sensation, pressure distribution and controlled muscular engagement through each part of a movement." },
   { n: 4, title: "Retrain", summary: "Practise simple movements with improved coordination and awareness." },
   { n: 5, title: "Strengthen", summary: "Progressively develop strength, balance and physical capability." },
-  { n: 6, title: "Integrate", summary: "Bring these improvements into everyday movement and more demanding tasks, keeping movement simple and controlled even when your mind is busy." },
+  { n: 6, title: "Integrate", summary: "Carry it into everything: the way you walk, lift your children or grandchildren, and play your sport, keeping movement simple and controlled even when your mind is busy." },
 ];
 
 export const WHO_FOR: string[] = [
@@ -112,6 +120,12 @@ export const NOT_FOR: string[] = [
 ];
 
 export type Stage = { title: string; summary: string };
+
+/** Shown on every programme page except the flagship (owner, 2026-10-24). */
+export const FLAGSHIP_POINTER = {
+  title: "Start with the flagship",
+  text: "Every programme includes a summary of the philosophy, enough to practise it well. The complete teaching, with the reasoning behind every principle, is in Lower Body Regeneration. If you're new to the method, we recommend starting there. It also includes Core & Hips free.",
+};
 
 export type Programme = {
   slug: string;
@@ -147,7 +161,7 @@ export const PROGRAMMES: Programme[] = [
       "Listen mode, a short Key points version, and a one-page exercise sheet you can print or keep on your phone.",
       "Demonstration videos, so you can see what each movement looks like.",
       "Free bonus: the complete Core & Hips programme, with 20 more exercises for the hips, the breath and the deep core.",
-      "Advised: one round a day, about 25–35 minutes while you're learning and 15–20 once you know it. Not every day is needed.",
+      "Advised: one round a day, about 25 to 35 minutes while you're learning and 15 to 20 once you know it. Not every day is needed, and it's never a race.",
       "Your own members' area, where your programmes are always waiting for you.",
     ],
   },
@@ -174,8 +188,34 @@ export const PROGRAMMES: Programme[] = [
     ],
   },
   { slug: "upper-body", title: "Upper Body", short: "The same principles applied to the shoulders, arms and upper back, where so many of us hold tension.", status: "coming-soon", price: placeholder("Price") },
-  { slug: "hips", title: "Hips", short: "The hips half of Core & Hips on its own: open and strengthen the hips, building range off the correct pattern.", status: "coming-soon", price: placeholder("Price") },
-  { slug: "core", title: "Core", short: "The core half of Core & Hips on its own: rebuild reflexive support from the breath up, without bracing.", status: "coming-soon", price: placeholder("Price") },
+  {
+    slug: "hips",
+    title: "Hips",
+    short: "The hips half of Core & Hips on its own: open and strengthen the hips, building range off the correct pattern.",
+    status: "available",
+    price: placeholder("Hips price"),
+    access: placeholder("How long buyers keep access (e.g. lifetime)"),
+    includes: [
+      "10 exercises in two parts: open the hips, then strengthen them.",
+      "Every exercise with a detailed starting position, how to do it, what to watch for, and easier and harder versions.",
+      "The page-by-page guide, Listen mode, Key points and a printable exercise sheet.",
+      "Included free with Lower Body Regeneration, and part of Core & Hips.",
+    ],
+  },
+  {
+    slug: "core",
+    title: "Core",
+    short: "The core half of Core & Hips on its own: rebuild reflexive support from the breath up, without bracing.",
+    status: "available",
+    price: placeholder("Core price"),
+    access: placeholder("How long buyers keep access (e.g. lifetime)"),
+    includes: [
+      "11 exercises in two parts: breath and deep-core foundations, then the culmination (dead bug, bird dog, front plank, side plank).",
+      "Every exercise with a detailed starting position, how to do it, what to watch for, and easier and harder versions.",
+      "The page-by-page guide, Listen mode, Key points and a printable exercise sheet.",
+      "Included free with Lower Body Regeneration, and part of Core & Hips.",
+    ],
+  },
   { slug: "breathwork-regulation", title: "Breathwork & Regulation", short: "Learn to use your breath to settle the body, support release and recover well.", status: "coming-soon", price: placeholder("Price") },
   { slug: "full-body", title: "Full Body", short: "The complete method brought together, from head to toe.", status: "coming-soon", price: placeholder("Price") },
   { slug: "stretching", title: "Stretching", short: "Gentle, open stretching programmes for the upper body, lower body and full body.", status: "coming-soon", price: placeholder("Price") },
@@ -216,7 +256,8 @@ export const FAQS: Faq[] = [
   {
     q: "How long does it take, and how often should I do it?",
     a: [
-      "Everything is advised rather than fixed. We advise one round a day if you have the time: about 25–35 minutes for Lower Body while you're learning, and 15–20 minutes once you know it. You don't need to do it every day. Some people train daily because they love it, others two or three times a week, and both are fine.",
+      "Everything is advised rather than fixed. We suggest one round a day if you have the time: about 25 to 35 minutes for Lower Body while you're learning, and 15 to 20 minutes once you know it. You don't need to train every day.",
+      "This isn't another system to follow. The method frees you from rigid structure and gives you a baseline, so you can decide what to build on it, whether that's another of our programmes, your own training or your sport. Your pace depends on your age and ability, and every pace is the right one. No shame, no ego.",
     ],
   },
   {
