@@ -2,6 +2,10 @@
 
 Newest first. Each entry has the decision, why, and how to undo it.
 
+## 2026-10-24: Voiceover
+- The owner listened to free open-source AI voices (Kokoro) and rejected them as not good enough.
+- **Plan:** a premium AI voice (e.g. ElevenLabs) once the content is final, as a one-off cost. The device voice stays as the fallback until then.
+
 ## 2026-10-23: Payments switched to Stripe (replaces PayPal direct)
 - **Decision:** Stripe Checkout, the hosted payment page. Customers pay by card, Apple Pay, Google Pay, or PayPal, which is enabled inside Stripe.
 - **Why:** the owner asked. It's cheaper for UK cards (about 1.5% + 20p, against about 2.9% + 30p), quick to set up, has a full test mode, and its multi-item checkout suits the basket. Stripe Tax (optional, about 0.5% per sale) can calculate EU VAT later.
