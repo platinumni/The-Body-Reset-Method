@@ -5,7 +5,7 @@ position: 12
 kind: exercise
 stage: Part 1: Open the hips
 title: Hip circles (hip CARs)
-recommended_time: 3 to 5 slow circles each way, each leg
+recommended_time: 3-5 slow circles each way, each leg
 sheet_line: Standing, holding a wall. Slow, controlled circles of the knee. No leaning. Small circles first.
 status: draft
 youtube: https://www.youtube.com/watch?v=5kM-o61Z14I

@@ -124,7 +124,7 @@ export type Stage = { title: string; summary: string };
 /** Shown on every programme page except the flagship (owner, 2026-10-24). */
 export const FLAGSHIP_POINTER = {
   title: "Start with the flagship",
-  text: "Every programme includes a summary of the philosophy, enough to practise it well. The complete teaching, with the reasoning behind every principle, is in Lower Body Regeneration. If you're new to the method, we recommend starting there. It also includes Core & Hips free.",
+  text: "Lower Body Regeneration is the access point to all of our programmes. Every programme touches on the philosophy, but only the flagship teaches it in real depth, and that understanding is what makes everything else work. We always recommend starting there, and it includes Core & Hips free.",
 };
 
 export type Programme = {
@@ -148,7 +148,7 @@ export const PROGRAMMES: Programme[] = [
     status: "available",
     flagship: true,
     price: placeholder("Flagship price"),
-    access: placeholder("How long buyers keep access (e.g. lifetime)"),
+    access: "Lifetime access to everything in the programme, with no subscription.",
     stages: [
       { title: "Feet & balance", summary: "Short foot, toe yoga, toe spreading and single-leg balance. Learn the method itself, and let your feet support you instead of gripping. Everything else stands on this." },
       { title: "Shins, Achilles & calves", summary: "Tibialis raises and calf raises: basic strength for the lower leg, built in the position you've got." },
@@ -161,7 +161,7 @@ export const PROGRAMMES: Programme[] = [
       "Listen mode, a short Key points version, and a one-page exercise sheet you can print or keep on your phone.",
       "Demonstration videos, so you can see what each movement looks like.",
       "Free bonus: the complete Core & Hips programme, with 20 more exercises for the hips, the breath and the deep core.",
-      "Advised: one round a day, about 25 to 35 minutes while you're learning and 15 to 20 once you know it. Not every day is needed, and it's never a race.",
+      "Advised: one round a day, about 25-35 minutes while you're learning and 15-20 once you know it. Not every day is needed, and it's never a race.",
       "Your own members' area, where your programmes are always waiting for you.",
     ],
   },
@@ -172,7 +172,7 @@ export const PROGRAMMES: Programme[] = [
       "Open and strengthen the hips, then rebuild the deep core from the breath up, with released, reflexive support instead of bracing. Free with Lower Body Regeneration.",
     status: "available",
     price: placeholder("Core & Hips price (free with Lower Body)"),
-    access: placeholder("How long buyers keep access (e.g. lifetime)"),
+    access: "Lifetime access to everything in the programme, with no subscription.",
     stages: [
       { title: "Open the hips", summary: "90/90 switches, hip circles, leg swings and simple stretches. Build range off the correct pattern, without leaning or forcing." },
       { title: "Strengthen the hips", summary: "Step hip hikes, side-lying leg raises, banded side steps and supported hip airplanes." },
@@ -194,7 +194,7 @@ export const PROGRAMMES: Programme[] = [
     short: "The hips half of Core & Hips on its own: open and strengthen the hips, building range off the correct pattern.",
     status: "available",
     price: placeholder("Hips price"),
-    access: placeholder("How long buyers keep access (e.g. lifetime)"),
+    access: "Lifetime access to everything in the programme, with no subscription.",
     includes: [
       "10 exercises in two parts: open the hips, then strengthen them.",
       "Every exercise with a detailed starting position, how to do it, what to watch for, and easier and harder versions.",
@@ -208,7 +208,7 @@ export const PROGRAMMES: Programme[] = [
     short: "The core half of Core & Hips on its own: rebuild reflexive support from the breath up, without bracing.",
     status: "available",
     price: placeholder("Core price"),
-    access: placeholder("How long buyers keep access (e.g. lifetime)"),
+    access: "Lifetime access to everything in the programme, with no subscription.",
     includes: [
       "11 exercises in two parts: breath and deep-core foundations, then the culmination (dead bug, bird dog, front plank, side plank).",
       "Every exercise with a detailed starting position, how to do it, what to watch for, and easier and harder versions.",
@@ -246,7 +246,7 @@ export const FAQS: Faq[] = [
     q: "How do I get my programme after buying?",
     a: ["You don't need an account to buy. After payment we email you a link to create your account. Log in and your programmes are waiting in your members' area."],
   },
-  { q: "How long do I keep access?", a: [placeholder("Access length, e.g. lifetime access to programmes you've bought")] },
+  { q: "How long do I keep access?", a: ["For life. Once you've bought a programme, it's yours to come back to whenever you like, with no subscription."] },
   {
     q: "Do I need any equipment?",
     a: [
@@ -256,7 +256,7 @@ export const FAQS: Faq[] = [
   {
     q: "How long does it take, and how often should I do it?",
     a: [
-      "Everything is advised rather than fixed. We suggest one round a day if you have the time: about 25 to 35 minutes for Lower Body while you're learning, and 15 to 20 minutes once you know it. You don't need to train every day.",
+      "Everything is advised rather than fixed. We suggest one round a day if you have the time: about 25-35 minutes for Lower Body while you're learning, and 15-20 minutes once you know it. You don't need to train every day.",
       "This isn't another system to follow. The method frees you from rigid structure and gives you a baseline, so you can decide what to build on it, whether that's another of our programmes, your own training or your sport. Your pace depends on your age and ability, and every pace is the right one. No shame, no ego.",
     ],
   },

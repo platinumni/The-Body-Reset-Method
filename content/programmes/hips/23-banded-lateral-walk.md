@@ -5,7 +5,7 @@ position: 23
 kind: exercise
 stage: Part 2: Strengthen the hips
 title: Banded lateral walk
-recommended_time: 8 to 10 steps each way
+recommended_time: 8-10 steps each way
 sheet_line: Band around the ankles, soft knees, small side steps. Feet stay pointing forward. Stay tall.
 status: draft
 youtube: https://www.youtube.com/watch?v=qeIK3bkD-vA

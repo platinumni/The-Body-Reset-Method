@@ -5,7 +5,7 @@ position: 21
 kind: exercise
 stage: Stage 2: Shins, Achilles and calves
 title: Tibialis raises
-recommended_time: 8 to 12 reps
+recommended_time: 8-12 reps
 sheet_line: Back against a wall, heels forward. Lift the front of the feet, pause, lower slowly. Hips and ribs stay quiet.
 status: draft
 youtube: https://www.youtube.com/watch?v=UmHbtN0iFMg

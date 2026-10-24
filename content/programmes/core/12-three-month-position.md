@@ -5,7 +5,7 @@ position: 12
 kind: exercise
 stage: Part 1: Breath and deep-core foundations
 title: Back-lying legs up (the 3-month position)
-recommended_time: 8 to 10 slow breaths
+recommended_time: 8-10 slow breaths
 sheet_line: On your back, hips and knees at 90°, legs relaxed in the air. Breathe 360° without bracing.
 status: draft
 youtube: https://www.youtube.com/watch?v=VQdqk9QfQ7c

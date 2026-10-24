@@ -5,7 +5,7 @@ position: 21
 kind: exercise
 stage: Part 2: The culmination
 title: Dead bug
-recommended_time: 6 to 8 each side
+recommended_time: 6-8 each side
 sheet_line: On your back, arms up, legs at 90°. Slowly extend the opposite arm and leg, back stays the same. Breathe.
 status: draft
 youtube: https://www.youtube.com/watch?v=g_BYB0R-4Ws

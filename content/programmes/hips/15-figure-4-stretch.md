@@ -5,7 +5,7 @@ position: 15
 kind: exercise
 stage: Part 1: Open the hips
 title: Figure-4 glute stretch
-recommended_time: 30 to 60 seconds each side
+recommended_time: 30-60 seconds each side
 sheet_line: On your back, ankle over the opposite knee. Draw the legs in gently. Shoulders and neck relaxed.
 status: draft
 youtube: https://www.youtube.com/watch?v=PiJ_5AXTLOw

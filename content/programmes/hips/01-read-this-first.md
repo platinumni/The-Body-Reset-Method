@@ -8,7 +8,7 @@ youtube:
 ---
 Welcome to the Hips programme.
 
-Before your first session, please read the whole programme through, slowly and properly. **Allow about 20 minutes for your first read.** Then return to it often.
+Before your first session, please read the whole programme through, slowly and properly. **Allow about 20 minutes for your first read.** Your first few rounds will be slower too, about 20 minutes, while you read along. Once you understand it, a round takes about 10-15 minutes. Return to the guide often.
 
 The Hips programme is built on exactly the same philosophy as Lower Body Regeneration. If you've done that programme, read this as a reminder. If you're starting here, take your time with it, because the exercises only work properly when you understand the thinking behind them.
 
@@ -37,7 +37,7 @@ When it's right, you'll feel it: supported, light, almost floating.
 - **Build range off the correct pattern.** A smaller movement done well beats a large one full of compensation. The range will come.
 - **Never force into a position that makes you compensate.** No leaning, twisting or holding your breath to get further.
 - **Engage, but don't grip.**
-- **A little shaking is normal.** Stop if discomfort rises above 2 to 3 out of 10.
+- **A little shaking is normal.** Stop if discomfort rises above 2-3 out of 10.
 - **Don't rush to the advanced versions.**
 
 ## The four stages of learning
@@ -49,8 +49,8 @@ You'll move from not noticing your gripping (unconsciously incompetent), to noti
 Everything here is **advised**, not prescribed.
 
 - **Advised: one round a day,** if you have the time. Not every day is needed.
-- **Advised reps: around 8 to 10,** or the breaths or hold time shown.
-- A round takes about 20 minutes while you're learning, and 10 to 15 once you know it.
+- **Advised reps: around 8-10,** or the breaths or hold time shown.
+- A round takes about 20 minutes while you're learning, and 10-15 once you know it.
 - If you have both Hips and Core, you can do them together, alternate them day by day, or spread them across the week.
 
 Please don't see this as another system to follow. The aim is to free you from rigid structure, not to hand you a new one. This gives you a baseline, and from there you choose what to build: another of our programmes, your own training, or your sport.
@@ -65,9 +65,9 @@ The harder versions rarely add much effort. They layer awareness onto a simple m
 
 Most exercises have a short demonstration video at the bottom of the page. Watch it first if it helps you picture the movement, but remember it shows only what the movement looks like. **The real value is in the starting position and the guidance.**
 
-## Where the full philosophy lives
+## Start with the flagship
 
-This programme includes a summary of the philosophy, enough to practise it well. The complete teaching, with the reasoning behind every principle, is in our flagship programme, **Lower Body Regeneration**. If you haven't done it, we recommend starting there.
+Our flagship programme, **Lower Body Regeneration**, is the access point to all of our programmes. Every programme touches on the philosophy, but only the flagship teaches it in real depth, and that understanding is what makes everything else work. We always recommend starting there.
 
 ## What you'll need
 

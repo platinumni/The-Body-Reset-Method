@@ -5,7 +5,7 @@ position: 23
 kind: exercise
 stage: Part 2: The culmination
 title: Front plank
-recommended_time: 20 to 60 seconds
+recommended_time: 20-60 seconds
 sheet_line: Forearms down, body in a line. Released first, breathing 360°. At the end, a short full-body squeeze.
 status: draft
 youtube: https://www.youtube.com/watch?v=3QZlgJ40LfU

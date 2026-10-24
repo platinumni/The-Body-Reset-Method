@@ -5,7 +5,7 @@ position: 24
 kind: exercise
 stage: Part 2: Strengthen the hips
 title: Supported hip airplanes
-recommended_time: 5 to 6 slow rotations each side
+recommended_time: 5-6 slow rotations each side
 sheet_line: Hinge on one leg, holding a wall. Slowly rotate the pelvis open and closed over the standing hip.
 status: draft
 youtube: https://www.youtube.com/watch?v=hzY7H6tPT4g

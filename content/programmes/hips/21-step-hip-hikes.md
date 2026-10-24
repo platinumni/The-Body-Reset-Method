@@ -5,7 +5,7 @@ position: 21
 kind: exercise
 stage: Part 2: Strengthen the hips
 title: Step hip hikes
-recommended_time: 8 to 10 each side
+recommended_time: 8-10 each side
 sheet_line: Standing sideways on a step, one leg hanging. Let that hip drop, then lift it level and a little higher.
 status: draft
 youtube: https://www.youtube.com/watch?v=LF_YbQOTRJI

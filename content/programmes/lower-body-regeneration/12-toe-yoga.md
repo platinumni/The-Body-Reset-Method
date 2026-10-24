@@ -5,7 +5,7 @@ position: 12
 kind: exercise
 stage: Stage 1: Feet and balance
 title: Toe yoga
-recommended_time: 8 to 10 reps each way
+recommended_time: 8-10 reps each way
 sheet_line: Seated. Big toe down, four toes up, hold, lower slowly. Then swap. Find the sweet spot of pressure.
 status: draft
 youtube: https://www.youtube.com/watch?v=SbQ2RYxbppE
@@ -46,7 +46,7 @@ Notice where you can release tension. Then explore the pressure in the big toe: 
 ### Advanced
 Count the holds while you keep breathing, without letting the count fall into rhythm with your breath. Count each time the big toe is down, and the same for the four toes.
 
-This splits your attention several ways at once, and you'll feel the difference: the breath wants to sync with the count, the pressure creeps up, the hips quietly join in. Notice each one and release it. When the other tension has gone and it's just the toes working, release another 5 to 10 percent. Feel the point where the toes let go too much and want to lift. Find that beautiful spot just before it.
+This splits your attention several ways at once, and you'll feel the difference: the breath wants to sync with the count, the pressure creeps up, the hips quietly join in. Notice each one and release it. When the other tension has gone and it's just the toes working, release another 5-10 percent. Feel the point where the toes let go too much and want to lift. Find that beautiful spot just before it.
 
 ## Key points
 - Same seated start: tall, released, breathing.

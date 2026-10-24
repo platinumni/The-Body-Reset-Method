@@ -5,7 +5,7 @@ position: 16
 kind: exercise
 stage: Part 1: Breath and deep-core foundations
 title: Side-lying breath and reach
-recommended_time: 5 to 6 breaths each side
+recommended_time: 5-6 breaths each side
 sheet_line: On your side, knees bent, head supported. Breathe into the top ribs, then reach the top arm overhead.
 status: draft
 youtube: 

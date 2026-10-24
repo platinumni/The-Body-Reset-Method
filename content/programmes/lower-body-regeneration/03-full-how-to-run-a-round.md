@@ -33,7 +33,7 @@ A round is one set of every exercise, in this order:
 ## Advised
 
 - One round a day, if you have the time. Not every day is needed.
-- Around 8 to 10 reps of each, unless the exercise says otherwise.
+- Around 8-10 reps of each, unless the exercise says otherwise.
 - With more time, go round again. You can skip an exercise, or linger on the ones you find most useful.
 
 These are guides, not rules. Take what serves you.

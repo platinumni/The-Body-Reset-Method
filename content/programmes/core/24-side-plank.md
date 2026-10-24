@@ -5,7 +5,7 @@ position: 24
 kind: exercise
 stage: Part 2: The culmination
 title: Side plank
-recommended_time: 15 to 45 seconds each side
+recommended_time: 15-45 seconds each side
 sheet_line: On your side, elbow under shoulder. Lift the hips into a line. Released, breathing, ribs stacked.
 status: draft
 youtube: https://www.youtube.com/watch?v=UurF0EhHFLg

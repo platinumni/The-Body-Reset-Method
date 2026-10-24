@@ -5,7 +5,7 @@ position: 11
 kind: exercise
 stage: Stage 1: Feet and balance
 title: Short foot
-recommended_time: 8 to 10 reps, holding each for about 5 seconds
+recommended_time: 8-10 reps, holding each for about 5 seconds
 sheet_line: Seated on a hard chair. Toes long and loose. Draw the ball of the foot towards the heel, arch lifts. Hold 5, release.
 status: draft
 youtube: https://www.youtube.com/watch?v=QnnsoOIAFm0
@@ -42,7 +42,7 @@ Simply do the movement: raise and lower the arch, toes long and loose. No extra 
 Do the movement, and release the force you're using everywhere else: the knees, the thighs, the hips, and anything pulling elsewhere in the body.
 
 ### Advanced
-Add the breath and a count. Hold the top for 2 to 5 seconds, counting only the hold, then move very slowly down and very slowly up, breathing all the while.
+Add the breath and a count. Hold the top for 2-5 seconds, counting only the hold, then move very slowly down and very slowly up, breathing all the while.
 
 You'll find this is surprisingly demanding. Breathing, counting, holding and moving at once makes a tiny movement complex, and you may notice the breath catching, the toes wanting to grip, or tension sneaking into the jaw. That's exactly what you're training: your body learning to stay relaxed while the load on your attention rises. If it becomes a struggle, step back a level and release.
 

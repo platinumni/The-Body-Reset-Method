@@ -5,7 +5,7 @@ position: 22
 kind: exercise
 stage: Part 2: The culmination
 title: Bird dog
-recommended_time: 6 to 8 each side
+recommended_time: 6-8 each side
 sheet_line: All fours, spine long. Reach one arm forward and the opposite leg back. No tipping. Back and swap.
 status: draft
 youtube: https://www.youtube.com/watch?v=LaLKNS7mxrk

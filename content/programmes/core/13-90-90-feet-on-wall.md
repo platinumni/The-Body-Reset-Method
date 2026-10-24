@@ -5,7 +5,7 @@ position: 13
 kind: exercise
 stage: Part 1: Breath and deep-core foundations
 title: 90/90 feet on the wall
-recommended_time: 8 to 10 slow breaths
+recommended_time: 8-10 slow breaths
 sheet_line: On your back, feet flat on a wall, hips and knees at 90°. Light press through the heels, breathe 360°.
 status: draft
 youtube: https://www.youtube.com/watch?v=C9ZX2TFJ3CU

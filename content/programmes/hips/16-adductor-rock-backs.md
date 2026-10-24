@@ -5,7 +5,7 @@ position: 16
 kind: exercise
 stage: Part 1: Open the hips
 title: Adductor rock-backs
-recommended_time: 8 to 10 slow rocks each side
+recommended_time: 8-10 slow rocks each side
 sheet_line: On all fours, one leg out to the side. Rock the hips back towards the heels, spine long. Forward again.
 status: draft
 youtube: https://www.youtube.com/watch?v=yF8o6I6aSZg

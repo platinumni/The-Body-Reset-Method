@@ -5,7 +5,7 @@ position: 14
 kind: exercise
 stage: Part 1: Open the hips
 title: Half-kneeling hip flexor stretch
-recommended_time: 30 to 60 seconds each side
+recommended_time: 30-60 seconds each side
 sheet_line: One knee down, cushion under it. Tuck the pelvis slightly, shift gently forward. No arching.
 status: draft
 youtube: https://www.youtube.com/watch?v=F55tzqJggAY

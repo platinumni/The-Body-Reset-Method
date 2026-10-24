@@ -5,7 +5,7 @@ position: 17
 kind: exercise
 stage: Part 1: Breath and deep-core foundations
 title: Quadruped rocking
-recommended_time: 8 to 10 slow rocks
+recommended_time: 8-10 slow rocks
 sheet_line: On all fours, spine long. Rock the hips back towards the heels and forward again, spine staying the same.
 status: draft
 youtube: https://www.youtube.com/watch?v=yn4qiqSlUgY

@@ -5,7 +5,7 @@ position: 31
 kind: exercise
 stage: Stage 3: Hips and knees
 title: Glute bridge
-recommended_time: 8 to 12 reps
+recommended_time: 8-12 reps
 sheet_line: On your back, knees bent, feet flat. Press softly through the whole foot, lift the hips, pause, lower slowly.
 status: draft
 youtube: https://www.youtube.com/watch?v=NXwR65L7I-s

@@ -5,7 +5,7 @@ position: 13
 kind: exercise
 stage: Stage 1: Feet and balance
 title: Toe spreading
-recommended_time: 8 to 10 reps
+recommended_time: 8-10 reps
 sheet_line: Seated. Spread the toes as wide as you can, then release the effort you don't need.
 status: draft
 youtube: https://www.youtube.com/watch?v=v5gIyH1jRr0

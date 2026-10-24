@@ -5,7 +5,7 @@ position: 32
 kind: exercise
 stage: Stage 3: Hips and knees
 title: Clamshells
-recommended_time: 8 to 12 reps on each side
+recommended_time: 8-12 reps on each side
 sheet_line: Side-lying, knees bent, heels together. Open the top knee without the pelvis rolling back. Close slowly.
 status: draft
 youtube: https://www.youtube.com/watch?v=wXbXHy8tjpw

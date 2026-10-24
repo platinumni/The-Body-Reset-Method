@@ -108,7 +108,7 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
         <h2>What you're buying</h2>
         <p>
           Our programmes are digital content: written teaching, images and video. When you buy, you get a personal, non-transferable licence to use the
-          programme for your own use. Access lasts <Text copy={placeholder("Access length, e.g. for as long as the website operates")} />.
+          programme for your own use. Access is for life: you can return to the programmes you've bought for as long as our members' area is running, with no subscription.
         </p>
         <h2>Please don't share</h2>
         <p>

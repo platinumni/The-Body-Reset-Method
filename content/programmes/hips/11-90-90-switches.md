@@ -5,7 +5,7 @@ position: 11
 kind: exercise
 stage: Part 1: Open the hips
 title: 90/90 hip switches
-recommended_time: 8 to 10 switches
+recommended_time: 8-10 switches
 sheet_line: Seated, both knees at 90°. Push up off the knuckles, relax in, then rotate both knees to the other side.
 status: draft
 youtube: https://www.youtube.com/watch?v=Ot6EsGs1Wj8

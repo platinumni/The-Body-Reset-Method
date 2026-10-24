@@ -5,7 +5,7 @@ position: 15
 kind: exercise
 stage: Part 1: Breath and deep-core foundations
 title: Heel slides and knee fall-outs
-recommended_time: 6 to 8 each side
+recommended_time: 6-8 each side
 sheet_line: On your back in neutral. Slide one heel away and back. Then let one knee fall out and back. Pelvis stays still.
 status: draft
 youtube: https://www.youtube.com/watch?v=6-anByqnKp8

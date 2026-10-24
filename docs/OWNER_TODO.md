@@ -8,7 +8,6 @@ These are things only you can do. None of them block the build until go-live unl
   - the exercises Claude wrote for you: tibialis raises, glute bridge, clamshells, all of Hips and Core, and the "Strengthen and reintegrate" list;
   - the toe yoga swap (four toes down, big toe up), which Claude added from your note;
   - every "What to watch for" list (Claude researched these).
-- [ ] **Confirm the "Start with the flagship" wording** on the Hips, Core, and Core & Hips pages.
 - [ ] **Watch every YouTube demo link** and tell Claude any to swap. None has been watched by a person yet.
 - [ ] **Prices:** Lower Body (you mentioned 29.99; **£ or $?**) and Core & Hips, Hips, and Core (each has its own buy page now).
 - [ ] **Photos:** your own phone photos of each starting position are best. AI images often get feet and toes wrong.
@@ -17,7 +16,7 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Affiliate commission %.** For example 20% or 30% of the sale. Set it yourself in **Admin → Affiliates** (the programme stays closed until you do). Also check the hold period (30 days) and the minimum payout (£10).
 - [ ] **Your coach story and photos.** A short bio, your own journey (in your words), and any photos or images.
 - [ ] **Check the test site wording** and reply with changes. Every yellow highlight is a placeholder waiting for your words.
-- [ ] **Access length** (e.g. lifetime), for the FAQ and terms. (The equipment FAQ is done: check it.)
+- [x] **Access length:** lifetime (owner, 2026-10-24). It's on the programme pages, FAQ and terms. Worth a line in the solicitor review.
 
 - [ ] **Keep evidence for "thousands"** (group sizes, messages, screenshots) in case it's ever challenged.
 - [ ] **Testimonials:** collect real quotes from people you've helped, with their permission (first name and town is fine), and no medical-cure claims.

@@ -5,7 +5,7 @@ position: 22
 kind: exercise
 stage: Part 2: Strengthen the hips
 title: Side-lying leg raise
-recommended_time: 8 to 12 each side
+recommended_time: 8-12 each side
 sheet_line: On your side, hips stacked, top leg straight and slightly back. Lift, pause, lower slowly.
 status: draft
 youtube: https://www.youtube.com/watch?v=nn5AtZNjnIE

@@ -5,7 +5,7 @@ position: 14
 kind: exercise
 stage: Part 1: Breath and deep-core foundations
 title: Pelvic tilts and finding neutral
-recommended_time: 8 to 10 slow tilts
+recommended_time: 8-10 slow tilts
 sheet_line: On your back, knees bent. Gently tilt the pelvis forward and back, then settle in the middle.
 status: draft
 youtube: https://www.youtube.com/watch?v=n8DU1desCy8

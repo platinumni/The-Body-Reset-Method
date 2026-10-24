@@ -5,7 +5,7 @@ position: 13
 kind: exercise
 stage: Part 1: Open the hips
 title: Leg swings
-recommended_time: 8 to 10 swings each direction, each leg
+recommended_time: 8-10 swings each direction, each leg
 sheet_line: Holding a wall. Easy, relaxed swings front to back, then side to side, then full circles.
 status: draft
 youtube: https://www.youtube.com/watch?v=ihsH785vBq0

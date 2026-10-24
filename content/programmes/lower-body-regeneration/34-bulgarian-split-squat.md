@@ -5,7 +5,7 @@ position: 34
 kind: exercise
 stage: Stage 3: Hips and knees
 title: Bulgarian split squat
-recommended_time: 6 to 10 reps on each leg
+recommended_time: 6-10 reps on each leg
 sheet_line: Back foot on a sofa or bench. Weight spread across the front foot. Lower only as far as you hold the position, then rise.
 status: draft
 youtube: https://www.youtube.com/watch?v=oGTVhFgRnes

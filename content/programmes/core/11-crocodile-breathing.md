@@ -5,7 +5,7 @@ position: 11
 kind: exercise
 stage: Part 1: Breath and deep-core foundations
 title: 360° breathing (crocodile breath)
-recommended_time: 8 to 10 slow breaths
+recommended_time: 8-10 slow breaths
 sheet_line: Face down, forehead on your hands. Breathe low and wide, into the back and sides. No forcing.
 status: draft
 youtube: https://www.youtube.com/watch?v=yOSmEVxP8kI

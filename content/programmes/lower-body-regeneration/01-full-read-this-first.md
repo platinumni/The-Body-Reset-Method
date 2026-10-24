@@ -8,7 +8,7 @@ youtube:
 ---
 Welcome to Lower Body Regeneration.
 
-Before you try a single exercise, please read this guide all the way through, slowly and properly. **Set aside about 45 minutes for your first read**, somewhere quiet, ideally before your first session. Then come back to it often. Each time you return, you'll notice something you missed, because you'll be reading it with a body that has started to understand.
+Before you try a single exercise, please read this guide all the way through, slowly and properly. **Set aside about 45 minutes for your first read**, somewhere quiet, ideally before your first session. Your first few rounds will be slower too, around 25-35 minutes, as you read along and find each position. Once you understand it, a full round takes about 15-20 minutes. Come back to this guide often. Each time you return, you'll notice something you missed, because you'll be reading it with a body that has started to understand.
 
 The exercises matter. The thinking behind them matters more.
 
@@ -69,7 +69,7 @@ The first four exercises are mostly about recognising, releasing, reconnecting a
 - **Never force yourself into a position that makes you compensate.** If you have to twist, lean, grip or hold your breath to get there, you've gone too far. Come back to where you can stay released.
 - **Engage, but don't grip.** Trust that the support is there whenever you need it, and that it will arrive when it's required.
 - **A little shaking is normal.** It's your nervous system learning.
-- **Respect discomfort.** A little is fine. Stop if anything rises above 2 to 3 out of 10.
+- **Respect discomfort.** A little is fine. Stop if anything rises above 2-3 out of 10.
 - **Don't rush to the advanced versions.** It's far better to stay at beginner level and patiently release tension than to rush ahead carrying extra force and compensation. Even in the right muscles, too much is too much.
 
 ## What the advanced versions are really doing
@@ -90,8 +90,8 @@ Everything here is **advised**, not prescribed.
 
 - **Advised: one round a day,** if you have the time. A round is one set of every exercise, in order.
 - **You don't need to train every day.** Some people practise daily because they love it; others two or three times a week. Both are fine.
-- **Advised reps: around 8 to 10.** Do fewer if you need to, and more if it feels good. As your control improves, you'll often find you need fewer.
-- **A round takes about 25 to 35 minutes** while you're learning, and about 15 to 20 minutes once you know it.
+- **Advised reps: around 8-10.** Do fewer if you need to, and more if it feels good. As your control improves, you'll often find you need fewer.
+- **A round takes about 25-35 minutes** while you're learning, and about 15-20 minutes once you know it.
 
 Please don't see this as another system to follow. This programme exists to free you from rigid structure, not to hand you a new one. It gives you a baseline: a deep understanding of how your body moves, and how to move without forcing. From there, you decide what structure you want to build in, whether that's another of our programmes, your own training, or the sport you love.
 

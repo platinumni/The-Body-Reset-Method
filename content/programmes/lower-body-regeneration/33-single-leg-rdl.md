@@ -5,7 +5,7 @@ position: 33
 kind: exercise
 stage: Stage 3: Hips and knees
 title: Single-leg Romanian deadlift
-recommended_time: 6 to 10 reps on each leg
+recommended_time: 6-10 reps on each leg
 sheet_line: Begin in your single-leg balance. Hinge slowly at the hip, only as far as you stay stable. Return.
 status: draft
 youtube: https://www.youtube.com/watch?v=tX_0Pas9iNI

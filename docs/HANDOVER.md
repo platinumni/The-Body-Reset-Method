@@ -197,7 +197,7 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 **Owner review round 1 (2026-10-24, voice notes 19 to 30)**
 - **Content rewritten** in a more polished voice.
-  - Number ranges read "8 to 10", never with a dash; a script test enforces this.
+  - Number ranges use a plain hyphen ("8-10"), never an en dash (the owner felt it looked AI-written). A script test enforces this.
   - Every starting position follows the same order: nudge gently, release, engage only what's needed, release again and maintain ("almost floating").
   - Short foot stresses toes long and fully loose.
   - The single-leg balance and the Release example now cover stacking up the spine and the toe grip as the consciously competent stage, then releasing it.
@@ -205,13 +205,14 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - Retrain and Strengthen are split into separate sections.
   - Integrate covers everyday life and sport.
   - "Advised" is framed as not another system: a baseline, no rush, no shame, no ego.
-  - First-read times: Lower Body about 45 minutes, Hips and Core about 20 minutes each.
+  - First-read times: Lower Body about 45 minutes, Hips and Core about 20 minutes each. Each intro also gives the time for a round once understood.
+  - Access is **lifetime** (owner, 2026-10-24): on the programme pages, FAQ and terms.
   - "Strengthen and reintegrate" became "Beyond the programme: letting go of it" (same key). It lists the practices always worth keeping, including a skipping rope.
   - Hips gained a "What next" page.
 - **Reader:** each exercise with a video gets a line near the top saying the video is at the bottom (with a link), and that it shows the movement only.
 - **Website:**
   - Hips and Core each have their own buy page (price placeholders).
-  - Every page except the flagship carries a "Start with the flagship" card (`FLAGSHIP_POINTER`). The wording is Claude's proposal, awaiting owner confirmation.
+  - Every page except the flagship carries a "Start with the flagship" card (`FLAGSHIP_POINTER`). Wording confirmed by the owner (2026-10-24): the flagship is the access point to all programmes.
   - Method page and FAQ updated to match.
 - **Content generators:** the scripts that write `content/programmes` live in the session scratchpad only; the `.md` files are the source of truth.
 
