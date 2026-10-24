@@ -13,7 +13,7 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Photos:** your own phone photos of each starting position are best. AI images often get feet and toes wrong.
 - [ ] **Buy the domain.** Tell me which one. Connecting it takes about 15 minutes at go-live.
 - [ ] **Stripe account** (free) at stripe.com. You only need test mode for now. Steps are in `docs/STRIPE_SETUP.md`. Turn on PayPal under Settings → Payment methods if you want customers to have it as an option.
-- [ ] **Affiliate commission %.** For example 20% or 30% of the sale. Set it yourself in **Admin → Affiliates** (the programme stays closed until you do). Also check the hold period (30 days) and the minimum payout (£10).
+- [ ] **Affiliate commission %.** For example 20% or 30% of the sale. Set it yourself in **Admin → Affiliates** (the programme stays closed until you do). Also check the minimum payout (£10). Commission is held 90 days and paid on the last working day of the month; **payouts stay manual** (owner, 2026-10-24): you pay by PayPal or bank and tap "Record payout".
 - [ ] **Your coach story and photos.** A short bio, your own journey (in your words), and any photos or images.
 - [ ] **Check the test site wording** and reply with changes. Every yellow highlight is a placeholder waiting for your words.
 - [x] **Access length:** lifetime (owner, 2026-10-24). It's on the programme pages, FAQ and terms. Worth a line in the solicitor review.
@@ -33,6 +33,7 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Trademark check** on "The Body Regeneration Method" (UK IPO search, free): gov.uk/search-for-trademark
 - [ ] **Insurance:** professional indemnity / public liability that covers online coaching.
 - [ ] **Stripe: activate live payments** (business details and bank account) before go-live.
+- [ ] **HMRC:** register as self-employed (free, online) by 5 October after the tax year you start selling.
 - [ ] **Accountant question:** EU VAT on digital sales to EU customers (it applies from the first EU sale). Ask whether to register for the "non-Union OSS" or limit EU sales. UK VAT only kicks in over £90k turnover.
 - [ ] **Email sending:** a Resend account (or reuse the Platinum NI one) and verify the new domain.
 - [ ] **Solicitor review** of the terms, refund and health disclaimer pages (recommended, not required).
