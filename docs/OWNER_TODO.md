@@ -33,7 +33,15 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Trademark check** on "The Body Regeneration Method" (UK IPO search, free): gov.uk/search-for-trademark
 - [ ] **Insurance:** professional indemnity / public liability that covers online coaching.
 - [ ] **Stripe: activate live payments** (business details and bank account) before go-live.
-- [ ] **HMRC:** register as self-employed (free, online) by 5 October after the tax year you start selling.
+- [ ] **Business setup (owner may use their existing Ltd, 2026-10-24):** if so, sell as "[Ltd name] trading as The Body Regeneration Method". Then:
+  - no self-employed registration is needed;
+  - Stripe and its payouts go to the company and the company bank account;
+  - the legal pages show the company name, number and registered office (send Claude these);
+  - VAT counts the company's total turnover across both websites (£90k threshold);
+  - one ICO fee covers the company, but check the registration mentions this website;
+  - insurance should cover both activities;
+  - ask the accountant whether to add a SIC code for online coaching.
+  If not using the Ltd: register as self-employed with HMRC by 5 October after the tax year you start selling.
 - [ ] **Accountant question:** EU VAT on digital sales to EU customers (it applies from the first EU sale). Ask whether to register for the "non-Union OSS" or limit EU sales. UK VAT only kicks in over £90k turnover.
 - [ ] **Email sending:** a Resend account (or reuse the Platinum NI one) and verify the new domain.
 - [ ] **Solicitor review** of the terms, refund and health disclaimer pages (recommended, not required).
