@@ -37,4 +37,4 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Email sending:** a Resend account (or reuse the Platinum NI one) and verify the new domain.
 - [ ] **Solicitor review** of the terms, refund and health disclaimer pages (recommended, not required).
 - [x] **Refund policy:** 90-day money-back guarantee on every programme (2026-10-24).
-- [ ] **Contact email:** when you've made the Gmail for website messages, put it in Admin → Site wording → "Contact form: send messages to" (or send it to Claude). Until then, messages wait in Admin → Messages.
+- [ ] **Contact email (parked, 2026-10-24):** when you've made the Gmail for website messages, put it in Admin → Site wording → "Contact form: send messages to" (or send it to Claude). Until then, messages wait in Admin → Messages.
