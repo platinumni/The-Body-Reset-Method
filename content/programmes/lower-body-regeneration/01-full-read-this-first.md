@@ -28,6 +28,18 @@ Every exercise in this programme follows that same order. First you let go of th
 
 Taoism has a beautiful name for this: **wu wei**, often translated as "effortless action". Doing exactly what is needed, and nothing more. It isn't collapse, and it isn't laziness. It's the body doing its job, without you getting in the way.
 
+## Letting go, in the body and in life
+
+Most of us live under control. At first it's the wrong kind: the gripping that comes from pressure, habit, fear and the need to hold everything together. For many people it takes a crisis, an injury or a body that finally says enough before they go looking for something better. And they find it: better habits, better choices, a quieter mind, a deeper sense of meaning. In the body, it's the right muscles finally doing the work.
+
+That's real progress, and it matters. But look closely and you'll see it's still control. The right kind, held tightly. We swap one grip for another, and the body, the mind and the spirit stay braced.
+
+The final step is the hardest, and the most freeing: to release even the good control, and trust. Trust your reflexes. Trust your body. Trust the process. Trust yourself. Not giving up, and not falling apart, but letting what you've learned run without standing guard over it.
+
+This is wu wei. It's why every exercise ends in release, and why every programme ends by letting go of control.
+
+> **Once you understand it, a full round takes about 15-20 minutes.** The first few times are slower, and that's exactly as it should be.
+
 ## How every starting position works
 
 You'll spend more time in the starting positions than anywhere else, and that's deliberate. They are where the real learning happens. Each one follows the same quiet sequence:

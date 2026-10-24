@@ -342,10 +342,19 @@ const TimeNote = (props: { time: string | null }) =>
     </p>
   ) : null;
 
-function HowToUse(props: { open: boolean }) {
+/** Roughly how long a round takes once someone understands the programme (owner, 2026-10-24). */
+const ROUND_TIME: Record<string, string> = { "lower-body-regeneration": "15-20", hips: "10-15", core: "10-15" };
+
+function HowToUse(props: { open: boolean; slug: string }) {
+  const round = ROUND_TIME[props.slug];
   return (
     <details class="how-to-use" open={props.open}>
       <summary>How to use this programme</summary>
+      {round && (
+        <p class="round-time">
+          <strong>Once you understand it, a round takes about {round} minutes.</strong> The first few times are slower, as they should be.
+        </p>
+      )}
       <ol>
         <li>
           <strong>Full guide:</strong> read everything for the first week or two, especially the starting positions.
@@ -436,7 +445,7 @@ export function ReaderPage(props: {
       </section>
       <section class="band band-tight reader-body">
         <div class="wrap narrow">
-          {(mode !== "guide" || index === 1) && mode !== "sheet" && <HowToUse open={mode === "guide"} />}
+          {(mode !== "guide" || index === 1) && mode !== "sheet" && <HowToUse open={mode === "guide"} slug={programme.slug} />}
 
           {mode === "guide" && (guide.length === 0 ? empty : <GuideItem base={base} items={guide} index={index} csrfToken={props.csrfToken} />)}
 
@@ -542,7 +551,7 @@ export function ReaderPage(props: {
                     </section>
                   ))}
               <p class="sheet-foot small">
-                All reps, sets and times are advised. Advised: one round a day, and not every day is needed. Tune in to your body rather than the clock, go at your own pace,
+                {ROUND_TIME[programme.slug] && <>Once you understand it, a round takes about {ROUND_TIME[programme.slug]} minutes. </>}All reps, sets and times are advised. Advised: one round a day, and not every day is needed. Tune in to your body rather than the clock, go at your own pace,
                 and stop if anything causes pain. This is a guide, not another system to follow.
               </p>
             </div>

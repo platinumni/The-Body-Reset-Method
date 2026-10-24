@@ -532,3 +532,4 @@ html[data-text-size="3"] .reader-body { font-size: 1.36rem; }
 .video-pointer { font-size: .92rem; background: var(--bg-quiet); border-radius: var(--radius-sm); padding: .6rem .85rem; }
 .flagship-pointer { margin: 1.5rem 0 0; border-color: var(--accent); }
 .flagship-pointer p { margin: .25rem 0 1rem; }
+.round-time { margin: .75rem 0 0; }

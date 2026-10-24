@@ -216,6 +216,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - Method page and FAQ updated to match.
 - **Content generators:** the scripts that write `content/programmes` live in the session scratchpad only; the `.md` files are the source of truth.
 
+- **Letting go, in the body and in life** (owner, 2026-10-24): a passage in Lower Body "Read this first" (after wu wei) that runs from the wrong control, to good control, to trust (reflexes, body, the process, yourself). It's written for everyone, with no religious terms, and has a short reprise at the start of "Beyond the programme". The round time once understood (`ROUND_TIME` in `src/views/account.tsx`) shows in the How to use box and on the exercise sheet.
+
 ## Next step
 - **2026-10-24: the course is published on staging only**, at the owner's request, so they can preview it on their phone. Their preview member account is `michaeljmarden+preview@gmail.com` (order `OWNER-PREVIEW`, £0, no payment). Their main account is the admin one, which needs 2FA. The content files still say `status: draft`, so a later `--update` import will set staging back to draft unless the files are changed to `published` first.
 - The owner reviews the course (screenshots, or drafts once admin login exists) and the YouTube links.

@@ -8,6 +8,10 @@ youtube:
 ---
 You've reached the end of the core programme, and this may be the most important page in it.
 
+## The last letting go
+
+In the body, you released the compensation, found the right muscles, and then released even those. Life tends to follow the same arc: from the wrong kind of control, to the right kind, to trust. Letting go of this programme is part of that. Trust your reflexes, trust the process, and trust yourself.
+
 ## You're meant to outgrow this
 
 The aim was never to give you another routine to keep up for the rest of your life. There is a phase of teaching the body. For some people it takes weeks or months; others find it in a week or two. Either is fine. But once you genuinely have the control, you can let go of most of the structure.
