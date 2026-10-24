@@ -14,6 +14,7 @@ youtube:
 - **Engage, but don't grip.**
 - **A little shaking is normal.** Stop if discomfort rises above 2-3 out of 10.
 - **Don't rush to the advanced versions.** Stay where you're learning, not forcing.
+- **Control on and off.** Find the right control, then learn to switch it on when you need it and off when you don't.
 
 **Three questions for every exercise:**
 

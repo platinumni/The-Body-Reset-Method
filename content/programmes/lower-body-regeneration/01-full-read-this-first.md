@@ -38,6 +38,21 @@ The final step is the hardest, and the most freeing: to release even the good co
 
 This is wu wei. It's why every exercise ends in release, and why every programme ends by letting go of control.
 
+## On and off: the real skill
+
+Letting go doesn't mean living without control. A heavy squat needs control. So does a deadlift, a golf swing, a martial art, or lifting a child from the floor. The problem is that most people can't switch it off. Their control is permanently on, gripped and tight, long after the moment that needed it has passed.
+
+So the journey has four steps:
+
+1. **Find the wrong control, and switch it off.** The gripping and compensation your body has learned over the years.
+2. **Learn the right control,** from the ground up: the correct muscles, in the correct order, doing the correct job.
+3. **Release even that,** until movement becomes fluid and your reflexes carry you.
+4. **Switch it on and off at will.** Engaged the moment you need it, released the moment you don't. On, off, on, off.
+
+> The real skill isn't switching control off. It's finding the right control in a body that has learned the wrong patterns, and then being able to switch it on and off whenever you need it.
+
+That's what proper function looks like: a body that moves freely between control and release, and never gets stuck in either.
+
 > **Once you understand it, a full round takes about 15-20 minutes.** The first few times are slower, and that's exactly as it should be.
 
 ## How every starting position works

@@ -73,6 +73,7 @@ export const LEARNING_STAGES: { title: string; summary: string }[] = [
 export const EFFORTLESS = [
   "There's an old idea from Taoism called wu wei, often translated as \"effortless action\": doing exactly what's needed, and nothing more. That's the feeling the method is after.",
   "It isn't collapse, and it isn't laziness. You release the tension, find the muscles that should be working, and then release even those, back to the level your reflexes need. Then you learn to trust those reflexes.",
+  "And it isn't about living without control. A heavy lift, a golf swing or a martial art all need it. The real skill is finding the right control in a body that has learned the wrong patterns, and then being able to switch it on and off whenever you need it, moving freely between control and release.",
 ];
 
 /** The "why" behind the method, used on the homepage and the method page. */
