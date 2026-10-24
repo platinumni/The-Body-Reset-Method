@@ -108,3 +108,11 @@ export function RichText(props: { source: string; level?: 2 | 3 }) {
     </>
   );
 }
+
+/** The same text without formatting marks, for reading aloud. */
+export function plainText(src: string): string {
+  const strip = (t: string) => t.replace(/\*\*([^*]+)\*\*/g, "$1").replace(/\*([^*]+)\*/g, "$1").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
+  return parseBlocks(src)
+    .map((b) => ("items" in b ? b.items.map((i) => strip(i).replace(/([^.!?])$/, "$1.")).join(" ") : strip(b.text).replace(/([^.!?:])$/, "$1.")))
+    .join(" ");
+}

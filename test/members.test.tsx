@@ -176,7 +176,7 @@ describe("programme reader", () => {
     await addLesson(pid, "quick", "Feet key points");
 
     const full = await (await client.get("/account/programmes/lower-body-regeneration")).text();
-    expect(full).toContain("Read the Full Programme all the way through");
+    expect(full).toContain("How to use this programme");
     expect(full).toContain("The philosophy");
     expect(full).not.toContain("Secret draft");
     expect(full).toContain("https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ");
@@ -185,7 +185,7 @@ describe("programme reader", () => {
 
     const quick = await (await client.get("/account/programmes/lower-body-regeneration?tab=quick")).text();
     expect(quick).toContain("Feet key points");
-    expect(quick).toContain('aria-current="page">Quick Run-Through');
+    expect(quick).toContain('aria-current="page">Key points');
   });
 
   it("is only open to buyers, and closes after a refund", async () => {

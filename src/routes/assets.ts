@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import type { AppEnv } from "../env";
 import clientJs from "../assets/client";
+import readerJs from "../assets/reader";
 import favicon from "../assets/favicon.svg";
 import frauncesItalic from "../assets/fonts/fraunces-latin-wght-italic.woff2";
 import fraunces from "../assets/fonts/fraunces-latin-wght-normal.woff2";
@@ -21,6 +22,7 @@ function hash(data: string | ArrayBuffer): string {
 const FILES = {
   "/styles.css": { body: styles, type: "text/css; charset=utf-8" },
   "/app.js": { body: clientJs, type: "text/javascript; charset=utf-8" },
+  "/reader.js": { body: readerJs, type: "text/javascript; charset=utf-8" },
   "/favicon.svg": { body: favicon, type: "image/svg+xml" },
   "/fonts/fraunces.woff2": { body: fraunces, type: "font/woff2" },
   "/fonts/fraunces-italic.woff2": { body: frauncesItalic, type: "font/woff2" },

@@ -167,6 +167,7 @@ async function readLessonForm(c: Context<AppEnv>, existingImage: string | null):
   } else if (form.remove_image === "yes") imageKey = null;
   else imageKey = existingImage;
   const status = (["draft", "published", "archived"] as const).find((s) => s === form.status) ?? "draft";
+  const text = (name: string, max: number) => String(form[name] ?? "").replace(/\r\n?/g, "\n").trim().slice(0, max) || null;
   return {
     videoInput,
     input: {
@@ -177,6 +178,13 @@ async function readLessonForm(c: Context<AppEnv>, existingImage: string | null):
       image_key: imageKey,
       image_alt: String(form.image_alt ?? "").trim().slice(0, 200) || null,
       status,
+      kind: form.kind === "exercise" ? "exercise" : "section",
+      stage: text("stage", 120),
+      starting_position: text("starting_position", 100_000),
+      conducting: text("conducting", 100_000),
+      key_points: text("key_points", 20_000),
+      recommended_time: text("recommended_time", 80),
+      sheet_line: text("sheet_line", 160),
     },
   };
 }

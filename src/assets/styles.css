@@ -445,3 +445,50 @@ body:has(.sticky-buy) .site-footer { padding-bottom: 6rem; }
 .hero .actions { margin-top: 1.5rem; }
 .depth { margin-bottom: 2rem; }
 .depth h3 { font-size: 1.45rem; margin-bottom: .5rem; }
+
+/* Programme reader: exercises and modes */
+.how-to-use { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1.5rem 0; }
+.how-to-use summary { cursor: pointer; font-weight: 600; }
+.how-to-use ol { margin: .75rem 0; padding-left: 1.25rem; }
+.how-to-use li { margin-bottom: .4rem; }
+.stage-heading { font-size: clamp(1.7rem, 5vw, 2.2rem); margin: 3rem 0 0; padding-top: 1.5rem; border-top: 2px solid var(--accent); }
+.exercise .part-title { font-family: var(--font-body); font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin: 1.75rem 0 .35rem; }
+.part-note { background: var(--sage-soft); border-radius: var(--radius-sm); padding: .6rem .85rem; font-size: .95rem; }
+.time-note { font-size: .92rem; color: var(--ink-soft); border-left: 3px solid var(--sage); padding-left: .75rem; }
+.demo { margin: 1.5rem 0; }
+.demo-note { font-size: .9rem; background: var(--bg-quiet); border-radius: var(--radius-sm); padding: .6rem .85rem; margin-bottom: .5rem; }
+.demo details summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+.lesson-compact { padding: 1.5rem 0; }
+.listen-controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin-bottom: 1.5rem; }
+.listen-controls p { flex-basis: 100%; margin: 0 0 .25rem; }
+.listen-controls label { margin: 0; }
+.listen-controls select { width: auto; min-height: 2.5rem; padding: .4rem .7rem; }
+.listen-list { list-style: none; padding: 0; margin: 1rem 0 0; }
+.listen-item { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+.listen-btn { flex: none; min-width: 6.5rem; }
+.listen-item details summary { cursor: pointer; color: var(--muted); }
+.sheet { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+.sheet-title { font-size: 1.6rem; margin-top: 1rem; }
+.sheet-stage h3 { font-size: 1.15rem; margin: 1.25rem 0 .5rem; border-bottom: 1px solid var(--line); padding-bottom: .25rem; }
+.sheet-stage ol { margin: 0; padding-left: 1.4rem; }
+.sheet-stage li { margin-bottom: .45rem; }
+.sheet-time { color: var(--muted); font-size: .9rem; }
+.sheet-line { display: block; font-size: .92rem; color: var(--ink-soft); }
+.sheet-foot { margin-top: 1.5rem; color: var(--muted); }
+@media print {
+  @page { size: A4; margin: 14mm; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .site-header, .site-footer, .test-banner, .referral-banner, .no-print, .skip-link, .sticky-buy, .tabs { display: none !important; }
+  .page-hero { padding: 0; }
+  .band { padding: 0; }
+  .sheet { border: 0; padding: 0; }
+  .sheet-stage { break-inside: avoid; }
+  a { color: #000; text-decoration: none; }
+}
+.exercise-fields { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 1rem; margin: 0 0 1.25rem; }
+.exercise-fields legend { font-weight: 700; padding: 0 .4rem; }
+/* Four programme modes always fit on a phone */
+.reader-hero .tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; overflow: visible; }
+.reader-hero .tabs a { white-space: normal; text-align: center; padding: .7rem .25rem; font-size: .9rem; line-height: 1.25; display: flex; align-items: center; justify-content: center; }
+@media (min-width: 40rem) { .reader-hero .tabs a { font-size: 1rem; } }
+.sheet .row-between { flex-wrap: wrap; } .sheet .row-between .btn { white-space: nowrap; } .sheet .row-between p { margin: 0; flex: 1 1 14rem; }

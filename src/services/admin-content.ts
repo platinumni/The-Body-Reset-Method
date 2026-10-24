@@ -116,6 +116,12 @@ export async function setBundleItems(db: D1Database, bundleId: number, programme
 
 // --- Lessons ---------------------------------------------------------------
 
+/** Only the exercise fields that are present (older saved versions may not have them). */
+function pickExercise(x: Partial<ExerciseFields>): Partial<ExerciseFields> {
+  const keys = Object.keys(EXERCISE_DEFAULTS) as (keyof ExerciseFields)[];
+  return Object.fromEntries(keys.filter((k) => x[k] !== undefined).map((k) => [k, x[k]])) as Partial<ExerciseFields>;
+}
+
 export type LessonRow = {
   id: number;
   product_id: number;
@@ -128,9 +134,23 @@ export type LessonRow = {
   image_alt: string | null;
   status: "draft" | "published" | "archived";
   updated_at: string;
+} & ExerciseFields;
+
+/** Extra parts an exercise has (all null for written sections). */
+export type ExerciseFields = {
+  kind: "section" | "exercise";
+  stage: string | null;
+  starting_position: string | null;
+  conducting: string | null;
+  key_points: string | null;
+  recommended_time: string | null;
+  sheet_line: string | null;
 };
 
-const LESSON_COLS = "id, product_id, tab, position, title, body, youtube_id, image_key, image_alt, status, updated_at";
+export const EXERCISE_DEFAULTS: ExerciseFields = { kind: "section", stage: null, starting_position: null, conducting: null, key_points: null, recommended_time: null, sheet_line: null };
+
+const LESSON_COLS =
+  "id, product_id, tab, position, title, body, youtube_id, image_key, image_alt, status, updated_at, kind, stage, starting_position, conducting, key_points, recommended_time, sheet_line";
 
 export async function listLessonsAdmin(db: D1Database, productId: number): Promise<LessonRow[]> {
   const { results } = await db.prepare(`SELECT ${LESSON_COLS} FROM programme_lessons WHERE product_id = ?1 ORDER BY tab, position, id`).bind(productId).all<LessonRow>();
@@ -141,15 +161,22 @@ export async function getLesson(db: D1Database, id: number): Promise<LessonRow |
   return db.prepare(`SELECT ${LESSON_COLS} FROM programme_lessons WHERE id = ?1`).bind(id).first<LessonRow>();
 }
 
-export type LessonInput = Pick<LessonRow, "tab" | "title" | "body" | "youtube_id" | "image_alt" | "status"> & { image_key?: string | null };
+export type LessonInput = Pick<LessonRow, "tab" | "title" | "body" | "youtube_id" | "image_alt" | "status"> & Partial<ExerciseFields> & { image_key?: string | null };
+
+const exerciseValues = (i: Partial<ExerciseFields>) => {
+  const f = { ...EXERCISE_DEFAULTS, ...i };
+  return [f.kind, f.stage, f.starting_position, f.conducting, f.key_points, f.recommended_time, f.sheet_line] as const;
+};
 
 export async function createLesson(db: D1Database, productId: number, input: LessonInput, actor: Actor): Promise<number> {
   const id = (await db
     .prepare(
-      `INSERT INTO programme_lessons (product_id, tab, position, title, body, youtube_id, image_key, image_alt, status)
-       VALUES (?1, ?2, (SELECT COALESCE(MAX(position), 0) + 1 FROM programme_lessons WHERE product_id = ?1 AND tab = ?2), ?3, ?4, ?5, ?6, ?7, ?8) RETURNING id`,
+      `INSERT INTO programme_lessons (product_id, tab, position, title, body, youtube_id, image_key, image_alt, status,
+         kind, stage, starting_position, conducting, key_points, recommended_time, sheet_line)
+       VALUES (?1, ?2, (SELECT COALESCE(MAX(position), 0) + 1 FROM programme_lessons WHERE product_id = ?1 AND tab = ?2), ?3, ?4, ?5, ?6, ?7, ?8,
+         ?9, ?10, ?11, ?12, ?13, ?14, ?15) RETURNING id`,
     )
-    .bind(productId, input.tab, input.title, input.body, input.youtube_id, input.image_key ?? null, input.image_alt, input.status)
+    .bind(productId, input.tab, input.title, input.body, input.youtube_id, input.image_key ?? null, input.image_alt, input.status, ...exerciseValues(input))
     .first<number>("id"))!;
   await recordAudit(db, { actorUserId: actor.userId, action: "lesson.create", targetType: "lesson", targetId: id, ip: actor.ip, detail: { title: input.title, status: input.status } });
   return id;
@@ -165,9 +192,10 @@ export async function updateLesson(db: D1Database, id: number, input: LessonInpu
       .prepare(
         `UPDATE programme_lessons SET tab = ?1, title = ?2, body = ?3, youtube_id = ?4, image_key = ?5, image_alt = ?6, status = ?7,
            position = CASE WHEN tab = ?1 THEN position ELSE (SELECT COALESCE(MAX(position), 0) + 1 FROM programme_lessons WHERE product_id = ?9 AND tab = ?1) END,
+           kind = ?10, stage = ?11, starting_position = ?12, conducting = ?13, key_points = ?14, recommended_time = ?15, sheet_line = ?16,
            updated_at = datetime('now') WHERE id = ?8`,
       )
-      .bind(input.tab, input.title, input.body, input.youtube_id, imageKey, input.image_alt, input.status, id, before.product_id),
+      .bind(input.tab, input.title, input.body, input.youtube_id, imageKey, input.image_alt, input.status, id, before.product_id, ...exerciseValues({ ...pickExercise(before), ...input })),
   ]);
   await recordAudit(db, { actorUserId: actor.userId, action: note === "restore" ? "lesson.restore" : "lesson.update", targetType: "lesson", targetId: id, ip: actor.ip, detail: { title: input.title, status: input.status } });
   return true;
@@ -199,7 +227,13 @@ export async function restoreLessonRevision(db: D1Database, revisionId: number, 
   const rev = await getRevision(db, revisionId);
   if (!rev || rev.entity_type !== "lesson") return null;
   const snap = JSON.parse(rev.snapshot_json) as LessonRow;
-  await updateLesson(db, Number(rev.entity_id), { tab: snap.tab, title: snap.title, body: snap.body, youtube_id: snap.youtube_id, image_key: snap.image_key, image_alt: snap.image_alt, status: snap.status }, actor, "restore");
+  await updateLesson(
+    db,
+    Number(rev.entity_id),
+    { tab: snap.tab, title: snap.title, body: snap.body, youtube_id: snap.youtube_id, image_key: snap.image_key, image_alt: snap.image_alt, status: snap.status, ...EXERCISE_DEFAULTS, ...pickExercise(snap) },
+    actor,
+    "restore",
+  );
   return Number(rev.entity_id);
 }
 

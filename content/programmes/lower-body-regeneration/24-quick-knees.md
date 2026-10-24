@@ -3,7 +3,8 @@ key: lbr-quick-24-knees
 tab: quick
 position: 4
 title: Key points: Knees
-status: draft
+status: archived
 youtube:
 ---
+Replaced by each exercise's own key points.
 [PLACEHOLDER: key points for knees, written once the full stage is done]

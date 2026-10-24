@@ -160,5 +160,16 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Website:** the six principle summaries were sharpened (Recognise both ways, layered Release, Integrate with dual-task training). The method page has a new "The principles in more depth" section (`PRINCIPLES_DEPTH`), and the six-principles guide was updated.
 - **Gotcha:** never stop the dev server with `ps | grep … | kill` or `pkill -f`. The pattern matches the command's own shell and kills it. Use `pkill -x workerd`.
 
+**Course structure (2026-10-24)**
+- **Migration 0009:** lessons can be `kind = 'exercise'`, with `stage`, `starting_position`, `conducting`, `key_points`, `recommended_time` and `sheet_line`. Sections can carry a `stage` too, as a stage intro.
+- **Members choose one of four modes:** `/account/programmes/:slug?mode=guide|listen|points|sheet`. Old `?tab=` links still map across.
+  - **Full guide:** Full-tab sections, then exercises grouped under stage headings. Each exercise shows Starting position (with a "most important part" note), then Conducting the exercise, the suggested time with the "tune in to your body" wording, and the demo video with a "shows the movement only" label.
+  - **Listen:** a Play button per item, using the device's built-in voice (`/reader.js`, speechSynthesis, sentence by sentence, with speed and stop). It's free, with no API.
+    - Upgrades possible later: recorded AI voice files or translations. The Cloudflare token here has no Workers AI permission.
+  - **Key points:** Quick-tab sections plus each exercise's key points, with the video collapsed.
+  - **Exercise sheet:** exercises only (no philosophy), as an A4 print stylesheet, with a "Print or save as PDF" button.
+- **Admin lesson editor** has a Type selector and all the exercise fields. The import script supports `kind: exercise`, with body parts split on `## Starting position`, `## Conducting the exercise` and `## Key points`.
+- **Content:** each stage now has an "About this stage" placeholder section. There's an exercise template in stage 1 (`11-exercise-template.md`). The old Quick-tab stage placeholders are archived.
+
 ## Next step
 **Step 8 (content)** and **Step 9 (go live)**: see `docs/GO_LIVE.md` and `docs/CONTENT_WORKFLOW.md`.

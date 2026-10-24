@@ -207,6 +207,7 @@ export function ProductEditPage(props: {
                     <li>
                       <div>
                         <a href={`/admin/lessons/${l.id}`}>{l.title}</a> <StatusPill status={l.status} />
+                        {l.kind === "exercise" && <span class="small muted"> · exercise</span>}
                         {l.youtube_id && <span class="small muted"> · video</span>}
                         {l.image_key && <span class="small muted"> · image</span>}
                       </div>
@@ -311,12 +312,60 @@ export function LessonEditPage(props: { meta: AdminMeta; product: Product; lesso
               </select>
             </div>
           </div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="kind">Type</label>
+              <select id="kind" name="kind">
+                <option value="section" selected={(l.kind ?? "section") === "section"}>
+                  Written section (introduction, teaching)
+                </option>
+                <option value="exercise" selected={l.kind === "exercise"}>
+                  Exercise
+                </option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="stage">Stage heading (optional)</label>
+              <input id="stage" name="stage" type="text" value={l.stage ?? ""} maxlength={120} placeholder="e.g. Stage 1: Feet, arches and toes" />
+            </div>
+          </div>
           <div class="field">
             <label for="title">Title</label>
             <input id="title" name="title" type="text" value={l.title ?? ""} maxlength={200} required />
           </div>
+          <fieldset class="exercise-fields">
+            <legend>Exercise parts (only for exercises)</legend>
+            <div class="field">
+              <label for="starting_position">1. Starting position</label>
+              <textarea id="starting_position" name="starting_position" rows={10}>
+                {l.starting_position ?? ""}
+              </textarea>
+            </div>
+            <div class="field">
+              <label for="conducting">2. Conducting the exercise</label>
+              <textarea id="conducting" name="conducting" rows={10}>
+                {l.conducting ?? ""}
+              </textarea>
+            </div>
+            <div class="field">
+              <label for="key_points">Key points (the short version)</label>
+              <textarea id="key_points" name="key_points" rows={5}>
+                {l.key_points ?? ""}
+              </textarea>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="recommended_time">Suggested time</label>
+                <input id="recommended_time" name="recommended_time" type="text" value={l.recommended_time ?? ""} maxlength={80} placeholder="e.g. 30–60 seconds" />
+              </div>
+              <div class="field">
+                <label for="sheet_line">One line for the exercise sheet</label>
+                <input id="sheet_line" name="sheet_line" type="text" value={l.sheet_line ?? ""} maxlength={160} />
+              </div>
+            </div>
+          </fieldset>
           <div class="field">
-            <label for="body">Text</label>
+            <label for="body">Text (written sections)</label>
             <textarea id="body" name="body" rows={18}>
               {l.body ?? ""}
             </textarea>
@@ -353,9 +402,20 @@ export function LessonEditPage(props: { meta: AdminMeta; product: Product; lesso
           <aside class="card preview">
             <p class="eyebrow">Preview (as members see it)</p>
             <h2>{l.title}</h2>
-            <div class="prose">
-              <RichText source={l.body ?? ""} />
-            </div>
+            {l.kind === "exercise" ? (
+              <div class="prose">
+                <h3>1. Starting position</h3>
+                <RichText source={l.starting_position ?? ""} />
+                <h3>2. Conducting the exercise</h3>
+                <RichText source={l.conducting ?? ""} />
+                <h3>Key points</h3>
+                <RichText source={l.key_points ?? ""} />
+              </div>
+            ) : (
+              <div class="prose">
+                <RichText source={l.body ?? ""} />
+              </div>
+            )}
             <History meta={props.meta} history={props.history} restoreAction={(id) => `/admin/lessons/${l.id}/restore/${id}`} describe={(s) => `${s.title} (${s.status}, ${String(s.body ?? "").length} characters)`} />
           </aside>
         )}

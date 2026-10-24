@@ -1,9 +1,10 @@
 ---
 key: lbr-full-04-stage-achilles-and-calves
 tab: full
-position: 4
-title: Stage 2: Achilles and calves
+position: 20
+stage: Stage 2: Achilles and calves
+title: About this stage
 status: draft
 youtube:
 ---
-[PLACEHOLDER: Exercises, cues and common mistakes for the Achilles and calves, from the owner's next voice note]
+[PLACEHOLDER: a short introduction to the Achilles and calves: what this stage is for and what to notice, from the owner's voice note]

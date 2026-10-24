@@ -1,9 +1,10 @@
 ---
 key: lbr-full-05-stage-knees
 tab: full
-position: 5
-title: Stage 3: Knees
+position: 30
+stage: Stage 3: Knees
+title: About this stage
 status: draft
 youtube:
 ---
-[PLACEHOLDER: Exercises, cues and common mistakes for the knees, from the owner's next voice note]
+[PLACEHOLDER: a short introduction to the knees: what this stage is for and what to notice, from the owner's voice note]

@@ -4,7 +4,7 @@ import { endSession, requireUser, startSession } from "../middleware/auth";
 import { clientIp, rateLimit } from "../middleware/rate-limit";
 import { affiliateSettings, affiliateSummary, getAffiliateByUser, joinAffiliateProgramme, setPayoutEmail } from "../services/affiliates";
 import { changePassword, deleteAccount, exportUserData, looksLikeEmail, marketingOptedIn, passwordProblem, setMarketing, verifyUserPassword } from "../services/accounts";
-import { canViewMedia, listLessons, listOwnedProgrammes, ownedProgrammeBySlug, setLessonDone, type Tab } from "../services/library";
+import { canViewMedia, listLessons, listOwnedProgrammes, MODES, ownedProgrammeBySlug, setLessonDone, type Mode } from "../services/library";
 import { AccountPage, ReaderPage } from "../views/account";
 import { pageMeta } from "./meta";
 
@@ -54,18 +54,24 @@ async function renderAccount(c: Context<AppEnv>, opts: { error?: string; status?
 
 accountRoutes.get("/account", (c) => renderAccount(c));
 
+/** ?mode=guide|listen|points|sheet (older links used ?tab=full|quick). */
+function readMode(value: string | undefined): Mode {
+  if (value === "quick") return "points";
+  return MODES.find((m) => m === value) ?? "guide";
+}
+
 accountRoutes.get("/account/programmes/:slug", async (c) => {
   const user = c.get("user")!;
   const programme = await ownedProgrammeBySlug(c.env.DB, user.id, c.req.param("slug"));
   if (!programme) return c.notFound();
-  const tab: Tab = c.req.query("tab") === "quick" ? "quick" : "full";
+  const mode = readMode(c.req.query("mode") ?? c.req.query("tab"));
   return c.html(
     <ReaderPage
       meta={pageMeta(c, { title: programme.title, description: programme.title, path: `/account/programmes/${programme.slug}`, noindex: true })}
       csrfToken={c.get("csrfToken")}
       programme={programme}
-      tab={tab}
-      lessons={await listLessons(c.env.DB, user.id, programme.id, tab)}
+      mode={mode}
+      lessons={await listLessons(c.env.DB, user.id, programme.id)}
     />,
   );
 });
@@ -76,9 +82,9 @@ accountRoutes.post("/account/programmes/:slug/progress", async (c) => {
   if (!programme) return c.notFound();
   const form = await c.req.parseBody();
   const lessonId = Number(form.lesson);
-  const tab = form.tab === "quick" ? "quick" : "full";
+  const mode = readMode(String(form.mode ?? form.tab ?? ""));
   if (Number.isInteger(lessonId)) await setLessonDone(c.env.DB, user.id, programme.id, lessonId, form.done === "yes");
-  return c.redirect(`/account/programmes/${programme.slug}?tab=${tab}#lesson-${lessonId}`, 303);
+  return c.redirect(`/account/programmes/${programme.slug}?mode=${mode}#lesson-${lessonId}`, 303);
 });
 
 accountRoutes.post("/account/marketing", async (c) => {

@@ -5,6 +5,7 @@ These are things only you can do. None of them block the build until go-live unl
 ## Soon
 - [ ] *(Optional)* **Test-site admin login.** The owner chose to wait until the live site, which gets its own admin login at go-live. Claude shows drafts as screenshots or preview links until then.
 - [ ] **Review the first two course sections** (screenshots sent 2026-10-24), then send stage 1 (feet, arches and toes): exercises, cues, common mistakes, YouTube links.
+- [ ] **For each exercise, send:** its name, the starting position (in full), how to conduct it (where attention goes), the key points, a suggested time, and a YouTube demo link if you have one.
 - [ ] **Send your Lower Body programme content** (voice notes, text, YouTube links, photos). Claude writes it up and builds it in as drafts for you to check.
 - [ ] **Voice note: further packages.** List the programmes, which ones are bundles or add-ons, and rough prices. Prices stay placeholders until you confirm them.
 - [ ] **Buy the domain.** Tell me which one. Connecting it takes about 15 minutes at go-live.

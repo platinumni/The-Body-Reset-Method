@@ -1,9 +1,10 @@
 ---
 key: lbr-full-06-stage-hips
 tab: full
-position: 6
-title: Stage 4: Hips
+position: 40
+stage: Stage 4: Hips
+title: About this stage
 status: draft
 youtube:
 ---
-[PLACEHOLDER: Exercises, cues and common mistakes for the hips, from the owner's next voice note]
+[PLACEHOLDER: a short introduction to the hips: what this stage is for and what to notice, from the owner's voice note]

@@ -1,9 +1,10 @@
 ---
 key: lbr-full-03-stage-feet-arches-and-toes
 tab: full
-position: 3
-title: Stage 1: Feet, arches and toes
+position: 10
+stage: Stage 1: Feet, arches and toes
+title: About this stage
 status: draft
 youtube:
 ---
-[PLACEHOLDER: Exercises, cues and common mistakes for the feet, arches and toes, from the owner's next voice note]
+[PLACEHOLDER: a short introduction to the feet, arches and toes: what this stage is for and what to notice, from the owner's voice note]

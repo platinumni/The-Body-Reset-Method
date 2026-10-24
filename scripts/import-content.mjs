@@ -28,10 +28,34 @@ export function parseLessonFile(text, file = "file") {
   if (!["full", "quick"].includes(meta.tab)) errors.push("tab must be full or quick");
   if (!meta.title) errors.push("title is required");
   if (!["draft", "published", "archived"].includes(meta.status ?? "draft")) errors.push("status must be draft, published or archived");
+  const kind = meta.kind || "section";
+  if (!["section", "exercise"].includes(kind)) errors.push("kind must be section or exercise");
   const position = Number(meta.position ?? 0);
   if (!Number.isInteger(position)) errors.push("position must be a whole number");
   if (errors.length) throw new Error(`${file}: ${errors.join("; ")}`);
-  return { key: meta.key, tab: meta.tab, position, title: meta.title, status: meta.status ?? "draft", youtube: youtubeId(meta.youtube), body: m[2].trim() };
+  const body = m[2].trim();
+  const base = { key: meta.key, tab: meta.tab, position, title: meta.title, status: meta.status ?? "draft", youtube: youtubeId(meta.youtube), kind, stage: meta.stage || null, recommended_time: meta.recommended_time || null, sheet_line: meta.sheet_line || null };
+  if (kind === "section") return { ...base, body, starting_position: null, conducting: null, key_points: null };
+  // Exercises: the body is split into parts by these headings.
+  const parts = splitParts(body);
+  if (!parts.starting_position) throw new Error(`${file}: exercises need a "## Starting position" part`);
+  return { ...base, body: "", ...parts };
+}
+
+const PART_HEADINGS = { "starting position": "starting_position", "conducting the exercise": "conducting", "key points": "key_points" };
+
+export function splitParts(body) {
+  const out = { starting_position: null, conducting: null, key_points: null };
+  let current = null;
+  const buf = [];
+  const flush = () => { if (current) out[current] = buf.join("\n").trim() || null; buf.length = 0; };
+  for (const line of body.split("\n")) {
+    const h = /^##\s+(.+?)\s*$/.exec(line);
+    const part = h && PART_HEADINGS[h[1].toLowerCase()];
+    if (part) { flush(); current = part; } else if (current) buf.push(line);
+  }
+  flush();
+  return out;
 }
 
 export function youtubeId(input) {
@@ -55,17 +79,19 @@ export function buildSql(slug, lessons, { update }) {
     if (update) {
       out.push(
         `INSERT INTO revisions (entity_type, entity_id, snapshot_json, note)
-SELECT 'lesson', CAST(id AS TEXT), json_object('id', id, 'product_id', product_id, 'tab', tab, 'position', position, 'title', title, 'body', body, 'youtube_id', youtube_id, 'image_key', image_key, 'image_alt', image_alt, 'status', status), 'before content import'
+SELECT 'lesson', CAST(id AS TEXT), json_object('id', id, 'product_id', product_id, 'tab', tab, 'position', position, 'title', title, 'body', body, 'youtube_id', youtube_id, 'image_key', image_key, 'image_alt', image_alt, 'status', status, 'kind', kind, 'stage', stage, 'starting_position', starting_position, 'conducting', conducting, 'key_points', key_points, 'recommended_time', recommended_time, 'sheet_line', sheet_line), 'before content import'
 FROM programme_lessons WHERE content_key = ${q(l.key)};`,
       );
     }
     out.push(
-      `INSERT INTO programme_lessons (product_id, tab, position, title, body, youtube_id, status, content_key)
-SELECT ${product}, ${q(l.tab)}, ${l.position}, ${q(l.title)}, ${q(l.body)}, ${q(l.youtube)}, ${q(l.status)}, ${q(l.key)}
+      `INSERT INTO programme_lessons (product_id, tab, position, title, body, youtube_id, status, content_key, kind, stage, starting_position, conducting, key_points, recommended_time, sheet_line)
+SELECT ${product}, ${q(l.tab)}, ${l.position}, ${q(l.title)}, ${q(l.body)}, ${q(l.youtube)}, ${q(l.status)}, ${q(l.key)}, ${q(l.kind)}, ${q(l.stage)}, ${q(l.starting_position)}, ${q(l.conducting)}, ${q(l.key_points)}, ${q(l.recommended_time)}, ${q(l.sheet_line)}
 WHERE ${product} IS NOT NULL
 ON CONFLICT (content_key) DO ${
         update
-          ? `UPDATE SET tab = excluded.tab, position = excluded.position, title = excluded.title, body = excluded.body, youtube_id = excluded.youtube_id, status = excluded.status, updated_at = datetime('now')`
+          ? `UPDATE SET tab = excluded.tab, position = excluded.position, title = excluded.title, body = excluded.body, youtube_id = excluded.youtube_id, status = excluded.status,
+  kind = excluded.kind, stage = excluded.stage, starting_position = excluded.starting_position, conducting = excluded.conducting, key_points = excluded.key_points,
+  recommended_time = excluded.recommended_time, sheet_line = excluded.sheet_line, updated_at = datetime('now')`
           : "NOTHING"
       };`,
     );

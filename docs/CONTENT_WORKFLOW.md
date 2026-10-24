@@ -22,6 +22,13 @@ Claude builds it in.
 ## Where content lives
 In `content/programmes/<slug>/` as one file per section, imported with `scripts/import-content.mjs`. The same files load into the test site and the live site.
 
+## Exercise files
+Copy `content/programmes/lower-body-regeneration/11-exercise-template.md`. Each exercise has:
+- **Starting position:** the big part.
+- **Conducting the exercise.**
+- **Key points:** the short version.
+- A suggested time, one line for the exercise sheet, and an optional YouTube demo link.
+
 ## Rules
 - Claude never invents results, testimonials or medical claims. Anything uncertain is marked `[PLACEHOLDER: …]` or `[OWNER TO CONFIRM: …]`.
 - Videos are YouTube links shown in privacy mode (youtube-nocookie). Set them to **Unlisted** on YouTube so only buyers see them on the site.

@@ -28,21 +28,55 @@ export async function ownedProgrammeBySlug(db: D1Database, userId: number, slug:
     .first<{ id: number; slug: string; title: string }>();
 }
 
-export type Tab = "full" | "quick";
-export type Lesson = { id: number; title: string; body: string; youtube_id: string | null; image_key: string | null; image_alt: string | null; done: number };
+/** The four ways members can use a programme, from most to least detail. */
+export type Mode = "guide" | "listen" | "points" | "sheet";
+export const MODES: Mode[] = ["guide", "listen", "points", "sheet"];
 
-export async function listLessons(db: D1Database, userId: number, productId: number, tab: Tab): Promise<Lesson[]> {
+export type Lesson = {
+  id: number;
+  tab: "full" | "quick";
+  kind: "section" | "exercise";
+  stage: string | null;
+  title: string;
+  body: string;
+  starting_position: string | null;
+  conducting: string | null;
+  key_points: string | null;
+  recommended_time: string | null;
+  sheet_line: string | null;
+  youtube_id: string | null;
+  image_key: string | null;
+  image_alt: string | null;
+  done: number;
+};
+
+/** Every published section and exercise of a programme, in order. Each mode picks what it shows. */
+export async function listLessons(db: D1Database, userId: number, productId: number): Promise<Lesson[]> {
   const { results } = await db
     .prepare(
-      `SELECT l.id, l.title, l.body, l.youtube_id, l.image_key, l.image_alt,
+      `SELECT l.id, l.tab, l.kind, l.stage, l.title, l.body, l.starting_position, l.conducting, l.key_points, l.recommended_time, l.sheet_line,
+         l.youtube_id, l.image_key, l.image_alt,
          EXISTS (SELECT 1 FROM lesson_progress lp WHERE lp.user_id = ?1 AND lp.lesson_id = l.id) AS done
        FROM programme_lessons l
-       WHERE l.product_id = ?2 AND l.tab = ?3 AND l.status = 'published'
+       WHERE l.product_id = ?2 AND l.status = 'published'
        ORDER BY l.position, l.id`,
     )
-    .bind(userId, productId, tab)
+    .bind(userId, productId)
     .all<Lesson>();
   return results;
+}
+
+export type StageGroup = { stage: string | null; lessons: Lesson[] };
+
+/** Group lessons under their stage heading, keeping the programme's order. */
+export function groupByStage(lessons: Lesson[]): StageGroup[] {
+  const groups: StageGroup[] = [];
+  for (const l of lessons) {
+    const last = groups[groups.length - 1];
+    if (last && last.stage === l.stage) last.lessons.push(l);
+    else groups.push({ stage: l.stage, lessons: [l] });
+  }
+  return groups;
 }
 
 /** Tick or untick a lesson. Only lessons in programmes the member owns can be ticked. */
