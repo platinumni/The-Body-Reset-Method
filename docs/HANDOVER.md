@@ -149,5 +149,16 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   1. String constants exported from `src/index.tsx` stopped the real Workers runtime from starting (from Step 6). They're moved to `src/cron.ts`, and `test/entry.test.ts` guards against it.
   2. Pages had no `<!DOCTYPE html>` (quirks mode). Both layouts now emit it, and a test checks.
 
+**Step 8 started: course content (2026-10-24)**
+- **Programme content lives in the repo** at `content/programmes/<slug>/*.md` (front matter: key, tab, position, title, status, youtube). It's loaded with `node scripts/import-content.mjs staging|production [--update]` (see `content/programmes/README.md`).
+- **Migration 0008** adds `programme_lessons.content_key` (unique). Imports never duplicate. Existing sections are only changed with `--update`, which saves their previous version to `revisions` first.
+- **Lower Body, so far:**
+  - "Read this first" and "The six principles" (Full tab), written from the owner's voice notes,
+  - "Key points: philosophy and principles" (Quick tab),
+  - a placeholder skeleton for the 4 stages in both tabs.
+  - Everything was imported to staging as **drafts**.
+- **Website:** the six principle summaries were sharpened (Recognise both ways, layered Release, Integrate with dual-task training). The method page has a new "The principles in more depth" section (`PRINCIPLES_DEPTH`), and the six-principles guide was updated.
+- **Gotcha:** never stop the dev server with `ps | grep … | kill` or `pkill -f`. The pattern matches the command's own shell and kills it. Use `pkill -x workerd`.
+
 ## Next step
 **Step 8 (content)** and **Step 9 (go live)**: see `docs/GO_LIVE.md` and `docs/CONTENT_WORKFLOW.md`.

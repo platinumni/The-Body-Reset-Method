@@ -17,6 +17,42 @@ export const PHILOSOPHY = {
 /** Owner-confirmed track record (2026-10-23). Keep evidence for the number (see docs/METHOD.md). */
 export const TRACK_RECORD = "Shared freely with thousands of people around the world for years. Now available as a complete programme.";
 
+/** Fuller explanation of each principle (method page). From the owner's voice note, 2026-10-24. */
+export const PRINCIPLES_DEPTH: { title: string; paragraphs: string[] }[] = [
+  {
+    title: "Recognise",
+    paragraphs: [
+      "Recognising works both ways. You become aware of the tension, gripping and compensating patterns you've built up, and you also learn to recognise the muscles that genuinely should be working, which are often the ones the compensation has been covering for.",
+    ],
+  },
+  {
+    title: "Release",
+    paragraphs: [
+      "Release happens in layers. First you let go of the muscles that have been compensating. Then you go further, and ease the excess tension and pressure even in the muscles you do need, until you find the equilibrium point where the body is supported without being forced.",
+      "Take standing on one leg. You need steady pressure through the big toe and the little toes, the stabilising muscles working, and your hips level and square. But most of us recruit far more than that: bracing through the back, tensing the shoulders, holding the breath. Release is about keeping what the balance needs and letting go of everything else.",
+    ],
+  },
+  {
+    title: "Reconnect",
+    paragraphs: [
+      "With the excess effort gone, you reconnect with each specific part of a movement: where the pressure is, which muscles switch on and when. You don't just do the movement, you understand it from the inside.",
+    ],
+  },
+  {
+    title: "Retrain and Strengthen",
+    paragraphs: [
+      "The first exercises focus on recognising, releasing and reconnecting. Only once those foundations are in place does the work turn to retraining movement patterns and progressively building strength and balance on top of them.",
+    ],
+  },
+  {
+    title: "Integrate",
+    paragraphs: [
+      "At the advanced stages, the exercises add complexity on purpose: keeping a steady breathing pattern, counting a rhythm as you raise and lower your heels, holding your awareness on several things at once. At first, the mind finds this genuinely hard, because there's a lot for the nervous system to organise at the same time.",
+      "That's the point. Known as dual-task training, it teaches your body to keep simple movements well controlled while your attention is busy elsewhere, which is exactly what everyday life asks of it.",
+    ],
+  },
+];
+
 /** The "why" behind the method, used on the homepage and the method page. */
 export const WHY = {
   title: "Most of us were never taught how to move. We learned how to hold on.",
@@ -40,12 +76,12 @@ export const FOUNDATION = {
 export type Principle = { n: number; title: string; summary: string };
 
 export const PRINCIPLES: Principle[] = [
-  { n: 1, title: "Recognise", summary: "Become aware of tension, gripping, compensation and habitual patterns." },
-  { n: 2, title: "Release", summary: "Learn to let go of unnecessary muscular effort without losing useful stability." },
-  { n: 3, title: "Reconnect", summary: "Rediscover sensation, pressure distribution and controlled muscular engagement." },
+  { n: 1, title: "Recognise", summary: "Become aware of the tension, gripping and compensation you hold, and of the muscles you should be using instead." },
+  { n: 2, title: "Release", summary: "Let go of the effort you don't need: first the compensating muscles, then the excess in the ones doing the work, until you find your balance point." },
+  { n: 3, title: "Reconnect", summary: "Rediscover sensation, pressure distribution and controlled muscular engagement through each part of a movement." },
   { n: 4, title: "Retrain", summary: "Practise simple movements with improved coordination and awareness." },
   { n: 5, title: "Strengthen", summary: "Progressively develop strength, balance and physical capability." },
-  { n: 6, title: "Integrate", summary: "Bring these improvements into everyday movement and more demanding tasks." },
+  { n: 6, title: "Integrate", summary: "Bring these improvements into everyday movement and more demanding tasks, keeping movement simple and controlled even when your mind is busy." },
 ];
 
 export const WHO_FOR: string[] = [

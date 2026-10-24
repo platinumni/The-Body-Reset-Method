@@ -19,6 +19,9 @@ Claude builds it in.
 4. **Owner checks** and replies with changes or "CH".
 5. **Claude publishes** it on the live site and reports back.
 
+## Where content lives
+In `content/programmes/<slug>/` as one file per section, imported with `scripts/import-content.mjs`. The same files load into the test site and the live site.
+
 ## Rules
 - Claude never invents results, testimonials or medical claims. Anything uncertain is marked `[PLACEHOLDER: …]` or `[OWNER TO CONFIRM: …]`.
 - Videos are YouTube links shown in privacy mode (youtube-nocookie). Set them to **Unlisted** on YouTube so only buyers see them on the site.

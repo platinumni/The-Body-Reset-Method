@@ -443,3 +443,5 @@ body:has(.sticky-buy) .site-footer { padding-bottom: 6rem; }
 .article-body h2 { font-size: clamp(1.5rem, 4vw, 1.9rem); margin-top: 2.25rem; }
 .sticky-buy .btn { white-space: nowrap; flex: none; }
 .hero .actions { margin-top: 1.5rem; }
+.depth { margin-bottom: 2rem; }
+.depth h3 { font-size: 1.45rem; margin-bottom: .5rem; }

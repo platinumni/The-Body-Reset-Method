@@ -122,15 +122,17 @@ If you'd like a structured way to do that, [Lower Body Regeneration](/programmes
 
 ## 1. Recognise
 
-Become aware of tension, gripping, compensation and habitual patterns.
+Become aware of the tension, gripping and compensation you hold, and of the muscles you should be using instead.
 
-You can't change what you can't feel. The first step is simply noticing: where you hold on, where you brace, where one side works harder than the other. Most people are surprised by how much they find.
+You can't change what you can't feel. The first step is noticing: where you hold on, where you brace, where one side works harder than the other. Recognising works both ways, though. You also learn to spot the muscles that genuinely should be working, which are often the ones the compensation has been covering for.
 
 ## 2. Release
 
-Learn to let go of unnecessary muscular effort without losing useful stability.
+Let go of the effort you don't need: first the compensating muscles, then the excess in the ones doing the work, until you find your balance point.
 
-This is the heart of the method. Releasing isn't about going limp. It's about dropping the effort you don't need, so the body can stop guarding and start moving.
+This is the heart of the method, and it happens in layers. First you let go of the muscles that have been compensating. Then you ease the excess even in the muscles you need, until the body is supported without being forced.
+
+Standing on one leg is a good example. You need steady pressure through the big toe and little toes, your stabilising muscles working and your hips level. But most of us also brace the back, tense the shoulders and hold the breath. Release means keeping what the balance needs and letting go of the rest.
 
 ## 3. Reconnect
 
@@ -152,9 +154,9 @@ Only now does the focus turn to strength. Because it's built on a foundation tha
 
 ## 6. Integrate
 
-Bring these improvements into everyday movement and more demanding tasks.
+Bring these improvements into everyday movement and more demanding tasks, keeping movement simple and controlled even when your mind is busy.
 
-Finally, you take what you've learned off the mat and into life: walking, carrying, playing sport, getting up and down from the floor, and whatever else your days ask of you.
+At the advanced stages, the exercises add complexity on purpose: a steady breathing pattern, counting a rhythm as you raise and lower your heels, holding your awareness on several things at once. It feels hard at first, because there's a lot for the nervous system to organise. That's the point. Known as dual-task training, it teaches your body to keep simple movements controlled while your attention is elsewhere, which is exactly what everyday life asks of it.
 
 ## Why the order matters
 

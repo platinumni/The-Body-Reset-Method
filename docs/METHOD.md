@@ -29,6 +29,15 @@ Release the tension, the forcing and the control, and learn to love your body ag
 5. **Strengthen.** Progressively develop strength, balance and physical capability.
 6. **Integrate.** Bring these improvements into everyday movement and more demanding tasks.
 
+## The principles in more depth (owner voice note, 2026-10-24)
+- **Recognise** works both ways: notice the tension, gripping and compensation, **and** recognise the muscles that should be working instead.
+- **Release** happens in layers: first the compensating muscles, then even the excess tension and pressure in the muscles you need, to find the equilibrium or balance point.
+  - Example: single-leg balance needs pressure through the big toe and little toes, stabilisers working and hips square, but people add lots of extra effort (spine not straight, bracing). Keep what's needed and release the rest.
+- **Reconnect** happens through each specific part of a movement.
+- **The first exercises** cover Recognise, Release and Reconnect. Then Retrain, Strengthen and Integrate.
+- **Advanced level:** add complexity (breathing focus, counting tempo on heel raises). The mind struggles because it's a lot for the nervous system. This is **dual-task training**: simple movements stay controlled while attention is busy.
+- The short principle summaries on the site were updated to match (owner-approved direction; wording by Claude).
+
 ## Flagship order (Lower Body)
 Feet, arches and toes → Achilles and calves → knees → hip stability.
 

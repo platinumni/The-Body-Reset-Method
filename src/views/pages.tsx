@@ -1,4 +1,4 @@
-import { FOUNDATION, WHY, type Copy, type Faq, type Principle } from "../content/site";
+import { FOUNDATION, PRINCIPLES_DEPTH, WHY, type Copy, type Faq, type Principle } from "../content/site";
 import type { CatalogueEntry } from "../services/catalogue";
 import { Button, ForNotFor, GroundUp, PrinciplesGrid, SectionHead, Text } from "./components";
 import { CsrfField, Layout, type PageMeta } from "./layout";
@@ -37,6 +37,19 @@ export function MethodPage(props: { meta: PageMeta; principles: Principle[] }) {
         <div class="wrap">
           <SectionHead title="The six principles" intro="Every programme moves through the same six principles, in this order." />
           <PrinciplesGrid principles={props.principles} />
+        </div>
+      </section>
+      <section class="band band-quiet">
+        <div class="wrap narrow">
+          <SectionHead title="The principles in more depth" />
+          {PRINCIPLES_DEPTH.map((d) => (
+            <div class="depth">
+              <h3>{d.title}</h3>
+              {d.paragraphs.map((p) => (
+                <p class="prose-lg">{p}</p>
+              ))}
+            </div>
+          ))}
         </div>
       </section>
       <section class="band">
