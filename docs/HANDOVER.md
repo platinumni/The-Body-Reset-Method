@@ -293,6 +293,11 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
     - Still needed for each: ingredients with amounts, method, servings and real timings ("15 min" labels untested).
     - Images are not chosen yet; Wikimedia photos must be checked for dish match and licence.
     - Flags: #011 aubergine parmigiana and #120 pesto pasta salad use parmesan, which is usually made with animal rennet, so they're not strictly vegetarian unless a vegetarian hard cheese is specified.
+    - **Full recipe drafts written by Claude (2026-10-25, owner asked):** `content/meal-plans/recipes/batch-1..4.txt`, in a simple format: R/I/M/N lines, with "c" marking cupboard items.
+      - `node scripts/build-recipes.mjs` merges them with the catalogue into `content/meal-plans/recipes.json`. It tags the 14 UK allergens by keyword (for the owner to check), sets the timing labels from the real prep and cook times, and fails if a recipe is missing or a diet label doesn't match its ingredients. A script test enforces this.
+      - #011 and #120 are fixed: vegetarian hard cheese, and vegetarian pesto.
+      - Status: `draft_for_owner_review`. The owner should check the recipes, amounts and allergens before anything goes live.
+      - Nothing in the meal-plan system has been built yet.
   - **Running cost:** about £0. Build time is to be confirmed once the meals arrive (about 3-4 days for the full version).
 - **Logo:** the owner wants a proper logo for the site, PDFs and emails at some point. Options: their own designer, or Claude drafts simple versions to choose from.
 - **Later or optional:** Stripe Connect automatic payouts; premium AI voiceover (owner picks from samples); the owner's own photos of the starting positions.

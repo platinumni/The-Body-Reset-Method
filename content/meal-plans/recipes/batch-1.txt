@@ -1,0 +1,454 @@
+# Recipe drafts. Format:
+# R id | serves N | prep MIN | cook MIN
+# I amount | ingredient | c   (c = store-cupboard item)
+# M method step
+# N note (optional)
+
+R 001 | serves 2 | prep 10 | cook 15
+I 2 x 150g | black cod fillets, skin on (or any firm white fish)
+I 2 tbsp | white miso paste
+I 1 tbsp | honey | c
+I 1 tbsp | rice vinegar | c
+I 1 tsp | soy sauce | c
+I 150g | jasmine rice | c
+I 3cm piece | fresh ginger
+I 2 | spring onions
+I 1 tsp | sesame seeds | c
+I 1 tsp | vegetable oil | c
+M Mix the miso, honey, rice vinegar and soy sauce. Coat the fish and leave for 10 minutes (or up to a day in the fridge).
+M Rinse the rice and cook with 300ml water and half the ginger, finely grated, for 12 minutes with the lid on, then rest for 5 minutes.
+M Heat the grill to high. Wipe off the excess glaze, place the fish skin-side down on an oiled, foil-lined tray and grill for 8-10 minutes until caramelised and flaking.
+M Cut the rest of the ginger into fine matchsticks and slice the spring onions.
+M Serve the fish on the rice, topped with ginger, spring onion and sesame seeds.
+
+R 002 | serves 4 | prep 15 | cook 30
+I 300g | paella rice (or risotto rice) | c
+I 1 pinch | saffron threads | c
+I 900ml | hot fish or vegetable stock | c
+I 1 | onion
+I 1 | red pepper
+I 3 cloves | garlic
+I 1 tsp | smoked paprika | c
+I 200g | raw king prawns
+I 300g | mussels, cleaned (discard any open ones that don't close when tapped)
+I 150g | squid rings
+I 100g | frozen peas
+I 2 | lemons
+I 2 tbsp | olive oil | c
+I 1 small bunch | flat-leaf parsley
+M Soak the saffron in the hot stock. Dice the onion and pepper; slice the garlic.
+M Heat the oil in a wide pan and soften the onion and pepper for 6 minutes. Add the garlic and paprika for 1 minute, then stir in the rice to coat.
+M Pour in the saffron stock, stir once, then simmer without stirring for 15 minutes.
+M Push the prawns, mussels and squid into the rice, scatter over the peas, cover and cook for 6-8 minutes until the mussels open and the prawns are pink. Discard any mussels that stay closed.
+M Meanwhile, halve the lemons and char them cut-side down in a dry pan. Serve the paella with the charred lemon and chopped parsley.
+
+R 003 | serves 2 | prep 15 | cook 50
+I 2 x 150g | beef fillet steaks
+I 2 | large floury potatoes (Maris Piper)
+I 40g | butter
+I 200ml | beef stock | c
+I 2 tsp | black peppercorns, crushed | c
+I 1 | shallot
+I 2 tbsp | brandy (optional)
+I 2 sprigs | thyme
+I 1 tbsp | vegetable oil | c
+I 150g | green beans
+M Heat the oven to 200C (180C fan). Peel the potatoes and cut into thick cylinders, about 4cm tall.
+M Brown the potatoes in half the butter and the oil for 4 minutes each side. Add half the stock and the thyme, then bake for 35-40 minutes until tender.
+M Season the steaks and sear in a very hot pan for 3 minutes each side for medium-rare. Rest for 5 minutes.
+M In the same pan, soften the finely chopped shallot, add the peppercorns and brandy, then the remaining stock. Reduce by half and whisk in the remaining butter.
+M Boil the green beans for 4 minutes. Serve the steak with the fondant potatoes, beans and peppercorn jus.
+
+R 004 | serves 2 | prep 15 | cook 30
+I 2 | duck breasts
+I 1 | small celeriac (about 500g)
+I 150ml | milk
+I 15g | butter
+I 150g | cherries, fresh or frozen, stoned
+I 100ml | red wine (or extra stock)
+I 100ml | chicken stock | c
+I 1 tsp | honey | c
+I 100g | tenderstem broccoli
+M Peel and chop the celeriac. Simmer in the milk with a splash of water for 20 minutes until soft, then blend with the butter and season.
+M Score the duck skin, season, and place skin-side down in a cold pan. Cook over a medium heat for 10-12 minutes to render the fat, then turn and cook for 3-4 minutes. Rest for 5 minutes.
+M Pour off most of the fat. Add the cherries, wine, stock and honey and simmer for 6-8 minutes until syrupy.
+M Steam the broccoli for 4 minutes. Slice the duck and serve on the purée with the cherry sauce.
+
+R 005 | serves 2 | prep 15 | cook 25
+I 1 | lamb rack (6-8 bones)
+I 40g | shelled pistachios
+I 1 tbsp | Dijon mustard | c
+I 1 small bunch | mint
+I 120g | couscous | c
+I 1 | lemon
+I 2 tbsp | pomegranate seeds
+I 1 tbsp | olive oil | c
+I 1 | small cucumber
+M Heat the oven to 200C (180C fan). Season the lamb and brown it all over in a hot pan.
+M Finely chop the pistachios with half the mint. Brush the fat side of the lamb with mustard and press on the crust.
+M Roast for 15-18 minutes for pink. Rest for 8 minutes.
+M Pour 150ml boiling water over the couscous, cover for 5 minutes, then fluff with the olive oil and lemon juice.
+M Stir the diced cucumber, pomegranate and the rest of the mint into the couscous. Carve the lamb and serve.
+
+R 006 | serves 2 | prep 10 | cook 30
+I 180g | risotto rice | c
+I 250g | mixed mushrooms
+I 15g | dried porcini (optional)
+I 1 | onion
+I 2 cloves | garlic
+I 750ml | hot vegetable stock | c
+I 30g | vegetarian hard cheese, grated
+I 20g | butter
+I 1 tsp | truffle oil
+I 8 | sage leaves
+I 1 tbsp | olive oil | c
+M Soak the porcini in 150ml of the hot stock, then chop and add the liquid back to the stock.
+M Soften the chopped onion in half the butter and the oil for 5 minutes. Add the garlic and rice and stir for 1 minute.
+M Add the stock a ladle at a time, stirring, for 18-20 minutes until the rice is creamy but still has a little bite.
+M Meanwhile, fry the mushrooms in a hot pan until golden. Fry the sage leaves in a little oil until crisp.
+M Stir the mushrooms, porcini, remaining butter and cheese into the risotto. Serve with a few drops of truffle oil and the crispy sage.
+
+R 007 | serves 2 | prep 15 | cook 15
+I 1 | cooked lobster (about 500g), or 200g cooked lobster meat
+I 200g | linguine | c
+I 2 cloves | garlic
+I 1 | red chilli
+I 1 | lemon
+I 100g | cherry tomatoes
+I 3 tbsp | olive oil | c
+I 1 small bunch | flat-leaf parsley
+M Remove the lobster meat from the shell and cut into chunks.
+M Cook the linguine in well-salted water for 9-10 minutes. Keep a cup of the cooking water.
+M Gently warm the sliced garlic and chilli in the olive oil for 2 minutes. Add the halved tomatoes for 3 minutes.
+M Add the lobster, lemon zest and juice, and the drained pasta with a splash of cooking water. Toss for 1 minute until glossy.
+M Serve scattered with chopped parsley.
+
+R 008 | serves 2 | prep 10 | cook 15
+I 8 | king scallops, roe removed
+I 200g | frozen peas
+I 15g | butter
+I 4 slices | pancetta
+I 1 small bunch | mint
+I 1 | lemon
+I 1 tbsp | vegetable oil | c
+M Boil the peas for 3 minutes, drain, then blend with the butter, a few mint leaves and seasoning until smooth.
+M Fry the pancetta until crisp, then drain on kitchen paper.
+M Pat the scallops dry and season. Sear in a very hot oiled pan for 1-2 minutes each side until golden but just translucent in the centre.
+M Spoon the purée onto plates, add the scallops and crumble over the pancetta. Finish with a squeeze of lemon.
+
+R 009 | serves 2 | prep 15 | cook 30
+I 1 | large cauliflower
+I 2 tbsp | harissa paste
+I 2 tbsp | olive oil | c
+I 3 tbsp | tahini
+I 1 | lemon
+I 1 clove | garlic
+I 150g | basmati rice | c
+I 30g | dried apricots or raisins
+I 2 tbsp | pomegranate seeds
+I 20g | toasted flaked almonds
+I 1 small bunch | coriander or parsley
+M Heat the oven to 220C (200C fan). Cut two thick steaks from the middle of the cauliflower (roast the rest alongside).
+M Mix the harissa and oil, brush over the cauliflower and roast for 25-30 minutes, turning once, until charred and tender.
+M Cook the rice for 12 minutes. Stir through the chopped apricots, pomegranate, almonds and herbs.
+M Whisk the tahini with the lemon juice, grated garlic and 3-4 tbsp cold water until light and smooth.
+M Serve the cauliflower on the rice with the whipped tahini.
+
+R 010 | serves 4 | prep 20 | cook 35
+I 4 x 120g | skinless salmon fillets (or one 500g piece)
+I 1 x 320g | ready-rolled puff pastry
+I 100g | baby spinach
+I 100g | soft cheese
+I 1 | lemon
+I 1 small bunch | dill
+I 1 | egg, beaten
+I 150g | crème fraîche
+I 300g | new potatoes
+M Heat the oven to 200C (180C fan). Wilt the spinach, squeeze out the water and mix with the soft cheese, lemon zest and half the chopped dill.
+M Unroll the pastry, lay the salmon in the middle, top with the spinach mix and fold the pastry over to make a parcel. Seal, glaze with egg and score the top.
+M Bake for 30-35 minutes until golden. Boil the potatoes alongside for 15-20 minutes.
+M Mix the crème fraîche with the lemon juice and remaining dill.
+M Slice the salmon en croûte and serve with the potatoes and lemon-dill sauce.
+
+R 011 | serves 4 | prep 20 | cook 40
+I 3 | aubergines
+I 2 x 400g | tins chopped tomatoes | c
+I 2 cloves | garlic
+I 1 large bunch | basil
+I 50g | vegetarian hard cheese, grated
+I 1 ball | burrata (about 150g)
+I 3 tbsp | olive oil | c
+I 1 bag | rocket
+N Uses vegetarian hard cheese instead of parmesan, so it's suitable for vegetarians.
+M Heat the oven to 200C (180C fan). Slice the aubergines lengthways, brush with oil and roast or griddle for 15-20 minutes until soft and golden.
+M Simmer the tomatoes with the sliced garlic and half the basil for 15 minutes until thick. Season.
+M Layer the aubergine, sauce and grated cheese in a dish, finishing with sauce and cheese.
+M Bake for 20 minutes until bubbling.
+M Tear the burrata over the top, scatter with the remaining basil and serve with rocket.
+
+R 012 | serves 2 | prep 5 | cook 10
+I 1 x 300g | sirloin or rump steak
+I 1 bag | rocket
+I 20g | Parmesan (or vegetarian hard cheese), shaved
+I 1 tbsp | balsamic vinegar | c
+I 2 tbsp | olive oil | c
+I 150g | cherry tomatoes
+I 1 sprig | rosemary
+M Bring the steak to room temperature, rub with a little oil, rosemary and seasoning.
+M Sear in a very hot pan for 2-3 minutes each side for medium-rare. Rest for 5 minutes.
+M Toss the rocket and halved tomatoes with the remaining oil.
+M Slice the steak thinly, lay over the salad and finish with shaved cheese and balsamic.
+
+R 013 | serves 2 | prep 10 | cook 10
+I 2 | sea bass fillets, skin on
+I 1 | fennel bulb
+I 1 | orange
+I 1 small handful | rocket
+I 10 | black olives
+I 2 tbsp | olive oil | c
+I 1 tsp | white wine vinegar | c
+M Shave the fennel very thinly. Peel and slice the orange, catching the juice.
+M Toss the fennel, orange, rocket and olives with the orange juice, vinegar and half the oil.
+M Pat the fish skin dry and season. Fry skin-side down in the remaining oil over a medium-high heat for 3-4 minutes, pressing gently so the skin stays flat, until crisp.
+M Turn and cook for 1 minute more. Serve on the salad, skin-side up.
+
+R 014 | serves 2 | prep 10 | cook 20
+I 250g | raw king prawns
+I 150g | orzo | c
+I 1 pinch | saffron | c
+I 500ml | hot vegetable stock | c
+I 1 | shallot
+I 2 cloves | garlic
+I 40g | butter
+I 1 | lemon
+I 1 small bunch | parsley
+I 50g | baby spinach
+M Soak the saffron in the stock. Soften the chopped shallot in a little butter for 3 minutes.
+M Add the orzo and stir, then add the stock and simmer for 10-12 minutes, stirring often, until creamy. Stir in the spinach.
+M Melt the rest of the butter with the sliced garlic over a low heat. Add the prawns and poach gently for 3-4 minutes until pink.
+M Spoon the orzo into bowls, top with the prawns and garlic butter, lemon juice and parsley.
+
+R 015 | serves 4 | prep 15 | cook 180
+I 1.2kg | beef short ribs
+I 3 tbsp | gochujang paste
+I 2 tbsp | soy sauce | c
+I 2 tbsp | honey | c
+I 3 cloves | garlic
+I 3cm piece | ginger
+I 500ml | beef stock | c
+I 1/4 | red cabbage
+I 2 | carrots
+I 1 tbsp | sesame oil
+I 1 tbsp | rice vinegar | c
+I 1 tbsp | sesame seeds | c
+I 300g | rice | c
+M Heat the oven to 160C (140C fan). Brown the ribs all over in a casserole dish.
+M Mix the gochujang, soy, honey, garlic and ginger. Coat the ribs, add the stock, cover and cook for 2.5-3 hours until very tender.
+M Lift out the ribs, skim the fat and reduce the sauce until sticky. Return the ribs and coat in the glaze.
+M Shred the cabbage and carrots and toss with the sesame oil, vinegar and sesame seeds.
+M Serve the ribs with rice and the slaw.
+
+R 016 | serves 2 | prep 10 | cook 0
+I 1 ball | burrata (about 150g)
+I 300g | heritage tomatoes
+I 2 | ripe peaches (or nectarines)
+I 1 small bunch | basil
+I 2 tbsp | extra virgin olive oil | c
+I 1 tsp | balsamic vinegar | c
+I 2 slices | sourdough, toasted
+M Slice the tomatoes and peaches and arrange on a plate. Season with salt and pepper.
+M Place the burrata in the middle and tear it open.
+M Drizzle with olive oil and balsamic, scatter with basil and serve with toasted sourdough.
+
+R 017 | serves 2 | prep 15 | cook 0
+I 150g | white crab meat
+I 1 | ripe avocado
+I 2 tbsp | mayonnaise
+I 1 | lime
+I 4 | brioche rolls
+I 1 handful | little gem lettuce
+I 1 pinch | chilli flakes | c
+I 1 small bunch | chives
+M Mix the crab with the mayonnaise, half the lime juice, chopped chives and seasoning.
+M Mash the avocado with the remaining lime juice and a pinch of salt.
+M Split and lightly toast the rolls. Fill with lettuce, avocado and crab, and finish with chilli flakes.
+
+R 018 | serves 2 | prep 10 | cook 0
+I 150g | sliced cooked roast beef
+I 4 slices | sourdough
+I 2 tbsp | creamed horseradish
+I 2 tbsp | crème fraîche
+I 1 handful | watercress or rocket
+I 1 | small red onion
+I 6 | cornichons
+M Mix the horseradish with the crème fraîche.
+M Toast the sourdough and spread with the horseradish cream.
+M Top with the roast beef, watercress, thinly sliced red onion and sliced cornichons. Season with black pepper.
+
+R 019 | serves 2 | prep 10 | cook 15
+I 250g | ricotta
+I 200g | red grapes
+I 30g | shelled pistachios, chopped
+I 1 tbsp | honey | c
+I 1 tbsp | olive oil | c
+I 2 sprigs | thyme
+I 4 slices | sourdough
+M Heat the oven to 220C (200C fan). Roast the grapes with the oil and thyme for 12-15 minutes until blistered.
+M Whip the ricotta with a pinch of salt until smooth.
+M Toast the sourdough. Spread with ricotta, top with the warm grapes, pistachios and a drizzle of honey.
+
+R 020 | serves 2 | prep 10 | cook 0
+I 4 slices | rye bread
+I 120g | smoked salmon
+I 4 tbsp | soft cheese
+I 1 tbsp | capers
+I 1 small bunch | dill
+I 1/2 | red onion
+I 1 | lemon
+M Spread the rye bread with soft cheese.
+M Top with smoked salmon, thinly sliced red onion and capers.
+M Finish with dill, a squeeze of lemon and black pepper.
+
+R 021 | serves 2 | prep 5 | cook 10
+I 4 thick slices | brioche or white bread
+I 2 | eggs
+I 100ml | milk
+I 1 pinch | saffron | c
+I 1/2 tsp | ground cardamom | c
+I 15g | butter
+I 150g | mixed berries
+I 2 tbsp | Greek yoghurt
+I 1 tbsp | maple syrup or honey | c
+M Warm 2 tbsp of the milk and soak the saffron in it for 5 minutes. Whisk with the eggs, remaining milk and cardamom.
+M Soak each slice of bread in the mixture for 20 seconds per side.
+M Fry in the butter over a medium heat for 2-3 minutes each side until golden.
+M Serve with the berries, yoghurt and a drizzle of maple syrup.
+
+R 022 | serves 2 | prep 5 | cook 5
+I 4 | eggs
+I 100g | smoked salmon
+I 2 | brioche buns (or 2 slices brioche)
+I 15g | butter
+I 1 tbsp | crème fraîche
+I 1 small bunch | chives
+M Whisk the eggs with a pinch of salt.
+M Melt the butter in a pan over a low heat. Add the eggs and stir slowly for 3-4 minutes until just set and soft. Stir in the crème fraîche off the heat.
+M Toast the brioche. Top with the eggs, smoked salmon, snipped chives and black pepper.
+
+R 023 | serves 2 | prep 10 | cook 15
+I 250g | ricotta
+I 2 | eggs
+I 60g | plain flour | c
+I 1 tsp | baking powder | c
+I 1 tbsp | caster sugar | c
+I 4 | figs
+I 2 tbsp | honey | c
+I 15g | butter
+M Heat the grill. Halve the figs, drizzle with half the honey and grill for 5 minutes until soft.
+M Separate the eggs. Mix the ricotta, yolks, flour, baking powder and sugar. Whisk the whites to soft peaks and fold in.
+M Fry spoonfuls of batter in a little butter over a medium heat for 2-3 minutes each side.
+M Serve the pancakes with the figs and the remaining honey.
+
+R 024 | serves 2 | prep 10 | cook 20
+I 4 | eggs
+I 1 x 400g | tin chopped tomatoes | c
+I 1 | red pepper
+I 1 | onion
+I 2 cloves | garlic
+I 1 tsp | ground cumin | c
+I 1 tsp | smoked paprika | c
+I 60g | feta
+I 1 small bunch | parsley or coriander
+I 1 tbsp | olive oil | c
+I 2 | flatbreads or slices of bread
+M Soften the sliced onion and pepper in the oil for 8 minutes. Add the garlic and spices for 1 minute.
+M Add the tomatoes and simmer for 8 minutes until thick. Season.
+M Make four hollows in the sauce, crack in the eggs, cover and cook gently for 5-7 minutes until the whites are set.
+M Crumble over the feta and herbs and serve with bread.
+
+R 025 | serves 2 | prep 10 | cook 5
+I 100g | rolled oats | c
+I 250ml | oat milk or other plant milk
+I 2 tbsp | plant-based yoghurt
+I 1 tbsp | maple syrup | c
+I 30g | shelled pistachios, chopped
+I 150g | raspberries, fresh or frozen
+I 1 tsp | lemon juice
+N Make the night before.
+M Mix the oats, plant milk, yoghurt and half the maple syrup. Divide between two jars and chill overnight.
+M Simmer the raspberries with the remaining maple syrup and the lemon juice for 5 minutes until jammy, then cool.
+M In the morning, top the oats with the compote and pistachios.
+
+R 026 | serves 12 | prep 20 | cook 5
+I 150g | dark chocolate (70%)
+I 100ml | double cream
+I 15g | butter
+I 40g | shelled pistachios, finely chopped
+I 1 tbsp | cocoa powder | c
+N Makes about 12 truffles. Chill for 2 hours.
+M Heat the cream until steaming, pour over the chopped chocolate and butter, and stir until smooth.
+M Chill for 2 hours until firm.
+M Roll teaspoons of the mixture into balls and coat in chopped pistachios or cocoa. Keep in the fridge.
+
+R 027 | serves 4 | prep 10 | cook 0
+I 200g | feta
+I 100g | Greek yoghurt
+I 2 tbsp | honey | c
+I 1/2 tsp | chilli flakes | c
+I 1 tsp | sesame seeds | c
+I 1 tbsp | olive oil | c
+I 2 | pitta breads or a selection of vegetables
+M Blend the feta and yoghurt until smooth and creamy.
+M Warm the honey with the chilli flakes for 1 minute.
+M Spread the feta into a bowl, drizzle with hot honey and oil, and scatter with sesame seeds. Serve with toasted pitta or vegetables.
+
+R 028 | serves 4 | prep 15 | cook 0
+I 1/2 | cantaloupe or galia melon
+I 8 slices | prosciutto
+I 1 small bunch | basil
+I 1 tbsp | extra virgin olive oil | c
+M Peel and deseed the melon and cut into 8 wedges.
+M Wrap each wedge with a slice of prosciutto and a basil leaf.
+M Drizzle with olive oil and finish with black pepper.
+
+R 029 | serves 4 | prep 10 | cook 5
+I 200g | mixed olives
+I 80g | whole almonds
+I 1 | orange
+I 1 | lemon
+I 2 tbsp | olive oil | c
+I 1 tsp | fennel seeds | c
+I 1 pinch | chilli flakes | c
+N Best left to marinate for at least 1 hour.
+M Toast the almonds in a dry pan for 4-5 minutes, then sprinkle with a little salt.
+M Warm the oil with strips of orange and lemon zest, the fennel seeds and chilli for 2 minutes.
+M Toss the olives in the warm oil with a squeeze of orange juice. Serve with the almonds.
+
+R 030 | serves 4 | prep 15 | cook 0
+I 1 | cucumber
+I 100g | white crab meat
+I 1 tbsp | mayonnaise
+I 1 | lime
+I 1 | red chilli
+I 1 small bunch | coriander
+M Slice the cucumber into thick rounds.
+M Mix the crab with the mayonnaise, lime zest and juice, and seasoning.
+M Spoon onto the cucumber and top with finely sliced chilli and coriander.
+
+R 031 | serves 4 | prep 15 | cook 25
+I 500g | boneless chicken thighs
+I 3 tbsp | Thai green curry paste
+I 1 x 400ml | tin coconut milk | c
+I 200ml | chicken stock | c
+I 150g | green beans
+I 1 | courgette
+I 1 tbsp | fish sauce
+I 1 | lime
+I 1 small bunch | Thai basil or coriander
+I 300g | jasmine rice | c
+I 1 tbsp | vegetable oil | c
+M Rinse the rice and cook in 600ml water, covered, for 12 minutes. Rest for 5 minutes.
+M Fry the curry paste in the oil for 1 minute. Add the sliced chicken and cook for 5 minutes.
+M Pour in the coconut milk and stock and simmer for 10 minutes.
+M Add the beans and sliced courgette for 5 minutes. Season with fish sauce and lime juice.
+M Serve with the rice and fresh herbs.
