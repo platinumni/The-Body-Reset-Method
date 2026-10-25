@@ -286,7 +286,9 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - **Meals needed:** a minimum of about 60 (10 breakfasts, 15 lunches, 20 teas, 15 snacks); ideally about 90. About a third vegetarian, with a mix of budget staples and treat meals.
   - **Cheap staples** for people on tight budgets, but every meal always has its **full ingredient list** with amounts, including oil, seasoning and spices. Cupboard items are costed per use (owner, 2026-10-25).
   - **Already have it:** the shopping list splits into "to buy" and "cupboard" (oil, spices, salt and so on). Users tick what they already have, and it comes off the list and the cost. A one-off "starter cupboard" cost is shown separately (owner, 2026-10-25).
+  - **PDF design:** it must look beautiful and on-brand. Page 1 is a cover: "The Body Regeneration Method, Meal Plan", their budget, household and dates. Then the week at a glance, recipes, the shopping list (to buy, and cupboard), and the source note. The design is a template kept separate from the data, so it can be restyled any time without losing anything (owner, 2026-10-25).
   - **Running cost:** about £0. Build time is to be confirmed once the meals arrive (about 3-4 days for the full version).
+- **Logo:** the owner wants a proper logo for the site, PDFs and emails at some point. Options: their own designer, or Claude drafts simple versions to choose from.
 - **Later or optional:** Stripe Connect automatic payouts; premium AI voiceover (owner picks from samples); the owner's own photos of the starting positions.
 
 ## Next step
