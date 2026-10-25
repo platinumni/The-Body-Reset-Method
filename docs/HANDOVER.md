@@ -285,6 +285,7 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - **Output:** a personalised plan and a downloadable PDF; lifetime access to every budget level.
   - **Meals needed:** a minimum of about 60 (10 breakfasts, 15 lunches, 20 teas, 15 snacks); ideally about 90. About a third vegetarian, with a mix of budget staples and treat meals.
   - **Cheap staples** for people on tight budgets, but every meal always has its **full ingredient list** with amounts, including oil, seasoning and spices. Cupboard items are costed per use (owner, 2026-10-25).
+  - **Already have it:** the shopping list splits into "to buy" and "cupboard" (oil, spices, salt and so on). Users tick what they already have, and it comes off the list and the cost. A one-off "starter cupboard" cost is shown separately (owner, 2026-10-25).
   - **Running cost:** about £0. Build time is to be confirmed once the meals arrive (about 3-4 days for the full version).
 - **Later or optional:** Stripe Connect automatic payouts; premium AI voiceover (owner picks from samples); the owner's own photos of the starting positions.
 
