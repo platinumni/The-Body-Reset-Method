@@ -233,6 +233,9 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **On/off control:** at first conscious, then even the switch becomes unconscious (Read this first, Beyond the programme, key points).
 
 ## Next step
+- **Planned: go live Monday 2026-10-26**, as a sole trader with Stripe paying into the owner's personal bank account. Switch to the owner's Ltd later (the legal pages need about 15 minutes of updates then).
+  - Needed from the owner: domain, Stripe, prices, legal details (name "trading as", postal address, contact email), Resend and the ICO fee.
+  - Preview accounts on staging: `michaeljmarden+preview@gmail.com` (owner, set up) and `michaeljmarden+brother@gmail.com` (setup link sent 2026-10-25, unused at the time).
 - **2026-10-24: the course is published on staging only**, at the owner's request, so they can preview it on their phone. Their preview member account is `michaeljmarden+preview@gmail.com` (order `OWNER-PREVIEW`, £0, no payment). Their main account is the admin one, which needs 2FA. The content files still say `status: draft`, so a later `--update` import will set staging back to draft unless the files are changed to `published` first.
 - The owner reviews the course (screenshots, or drafts once admin login exists) and the YouTube links.
 - Publish the drafts on staging once the owner approves. In admin, or set `status: published` in the files and run `node scripts/import-content.mjs staging --update`.
