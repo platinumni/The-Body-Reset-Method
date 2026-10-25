@@ -265,6 +265,14 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - The owner dislikes hype. Suggested approach: calm, real phone videos showing grip versus release; teach one free thing (short foot); real testimonials; coaches in golf, martial arts and running via affiliates; longer YouTube videos.
   - The owner may ask for a marketing plan (about 1 hour).
 - **Daily backup (2026-10-25):** a scheduled task (`trig_01RcF5wxZim32iud4dWZppvy`) fires into this session every day at 18:48 UK time. It records any new chat decisions, then, only if something changed, sends the latest two backups.
+- **Backups:** any change counts, even a small chat discussion, and goes into the daily drop.
+- **Idea discussed, not agreed to build (2026-10-25): budget meal plans.**
+  - The owner's idea: £20-£60 a week (UK, US and so on). The user enters a postcode or country and their usual supermarkets; prices are tracked weekly; the site shows the plans they can afford.
+  - Claude's advice: UK supermarkets have no public price feed, and scraping breaks their terms, so don't scrape.
+  - The free route: official monthly average prices (ONS in the UK, BLS in the US), a supermarket-type adjustment (discounter or premium), OpenStreetMap for nearby shops, and optional prices reported by users. Show estimates, not live prices. Kroger (US) has a free price API. Paid price data could come later.
+  - Running cost about £0; build about 2-3 days (worst case a week).
+  - Keep it to general healthy eating with allergen warnings and no weight-loss claims.
+  - Claude asked whether to add it to the roadmap; no answer yet.
 - **Later or optional:** Stripe Connect automatic payouts; premium AI voiceover (owner picks from samples); the owner's own photos of the starting positions.
 
 ## Next step
