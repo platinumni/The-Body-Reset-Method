@@ -232,6 +232,40 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - The next payday shows on the affiliate card and in Admin → Affiliates. The affiliate terms are updated.
 - **On/off control:** at first conscious, then even the switch becomes unconscious (Read this first, Beyond the programme, key points).
 
+## Working with the owner (learned so far)
+- They're usually on a phone, so keep replies short and plain. **Workflow:** a short brief, then the owner replies "CH", then work quietly, then a short report. When they send a run of voice notes and say "just say continue", reply only "Continue" until CH.
+- **After each change, send only the code backup bundle** (`bash scripts/make-bundle.sh <scratchpad>`). No screenshots unless asked.
+- **Writing style:**
+  - Number ranges use a plain hyphen ("8-10"), never an en dash; the owner finds it looks AI-written.
+  - Polished, assured, warm. It should speak to the person, with no hype.
+  - Education only: no cure, treat or fix claims. No DNS or Prague School material. "Reflexes", not "reflexology".
+- **Philosophy keywords:**
+  - release, then the right muscles, then release even those, then trust the reflexes;
+  - engage, don't grip; position over range; wu wei;
+  - the four stages of competence;
+  - control on and off, until even the switch is unconscious;
+  - "advised", not another system; no shame, no ego.
+- **Preview accounts on staging:** see "Next step". The course is published on staging only. A content `--update` import resets staging to draft, so re-run the publish SQL afterwards: `UPDATE programme_lessons SET status='published' WHERE content_key IS NOT NULL AND status='draft'`.
+- **Owner's voice-note captures:** `docs/owner-notes/`.
+
+## Decisions made in chat (2026-10-24/25)
+- **Pricing:** to be decided. The owner mentioned 29.99 for Lower Body (£ or $ still to confirm). Core & Hips, Hips and Core each have their own buy page. Lower Body includes Core & Hips free.
+- **Access:** lifetime.
+- **Guarantee:** 90-day money-back on every programme, no conditions, with "we recommend giving it a proper go".
+- **Affiliates:** commission held 90 days, then paid on the last working day of that month. Payouts are **manual** (no Stripe Connect for now). The commission % is not set yet.
+- **Business:** go live as a sole trader, with Stripe paying into the owner's personal bank account. Move to the owner's existing Ltd later (update the legal pages then).
+  - Legal pages need: name ("trading as"), postal address (a virtual office is fine), contact email.
+  - The £1,000 trading allowance and HMRC registration were explained; the owner will check with an accountant.
+- **Email:**
+  - Use a separate free Resend account for this business (Platinum NI already uses one).
+  - Cloudflare Email Routing (free) to forward hello@domain into a new business Gmail. No paid inbox.
+  - The contact form email is parked until the Gmail exists.
+- **Cloudflare:** keep the shared account with Platinum NI (never touch `platinumni*`). The $5 a month paid plan covers both if ever needed. Running cost is £0 to start, about £20 a month when busy.
+- **Marketing:**
+  - The owner dislikes hype. Suggested approach: calm, real phone videos showing grip versus release; teach one free thing (short foot); real testimonials; coaches in golf, martial arts and running via affiliates; longer YouTube videos.
+  - The owner may ask for a marketing plan (about 1 hour).
+- **Later or optional:** Stripe Connect automatic payouts; premium AI voiceover (owner picks from samples); the owner's own photos of the starting positions.
+
 ## Next step
 - **Planned: go live Monday 2026-10-26**, as a sole trader with Stripe paying into the owner's personal bank account. Switch to the owner's Ltd later (the legal pages need about 15 minutes of updates then).
   - Needed from the owner: domain, Stripe, prices, legal details (name "trading as", postal address, contact email), Resend and the ICO fee.

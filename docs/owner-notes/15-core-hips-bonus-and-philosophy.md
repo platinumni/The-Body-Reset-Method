@@ -1,0 +1,12 @@
+# Voice note 15 (owner, 2026-10-24): Core & Hips as a FREE BONUS with the Lower Body purchase (not a sign-up gift). Build at CH.
+- **Correction to note 13:** Core & Hips comes free **with** the Lower Body purchase; it supplements it.
+  - Build: when the flagship is bought, both are granted (bundle_items or a product that unlocks both).
+  - Catalogue: merge "Hips (coming soon)" into "Core & Hips (free bonus with Lower Body)". The sign-up pop-up stays as free guides plus offer.
+- **Core content direction (owner to send later):**
+  - DNS-style developmental positions: 3-month supine and simple baby movements; "feet on the wall" (90/90 supine), releasing all tension while holding and stabilising.
+  - The first 6–7 exercises warm up the deep core. Then bird dogs, dead bugs, and planks with squeezing as the end point.
+  - DNS = Dynamic Neuromuscular Stabilization (Pavel Kolář, Prague School). **Don't copy their materials or use the DNS name as if certified.** Describe the positions generically: "inspired by developmental movement".
+- **Philosophy, stated by the owner:**
+  - It's a life philosophy and life concept: releasing tension, even the "proper" tension.
+  - Like **wu wei** (Taoist "effortless action").
+  - It guides people through the **four stages of competence**: unconscious incompetence → conscious incompetence → conscious competence → unconscious competence.

@@ -1,0 +1,11 @@
+# Voice note 4 (owner, 2026-10-24): Exercise 3, Toe spreading (Stage 1, feet). Raw capture, build at CH.
+- Same starting position as before: seated, hard chair, barefoot. Emphasise it again in the write-up.
+- **Exercise:** spread the toes as wide as possible.
+- **Basic:** just do the spread, without body awareness. Try to spread widely. Common: the little toe won't move much; the big toe tries to go down and touch the floor.
+- **Intermediate:**
+  - Notice where else you carry tension, and whether you're forgetting to breathe or holding it in all areas.
+  - Owner asks Claude to **research the common places people hold tension** for each exercise and include them.
+  - Play with it: you'll need some control, force and pressure to open the toes, then release how much you're using. Some effort will remain. Aim for the least, most minimal amount.
+- **Advanced:**
+  - Add the breath, holds and counting. For example a 2-second open; vary it, e.g. 3 seconds, then 5, then 3. "You can go really advanced."
+  - Always while still breathing and keeping everything else released.

@@ -1,0 +1,11 @@
+# Voice note 30 (owner, 2026-10-24): end of programme. CH GIVEN for notes 19-30.
+- End of the programme: help people understand they can let go of it.
+- Once you've got control, you can drop most of the structured work. What's always worth keeping:
+  - single-leg balance;
+  - a few reps of calf raises ("calf pumps"), single-leg split squats, and the advanced single-leg bends;
+  - quick foundational activation: activating the arches (very quick and simple), activating the movement, body awareness;
+  - pogo hops, always good;
+  - a skipping rope, the owner's recommendation.
+- It becomes very quick after a while. There's a phase of teaching the body: weeks or months for some, while others get it in a week or two and let go.
+- Why: we're teaching the depth of the movement philosophy and body awareness, not just exercises.
+- "The exercises in this programme are good, and the exercises in a lot of people's programmes are good, and you'll get results. But this is the real core that we're teaching." Don't knock other programmes or professionals.

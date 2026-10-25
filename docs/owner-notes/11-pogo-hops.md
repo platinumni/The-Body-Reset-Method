@@ -1,0 +1,14 @@
+# Voice note 11 (owner, 2026-10-24): Exercise 8, Pogo hops, two legs (final exercise; culmination). Raw capture, build at CH.
+- **Common fault:** over-engaged, with the heels very high. At first, the heels should **just tap the floor**.
+- Remove tension everywhere: breathe; jaw and eye tension (the owner said "eye vent stuff", probably tension around the eyes and face).
+- **Part 1 (consciously competent):** grip the toes a little, so you know consciously they're there. Slight bend in the knees; heels lightly tapping.
+- **Duration** depends on fitness: from 20 seconds up to 5 minutes.
+- Owner's claim: "good for lymphatic drainage and releasing tension". **Don't publish lymphatic drainage** (a health claim). Use "a rhythmic way to loosen up and release tension" instead.
+- **Beginner:** use the kitchen counter to help push up, or just raise the heels a little with a light toe grip.
+- **Advanced:**
+  - the boxer skip (bouncing between legs, weight transfer);
+  - varying the bounce height, up to full, high bounces using the whole body.
+  - "A lot of people won't be able to do this."
+- **Part 2 (unconsciously competent):** the same again, but release the conscious control of the toes. Just bounce and trust the body to do it, staying loose.
+- **This is the culmination of the programme.** After it, people can finish, or move on to their own training and sports. It helps all sports because "everything comes from the feet" (keep that as a general statement, not a promise).
+- **Maps to the learning stages:** Part 1 is consciously competent; Part 2 is unconsciously competent.
