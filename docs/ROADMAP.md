@@ -15,7 +15,7 @@ Times are realistic / worst case, including waiting for the owner's "CH".
 | 7b | Marketing and SEO: sign-up pop-up (double opt-in), offers and discount codes, conversion sections, 3 guides, rich results, share image | ✅ Done 2026-10-23 | — |
 | 8b | Premium AI voiceover: once content is final, owner picks a voice from samples (OpenAI-style about £2–£5 pay-as-you-go, or ElevenLabs about £10–£20 for one month, then cancel). Claude generates one audio file per section and exercise into R2; Play buttons use them, with the device voice as fallback; an "AI-generated voice" note under the player. About half a day. | Planned (end of content) | 0.5 / 1 day |
 | 8 | Content: owner's programmes loaded (via voice notes → drafts → approval) | 🟡 Lower Body, Hips and Core drafted on the test site 2026-10-24; owner review and approval next | Owner review, then ~1 hour to publish changes |
-| 10 | Budget meal plans (separate product): owner sends meals, Claude builds personalised budget plans, PDFs and price updates. See HANDOVER "Meal plans" | Agreed, waiting for the owner's meals | 3-4 days / 1 week |
+| 10 | Budget meal plans (separate product): owner sends meals, Claude builds personalised budget plans, PDFs and price updates. See HANDOVER "Meal plans" | 🟡 Built on the test site 2026-10-25 with estimated prices. Waiting: network access for photos and ONS prices, product price, owner's recipe check | Photos and prices: about 0.5-1 day once unblocked |
 | 9 | Go live: domain, Stripe live, real test purchase and refund, and a check that no `[PLACEHOLDER]` remains | — | 1 / 3 days |
 
 ## Step details

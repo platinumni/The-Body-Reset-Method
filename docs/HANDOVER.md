@@ -302,6 +302,27 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Logo:** the owner wants a proper logo for the site, PDFs and emails at some point. Options: their own designer, or Claude drafts simple versions to choose from.
 - **Later or optional:** Stripe Connect automatic payouts; premium AI voiceover (owner picks from samples); the owner's own photos of the starting positions.
 
+**Budget meal plans built (2026-10-25, owner CH; on staging, product in draft with no price)**
+- **Migration 0012:** product `meal-plans` (draft) and `meal_plan_prefs` (saved choices; included in export and deleted with the account).
+- **Recipes:** `content/meal-plans/recipes.json` (built by `scripts/build-recipes.mjs`), loaded by `src/lib/meal-plans/recipes.ts`.
+- **Prices:** `src/lib/meal-plans/prices.ts` holds about 200 estimated UK mid-range prices, labelled as estimates, `PRICES_AS_OF` October 2026.
+  - Country factors: US ×1.3 USD, Canada ×1.75 CAD. Store factors: discount 0.85, premium 1.3.
+  - **To connect ONS, BLS and Statistics Canada later,** replace the prices in that file, or load them from the database, once the hosts are allowed. Every ingredient must match an item; a test enforces this.
+- **Planner:** `src/lib/meal-plans/planner.ts` (pure).
+  - Portions by age (babies excluded). Filters for diet, leave-outs and allergens; leftover-only recipes are skipped.
+  - Tries variety levels from 3/4/5/3 down to 1/2/2/1 different breakfasts, lunches, dinners and snacks, and keeps the fullest plan within budget. Otherwise it shows the lowest-cost plan with a message.
+  - Fresh food is costed in whole packs; cupboard items pro rata. "Already have" ticks; a starter cupboard cost; 3 swaps per recipe; seeded shuffle.
+- **Pages:** `/account/meal-plans` (members who own `meal-plans`, or admins).
+  - Form (GET), plan, week grid, shopping list, recipe cards (a soft placeholder until photos come), notes (estimates and source, maintain weight, allergens, babies and toddlers).
+  - "Download PDF" uses print, with a branded cover page. "Remember my choices" saves via POST with CSRF.
+  - Public page `/programmes/meal-plans` has a price placeholder and no movement "flagship" card (`food: true`).
+- **Waiting on the owner:**
+  - allow the 6 photo hosts plus ons.gov.uk (and BLS / Statistics Canada if wanted) in the environment's network settings;
+  - Pexels or Unsplash keys (stored as secrets);
+  - a price for the product;
+  - checking the recipes and allergens.
+- **Not built yet:** the calorie calculator (optional, worked out on the phone); live price data; photos.
+
 ## Next step
 - **Planned: go live Monday 2026-10-26**, as a sole trader with Stripe paying into the owner's personal bank account. Switch to the owner's Ltd later (the legal pages need about 15 minutes of updates then).
   - Needed from the owner: domain, Stripe, prices, legal details (name "trading as", postal address, contact email), Resend and the ICO fee.

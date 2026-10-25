@@ -1,3 +1,6 @@
+import { buildPlan } from "../lib/meal-plans/planner";
+import { canUseMealPlans, DEFAULT_PREFS, loadPrefs, readPlanInput, savePrefs } from "../services/meal-plans";
+import { MealPlannerPage } from "../views/meal-plans";
 import { Hono, type Context } from "hono";
 import type { AppEnv } from "../env";
 import { endSession, requireUser, startSession } from "../middleware/auth";
@@ -59,6 +62,51 @@ function readMode(value: string | undefined): Mode {
   if (value === "quick") return "points";
   return MODES.find((m) => m === value) ?? "guide";
 }
+
+// --- Budget meal plans ---
+
+const MEAL_MULTI = ["allergens", "have", "picks", "exclude", "children"];
+
+/** Reads the planner's choices from a query string, joining repeated fields (checkboxes). */
+function mealQuery(params: URLSearchParams): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const key of new Set(params.keys())) {
+    const all = params.getAll(key);
+    out[key] = MEAL_MULTI.includes(key) ? all.flatMap((v) => v.split(",")) : all[all.length - 1];
+  }
+  return out;
+}
+
+accountRoutes.get("/account/programmes/meal-plans", (c) => c.redirect("/account/meal-plans", 302));
+
+accountRoutes.get("/account/meal-plans", async (c) => {
+  const user = c.get("user")!;
+  if (user.role !== "admin" && !(await canUseMealPlans(c.env.DB, user.id))) return c.redirect("/programmes/meal-plans", 302);
+  const params = new URL(c.req.url).searchParams;
+  const prefs = await loadPrefs(c.env.DB, user.id);
+  const hasSaved = prefs !== DEFAULT_PREFS;
+  const input = readPlanInput(mealQuery(params), prefs);
+  const show = params.has("submitted") || hasSaved;
+  return c.html(
+    <MealPlannerPage
+      meta={pageMeta(c, { title: "Your meal plan", description: "Budget meal plans with recipes and a shopping list.", path: "/account/meal-plans", noindex: true })}
+      csrfToken={c.get("csrfToken")}
+      input={input}
+      plan={show ? buildPlan(input) : null}
+      saved={params.has("saved")}
+    />,
+  );
+});
+
+accountRoutes.post("/account/meal-plans/save", async (c) => {
+  const user = c.get("user")!;
+  if (user.role !== "admin" && !(await canUseMealPlans(c.env.DB, user.id))) return c.redirect("/programmes/meal-plans", 303);
+  const query = new URLSearchParams(String((await c.req.parseBody()).query ?? ""));
+  const input = readPlanInput(mealQuery(query));
+  await savePrefs(c.env.DB, user.id, input);
+  query.set("saved", "1");
+  return c.redirect(`/account/meal-plans?${query.toString()}`, 303);
+});
 
 accountRoutes.get("/account/programmes/:slug", async (c) => {
   const user = c.get("user")!;

@@ -140,6 +140,8 @@ export type Programme = {
   short: string;
   status: "available" | "coming-soon";
   flagship?: boolean;
+  /** Food products don't carry the movement "start with the flagship" note. */
+  food?: boolean;
   price: Copy;
   stages?: Stage[];
   includes?: Copy[];
@@ -192,6 +194,23 @@ export const PROGRAMMES: Programme[] = [
       "The same page-by-page guide, Listen mode, Key points and printable exercise sheet.",
       "Advised: one round of each a day if you have the time, about 20 minutes each while you're learning. Do them together, alternate them, or split them across the week.",
       "Included free with Lower Body Regeneration.",
+    ],
+  },
+  {
+    slug: "meal-plans",
+    title: "Budget Meal Plans",
+    short: "A healthy week of meals for any budget, from £20 to £100+. Set your household and what you don't eat, and get recipes and a shopping list that fit.",
+    status: "available",
+    food: true,
+    price: placeholder("Meal plans price"),
+    access: "Lifetime access to every budget level, with no subscription.",
+    includes: [
+      "Any weekly budget, to the pound. Change it whenever you like.",
+      "140 recipes: breakfasts, lunches, evening meals and snacks, from budget staples to special occasions.",
+      "Sized for your household, with your leave-outs, diet and allergies taken into account.",
+      "A shopping list with estimated costs. Tick what's already in your cupboard and the total updates.",
+      "Swap any meal you don't fancy, and download your plan as a PDF.",
+      "General healthy eating, designed to maintain your weight. Prices are estimates and are checked regularly.",
     ],
   },
   { slug: "upper-body", title: "Upper Body", short: "The same principles applied to the shoulders, arms and upper back, where so many of us hold tension.", status: "coming-soon", price: placeholder("Price") },

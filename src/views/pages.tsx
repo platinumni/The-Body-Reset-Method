@@ -148,7 +148,7 @@ export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry
           )}
         </div>
         <TrustStrip />
-        {!p.flagship && (
+        {!p.flagship && !p.food && (
           <aside class="card flagship-pointer">
             <h2 class="h3">{FLAGSHIP_POINTER.title}</h2>
             <p>{FLAGSHIP_POINTER.text}</p>

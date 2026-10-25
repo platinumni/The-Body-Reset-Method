@@ -537,3 +537,59 @@ html[data-text-size="3"] .reader-body { font-size: 1.36rem; }
 .contact-form { position: relative; }
 .message-card { margin-bottom: 1rem; }
 .pre-wrap { white-space: pre-wrap; }
+
+/* Budget meal plans */
+.meal-form { margin-bottom: 1.5rem; }
+.meal-form-grid { display: grid; gap: 0 1rem; grid-template-columns: 1fr; }
+@media (min-width: 40rem) { .meal-form-grid { grid-template-columns: 1fr 1fr; } }
+.input-prefix { display: flex; align-items: stretch; }
+.input-prefix span { display: flex; align-items: center; padding: 0 .75rem; border: 1px solid var(--line); border-right: 0; border-radius: var(--radius-sm) 0 0 var(--radius-sm); background: var(--bg-quiet); font-weight: 600; }
+.input-prefix input { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.pill-choices { display: flex; flex-wrap: wrap; gap: .5rem; }
+.diet-pill { position: relative; }
+.diet-pill input { position: absolute; opacity: 0; inset: 0; }
+.diet-pill span { display: inline-block; padding: .55rem 1rem; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; min-height: 2.75rem; line-height: 1.6; }
+.diet-pill input:checked + span { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.diet-pill input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+.allergen-picker summary { cursor: pointer; font-weight: 600; padding: .5rem 0; }
+.check-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .25rem 1rem; }
+@media (min-width: 40rem) { .check-grid { grid-template-columns: repeat(3, 1fr); } }
+.plan-summary { margin: 1.5rem 0; }
+.plan-total { font-size: 1.3rem; margin: 0 0 .25rem; }
+.plan-total strong { font-size: 1.8rem; color: var(--accent); }
+.plan-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.inline-form { display: inline; margin: 0; }
+.plan-heading { font-size: clamp(1.5rem, 4vw, 1.9rem); margin: 2.5rem 0 1rem; }
+.week { list-style: none; padding: 0; display: grid; gap: .75rem; grid-template-columns: 1fr; }
+@media (min-width: 40rem) { .week { grid-template-columns: 1fr 1fr; } }
+.day h3 { font-size: 1.1rem; margin: 0 0 .5rem; }
+.day ul { list-style: none; padding: 0; margin: 0; }
+.day li { padding: .3rem 0; border-top: 1px solid var(--line); font-size: .95rem; }
+.day li:first-child { border-top: 0; }
+.meal-label { display: block; font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.shopping-list { list-style: none; padding: 0; margin: 0 0 1rem; }
+.shopping-list li { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .35rem 0; border-bottom: 1px solid var(--line); }
+.shopping-list li.have span { text-decoration: line-through; color: var(--muted); }
+.shopping-cost { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.recipe-card { margin-bottom: 1.25rem; }
+.recipe-photo { aspect-ratio: 16 / 9; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--sage-soft), var(--bg-quiet)); display: flex; align-items: flex-end; padding: .75rem 1rem; margin-bottom: 1rem; }
+.recipe-photo span { font-family: var(--font-display, serif); font-size: 1.1rem; color: var(--ink-soft); }
+.recipe-card h4 { font-size: 1rem; margin: 1.25rem 0 .4rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+.ingredients { padding-left: 1.1rem; }
+.method li { margin-bottom: .4rem; }
+.allergen-tags .tag { display: inline-block; font-size: .8rem; padding: .1rem .5rem; margin: .1rem; border-radius: 999px; background: var(--bg-quiet); border: 1px solid var(--line); }
+.swaps { border-top: 1px solid var(--line); margin-top: 1rem; padding-top: .75rem; }
+.swaps ul { margin: .25rem 0 0; padding-left: 1.1rem; }
+.meal-notes { font-size: .9rem; background: var(--bg-quiet); border-radius: var(--radius); padding: 1rem 1.25rem; margin-top: 2rem; }
+.print-cover { display: none; }
+@media print {
+  .print-cover { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; break-after: page; text-align: center; }
+  .print-cover h1 { font-size: 48pt; margin: .5rem 0; }
+  .print-cover-sub { font-size: 14pt; }
+  .meal-form, .page-hero, .swaps, .plan-actions { display: none !important; }
+  .recipe-card { break-inside: avoid; border: 0; box-shadow: none; }
+  .recipe-photo { display: none; }
+  .week { grid-template-columns: 1fr 1fr; }
+  .shopping-list input { display: none; }
+}
+fieldset.field { border: 0; padding: 0; margin-left: 0; margin-right: 0; } fieldset.field legend { font-weight: 600; padding: 0; margin-bottom: .4rem; }

@@ -50,7 +50,9 @@ export function AccountPage(props: {
               {props.programmes.map((p) => (
                 <li class="card library-card">
                   <h3>{p.title}</h3>
-                  {p.lessons > 0 ? (
+                  {p.slug === "meal-plans" ? (
+                    <p class="small muted">Set your budget and household for a week of meals, recipes and a shopping list.</p>
+                  ) : p.lessons > 0 ? (
                     <p class="small muted">
                       {p.done} of {p.lessons} sections ticked off
                     </p>
@@ -62,7 +64,7 @@ export function AccountPage(props: {
                       <span class={`progress-bar w-${Math.round((p.done / p.lessons) * 20) * 5}`} />
                     </div>
                   )}
-                  <Button href={`/account/programmes/${p.slug}`}>{p.done ? "Continue" : "Start here"}</Button>
+                  <Button href={p.slug === "meal-plans" ? "/account/meal-plans" : `/account/programmes/${p.slug}`}>{p.done ? "Continue" : "Start here"}</Button>
                 </li>
               ))}
             </ul>

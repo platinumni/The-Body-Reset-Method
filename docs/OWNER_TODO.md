@@ -27,6 +27,8 @@ These are things only you can do. None of them block the build until go-live unl
 
 - [ ] **When the course content is final:** choose an AI voice from samples Claude sends (a one-off cost of about £2–£20).
 
+- [ ] **Meal plans:** add these to the environment's allowed network addresses: unsplash.com, images.unsplash.com, api.unsplash.com, pexels.com, images.pexels.com, api.pexels.com, ons.gov.uk. Optionally get free Pexels or Unsplash keys. Then check the recipes and allergens, and set a price.
+
 ## Before go-live
 - [ ] Follow `docs/GO_LIVE.md`. Admin → **Launch checklist** shows what's left.
 - [ ] **ICO data protection fee** (about £52 a year): ico.org.uk/fee
