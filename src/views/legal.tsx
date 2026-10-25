@@ -130,7 +130,7 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
         <p>
           If you're a consumer in the UK or EU, you normally have 14 days to cancel a digital purchase. At checkout, you can ask for immediate access to your
           programme. If you do, and you confirm you understand, you lose that 14-day right once access begins. Our 90-day money-back guarantee still
-          applies: see our <a href="/legal/refunds">refund policy</a>.
+          applies to movement programmes (not Budget Meal Plans): see our <a href="/legal/refunds">refund policy</a>.
         </p>
         <h2>Your health and safety</h2>
         <p>
@@ -198,7 +198,7 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
       <>
         <h2>Our policy</h2>
         <p>
-          <strong>{GUARANTEE.title}.</strong> Every programme is covered. If it isn't for you, email us any time within 90 days of buying and we'll refund
+          <strong>{GUARANTEE.title}.</strong> Every movement programme is covered. Budget Meal Plans are not covered by this guarantee. If it isn't for you, email us any time within 90 days of buying and we'll refund
           you in full, whether or not you've used the programme. When the refund is made, your access to that programme ends.
         </p>
         <p>

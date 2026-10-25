@@ -5,8 +5,8 @@ import { CsrfField } from "./layout";
 
 export type OfferCopy = { headline: string; code: string | null; details: string | null } | null;
 
-export function TrustStrip() {
-  const items = ["90-day money-back guarantee", "Secure checkout with Stripe", "Instant access after payment", "Works on any phone, tablet or computer", "Learn at your own pace"];
+export function TrustStrip(props: { guarantee?: boolean } = {}) {
+  const items = [...(props.guarantee === false ? [] : ["90-day money-back guarantee"]), "Secure checkout with Stripe", "Instant access after payment", "Works on any phone, tablet or computer", "Learn at your own pace"];
   return (
     <ul class="trust-strip" aria-label="Why buy with confidence">
       {items.map((t) => (

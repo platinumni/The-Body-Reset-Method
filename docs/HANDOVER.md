@@ -333,6 +333,17 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - Admin → Stats shows the anonymous average weekly saving from **actual** spend only, with marketing guidance.
 - **Privacy:** allergy ticks are never saved (they count as health data), and the planner page says so. The privacy policy has a new meal-plans bullet. Spending is included in data export and deleted with the account.
 
+**Guarantee: movement only (owner, 2026-10-25):** "No 90 day on meal plan." The 90-day guarantee covers movement programmes only, not Budget Meal Plans.
+- The trust strip on the meal-plans page drops the guarantee.
+- The refund policy, terms and FAQ say so.
+- The checkout tick no longer mentions the guarantee (consent version 2026-10-25). A small note under the ticks shows only when the basket has a movement programme.
+
+**Kitchen sub-brand (discussed, not built):**
+- "Body Regeneration Kitchen" at kitchen.<domain>, with the same look, its own landing page and campaign, and the shared checkout.
+- To avoid looking scammy: say "part of The Body Regeneration Method"; product name "Body Regeneration Kitchen: Budget Meal Plans"; Stripe statement descriptor e.g. BODYREGEN; matching receipt.
+- Ads must say "up-to-date official UK prices (updated monthly)", never "live".
+- Waiting for the owner's CH to build the landing page.
+
 ## Next step
 - **Planned: go live Monday 2026-10-26**, as a sole trader with Stripe paying into the owner's personal bank account. Switch to the owner's Ltd later (the legal pages need about 15 minutes of updates then).
   - Needed from the owner: domain, Stripe, prices, legal details (name "trading as", postal address, contact email), Resend and the ICO fee.

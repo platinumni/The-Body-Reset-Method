@@ -113,6 +113,12 @@ export function BasketPage(props: {
                     </div>
                   );
                 })}
+                {basket.items.some((i) => i.slug !== "meal-plans") && (
+                  <p class="small">
+                    Movement programmes come with our <a href="/legal/refunds">90-day money-back guarantee</a>
+                    {basket.items.some((i) => i.slug === "meal-plans") ? ". Budget Meal Plans aren't covered by it." : "."}
+                  </p>
+                )}
                 <div class="field">
                   <label for="ref">Recommended by a member? Their code (optional)</label>
                   <input id="ref" name="ref" type="text" value={props.refCode ?? ""} maxlength={12} autocomplete="off" />

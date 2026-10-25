@@ -89,3 +89,14 @@ describe("meal plan savings", () => {
     expect(JSON.parse(saved!).usual).toBe(70);
   });
 });
+
+describe("guarantee", () => {
+  it("doesn't offer the 90-day guarantee on meal plans", async () => {
+    const html = await (await new TestClient(env).get("/programmes/meal-plans")).text();
+    expect(html).not.toContain("90-day money-back guarantee");
+    const flagship = await (await new TestClient(env).get("/programmes/lower-body-regeneration")).text();
+    expect(flagship).toContain("90-day money-back guarantee");
+    const refunds = await (await new TestClient(env).get("/legal/refunds")).text();
+    expect(refunds).toContain("Budget Meal Plans are not covered by this guarantee");
+  });
+});

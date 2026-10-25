@@ -122,7 +122,7 @@ export const NOT_FOR: string[] = [
 
 export type Stage = { title: string; summary: string };
 
-/** The money-back guarantee (owner, 2026-10-24). Applies to every programme. */
+/** The money-back guarantee (owner, 2026-10-24). Movement programmes only: not Budget Meal Plans (owner, 2026-10-25). */
 export const GUARANTEE = {
   title: "90-day money-back guarantee",
   text: "If it isn't for you, email us any time within 90 days of buying for a full refund. We do recommend giving it a proper go and following the programme. Most people start to notice how much they've been gripping from the very first session, and with a few weeks of practice many find they move more freely: lighter and more fluid.",
@@ -293,7 +293,7 @@ export const FAQS: Faq[] = [
   {
     q: "Is there a guarantee?",
     a: [
-      "Yes. Every programme comes with a 90-day money-back guarantee. If it isn't for you, email us any time within 90 days of buying for a full refund. We do recommend giving it a proper go and following the programme. Most people start to notice how much they've been gripping from the very first session.",
+      "Yes, on our movement programmes (Budget Meal Plans aren't covered). Every movement programme comes with a 90-day money-back guarantee. If it isn't for you, email us any time within 90 days of buying for a full refund. We do recommend giving it a proper go and following the programme. Most people start to notice how much they've been gripping from the very first session.",
     ],
   },
   {

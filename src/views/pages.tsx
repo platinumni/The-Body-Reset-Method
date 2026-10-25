@@ -147,7 +147,7 @@ export function ProgrammePage(props: { meta: PageMeta; programme: CatalogueEntry
             <Button href="#signup">Get launch news</Button>
           )}
         </div>
-        <TrustStrip />
+        <TrustStrip guarantee={!p.food} />
         {!p.flagship && !p.food && (
           <aside class="card flagship-pointer">
             <h2 class="h3">{FLAGSHIP_POINTER.title}</h2>
