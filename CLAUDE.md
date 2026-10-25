@@ -9,6 +9,11 @@ Read `docs/HANDOVER.md` first. It says where the project is up to and what's nex
 - **Never invent** prices, reviews, testimonials, statistics, credentials or results. Use clearly marked placeholders: `[PLACEHOLDER: …]`.
 - Health wording: this is **education and movement coaching, not medical treatment**. No claims to cure, heal, treat or fix conditions or pain. Flag any borderline wording for the owner.
 - After each step, update `docs/HANDOVER.md`, `docs/ROADMAP.md` and `docs/OWNER_TODO.md`.
+- **Backups (owner's standing request, 2026-10-25):** whenever anything changes, or a decision is made in chat:
+  1. write the decision into `docs/HANDOVER.md` ("Decisions made in chat"); voice notes go in `docs/owner-notes/`;
+  2. commit and push;
+  3. make a bundle (`bash scripts/make-bundle.sh <scratchpad>`);
+  4. send the owner the **latest two** bundles. Send nothing else unless asked.
 
 ## Engineering rules (non-negotiable)
 - `npm run check` (type check + migration check + all tests) must pass before every commit.

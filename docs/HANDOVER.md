@@ -234,7 +234,7 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 ## Working with the owner (learned so far)
 - They're usually on a phone, so keep replies short and plain. **Workflow:** a short brief, then the owner replies "CH", then work quietly, then a short report. When they send a run of voice notes and say "just say continue", reply only "Continue" until CH.
-- **After each change, send only the code backup bundle** (`bash scripts/make-bundle.sh <scratchpad>`). No screenshots unless asked.
+- **After each change or chat decision:** write it into this file (decisions) or `docs/owner-notes/` (voice notes), commit, push, make a bundle, and send the **latest two** bundles. No screenshots unless asked. This is also in `CLAUDE.md`.
 - **Writing style:**
   - Number ranges use a plain hyphen ("8-10"), never an en dash; the owner finds it looks AI-written.
   - Polished, assured, warm. It should speak to the person, with no hype.
