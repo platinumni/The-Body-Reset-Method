@@ -284,6 +284,7 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - **Legal:** no medical or disease claims, no nutrition or health claims; show facts only (calories, protein, carbs, fat, fibre from official data). A word check blocks claims. Owner's own social posts: share experience, no medical claims.
   - **Output:** a personalised plan and a downloadable PDF; lifetime access to every budget level.
   - **Meals needed:** a minimum of about 60 (10 breakfasts, 15 lunches, 20 teas, 15 snacks); ideally about 90. About a third vegetarian, with a mix of budget staples and treat meals.
+  - **Cheap staples** for people on tight budgets, but every meal always has its **full ingredient list** with amounts, including oil, seasoning and spices. Cupboard items are costed per use (owner, 2026-10-25).
   - **Running cost:** about £0. Build time is to be confirmed once the meals arrive (about 3-4 days for the full version).
 - **Later or optional:** Stripe Connect automatic payouts; premium AI voiceover (owner picks from samples); the owner's own photos of the starting positions.
 
