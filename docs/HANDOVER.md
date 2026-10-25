@@ -264,6 +264,7 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Marketing:**
   - The owner dislikes hype. Suggested approach: calm, real phone videos showing grip versus release; teach one free thing (short foot); real testimonials; coaches in golf, martial arts and running via affiliates; longer YouTube videos.
   - The owner may ask for a marketing plan (about 1 hour).
+- **Daily backup (2026-10-25):** a scheduled task (`trig_01RcF5wxZim32iud4dWZppvy`) fires into this session every day at 18:48 UK time. It records any new chat decisions, then, only if something changed, sends the latest two backups.
 - **Later or optional:** Stripe Connect automatic payouts; premium AI voiceover (owner picks from samples); the owner's own photos of the starting positions.
 
 ## Next step
