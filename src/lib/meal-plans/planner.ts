@@ -32,10 +32,14 @@ export type PlanInput = {
   seed: number;
   have: string[];
   picks?: string[];
+  /** What they usually spend on food a week (optional), for the savings line. */
+  usual?: number | null;
+  /** How their real shop compares with our estimates (from what they actually paid). 1 = as estimated. */
+  personalFactor?: number;
 };
 
 export type ShoppingLine = { key: string; label: string; aisle: Aisle; packs: number; cost: number; cupboard: boolean; have: boolean };
-export type Slot = { day: number; meal: MealType; recipe: Recipe; cook: boolean; note: string | null };
+export type Slot = { day: number; meal: MealType; recipe: Recipe; cook: boolean; note: string | null; freeze: boolean };
 export type Plan = {
   input: PlanInput;
   portions: number;
@@ -67,7 +71,7 @@ export function householdPortions(adults: number, childAges: number[]): number {
   return Math.max(1, adults + childAges.reduce((t, a) => t + portionFor(a), 0));
 }
 
-const priceFactor = (input: Pick<PlanInput, "country" | "store">) => COUNTRIES[input.country].factor * STORES[input.store].factor;
+const priceFactor = (input: Pick<PlanInput, "country" | "store" | "personalFactor">) => COUNTRIES[input.country].factor * STORES[input.store].factor * (input.personalFactor ?? 1);
 
 /** Does this recipe suit the person's diet, leave-outs and allergens? */
 export function suits(r: Recipe, input: Pick<PlanInput, "diet" | "exclude" | "avoidAllergens">): boolean {
@@ -93,7 +97,7 @@ export function costPerPortion(r: Recipe, factor = 1): number {
 }
 
 /** The shopping list for a set of recipes, each cooked `scale` times its written amounts. */
-export function shoppingList(chosen: { recipe: Recipe; scale: number }[], input: Pick<PlanInput, "country" | "store" | "have">) {
+export function shoppingList(chosen: { recipe: Recipe; scale: number }[], input: Pick<PlanInput, "country" | "store" | "have" | "personalFactor">) {
   const factor = priceFactor(input);
   const totals = new Map<string, { item: PriceItem; qty: number }>();
   for (const { recipe, scale } of chosen) {
@@ -142,6 +146,8 @@ function spread(n: number): number[] {
   return Array.from({ length: n }, (_, i) => base + (i < extra ? 1 : 0));
 }
 
+const usesRice = (r: Recipe) => r.ingredients.some((i) => /\brice\b(?! (noodles|cakes|vinegar))/i.test(i.name));
+
 function assemble(picks: Record<MealType, Recipe[]>, input: PlanInput, portions: number) {
   const slots: Slot[] = [];
   const chosen: { recipe: Recipe; times: number; scale: number }[] = [];
@@ -153,9 +159,14 @@ function assemble(picks: Record<MealType, Recipe[]>, input: PlanInput, portions:
     list.forEach((recipe, i) => {
       const times = counts[i]!;
       chosen.push({ recipe, times, scale: (portions * times) / recipe.serves });
+      const batch = meal === "Evening meals" || meal === "Lunches";
+      // Food Standards Agency guidance: eat fridge leftovers within 2 days, and cooked rice within 1.
+      // Anything later is frozen on the day it's cooked.
+      const fridgeDays = usesRice(recipe) ? 1 : 2;
       for (let k = 0; k < times; k++, day++) {
-        const batch = meal === "Evening meals" || meal === "Lunches";
-        slots.push({ day, meal, recipe, cook: !batch || k === 0, note: batch && k > 0 ? `Leftovers from ${DAYS[day - k]}` : null });
+        const freeze = batch && k > fridgeDays;
+        const note = !batch || k === 0 ? null : freeze ? `Frozen on ${DAYS[day - k]}: defrost in the fridge the night before` : `Leftovers from ${DAYS[day - k]}`;
+        slots.push({ day, meal, recipe, cook: !batch || k === 0, note, freeze });
       }
     });
   }

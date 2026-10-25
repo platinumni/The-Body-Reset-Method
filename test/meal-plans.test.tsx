@@ -64,3 +64,28 @@ describe("budget meal plans", () => {
     expect(html).not.toContain("flagship-pointer");
   });
 });
+
+describe("meal plan savings", () => {
+  it("shows what you could save against your usual shop", async () => {
+    const client = await member(true);
+    const html = await (await client.get("/account/meal-plans?submitted=yes&budget=40&usual=90")).text();
+    expect(html).toMatch(/Compared with your usual £90\.00, you could save about <strong>£\d+\.\d\d<\/strong> this week/);
+  });
+
+  it("records what you actually paid, keeps a running total and never saves allergies", async () => {
+    const client = await member(true);
+    const page = await (await client.get("/account/meal-plans?submitted=yes&budget=40&usual=70&allergens=peanuts")).text();
+    const query = /name="query" value="([^"]+)"/.exec(page)![1]!.replace(/&amp;/g, "&");
+    const res = await client.post("/account/meal-plans/spend", { query, planned: "38.50", actual: "45.00" });
+    expect(res.status).toBe(303);
+    const after = await (await client.get(res.headers.get("location")!)).text();
+    expect(after).toMatch(/You(&#39;|')ve logged 1 week\./);
+    expect(after).toMatch(/you(&#39;|')ve spent about <strong>£25\.00<\/strong> less/);
+    expect(after).toContain("about 17% above our estimates");
+
+    await client.post("/account/meal-plans/save", { query });
+    const saved = await env.DB.prepare("SELECT prefs_json FROM meal_plan_prefs ORDER BY rowid DESC LIMIT 1").first<string>("prefs_json");
+    expect(JSON.parse(saved!).avoidAllergens).toEqual([]);
+    expect(JSON.parse(saved!).usual).toBe(70);
+  });
+});

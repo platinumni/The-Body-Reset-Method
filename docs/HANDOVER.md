@@ -323,6 +323,16 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - checking the recipes and allergens.
 - **Not built yet:** the calorie calculator (optional, worked out on the phone); live price data; photos.
 
+**Meal plans: leftovers safety and savings (2026-10-25, owner CH)**
+- **Leftovers:** batch-cooked portions eaten more than 2 days after cooking (1 day for rice dishes) are marked "frozen on [day]: defrost in the fridge the night before". Every plan has a "Leftovers, safely" section citing Food Standards Agency guidance. A test checks every slot.
+- **Savings:**
+  - optional "what you usually spend" (remembered) shows "you could save about £X this week (around £Y a year)";
+  - "Done your shop? What did you actually pay?" saves to `meal_plan_spend` (**migration 0013**);
+  - members see their running total against their usual shop;
+  - their real prices tune future estimates (a personal factor from the last 4 weeks, 0.7 to 1.5);
+  - Admin → Stats shows the anonymous average weekly saving from **actual** spend only, with marketing guidance.
+- **Privacy:** allergy ticks are never saved (they count as health data), and the planner page says so. The privacy policy has a new meal-plans bullet. Spending is included in data export and deleted with the account.
+
 ## Next step
 - **Planned: go live Monday 2026-10-26**, as a sole trader with Stripe paying into the owner's personal bank account. Switch to the owner's Ltd later (the legal pages need about 15 minutes of updates then).
   - Needed from the owner: domain, Stripe, prices, legal details (name "trading as", postal address, contact email), Resend and the ICO fee.

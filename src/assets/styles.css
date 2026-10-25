@@ -593,3 +593,4 @@ html[data-text-size="3"] .reader-body { font-size: 1.36rem; }
   .shopping-list input { display: none; }
 }
 fieldset.field { border: 0; padding: 0; margin-left: 0; margin-right: 0; } fieldset.field legend { font-weight: 600; padding: 0; margin-bottom: .4rem; }
+.savings { font-size: 1.05rem; margin: .5rem 0; } .savings strong { color: var(--accent); } .spend-card { margin: 0 0 1.5rem; } .spend-row { display: flex; gap: .5rem; align-items: stretch; margin: .5rem 0; } .spend-row .input-prefix { flex: 1; }

@@ -10,9 +10,9 @@ export const MEAL_PLANS_SLUG = "meal-plans";
 export const canUseMealPlans = async (db: D1Database, userId: number) => !!(await ownedProgrammeBySlug(db, userId, MEAL_PLANS_SLUG));
 
 /** Choices that are remembered between visits (not the budget or which recipes were picked). */
-export type MealPrefs = Pick<PlanInput, "country" | "store" | "adults" | "childAges" | "diet" | "exclude" | "avoidAllergens" | "snacks" | "have"> & { budget: number };
+export type MealPrefs = Pick<PlanInput, "country" | "store" | "adults" | "childAges" | "diet" | "exclude" | "avoidAllergens" | "snacks" | "have"> & { budget: number; usual: number | null };
 
-export const DEFAULT_PREFS: MealPrefs = { budget: 40, country: "uk", store: "mid", adults: 1, childAges: [], diet: "any", exclude: [], avoidAllergens: [], snacks: true, have: [] };
+export const DEFAULT_PREFS: MealPrefs = { budget: 40, country: "uk", store: "mid", adults: 1, childAges: [], diet: "any", exclude: [], avoidAllergens: [], snacks: true, have: [], usual: null };
 
 const clampInt = (v: unknown, min: number, max: number, fallback: number) => {
   const n = Math.round(Number(v));
@@ -39,6 +39,7 @@ export function readPlanInput(src: Record<string, unknown>, fallback: MealPrefs 
     seed: clampInt(src.seed ?? 1, 1, 1_000_000, 1),
     have: (has("have") ? list(src.have) : fallback.have).slice(0, 200),
     picks: has("picks") ? list(src.picks).slice(0, 30) : undefined,
+    usual: has("usual") ? (String(src.usual).trim() === "" ? null : clampInt(src.usual, 1, 5000, 0) || null) : fallback.usual,
   };
 }
 
@@ -47,16 +48,55 @@ export async function loadPrefs(db: D1Database, userId: number): Promise<MealPre
   if (!row) return DEFAULT_PREFS;
   try {
     const saved = readPlanInput({ ...JSON.parse(row), submitted: "yes", snacks: JSON.parse(row).snacks ? "yes" : "no" });
-    return { budget: saved.budget, country: saved.country, store: saved.store, adults: saved.adults, childAges: saved.childAges, diet: saved.diet, exclude: saved.exclude, avoidAllergens: saved.avoidAllergens, snacks: saved.snacks, have: saved.have };
+    return { budget: saved.budget, country: saved.country, store: saved.store, adults: saved.adults, childAges: saved.childAges, diet: saved.diet, exclude: saved.exclude, avoidAllergens: [], snacks: saved.snacks, have: saved.have, usual: saved.usual ?? null };
   } catch {
     return DEFAULT_PREFS;
   }
 }
 
 export async function savePrefs(db: D1Database, userId: number, input: PlanInput): Promise<void> {
-  const prefs: MealPrefs = { budget: input.budget, country: input.country, store: input.store, adults: input.adults, childAges: input.childAges, diet: input.diet, exclude: input.exclude, avoidAllergens: input.avoidAllergens, snacks: input.snacks, have: input.have };
+  // Allergies are health information, so they're never saved: members tick them each time.
+  const prefs: MealPrefs = { budget: input.budget, country: input.country, store: input.store, adults: input.adults, childAges: input.childAges, diet: input.diet, exclude: input.exclude, avoidAllergens: [], snacks: input.snacks, have: input.have, usual: input.usual ?? null };
   await db
     .prepare("INSERT INTO meal_plan_prefs (user_id, prefs_json) VALUES (?1, ?2) ON CONFLICT (user_id) DO UPDATE SET prefs_json = excluded.prefs_json, updated_at = datetime('now')")
     .bind(userId, JSON.stringify(prefs))
     .run();
+}
+
+// --- What members actually spend ---
+
+export type SpendSummary = { weeks: number; savedPence: number; currency: string; personalFactor: number };
+
+/** Records one week: what the plan estimated, what they usually spend, and what they actually paid. */
+export async function recordSpend(db: D1Database, userId: number, w: { plannedPence: number; usualPence: number | null; actualPence: number; currency: string }): Promise<void> {
+  await db
+    .prepare("INSERT INTO meal_plan_spend (user_id, planned_pence, usual_pence, actual_pence, currency) VALUES (?1, ?2, ?3, ?4, ?5)")
+    .bind(userId, w.plannedPence, w.usualPence, w.actualPence, w.currency)
+    .run();
+}
+
+/** Their running savings (usual shop minus what they actually paid), and how their real prices compare with our estimates. */
+export async function spendSummary(db: D1Database, userId: number): Promise<SpendSummary> {
+  const { results } = await db
+    .prepare("SELECT planned_pence, usual_pence, actual_pence, currency FROM meal_plan_spend WHERE user_id = ?1 ORDER BY id DESC LIMIT 200")
+    .bind(userId)
+    .all<{ planned_pence: number; usual_pence: number | null; actual_pence: number; currency: string }>();
+  const currency = results[0]?.currency ?? "gbp";
+  const same = results.filter((r) => r.currency === currency);
+  const savedPence = same.reduce((t, r) => t + (r.usual_pence != null ? r.usual_pence - r.actual_pence : 0), 0);
+  // Recent weeks only, and kept within sensible limits so one odd week can't skew future plans.
+  const recent = same.slice(0, 4).filter((r) => r.planned_pence > 0);
+  const ratio = recent.length ? recent.reduce((t, r) => t + r.actual_pence / r.planned_pence, 0) / recent.length : 1;
+  return { weeks: same.length, savedPence, currency, personalFactor: Math.min(1.5, Math.max(0.7, ratio)) };
+}
+
+/** Anonymous totals across all members, for marketing figures. Real amounts paid only, never estimates. */
+export async function memberSavingsSummary(db: D1Database): Promise<{ members: number; weeks: number; avgWeeklySavingPence: number | null }> {
+  const row = await db
+    .prepare(
+      `SELECT COUNT(DISTINCT user_id) AS members, COUNT(*) AS weeks, AVG(usual_pence - actual_pence) AS avg_saving
+       FROM meal_plan_spend WHERE usual_pence IS NOT NULL AND currency = 'gbp'`,
+    )
+    .first<{ members: number; weeks: number; avg_saving: number | null }>();
+  return { members: row?.members ?? 0, weeks: row?.weeks ?? 0, avgWeeklySavingPence: row?.avg_saving != null ? Math.round(row.avg_saving) : null };
 }

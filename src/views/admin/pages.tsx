@@ -696,11 +696,30 @@ export function WordingPage(props: { meta: AdminMeta; fields: WordingField[]; va
   );
 }
 
-export function StatsPage(props: { meta: AdminMeta; s: StatsSummary }) {
+export function StatsPage(props: { meta: AdminMeta; s: StatsSummary; meals?: { members: number; weeks: number; avgWeeklySavingPence: number | null } }) {
   const max = Math.max(1, ...props.s.days.map((d) => d.views));
   const f = props.s.funnel;
   return (
     <AdminLayout meta={props.meta}>
+      {props.meals && (
+        <div class="card">
+          <h2 class="h3">Meal plans: real savings</h2>
+          <p>
+            {props.meals.weeks} week{props.meals.weeks === 1 ? "" : "s"} logged by {props.meals.members} member{props.meals.members === 1 ? "" : "s"} who gave
+            their usual spend (UK, £).
+            {props.meals.avgWeeklySavingPence != null && (
+              <>
+                {" "}
+                Average: <strong>£{(props.meals.avgWeeklySavingPence / 100).toFixed(2)}</strong> a week less than their usual shop.
+              </>
+            )}
+          </p>
+          <p class="small muted">
+            From what members actually paid, not estimates. Only quote this in marketing once enough members have logged weeks, word it as an average
+            ("members spend about..."), and keep a copy of this figure and its date.
+          </p>
+        </div>
+      )}
       <h1>Visitors (last 30 days)</h1>
       <p class="muted">Anonymous counts only: no cookies, no IP addresses. Your own admin visits aren't counted.</p>
       <div class="card">

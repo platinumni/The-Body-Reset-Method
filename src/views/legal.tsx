@@ -45,6 +45,12 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
             you've clicked the confirmation link we email you.
           </li>
           <li>
+            <strong>If you use the meal plans:</strong> the choices you ask us to remember (budget, household size, children's ages, foods to leave out)
+            and, if you enter them, what you usually spend and what you actually paid. Allergy choices are never saved. We use spending figures to show your
+            own savings and to make your price estimates more accurate. We may publish anonymous averages across all members (for example "members spend
+            about £X a week less than their usual shop"), which never identify anyone.
+          </li>
+          <li>
             <strong>Security information:</strong> IP address and browser details, used to keep accounts secure and block abuse.
           </li>
         </ul>

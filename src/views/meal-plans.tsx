@@ -22,6 +22,7 @@ export function planQuery(input: PlanInput, change: Partial<PlanInput> = {}): st
     snacks: i.snacks ? "yes" : "no",
     seed: String(i.seed),
     have: i.have.join(","),
+    usual: i.usual ? String(i.usual) : "",
   });
   if (i.picks?.length) q.set("picks", i.picks.join(","));
   return `/account/meal-plans?${q.toString()}`;
@@ -60,6 +61,14 @@ function PlanForm(props: { input: PlanInput }) {
               </option>
             ))}
           </select>
+        </div>
+        <div class="field">
+          <label for="mp-usual">What you usually spend on food a week (optional)</label>
+          <div class="input-prefix">
+            <span>{COUNTRIES[i.country].symbol}</span>
+            <input id="mp-usual" name="usual" type="number" inputmode="numeric" min={1} max={5000} step={1} value={i.usual ? String(i.usual) : ""} />
+          </div>
+          <p class="hint">So we can show what you could save.</p>
         </div>
         <div class="field">
           <label for="mp-adults">Adults (teenagers count as adults)</label>
@@ -141,6 +150,12 @@ function Notes(props: { plan: Plan }) {
         <strong>Allergies:</strong> recipes are filtered on their listed ingredients, but brands differ and products can contain hidden allergens or
         "may contain" traces. Always check product labels. If you have a serious allergy, check with your GP or dietitian.
       </p>
+      <h3 class="h4">Leftovers, safely</h3>
+      <p>
+        Following the Food Standards Agency's guidance: cool leftovers within 2 hours and keep them in the fridge. Eat them within 2 days, or cooked rice
+        within 1 day. Reheat until steaming hot all the way through, and only reheat once. Meals marked "frozen" in your plan go in the freezer on the day
+        you cook them; defrost them in the fridge the night before.
+      </p>
       {plan.babies > 0 && <p>Babies under 1 aren't included in the portions. Follow the NHS weaning guidance for them.</p>}
       {toddlers && <p>For toddlers: no added salt, and cut up or leave out whole nuts and whole grapes (choking risk).</p>}
     </aside>
@@ -204,7 +219,15 @@ function RecipeCard(props: { recipe: Recipe; times: number; scale: number; porti
   );
 }
 
-export function MealPlannerPage(props: { meta: PageMeta; csrfToken: string; input: PlanInput; plan: Plan | null; saved?: boolean }) {
+export function MealPlannerPage(props: {
+  meta: PageMeta;
+  csrfToken: string;
+  input: PlanInput;
+  plan: Plan | null;
+  saved?: boolean;
+  spent?: boolean;
+  spend: import("../services/meal-plans").SpendSummary;
+}) {
   const { plan, input } = props;
   const cur = (n: number) => money(n, input.country);
   const allIds = plan?.recipes.map((r) => r.recipe.id) ?? [];
@@ -254,6 +277,12 @@ export function MealPlannerPage(props: { meta: PageMeta; csrfToken: string; inpu
                     Estimated <strong>{cur(plan.weeklyCost)}</strong> of your {cur(input.budget)} budget
                   </p>
                 )}
+                {input.usual != null && input.usual > plan.weeklyCost && (
+                  <p class="savings">
+                    Compared with your usual {cur(input.usual)}, you could save about <strong>{cur(input.usual - plan.weeklyCost)}</strong> this week (around{" "}
+                    {cur((input.usual - plan.weeklyCost) * 52)} a year).
+                  </p>
+                )}
                 <p class="small muted">
                   {household} · {STORES[input.store].label} · {plan.recipes.length} different recipes
                   {plan.starterCupboard > 0.5 && <> · starter cupboard if you need it: about {cur(plan.starterCupboard)}, lasts several weeks</>}
@@ -273,8 +302,51 @@ export function MealPlannerPage(props: { meta: PageMeta; csrfToken: string; inpu
                       Remember my choices
                     </button>
                   </form>
+                  <p class="hint">Allergies aren't saved, so please tick them each time.</p>
                 </div>
               </div>
+
+              <form method="post" action="/account/meal-plans/spend" class="card spend-card no-print">
+                <CsrfField token={props.csrfToken} />
+                <input type="hidden" name="query" value={planQuery(input).split("?")[1]} />
+                <input type="hidden" name="planned" value={plan.weeklyCost.toFixed(2)} />
+                <label for="mp-actual">
+                  <strong>Done your shop?</strong> What did you actually pay?
+                </label>
+                <div class="spend-row">
+                  <div class="input-prefix">
+                    <span>{COUNTRIES[input.country].symbol}</span>
+                    <input id="mp-actual" name="actual" type="number" inputmode="decimal" min={0} max={5000} step="0.01" required />
+                  </div>
+                  <button class="btn btn-ghost btn-small" type="submit">
+                    Save
+                  </button>
+                </div>
+                <p class="hint">Your real prices make your future plans more accurate, and keep a running total of what you've saved.</p>
+                {props.spent && (
+                  <p class="notice notice-ok" role="status">
+                    Saved. Thank you.
+                  </p>
+                )}
+                {props.spend.weeks > 0 && (
+                  <p class="small">
+                    You've logged {props.spend.weeks} week{props.spend.weeks === 1 ? "" : "s"}.
+                    {props.spend.savedPence > 0 && (
+                      <>
+                        {" "}
+                        Compared with your usual shop, you've spent about <strong>{money(props.spend.savedPence / 100, input.country)}</strong> less.
+                      </>
+                    )}
+                    {Math.abs(props.spend.personalFactor - 1) >= 0.03 && (
+                      <>
+                        {" "}
+                        Your plans now use your real prices (about {Math.round(Math.abs(props.spend.personalFactor - 1) * 100)}%{" "}
+                        {props.spend.personalFactor > 1 ? "above" : "below"} our estimates).
+                      </>
+                    )}
+                  </p>
+                )}
+              </form>
 
               <h2 class="plan-heading">The week at a glance</h2>
               <ol class="week">

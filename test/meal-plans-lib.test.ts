@@ -89,3 +89,25 @@ describe("meal plan builder", () => {
     console.log("cheapest", cheap.slice(0, 3).map((r) => `${r.name} £${costPerPortion(r).toFixed(2)}`), "dearest", cheap.slice(-3).map((r) => `${r.name} £${costPerPortion(r).toFixed(2)}`));
   });
 });
+
+describe("leftovers safety", () => {
+  it("never plans fridge leftovers beyond 2 days (1 for rice): later portions are frozen", () => {
+    for (const budget of [12, 20, 30]) {
+      const plan = buildPlan({ ...base, budget, adults: 3 });
+      for (const s of plan.slots.filter((x) => x.note)) {
+        const cookDay = plan.slots.find((x) => x.recipe.id === s.recipe.id && x.cook)!.day;
+        const rice = s.recipe.ingredients.some((i) => /\brice\b(?! (noodles|cakes|vinegar))/i.test(i.name));
+        if (s.day - cookDay > (rice ? 1 : 2)) expect(s.freeze, `${s.recipe.name} day ${s.day}`).toBe(true);
+      }
+    }
+  });
+});
+
+describe("personal prices", () => {
+  it("raises the estimate when someone's real shop costs more", () => {
+    const ids = buildPlan({ ...base, budget: 60 }).recipes.map((r) => r.recipe.id);
+    const normal = buildPlan({ ...base, budget: 60, picks: ids });
+    const dearer = buildPlan({ ...base, budget: 60, picks: ids, personalFactor: 1.2 });
+    expect(dearer.weeklyCost).toBeCloseTo(normal.weeklyCost * 1.2, 1);
+  });
+});

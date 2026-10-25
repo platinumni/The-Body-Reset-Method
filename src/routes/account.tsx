@@ -1,5 +1,5 @@
-import { buildPlan } from "../lib/meal-plans/planner";
-import { canUseMealPlans, DEFAULT_PREFS, loadPrefs, readPlanInput, savePrefs } from "../services/meal-plans";
+import { buildPlan, COUNTRIES } from "../lib/meal-plans/planner";
+import { canUseMealPlans, DEFAULT_PREFS, loadPrefs, readPlanInput, recordSpend, savePrefs, spendSummary } from "../services/meal-plans";
 import { MealPlannerPage } from "../views/meal-plans";
 import { Hono, type Context } from "hono";
 import type { AppEnv } from "../env";
@@ -85,7 +85,8 @@ accountRoutes.get("/account/meal-plans", async (c) => {
   const params = new URL(c.req.url).searchParams;
   const prefs = await loadPrefs(c.env.DB, user.id);
   const hasSaved = prefs !== DEFAULT_PREFS;
-  const input = readPlanInput(mealQuery(params), prefs);
+  const spend = await spendSummary(c.env.DB, user.id);
+  const input = { ...readPlanInput(mealQuery(params), prefs), personalFactor: spend.personalFactor };
   const show = params.has("submitted") || hasSaved;
   return c.html(
     <MealPlannerPage
@@ -94,8 +95,26 @@ accountRoutes.get("/account/meal-plans", async (c) => {
       input={input}
       plan={show ? buildPlan(input) : null}
       saved={params.has("saved")}
+      spent={params.has("spent")}
+      spend={spend}
     />,
   );
+});
+
+accountRoutes.post("/account/meal-plans/spend", rateLimit("meal-spend", 30, 3600), async (c) => {
+  const user = c.get("user")!;
+  if (user.role !== "admin" && !(await canUseMealPlans(c.env.DB, user.id))) return c.redirect("/programmes/meal-plans", 303);
+  const form = await c.req.parseBody();
+  const query = new URLSearchParams(String(form.query ?? ""));
+  const input = readPlanInput(mealQuery(query));
+  const pence = (v: unknown) => Math.round(Number(v) * 100);
+  const actual = pence(form.actual);
+  const planned = pence(form.planned);
+  if (Number.isFinite(actual) && actual >= 0 && actual <= 500_000 && Number.isFinite(planned) && planned > 0) {
+    await recordSpend(c.env.DB, user.id, { plannedPence: planned, usualPence: input.usual ? input.usual * 100 : null, actualPence: actual, currency: COUNTRIES[input.country].currency.toLowerCase() });
+  }
+  query.set("spent", "1");
+  return c.redirect(`/account/meal-plans?${query.toString()}`, 303);
 });
 
 accountRoutes.post("/account/meal-plans/save", async (c) => {
