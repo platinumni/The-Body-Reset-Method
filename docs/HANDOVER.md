@@ -300,6 +300,21 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
       - Nothing in the meal-plan system has been built yet.
   - **Running cost:** about £0. Build time is to be confirmed once the meals arrive (about 3-4 days for the full version).
 - **Logo:** the owner wants a proper logo for the site, PDFs and emails at some point. Options: their own designer, or Claude drafts simple versions to choose from.
+- **US and Canada (discussed 2026-10-25):** no subdomain needed for currency. One site; the planner already shows $ and C$. For payments, use Stripe Adaptive Pricing, or set fixed USD and CAD prices (about half a day).
+  - Official data: BLS (US, monthly, national, 4 regions and some cities, not by state) and Statistics Canada (monthly, national and by province), both free.
+  - The official lists cover only about 40-70 common foods. Use official prices where they exist; adjust the rest of the estimates monthly by official food price changes.
+  - Planned: a US region picker and a Canada province picker.
+- **Network unblock (owner to do 2026-10-26):** unsplash.com, images.unsplash.com, api.unsplash.com, pexels.com, images.pexels.com, api.pexels.com, ons.gov.uk, www.ons.gov.uk, api.beta.ons.gov.uk, api.bls.gov, www.bls.gov, www150.statcan.gc.ca, plus assets.publishing.service.gov.uk and api.nal.usda.gov for nutrition data.
+- **Socials (owner's plan):** official Instagram and other accounts for The Body Regeneration Method and for Body Regeneration Kitchen.
+  - Claude advised against bot or fake accounts, and against automated follows, likes, comments or cold DMs (ban risk; hidden advertising), even with approvals.
+  - Use official APIs only for scheduling, replying to comments on our own posts, and replying to people who DM first. Cold outreach is drafted and queued, and the owner sends it by hand. Use real affiliates and creators with #ad.
+  - Claude gave the owner a paste-ready brief with questions for their growth engine chat.
+- **Idea discussed, not built: macro mode for meal plans.**
+  - Nutrition per recipe from UK food composition tables and USDA FoodData Central. The user enters height, weight, age, sex and activity, or their own macro targets; the planner sizes portions to hit targets within budget.
+  - Keep: maintain-weight default, minimum calorie limits, GP or dietitian notes, not for under-18s, pregnancy or eating disorders, worked out on the phone and not stored unless chosen, approximate figures, no "lose X kg" marketing.
+  - About 2-3 days. Waiting for the owner's CH, ideally after prices and photos.
+- **Kitchen marketing:** "Body Regeneration Kitchen" stays on the same website for now (cross-promotion both ways), as a sub-brand at kitchen.<domain>; its own domain later if it takes off. The owner sees it as a possible standalone business. Advice: launch inside the site first, watch usage, then spin it out.
+- **Domain plan:** the owner will buy bodyregenerationmethod (.com, and .co.uk if available) on Cloudflare and send the name. Claude then sets up www, the redirect, kitchen., hello@ forwarding, Resend DNS and the SEO update.
 - **Later or optional:** Stripe Connect automatic payouts; premium AI voiceover (owner picks from samples); the owner's own photos of the starting positions.
 
 **Budget meal plans built (2026-10-25, owner CH; on staging, product in draft with no price)**
