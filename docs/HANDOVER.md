@@ -287,6 +287,12 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - **Cheap staples** for people on tight budgets, but every meal always has its **full ingredient list** with amounts, including oil, seasoning and spices. Cupboard items are costed per use (owner, 2026-10-25).
   - **Already have it:** the shopping list splits into "to buy" and "cupboard" (oil, spices, salt and so on). Users tick what they already have, and it comes off the list and the cost. A one-off "starter cupboard" cost is shown separately (owner, 2026-10-25).
   - **PDF design:** it must look beautiful and on-brand. Page 1 is a cover: "The Body Regeneration Method, Meal Plan", their budget, household and dates. Then the week at a glance, recipes, the shopping list (to buy, and cupboard), and the source note. The design is a template kept separate from the data, so it can be restyled any time without losing anything (owner, 2026-10-25).
+  - **Recipe catalogue received (2026-10-25):** `content/meal-plans/recipe-catalogue-2026-10-25.json`.
+    - 140 recipe concepts (names only, `concept_unverified`): 25 breakfasts, 30 lunches, 60 evening meals, 25 snacks.
+    - Three tiers: affordable staples (60), premium everyday (50), luxury (30). Diets: 55 vegan, 43 vegetarian, 21 pescatarian, 21 omnivore.
+    - Still needed for each: ingredients with amounts, method, servings and real timings ("15 min" labels untested).
+    - Images are not chosen yet; Wikimedia photos must be checked for dish match and licence.
+    - Flags: #011 aubergine parmigiana and #120 pesto pasta salad use parmesan, which is usually made with animal rennet, so they're not strictly vegetarian unless a vegetarian hard cheese is specified.
   - **Running cost:** about £0. Build time is to be confirmed once the meals arrive (about 3-4 days for the full version).
 - **Logo:** the owner wants a proper logo for the site, PDFs and emails at some point. Options: their own designer, or Claude drafts simple versions to choose from.
 - **Later or optional:** Stripe Connect automatic payouts; premium AI voiceover (owner picks from samples); the owner's own photos of the starting positions.
