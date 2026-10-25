@@ -13,7 +13,7 @@ Read `docs/HANDOVER.md` first. It says where the project is up to and what's nex
   1. write the decision into `docs/HANDOVER.md` ("Decisions made in chat"); voice notes go in `docs/owner-notes/`;
   2. commit and push;
   3. make a bundle (`bash scripts/make-bundle.sh <scratchpad>`);
-  4. send the owner the **latest two** bundles. Send nothing else unless asked.
+  4. **don't send anything during the day.** The latest two bundles go to the owner only in the daily scheduled drop (about 6:48pm UK time), or when the owner asks (owner, 2026-10-25: "never again" outside the drop).
 
 ## Engineering rules (non-negotiable)
 - `npm run check` (type check + migration check + all tests) must pass before every commit.
