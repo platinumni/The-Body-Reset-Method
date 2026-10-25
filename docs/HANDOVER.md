@@ -273,6 +273,18 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - Running cost about £0; build about 2-3 days (worst case a week).
   - Keep it to general healthy eating with allergen warnings and no weight-loss claims.
   - Claude asked whether to add it to the roadmap; no answer yet.
+- **Meal plans: agreed to build later (owner, 2026-10-25). The owner will send a variety of meals first.** Decisions so far:
+  - **Budget:** any amount from £20 to £100+, to the pound. If the budget is too low, show the lowest-cost week we can make ("lowest-cost", not "cheapest").
+  - **Countries:** UK, then US and Canada, then Europe in stages. EU sales wait until VAT is sorted.
+  - **Prices:** official averages: ONS (UK), BLS (US, with region), Statistics Canada. Updated monthly, adjusted by supermarket type. Every plan and PDF states the source and month, and says actual prices vary. No postcode needed.
+  - **Household:** number of adults (teenagers count as adults) plus each child's age, or just "children". Standard portions by age from official guidance. No weights; babies under 1 are excluded (point to NHS weaning advice); toddler safety note.
+  - **Weight:** every plan is maintain-weight. The note says: to gain or lose, speak to a GP, registered dietitian or registered nutritionist. An optional calorie calculator for one adult, worked out on the phone and not stored.
+  - **Leave-outs:** quick buttons (no meat, no fish, no pork, vegetarian, vegan, dairy-free), plus type-to-search across all ingredients. Remembered on the account.
+  - **Allergens:** the 14 UK allergens tagged per ingredient, which the owner checks. It's a filter, not a guarantee; every plan says "always check labels".
+  - **Legal:** no medical or disease claims, no nutrition or health claims; show facts only (calories, protein, carbs, fat, fibre from official data). A word check blocks claims. Owner's own social posts: share experience, no medical claims.
+  - **Output:** a personalised plan and a downloadable PDF; lifetime access to every budget level.
+  - **Meals needed:** a minimum of about 60 (10 breakfasts, 15 lunches, 20 teas, 15 snacks); ideally about 90. About a third vegetarian, with a mix of budget staples and treat meals.
+  - **Running cost:** about £0. Build time is to be confirmed once the meals arrive (about 3-4 days for the full version).
 - **Later or optional:** Stripe Connect automatic payouts; premium AI voiceover (owner picks from samples); the owner's own photos of the starting positions.
 
 ## Next step
