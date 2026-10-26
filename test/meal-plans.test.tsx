@@ -36,7 +36,7 @@ describe("budget meal plans", () => {
     expect(html).toContain("Shopping list");
     expect(html).toContain("maintain your current weight");
     expect(html).toContain("Always check product labels");
-    expect(html).toContain("use official average prices from the Office for National Statistics");
+    expect(html).toContain("use official average prices from Office for National Statistics");
     expect(html).toContain("Download PDF");
     expect(html).not.toMatch(/<h3>[^<]*(Chicken|Beef|Salmon|Prawn)/);
   });
