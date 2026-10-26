@@ -403,6 +403,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Referral rethink (owner, 2026-10-26, not yet CH'd):** keep the Kitchen out of it. The reward should be for **programme buyers** once 1 or 2 friends buy with their code. The owner asked about 50% off for friends. Claude pointed out that programmes are already lifetime access, so the reward needs to be something else (money back / "get it free", other programmes, or commission). Claude suggested 20-25% for friends, keeping 50% for short, time-limited influencer offers.
 
+- **Kitchen refer-a-friend: DECIDED (owner, 2026-10-26), build awaiting CH:** **Kitchen only** (programmes untouched; Lower Body stays one fee, lifetime). A Kitchen member shares their code. When **1 friend or family member joins the Kitchen**, the member gets **a year free**; with **2 friends**, **lifetime free**. Claude suggested the friend gets 50% off the joining fee (the monthly price stays the same), and "lifetime" in the terms means "for as long as the Kitchen runs". Friend discount awaiting the owner.
+
 - **Growth batch (2026-10-26, owner: "Clear heart all of it. Build it all"):** migrations 0016-0019, all on staging (version 9292dbf0).
   - **Growth engine reporting** (`src/services/growth-engine.ts`, `src/middleware/ge.ts`):
     - `?ge=CODE` is carried through the visit without a cookie: an HTMLRewriter adds it to the site's own links and POST forms, and to redirects after a form post. It's lost if the visitor leaves and comes back later (the owner's choice: no tracking cookies).
