@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { DAILY_CRON, WEEKLY_CRON } from "./cron";
+import { DAILY_CRON, PHOTO_CRON, WEEKLY_CRON } from "./cron";
 import type { AppEnv } from "./env";
 import { loadUser } from "./middleware/auth";
 import { csrf } from "./middleware/csrf";
@@ -91,6 +91,7 @@ export async function scheduled(controller: ScheduledController, env: Env): Prom
     await backupDatabase(env.DB, env.BACKUPS, "weekly");
     await pruneRateLimits(env.DB);
   }
+  if (controller.cron === PHOTO_CRON) console.log("Photo job", { result: await dailyPhotoPick(env).catch((err) => String(err)) });
   if (controller.cron === DAILY_CRON) {
     const steps: [string, () => Promise<unknown>][] = [
       ["commission", async () => notifyReleasedCommission(env, await releaseHeldCommissions(env.DB))],
