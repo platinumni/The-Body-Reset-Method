@@ -304,7 +304,11 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - Official data: BLS (US, monthly, national, 4 regions and some cities, not by state) and Statistics Canada (monthly, national and by province), both free.
   - The official lists cover only about 40-70 common foods. Use official prices where they exist; adjust the rest of the estimates monthly by official food price changes.
   - Planned: a US region picker and a Canada province picker.
-- **Network unblock (owner to do 2026-10-26):** unsplash.com, images.unsplash.com, api.unsplash.com, pexels.com, images.pexels.com, api.pexels.com, ons.gov.uk, www.ons.gov.uk, api.beta.ons.gov.uk, api.bls.gov, www.bls.gov, www150.statcan.gc.ca, plus assets.publishing.service.gov.uk and api.nal.usda.gov for nutrition data.
+- **Network allow-list (owner added 2026-10-26, environment "Default", Limited).** OURS, for this project:
+  - photos: unsplash.com, images.unsplash.com, api.unsplash.com, pexels.com, www.pexels.com, images.pexels.com, api.pexels.com;
+  - prices: ons.gov.uk, www.ons.gov.uk, api.beta.ons.gov.uk, api.bls.gov, www.bls.gov, www150.statcan.gc.ca;
+  - nutrition: assets.publishing.service.gov.uk, api.nal.usda.gov.
+  The six other entries already in the list belong to another of the owner's projects; don't touch them. Remove ours when the photo, price and nutrition jobs are done (the live site fetches prices itself).
 - **Socials (owner's plan):** official Instagram and other accounts for The Body Regeneration Method and for Body Regeneration Kitchen.
   - Claude advised against bot or fake accounts, and against automated follows, likes, comments or cold DMs (ban risk; hidden advertising), even with approvals.
   - Use official APIs only for scheduling, replying to comments on our own posts, and replying to people who DM first. Cold outreach is drafted and queued, and the owner sends it by hand. Use real affiliates and creators with #ad.
