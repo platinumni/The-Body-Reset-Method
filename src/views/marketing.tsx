@@ -59,6 +59,7 @@ export function Testimonials(props: { items: Testimonial[] }) {
                 </p>
               )}
               <p class="testimonial-who">{t.who}</p>
+              {t.note && <p class="small muted">{t.note}</p>}
             </li>
           ))}
         </ul>

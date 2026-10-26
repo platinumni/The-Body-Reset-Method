@@ -66,6 +66,8 @@ import {
   WordingPage,
 } from "../views/admin/pages";
 import { adminMeta } from "./admin-login";
+import { codeProblem, createAccessCode, listCodesWithResults, setCodeStatus, type CodeInput } from "../services/access-codes";
+import { CodesAdminPage } from "../views/admin/codes";
 
 export const adminRoutes = new Hono<AppEnv>();
 
@@ -395,6 +397,49 @@ adminRoutes.post("/admin/affiliates/:id/terms", async (c) => {
 adminRoutes.post("/admin/affiliates/:id/status", async (c) => {
   await setAffiliateStatus(c.env.DB, idParam(c), (await c.req.parseBody()).status === "active" ? "active" : "suspended", actor(c));
   return back(c, "/admin/affiliates", "saved");
+});
+
+// --- Access codes (partners and beta testers) ---
+
+const renderCodes = async (c: Context<AppEnv>, error: string | null = null) =>
+  c.html(
+    <CodesAdminPage
+      meta={meta(c, "Access codes", { error })}
+      codes={await listCodesWithResults(c.env.DB)}
+      products={(await listProducts(c.env.DB)).map((p) => ({ slug: p.slug, title: p.title }))}
+      siteUrl={c.env.SITE_URL}
+    />,
+    error ? 422 : 200,
+  );
+
+adminRoutes.get("/admin/codes", (c) => renderCodes(c));
+
+adminRoutes.post("/admin/codes", async (c) => {
+  const form = await c.req.parseBody({ all: true });
+  const one = (k: string) => String(Array.isArray(form[k]) ? (form[k] as unknown[])[0] : (form[k] ?? "")).trim();
+  const slugs = (Array.isArray(form.slugs) ? form.slugs : form.slugs ? [form.slugs] : []).map(String);
+  const fee = one("monthly_fee").replace(/[£,\s]/g, "");
+  const input: CodeInput = {
+    code: one("code").toUpperCase(),
+    kind: one("kind") === "beta" ? "beta" : "partner",
+    label: one("label"),
+    slugs,
+    maxUses: one("max_uses") ? Number(one("max_uses")) : null,
+    monthlyFeePence: fee && Number.isFinite(Number(fee)) ? Math.round(Number(fee) * 100) : null,
+    affiliateCode: one("affiliate_code"),
+    note: one("note"),
+  };
+  const known = (await listProducts(c.env.DB)).map((p) => p.slug);
+  const error = codeProblem(input, known) ?? (await createAccessCode(c.env.DB, input, actor(c)));
+  if (error) return renderCodes(c, error);
+  return back(c, "/admin/codes", "created");
+});
+
+adminRoutes.post("/admin/codes/:id/status", async (c) => {
+  const form = await c.req.parseBody();
+  const status = form.status === "ended" ? (form.confirm === "yes" ? "ended" : null) : form.status === "paused" ? "paused" : "active";
+  if (status) await setCodeStatus(c.env.DB, idParam(c), status, actor(c));
+  return back(c, "/admin/codes", "saved");
 });
 
 // --- Reviews ---

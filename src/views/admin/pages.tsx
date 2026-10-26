@@ -1276,6 +1276,7 @@ export function ReviewsAdminPage(props: { meta: AdminMeta; reviews: import("../.
           <p class="small muted">
             {r.created_at} · {r.product_title ?? "General"} · {r.email} · <StatusPill status={r.status} />
             {!r.may_publish && " · private (not for publishing)"}
+            {r.beta === 1 && " · beta tester (shown as free access)"}
           </p>
           <p class="stars" aria-label={`${r.rating} out of 5 stars`}>
             {"★".repeat(r.rating)}

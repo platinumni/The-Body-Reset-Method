@@ -146,3 +146,12 @@ export function freeWeekFollowUpEmail(i: { siteName: string; to: string; url: st
   );
   return { to: i.to, template: "kitchen_free_week_followup", subject: "Want next week's plan?", html, text: `That's your free week from Body Regeneration Kitchen. Want next week's plan?\n\n${i.url}\n\nThis is the one follow-up we said we'd send.` };
 }
+
+export function accessCodeEmail(i: { siteName: string; to: string; url: string; label: string; beta: boolean }): Email {
+  const intro = i.beta
+    ? "Thanks for helping test the programmes. Click below to unlock your free access."
+    : `Your access through ${esc(i.label)} is ready to unlock.`;
+  const extra = i.beta ? `<p>All we ask in return is honest feedback, good or bad. We'll only ever quote you with your permission.</p>` : "";
+  const html = wrap(i.siteName, `<p>${intro}</p>${button(i.url, "Unlock my access")}${extra}<p style="font-size:14px;color:#4b5750">This link lasts 7 days. If you didn't ask for this, ignore this email.</p>`);
+  return { to: i.to, template: "access_code", subject: "Unlock your access", html, text: `${i.beta ? "Thanks for helping test the programmes." : `Your access through ${i.label} is ready.`}\n\nUnlock it: ${i.url}\n\nThis link lasts 7 days.` };
+}

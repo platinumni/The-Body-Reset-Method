@@ -5,8 +5,9 @@
 import { recordAudit } from "./audit";
 import type { Actor } from "./admin-content";
 import type { Testimonial } from "./site-content";
+import { BETA_REVIEWER_SQL } from "./access-codes";
 
-export type Review = { id: number; user_id: number; email: string; product_title: string | null; rating: number; body: string; display_name: string; may_publish: number; status: string; created_at: string };
+export type Review = { id: number; user_id: number; email: string; product_title: string | null; rating: number; body: string; display_name: string; may_publish: number; status: string; created_at: string; beta: number };
 
 export type ReviewInput = { productId: number | null; rating: number; body: string; displayName: string; mayPublish: boolean };
 
@@ -38,7 +39,7 @@ export async function submitReview(db: D1Database, userId: number, i: ReviewInpu
 export async function listReviewsAdmin(db: D1Database): Promise<Review[]> {
   const { results } = await db
     .prepare(
-      `SELECT r.id, r.user_id, u.email, p.title AS product_title, r.rating, r.body, r.display_name, r.may_publish, r.status, r.created_at
+      `SELECT r.id, r.user_id, u.email, p.title AS product_title, r.rating, r.body, r.display_name, r.may_publish, r.status, r.created_at, ${BETA_REVIEWER_SQL} AS beta
        FROM reviews r JOIN users u ON u.id = r.user_id LEFT JOIN products p ON p.id = r.product_id
        ORDER BY CASE r.status WHEN 'pending' THEN 0 ELSE 1 END, r.id DESC LIMIT 300`,
     )
@@ -55,11 +56,12 @@ export async function moderateReview(db: D1Database, id: number, status: "approv
 export async function publishedReviews(db: D1Database, productSlug?: string): Promise<Testimonial[]> {
   const { results } = await db
     .prepare(
-      `SELECT r.body, r.display_name, r.rating FROM reviews r LEFT JOIN products p ON p.id = r.product_id
+      `SELECT r.body, r.display_name, r.rating, ${BETA_REVIEWER_SQL} AS beta FROM reviews r LEFT JOIN products p ON p.id = r.product_id
        WHERE r.status = 'approved' AND r.may_publish = 1 AND (?1 IS NULL OR p.slug = ?1)
        ORDER BY r.id DESC LIMIT 12`,
     )
     .bind(productSlug ?? null)
-    .all<{ body: string; display_name: string; rating: number }>();
-  return results.map((r) => ({ quote: r.body, who: r.display_name, rating: r.rating }));
+    .all<{ body: string; display_name: string; rating: number; beta: number }>();
+  // UK law: a review given in return for free access must say so.
+  return results.map((r) => ({ quote: r.body, who: r.display_name, rating: r.rating, ...(r.beta ? { note: "Given free access as a beta tester" } : {}) }));
 }
