@@ -101,3 +101,16 @@ describe("standards mode", () => {
     for (const p of ["/", "/faq", "/no-such-page", "/admin/login"]) expect(await (await get(p)).text(), p).toMatch(/^<!DOCTYPE html>/);
   });
 });
+
+describe("live site addresses", () => {
+  const live = { ...env, SITE_URL: "https://bodyregenerationmethod.com" } as Env;
+  const go = (url: string) => app.request(url, {}, live);
+  it("sends www and kitchen addresses to the right place", async () => {
+    const w = await go("https://www.bodyregenerationmethod.com/faq?x=1");
+    expect(w.status).toBe(301);
+    expect(w.headers.get("Location")).toBe("https://bodyregenerationmethod.com/faq?x=1");
+    expect((await go("https://kitchen.bodyregenerationmethod.com/")).headers.get("Location")).toBe("https://bodyregenerationmethod.com/kitchen");
+    expect((await go("https://kitchen.bodyregenerationmethod.com/free-week?ge=tt")).headers.get("Location")).toBe("https://bodyregenerationmethod.com/kitchen/free-week?ge=tt");
+    expect((await go("https://bodyregenerationmethod.com/health")).status).toBe(200);
+  });
+});

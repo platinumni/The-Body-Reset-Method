@@ -33,6 +33,21 @@ import { NotFoundPage, ServerErrorPage } from "./views/errors";
 export const app = new Hono<AppEnv>();
 
 app.use("*", securityHeaders);
+
+// Live site addresses: www.<domain> goes to <domain>, and kitchen.<domain> goes to the Kitchen pages (301, so search engines see one address).
+app.use("*", async (c, next) => {
+  const url = new URL(c.req.url);
+  const host = url.hostname;
+  const site = new URL(c.env.SITE_URL);
+  if (host === site.hostname || !host.endsWith(`.${site.hostname}`)) return next();
+  const sub = host.slice(0, -site.hostname.length - 1);
+  if (sub === "www") return c.redirect(`${site.origin}${url.pathname}${url.search}`, 301);
+  if (sub === "kitchen") {
+    const path = url.pathname === "/" ? "/kitchen" : url.pathname.startsWith("/kitchen") || url.pathname.startsWith("/recipe-photos") ? url.pathname : `/kitchen${url.pathname}`;
+    return c.redirect(`${site.origin}${path}${url.search}`, 301);
+  }
+  return next();
+});
 app.use("*", csrf);
 app.use("*", loadUser); // only queries the database when a login cookie is present
 app.use("*", carryGe);

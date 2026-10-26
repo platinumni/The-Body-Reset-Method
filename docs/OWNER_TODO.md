@@ -11,7 +11,7 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Watch every YouTube demo link** and tell Claude any to swap. None has been watched by a person yet.
 - [ ] **Prices:** Lower Body (you mentioned 29.99; **£ or $?**) and Core & Hips, Hips, and Core (each has its own buy page now).
 - [ ] **Photos:** your own phone photos of each starting position are best. AI images often get feet and toes wrong.
-- [ ] **Buy the domain.** Tell me which one. Connecting it takes about 15 minutes at go-live.
+- [x] **Domain bought:** bodyregenerationmethod.com (2026-10-26). The Kitchen will be kitchen.bodyregenerationmethod.com.
 - [ ] **Stripe account** (free) at stripe.com. You only need test mode for now. Steps are in `docs/STRIPE_SETUP.md`. Turn on PayPal under Settings → Payment methods if you want customers to have it as an option.
 - [ ] **Affiliate commission %.** For example 20% or 30% of the sale. Set it yourself in **Admin → Affiliates** (the programme stays closed until you do). Also check the minimum payout (£10). Commission is held 90 days and paid on the last working day of the month; **payouts stay manual** (owner, 2026-10-24): you pay by PayPal or bank and tap "Record payout".
 - [ ] **Your coach story and photos.** A short bio, your own journey (in your words), and any photos or images.
