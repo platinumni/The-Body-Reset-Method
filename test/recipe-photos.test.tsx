@@ -88,3 +88,10 @@ describe("recipe photos", () => {
     expect((await app.request("/admin/photos", {}, pEnv)).status).toBeGreaterThanOrEqual(300);
   });
 });
+
+describe("daily photo job", () => {
+  it("does nothing without a key", async () => {
+    const { dailyPhotoPick } = await import("../src/services/recipe-photos");
+    expect(await dailyPhotoPick({ ...env, PIXABAY_API_KEY: undefined } as Env)).toBe("no key");
+  });
+});

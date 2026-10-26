@@ -80,7 +80,7 @@ export async function photoUrls(db: D1Database): Promise<Record<string, string>>
 }
 
 /** Auto-pick the top match for recipes that don't have a photo yet, a batch at a time. Returns how many were done and how many are left. */
-export async function autoPickBatch(env: Env, batch = 12): Promise<{ done: number; none: string[]; left: number }> {
+export async function autoPickBatch(env: Env, batch = 12, pauseMs = 0): Promise<{ done: number; none: string[]; left: number }> {
   const have = await listPhotos(env.DB);
   // Recipes with no match last time are skipped (choose those by hand), so the batches keep moving.
   const { results } = await env.DB.prepare("SELECT ref FROM automation_sent WHERE kind = 'photo-no-match'").all<{ ref: string }>();
@@ -89,6 +89,8 @@ export async function autoPickBatch(env: Env, batch = 12): Promise<{ done: numbe
   let done = 0;
   const none: string[] = [];
   for (const r of missing.slice(0, batch)) {
+    // Pixabay allows 100 searches a minute; the daily job paces itself.
+    if (pauseMs) await new Promise((ok) => setTimeout(ok, pauseMs));
     const { query, hits } = await candidatesFor(env.PIXABAY_API_KEY!, r, 3);
     if (hits[0] && (await savePhoto(env, r.id, hits[0], query, "auto"))) done++;
     else {
@@ -101,4 +103,11 @@ export async function autoPickBatch(env: Env, batch = 12): Promise<{ done: numbe
 
 export async function noMatchCount(db: D1Database): Promise<number> {
   return (await db.prepare("SELECT COUNT(*) AS n FROM automation_sent a WHERE a.kind = 'photo-no-match' AND NOT EXISTS (SELECT 1 FROM recipe_photos p WHERE p.recipe_id = a.ref)").first<number>("n")) ?? 0;
+}
+
+/** Daily job: if the Pixabay key is set, picks photos for any recipes still without one (all of them, paced). */
+export async function dailyPhotoPick(env: Env): Promise<string> {
+  if (!env.PIXABAY_API_KEY) return "no key";
+  const r = await autoPickBatch(env, 200, 1500);
+  return `${r.done} picked, ${r.none.length} no match`;
 }
