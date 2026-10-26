@@ -157,3 +157,7 @@ export async function isNewStripeEvent(db: D1Database, id: string): Promise<bool
 export async function recordStripeEvent(db: D1Database, id: string, type: string): Promise<void> {
   await db.prepare("INSERT INTO stripe_events (id, type) VALUES (?1, ?2) ON CONFLICT (id) DO NOTHING").bind(id, type).run();
 }
+
+export async function orderIdByPaymentIntent(db: D1Database, paymentIntent: string): Promise<number | null> {
+  return db.prepare("SELECT id FROM orders WHERE stripe_payment_intent = ?1").bind(paymentIntent).first<number>("id");
+}

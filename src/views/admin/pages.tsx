@@ -953,6 +953,7 @@ export function AffiliatesAdminPage(props: {
               <th>Sales</th>
               <th>On hold</th>
               <th>Owed</th>
+              <th>Rate</th>
               <th>Paid</th>
               <th>Actions</th>
             </tr>
@@ -972,22 +973,44 @@ export function AffiliatesAdminPage(props: {
                 <td>{a.summary.sales}</td>
                 <td>{money(a.summary.pending)}</td>
                 <td>
-                  <strong>{money(a.summary.approved)}</strong>
+                  <strong>{money(a.summary.owed)}</strong>
+                  {a.summary.deductions > 0 && <span class="small muted"> (after {money(a.summary.deductions)} refunds/chargebacks)</span>}
+                </td>
+                <td>
+                  {a.rate_percent != null ? <strong>{a.rate_percent}% (custom)</strong> : s.ratePercent != null ? `${s.ratePercent}%` : "-"}
+                  {a.partner_note && <span class="small muted"> · {a.partner_note}</span>}
+                  <details>
+                    <summary class="small">Partner terms</summary>
+                    <form method="post" action={`/admin/affiliates/${a.id}/terms`}>
+                      <CsrfField token={props.meta.csrfToken} />
+                      <label class="small" for={`rate-${a.id}`}>
+                        Custom rate % (empty = standard)
+                      </label>
+                      <input id={`rate-${a.id}`} name="rate" type="text" inputmode="decimal" value={a.rate_percent != null ? String(a.rate_percent) : ""} />
+                      <label class="small" for={`note-${a.id}`}>
+                        Note (e.g. agency)
+                      </label>
+                      <input id={`note-${a.id}`} name="note" type="text" maxlength={200} value={a.partner_note ?? ""} />
+                      <button class="btn btn-ghost btn-small" type="submit">
+                        Save
+                      </button>
+                    </form>
+                  </details>
                 </td>
                 <td>{money(a.summary.paid)}</td>
                 <td>
-                  {a.summary.approved > 0 && a.summary.approved >= s.minPayoutPence && (
+                  {a.summary.owed > 0 && a.summary.owed >= s.minPayoutPence && (
                     <details>
                       <summary class="small">Record payout</summary>
                       <form method="post" action={`/admin/affiliates/${a.id}/payout`}>
                         <CsrfField token={props.meta.csrfToken} />
-                        <p class="small">First pay {money(a.summary.approved)} to {a.payout_email ?? "them"}, then record it here.</p>
+                        <p class="small">First pay {money(a.summary.owed)} to {a.payout_email ?? "them"}, then record it here.</p>
                         <select name="method">
                           <option value="paypal">PayPal</option>
                           <option value="bank">Bank transfer</option>
                         </select>
                         <input name="reference" type="text" placeholder="Reference (optional)" />
-                        <Confirm label={`I've paid ${money(a.summary.approved)}`} />
+                        <Confirm label={`I've paid ${money(a.summary.owed)}`} />
                         <button class="btn btn-primary btn-small" type="submit">
                           Record payout
                         </button>

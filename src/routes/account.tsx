@@ -45,7 +45,7 @@ async function renderAccount(c: Context<AppEnv>, opts: { error?: string; status?
       marketing={await marketingOptedIn(c.env.DB, user.email)}
       affiliate={{
         csrfToken: c.get("csrfToken"),
-        ratePercent: settings.ratePercent,
+        ratePercent: affiliate?.rate_percent ?? settings.ratePercent,
         holdDays: settings.holdDays,
         affiliate,
         summary: affiliate ? await affiliateSummary(c.env.DB, affiliate.id) : null,

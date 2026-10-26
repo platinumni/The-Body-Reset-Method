@@ -17,7 +17,7 @@ import {
   isNewStripeEvent,
   markOrderExpired,
   markOrderPaid,
-  markOrderRefunded,
+  markOrderRefunded, orderIdByPaymentIntent,
   recordStripeEvent,
   type ConsentAnswers,
   type PaidSession,
@@ -153,11 +153,17 @@ shopRoutes.post("/webhooks/stripe", async (c) => {
       // Only a full refund removes access; partial refunds keep it.
       if (obj.refunded === true && obj.payment_intent) {
         const refunded = await markOrderRefunded(c.env.DB, String(obj.payment_intent));
-        if (refunded && (await cancelCommissionForOrder(c.env.DB, refunded.id)) === "already-paid") {
-          console.warn("Refunded order's commission was already paid out", { order: refunded.public_id });
+        if (refunded && (await cancelCommissionForOrder(c.env.DB, refunded.id, "refund")) === "clawed-back") {
+          console.warn("Refunded order's commission was already paid out; it comes off the partner's next payout", { order: refunded.public_id });
         }
       }
       break;
+    case "charge.dispute.created": {
+      // A chargeback: the bank has taken the money back. The partner's commission is cancelled or deducted.
+      const orderId = obj.payment_intent ? await orderIdByPaymentIntent(c.env.DB, String(obj.payment_intent)) : null;
+      if (orderId) await cancelCommissionForOrder(c.env.DB, orderId, "chargeback");
+      break;
+    }
   }
   await recordStripeEvent(c.env.DB, event.id, event.type);
   return c.json({ received: true });

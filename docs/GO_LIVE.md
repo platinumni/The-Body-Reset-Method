@@ -7,7 +7,7 @@ Admin → **Launch checklist** shows what's still missing at any time.
 1. **Buy the domain.** Easiest is Cloudflare Registrar (Cloudflare → Domain Registration), so it sits in the same account. If you buy elsewhere, point its nameservers to Cloudflare.
 2. **Stripe live mode:**
    - Activate your account: business details and the bank account for payouts.
-   - In live mode, create a **secret key** and a **webhook** to `https://YOURDOMAIN/webhooks/stripe`, with the same 4 events as in `STRIPE_SETUP.md`.
+   - In live mode, create a **secret key** and a **webhook** to `https://YOURDOMAIN/webhooks/stripe`, with the same 5 events as in `STRIPE_SETUP.md`.
    - Add both to the live site in Cloudflare, as `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET`.
 3. **Email:** in Resend, add your domain and its DNS records (Cloudflare can add them in one click), then add `RESEND_API_KEY` to the live site.
 4. **Your decisions in admin** (on the live site, after step 1 of Claude's list below):

@@ -26,7 +26,7 @@ import {
   type Actor,
   type LessonInput,
 } from "../services/admin-content";
-import { affiliateSettings, listAffiliatesAdmin, recordPayout, saveAffiliateSettings, setAffiliateStatus } from "../services/affiliates";
+import { affiliateSettings, listAffiliatesAdmin, recordPayout, setPartnerTerms, saveAffiliateSettings, setAffiliateStatus } from "../services/affiliates";
 import { usageThisMonth } from "../services/automation";
 import { findPlaceholders, launchChecks } from "../services/launch";
 import { sitemapPaths } from "./public";
@@ -384,6 +384,12 @@ adminRoutes.post("/admin/affiliates/:id/payout", async (c) => {
   if (form.confirm !== "yes") return c.redirect("/admin/affiliates", 303);
   const paid = await recordPayout(c.env.DB, idParam(c), { method: form.method === "bank" ? "bank" : "paypal", reference: String(form.reference ?? "") }, actor(c));
   return back(c, "/admin/affiliates", paid ? "payout" : "nopayout");
+});
+
+adminRoutes.post("/admin/affiliates/:id/terms", async (c) => {
+  const form = await c.req.parseBody();
+  const error = await setPartnerTerms(c.env.DB, idParam(c), { rate: String(form.rate ?? ""), note: String(form.note ?? "") }, actor(c));
+  return error ? renderAffiliates(c, error) : back(c, "/admin/affiliates", "saved");
 });
 
 adminRoutes.post("/admin/affiliates/:id/status", async (c) => {

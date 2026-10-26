@@ -82,7 +82,7 @@ export function AffiliateCard(props: {
             <span>on hold</span>
           </li>
           <li>
-            <strong>{formatPrice(summary.approved)}</strong>
+            <strong>{formatPrice(Math.max(0, summary.owed))}</strong>
             <span>owed to you</span>
           </li>
           <li>

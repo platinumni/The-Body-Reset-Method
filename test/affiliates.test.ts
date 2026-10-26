@@ -190,3 +190,64 @@ describe("commission", () => {
     expect(data.affiliate[0].code).toBe(a.code);
   });
 });
+
+describe("partners", () => {
+  async function paidOrder(email: string, ref: string | null, pence = 5000) {
+    return (await env.DB.prepare("INSERT INTO orders (public_id, email, status, total_pence, consents_json, ref_code) VALUES (?1, ?2, 'paid', ?3, '{}', ?4) RETURNING id, ref_code, total_pence").bind(`P-${crypto.randomUUID()}`, email, pence, ref).first<{ id: number; ref_code: string | null; total_pence: number }>())!;
+  }
+
+  it("uses a partner's custom rate instead of the standard one", async () => {
+    await setRate("20");
+    const a = await affiliate();
+    await env.DB.prepare("UPDATE affiliates SET rate_percent = 60 WHERE id = ?1").bind(a.affId).run();
+    const buyer = `p1-${Date.now()}@example.com`;
+    const order = await paidOrder(buyer, a.code);
+    expect(await createCommissionForOrder(env.DB, order, buyer)).toBe(true);
+    expect(await env.DB.prepare("SELECT amount_pence FROM commissions WHERE order_id = ?1").bind(order.id).first("amount_pence")).toBe(3000);
+  });
+
+  it("earns on a referred customer's repeat purchases for 12 months, without the link", async () => {
+    await setRate("30");
+    const a = await affiliate();
+    const buyer = `p2-${Date.now()}@example.com`;
+    await createCommissionForOrder(env.DB, await paidOrder(buyer, a.code), buyer);
+    const repeat = await paidOrder(buyer, null, 2000);
+    expect(await createCommissionForOrder(env.DB, repeat, buyer)).toBe(true);
+    expect(await env.DB.prepare("SELECT affiliate_id FROM commissions WHERE order_id = ?1").bind(repeat.id).first("affiliate_id")).toBe(a.affId);
+    // After 12 months it stops.
+    await env.DB.prepare("UPDATE referred_customers SET created_at = datetime('now', '-13 months') WHERE email = ?1").bind(buyer).run();
+    expect(await createCommissionForOrder(env.DB, await paidOrder(buyer, null, 2000), buyer)).toBe(false);
+  });
+
+  it("takes a refund or chargeback on already-paid commission off the next payout", async () => {
+    await setRate("50", "0", "0");
+    const a = await affiliate();
+    const b1 = `p3-${Date.now()}@example.com`;
+    const first = await paidOrder(b1, a.code, 4000);
+    await createCommissionForOrder(env.DB, first, b1);
+    await env.DB.prepare("UPDATE commissions SET status = 'approved' WHERE affiliate_id = ?1").bind(a.affId).run();
+    expect(await recordPayout(env.DB, a.affId, { method: "bank", reference: "" }, ACTOR)).toBe(2000);
+
+    const { cancelCommissionForOrder } = await import("../src/services/affiliates");
+    expect(await cancelCommissionForOrder(env.DB, first.id, "chargeback")).toBe("clawed-back");
+
+    const b2 = `p4-${Date.now()}@example.com`;
+    const second = await paidOrder(b2, a.code, 6000);
+    await createCommissionForOrder(env.DB, second, b2);
+    await env.DB.prepare("UPDATE commissions SET status = 'approved' WHERE order_id = ?1").bind(second.id).run();
+    expect(await recordPayout(env.DB, a.affId, { method: "bank", reference: "" }, ACTOR)).toBe(3000 - 2000);
+    expect(await env.DB.prepare("SELECT COUNT(*) AS n FROM commission_clawbacks WHERE affiliate_id = ?1 AND payout_id IS NULL").bind(a.affId).first("n")).toBe(0);
+  });
+
+  it("cancels unpaid commission when Stripe reports a chargeback", async () => {
+    await setRate("30");
+    const a = await affiliate();
+    const buyer = `p5-${Date.now()}@example.com`;
+    const order = await paidOrder(buyer, a.code);
+    await env.DB.prepare("UPDATE orders SET stripe_payment_intent = ?1 WHERE id = ?2").bind(`pi_dispute_${order.id}`, order.id).run();
+    await createCommissionForOrder(env.DB, order, buyer);
+    const payload = JSON.stringify({ id: `evt_dispute_${order.id}`, type: "charge.dispute.created", data: { object: { id: "dp_1", payment_intent: `pi_dispute_${order.id}` } } });
+    await app.request("/webhooks/stripe", { method: "POST", body: payload, headers: { "Stripe-Signature": await signWebhook(WHSEC, payload) } }, shopEnv);
+    expect(await env.DB.prepare("SELECT status FROM commissions WHERE order_id = ?1").bind(order.id).first("status")).toBe("cancelled");
+  });
+});

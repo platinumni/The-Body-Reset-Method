@@ -249,6 +249,14 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
             your account. For example, a sale on 15 January is released on 15 April and paid on the last working day of April. You're responsible for any
             tax due on what you earn.
           </li>
+          <li>
+            If someone first buys through your link, you also earn on their further purchases for 12 months, unless they use another member's link.
+          </li>
+          <li>
+            If a sale is refunded or charged back (disputed with their bank) after its commission has been paid, that amount is taken off your next
+            payout.
+          </li>
+          <li>Some partners agree a different commission rate with us in writing. Your rate is always shown on your account page.</li>
           <li>You can't earn commission on your own purchases.</li>
         </ul>
         <h2>When you share</h2>
