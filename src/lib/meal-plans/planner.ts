@@ -2,6 +2,7 @@
 // Prices are estimates (see prices.ts) adjusted for country and supermarket type.
 
 import { PRICE_ITEMS, priceItemFor, usage, type Aisle, type PriceItem } from "./prices";
+import type { PriceBook } from "./official";
 import { RECIPES, type MealType, type Recipe } from "./recipes";
 
 export type Country = "uk" | "us" | "ca";
@@ -36,9 +37,13 @@ export type PlanInput = {
   usual?: number | null;
   /** How their real shop compares with our estimates (from what they actually paid). 1 = as estimated. */
   personalFactor?: number;
+  /** US region or Canadian province ("national" if not chosen). */
+  region?: string;
+  /** Official average prices for the chosen country and region, where we have them. */
+  book?: PriceBook;
 };
 
-export type ShoppingLine = { key: string; label: string; aisle: Aisle; packs: number; cost: number; cupboard: boolean; have: boolean };
+export type ShoppingLine = { key: string; label: string; aisle: Aisle; packs: number; cost: number; cupboard: boolean; have: boolean; official: boolean };
 export type Slot = { day: number; meal: MealType; recipe: Recipe; cook: boolean; note: string | null; freeze: boolean };
 export type Plan = {
   input: PlanInput;
@@ -71,7 +76,14 @@ export function householdPortions(adults: number, childAges: number[]): number {
   return Math.max(1, adults + childAges.reduce((t, a) => t + portionFor(a), 0));
 }
 
-const priceFactor = (input: Pick<PlanInput, "country" | "store" | "personalFactor">) => COUNTRIES[input.country].factor * STORES[input.store].factor * (input.personalFactor ?? 1);
+type PriceInput = Pick<PlanInput, "country" | "store" | "personalFactor" | "book">;
+
+/** Price of one pack: the official average where we have one, otherwise our estimate (kept current with the official food price index). */
+export function packPrice(item: PriceItem, input: PriceInput): number {
+  const official = input.book?.official[item.key];
+  const base = official ?? item.price * COUNTRIES[input.country].factor * (input.book?.estimateAdjust ?? 1);
+  return base * STORES[input.store].factor * (input.personalFactor ?? 1);
+}
 
 /** Does this recipe suit the person's diet, leave-outs and allergens? */
 export function suits(r: Recipe, input: Pick<PlanInput, "diet" | "exclude" | "avoidAllergens">): boolean {
@@ -97,8 +109,7 @@ export function costPerPortion(r: Recipe, factor = 1): number {
 }
 
 /** The shopping list for a set of recipes, each cooked `scale` times its written amounts. */
-export function shoppingList(chosen: { recipe: Recipe; scale: number }[], input: Pick<PlanInput, "country" | "store" | "have" | "personalFactor">) {
-  const factor = priceFactor(input);
+export function shoppingList(chosen: { recipe: Recipe; scale: number }[], input: PriceInput & Pick<PlanInput, "have">) {
   const totals = new Map<string, { item: PriceItem; qty: number }>();
   for (const { recipe, scale } of chosen) {
     for (const ing of recipe.ingredients) {
@@ -116,10 +127,11 @@ export function shoppingList(chosen: { recipe: Recipe; scale: number }[], input:
     const have = input.have.includes(item.key);
     const packs = Math.max(1, Math.ceil(qty / item.pack - 0.05));
     // Fresh food: you buy whole packs. Cupboard items: only what this week uses counts.
-    const cost = item.cupboard ? (qty / item.pack) * item.price * factor : packs * item.price * factor;
+    const price = packPrice(item, input);
+    const cost = item.cupboard ? (qty / item.pack) * price : packs * price;
     if (!have) weeklyCost += cost;
-    if (item.cupboard && !have) starterCupboard += packs * item.price * factor;
-    lines.push({ key: item.key, label: item.label, aisle: item.aisle, packs, cost, cupboard: !!item.cupboard, have });
+    if (item.cupboard && !have) starterCupboard += packs * price;
+    lines.push({ key: item.key, label: item.label, aisle: item.aisle, packs, cost, cupboard: !!item.cupboard, have, official: input.book?.official[item.key] != null });
   }
   lines.sort((a, b) => a.aisle.localeCompare(b.aisle) || a.label.localeCompare(b.label));
   return { lines, weeklyCost, starterCupboard };
@@ -177,7 +189,6 @@ function assemble(picks: Record<MealType, Recipe[]>, input: PlanInput, portions:
 export function buildPlan(input: PlanInput): Plan {
   const portions = householdPortions(input.adults, input.childAges);
   const babies = input.childAges.filter((a) => a < 1).length;
-  const factor = priceFactor(input);
   const pool: Record<MealType, Recipe[]> = { Breakfasts: [], Lunches: [], "Evening meals": [], Snacks: [] };
   // Recipes made from another recipe's leftovers aren't planned on their own.
   const standalone = (r: Recipe) => !r.ingredients.some((i) => /leftover/i.test(i.name));

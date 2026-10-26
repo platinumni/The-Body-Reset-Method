@@ -1,3 +1,5 @@
+import { priceBook, regionsFor } from "../lib/meal-plans/official";
+import { loadOfficialPrices } from "../services/official-prices";
 import { buildPlan, COUNTRIES } from "../lib/meal-plans/planner";
 import { canUseMealPlans, DEFAULT_PREFS, loadPrefs, readPlanInput, recordSpend, savePrefs, spendSummary } from "../services/meal-plans";
 import { MealPlannerPage } from "../views/meal-plans";
@@ -86,7 +88,9 @@ accountRoutes.get("/account/meal-plans", async (c) => {
   const prefs = await loadPrefs(c.env.DB, user.id);
   const hasSaved = prefs !== DEFAULT_PREFS;
   const spend = await spendSummary(c.env.DB, user.id);
-  const input = { ...readPlanInput(mealQuery(params), prefs), personalFactor: spend.personalFactor };
+  const prices = await loadOfficialPrices(c.env.DB);
+  const chosen = readPlanInput(mealQuery(params), prefs);
+  const input = { ...chosen, personalFactor: spend.personalFactor, book: priceBook(prices, chosen.country, chosen.region) };
   const show = params.has("submitted") || hasSaved;
   return c.html(
     <MealPlannerPage
@@ -97,6 +101,7 @@ accountRoutes.get("/account/meal-plans", async (c) => {
       saved={params.has("saved")}
       spent={params.has("spent")}
       spend={spend}
+      regions={{ us: regionsFor(prices, "us"), ca: regionsFor(prices, "ca") }}
     />,
   );
 });

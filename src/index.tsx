@@ -5,6 +5,7 @@ import { loadUser } from "./middleware/auth";
 import { csrf } from "./middleware/csrf";
 import { securityHeaders } from "./middleware/security";
 import { accountRoutes } from "./routes/account";
+import { refreshOfficialPrices } from "./services/official-prices";
 import { adminRoutes } from "./routes/admin";
 import { adminLoginRoutes } from "./routes/admin-login";
 import { assetRoutes } from "./routes/assets";
@@ -73,7 +74,8 @@ app.onError((err, c) => {
  * Scheduled jobs.
  *  Weekly (Sunday 03:00 UTC): database backup + housekeeping.
  *  Daily (06:00 UTC, 6–7am UK): release held commission, reminders and check-ins,
- *  usage watch, then the owner's morning report. Each step runs even if another fails.
+ *  usage watch, the owner's morning report, then (about monthly) official food prices.
+ *  Each step runs even if another fails.
  */
 export async function scheduled(controller: ScheduledController, env: Env): Promise<void> {
   if (controller.cron === WEEKLY_CRON) {
@@ -87,6 +89,8 @@ export async function scheduled(controller: ScheduledController, env: Env): Prom
       ["check-ins", () => sendCheckIns(env)],
       ["usage", async () => checkUsage(env, await adminEmails(env.DB))],
       ["morning-report", () => sendMorningReport(env)],
+      // Official food prices for the meal planner: refreshed about monthly (skips if recent).
+      ["meal-prices", () => refreshOfficialPrices(env)],
     ];
     for (const [name, run] of steps) {
       try {

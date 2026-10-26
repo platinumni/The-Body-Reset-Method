@@ -10,9 +10,9 @@ export const MEAL_PLANS_SLUG = "meal-plans";
 export const canUseMealPlans = async (db: D1Database, userId: number) => !!(await ownedProgrammeBySlug(db, userId, MEAL_PLANS_SLUG));
 
 /** Choices that are remembered between visits (not the budget or which recipes were picked). */
-export type MealPrefs = Pick<PlanInput, "country" | "store" | "adults" | "childAges" | "diet" | "exclude" | "avoidAllergens" | "snacks" | "have"> & { budget: number; usual: number | null };
+export type MealPrefs = Pick<PlanInput, "country" | "store" | "adults" | "childAges" | "diet" | "exclude" | "avoidAllergens" | "snacks" | "have"> & { budget: number; usual: number | null; region: string };
 
-export const DEFAULT_PREFS: MealPrefs = { budget: 40, country: "uk", store: "mid", adults: 1, childAges: [], diet: "any", exclude: [], avoidAllergens: [], snacks: true, have: [], usual: null };
+export const DEFAULT_PREFS: MealPrefs = { budget: 40, country: "uk", store: "mid", adults: 1, childAges: [], diet: "any", exclude: [], avoidAllergens: [], snacks: true, have: [], usual: null, region: "national" };
 
 const clampInt = (v: unknown, min: number, max: number, fallback: number) => {
   const n = Math.round(Number(v));
@@ -39,6 +39,7 @@ export function readPlanInput(src: Record<string, unknown>, fallback: MealPrefs 
     seed: clampInt(src.seed ?? 1, 1, 1_000_000, 1),
     have: (has("have") ? list(src.have) : fallback.have).slice(0, 200),
     picks: has("picks") ? list(src.picks).slice(0, 30) : undefined,
+    region: has("region") ? String(src.region).slice(0, 60) || "national" : fallback.region,
     usual: has("usual") ? (String(src.usual).trim() === "" ? null : clampInt(src.usual, 1, 5000, 0) || null) : fallback.usual,
   };
 }
@@ -48,7 +49,7 @@ export async function loadPrefs(db: D1Database, userId: number): Promise<MealPre
   if (!row) return DEFAULT_PREFS;
   try {
     const saved = readPlanInput({ ...JSON.parse(row), submitted: "yes", snacks: JSON.parse(row).snacks ? "yes" : "no" });
-    return { budget: saved.budget, country: saved.country, store: saved.store, adults: saved.adults, childAges: saved.childAges, diet: saved.diet, exclude: saved.exclude, avoidAllergens: [], snacks: saved.snacks, have: saved.have, usual: saved.usual ?? null };
+    return { budget: saved.budget, country: saved.country, store: saved.store, adults: saved.adults, childAges: saved.childAges, diet: saved.diet, exclude: saved.exclude, avoidAllergens: [], snacks: saved.snacks, have: saved.have, usual: saved.usual ?? null, region: saved.region ?? "national" };
   } catch {
     return DEFAULT_PREFS;
   }
@@ -56,7 +57,7 @@ export async function loadPrefs(db: D1Database, userId: number): Promise<MealPre
 
 export async function savePrefs(db: D1Database, userId: number, input: PlanInput): Promise<void> {
   // Allergies are health information, so they're never saved: members tick them each time.
-  const prefs: MealPrefs = { budget: input.budget, country: input.country, store: input.store, adults: input.adults, childAges: input.childAges, diet: input.diet, exclude: input.exclude, avoidAllergens: [], snacks: input.snacks, have: input.have, usual: input.usual ?? null };
+  const prefs: MealPrefs = { budget: input.budget, country: input.country, store: input.store, adults: input.adults, childAges: input.childAges, diet: input.diet, exclude: input.exclude, avoidAllergens: [], snacks: input.snacks, have: input.have, usual: input.usual ?? null, region: input.region ?? "national" };
   await db
     .prepare("INSERT INTO meal_plan_prefs (user_id, prefs_json) VALUES (?1, ?2) ON CONFLICT (user_id) DO UPDATE SET prefs_json = excluded.prefs_json, updated_at = datetime('now')")
     .bind(userId, JSON.stringify(prefs))

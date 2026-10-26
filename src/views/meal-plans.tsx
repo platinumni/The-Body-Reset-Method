@@ -1,4 +1,5 @@
 import { COUNTRIES, DAYS, LEAVE_OUT_WORDS, STORES, money, type Plan, type PlanInput } from "../lib/meal-plans/planner";
+import { REGION_LABELS } from "../lib/meal-plans/official";
 import { PRICES_AS_OF } from "../lib/meal-plans/prices";
 import { ALLERGEN_LABELS, type Recipe } from "../lib/meal-plans/recipes";
 import { assetUrl } from "../routes/assets";
@@ -23,12 +24,13 @@ export function planQuery(input: PlanInput, change: Partial<PlanInput> = {}): st
     seed: String(i.seed),
     have: i.have.join(","),
     usual: i.usual ? String(i.usual) : "",
+    region: i.region ?? "national",
   });
   if (i.picks?.length) q.set("picks", i.picks.join(","));
   return `/account/meal-plans?${q.toString()}`;
 }
 
-function PlanForm(props: { input: PlanInput }) {
+function PlanForm(props: { input: PlanInput; regions: { us: string[]; ca: string[] } }) {
   const i = props.input;
   return (
     <form method="get" action="/account/meal-plans" class="card meal-form no-print">
@@ -50,6 +52,28 @@ function PlanForm(props: { input: PlanInput }) {
                 {c.label}
               </option>
             ))}
+          </select>
+        </div>
+        <div class="field">
+          <label for="mp-region">Region (US and Canada only)</label>
+          <select id="mp-region" name="region">
+            <option value="national" selected={!i.region || i.region === "national"}>
+              National average
+            </option>
+            <optgroup label="United States">
+              {props.regions.us.map((r) => (
+                <option value={r} selected={i.region === r}>
+                  {REGION_LABELS[r] ?? r}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label="Canada">
+              {props.regions.ca.map((r) => (
+                <option value={r} selected={i.region === r}>
+                  {r}
+                </option>
+              ))}
+            </optgroup>
           </select>
         </div>
         <div class="field">
@@ -135,13 +159,24 @@ function PlanForm(props: { input: PlanInput }) {
 function Notes(props: { plan: Plan }) {
   const { plan } = props;
   const c = COUNTRIES[plan.input.country];
+  const book = plan.input.book;
+  const officialCount = plan.shopping.filter((l) => l.official).length;
   const toddlers = plan.input.childAges.some((a) => a >= 1 && a <= 3);
   return (
     <aside class="meal-notes">
-      <p>
-        <strong>Prices are estimates</strong> for {STORES[plan.input.store].label.split(" (")[0]!.toLowerCase()} supermarkets in {c.label}, checked{" "}
-        {PRICES_AS_OF}. Actual prices in store will vary. Source: {c.source}.
-      </p>
+      {book?.source ? (
+        <p>
+          <strong>Prices:</strong> {officialCount} of the {plan.shopping.length} items on your list use official average prices from the {book.source} (
+          {book.note}, latest {book.period}){book.region !== "national" ? `, for ${REGION_LABELS[book.region] ?? book.region}` : ""}. The rest are our
+          estimates, kept up to date with official food price changes. All prices are adjusted for {STORES[plan.input.store].label.split(" (")[0]!.toLowerCase()}{" "}
+          supermarkets. They're averages, so actual prices in store will vary.
+        </p>
+      ) : (
+        <p>
+          <strong>Prices are estimates</strong> for {STORES[plan.input.store].label.split(" (")[0]!.toLowerCase()} supermarkets in {c.label}, checked{" "}
+          {PRICES_AS_OF}. Actual prices in store will vary.
+        </p>
+      )}
       <p>
         These plans are designed to <strong>maintain your current weight</strong>. If you want to gain or lose weight, speak to your GP, a registered
         dietitian or a registered nutritionist. This is general healthy eating, not advice for medical conditions.
@@ -227,6 +262,7 @@ export function MealPlannerPage(props: {
   saved?: boolean;
   spent?: boolean;
   spend: import("../services/meal-plans").SpendSummary;
+  regions: { us: string[]; ca: string[] };
 }) {
   const { plan, input } = props;
   const cur = (n: number) => money(n, input.country);
@@ -243,7 +279,7 @@ export function MealPlannerPage(props: {
           <p class="print-cover-sub">
             One week · budget {cur(input.budget)} · estimated {cur(plan.weeklyCost)} · {household}
           </p>
-          <p class="small">Prices estimated, {PRICES_AS_OF}. Made for you on {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}.</p>
+          <p class="small">Prices: {input.book?.source ? `official averages (${input.book.period}) and estimates` : `estimated, ${PRICES_AS_OF}`}. Made for you on {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}.</p>
         </section>
       )}
       <section class="page-hero no-print">
@@ -263,7 +299,7 @@ export function MealPlannerPage(props: {
               Saved. These choices will be ready next time.
             </p>
           )}
-          <PlanForm input={input} />
+          <PlanForm input={input} regions={props.regions} />
           {plan && (
             <>
               <div class="card plan-summary">

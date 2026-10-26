@@ -696,11 +696,38 @@ export function WordingPage(props: { meta: AdminMeta; fields: WordingField[]; va
   );
 }
 
-export function StatsPage(props: { meta: AdminMeta; s: StatsSummary; meals?: { members: number; weeks: number; avgWeeklySavingPence: number | null } }) {
+export function StatsPage(props: {
+  meta: AdminMeta;
+  s: StatsSummary;
+  meals?: { members: number; weeks: number; avgWeeklySavingPence: number | null };
+  prices?: import("../../lib/meal-plans/official").OfficialPrices;
+}) {
   const max = Math.max(1, ...props.s.days.map((d) => d.views));
   const f = props.s.funnel;
   return (
     <AdminLayout meta={props.meta}>
+      {props.prices && (
+        <div class="card">
+          <h2 class="h3">Meal plans: official food prices</h2>
+          <ul>
+            {(["uk", "us", "ca"] as const).map((c) => {
+              const p = props.prices![c];
+              return (
+                <li>
+                  <strong>{c.toUpperCase()}:</strong> {p ? `${p.source}, latest ${p.period}` : "not available yet (using estimates)"}
+                </li>
+              );
+            })}
+          </ul>
+          <p class="small muted">Last checked {props.prices.fetchedAt.slice(0, 10)}. The site refreshes these itself about once a month.</p>
+          <form method="post" action="/admin/meal-prices/refresh">
+            <CsrfField token={props.meta.csrfToken} />
+            <button class="btn btn-ghost btn-small" type="submit">
+              Refresh now
+            </button>
+          </form>
+        </div>
+      )}
       {props.meals && (
         <div class="card">
           <h2 class="h3">Meal plans: real savings</h2>

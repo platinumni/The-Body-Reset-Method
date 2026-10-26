@@ -1,0 +1,1152 @@
+{
+ "_about": "Which official average prices feed which meal-plan ingredients. factor = our pack size divided by the official unit (so pack price = official price x factor). Used by scripts/fetch-official-prices.mjs and the website's monthly refresh.",
+ "uk": {
+  "source": "Office for National Statistics (ONS)",
+  "basePeriod": "2025 JAN",
+  "index": {
+   "cdid": "d7c8",
+   "title": "CPI index 01.1: Food"
+  },
+  "estimatesIndexPeriod": "2026 SEP",
+  "penceToPounds": true,
+  "series": [
+   {
+    "cdid": "j428",
+    "key": "eggs",
+    "factor": 0.5,
+    "unit": "per dozen"
+   },
+   {
+    "cdid": "czmv",
+    "key": "banana",
+    "factor": 0.6,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "czne",
+    "key": "carrots",
+    "factor": 1,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "cznj",
+    "key": "tomatoes",
+    "factor": 0.48,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "cznd",
+    "key": "onion",
+    "factor": 0.9,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "cznc",
+    "key": "mushrooms",
+    "factor": 0.3,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "vkyy",
+    "key": "potatoes",
+    "factor": 2.5,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "vkyu",
+    "key": "bread",
+    "factor": 1,
+    "unit": "800g loaf"
+   },
+   {
+    "cdid": "cznw",
+    "key": "cheddar",
+    "factor": 0.35,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "kw9b",
+    "key": "butter",
+    "factor": 1,
+    "unit": "per 250g"
+   },
+   {
+    "cdid": "cznt",
+    "key": "milk",
+    "factor": 4,
+    "unit": "per pint"
+   },
+   {
+    "cdid": "cznn",
+    "key": "sugar",
+    "factor": 1,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "cznh",
+    "key": "cabbage",
+    "factor": 0.8,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "gk8e",
+    "key": "broccoli",
+    "factor": 0.35,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "czng",
+    "key": "cauliflower",
+    "factor": 1,
+    "unit": "each"
+   },
+   {
+    "cdid": "cznb",
+    "key": "cucumber",
+    "factor": 1,
+    "unit": "each"
+   },
+   {
+    "cdid": "zptx",
+    "key": "salmon",
+    "factor": 0.24,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "czmu",
+    "key": "grapes",
+    "factor": 0.5,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "czmx",
+    "key": "pear",
+    "factor": 0.68,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "czmy",
+    "key": "apple",
+    "factor": 0.9,
+    "unit": "per kg"
+   },
+   {
+    "cdid": "czmw",
+    "key": "orange",
+    "factor": 1,
+    "unit": "each"
+   },
+   {
+    "cdid": "doht",
+    "key": "avocado",
+    "factor": 1,
+    "unit": "each"
+   },
+   {
+    "cdid": "czom",
+    "key": "chicken-breast",
+    "factor": 0.6,
+    "unit": "whole chicken per kg (used as a guide)"
+   }
+  ]
+ },
+ "us": {
+  "source": "US Bureau of Labor Statistics (BLS)",
+  "regions": {
+   "national": "0000",
+   "northeast": "0100",
+   "midwest": "0200",
+   "south": "0300",
+   "west": "0400"
+  },
+  "series": [
+   {
+    "item": "708111",
+    "key": "eggs",
+    "factor": 0.5,
+    "unit": "per dozen"
+   },
+   {
+    "item": "711211",
+    "key": "banana",
+    "factor": 1.323,
+    "unit": "per lb"
+   },
+   {
+    "item": "712112",
+    "key": "potatoes",
+    "factor": 5.512,
+    "unit": "per lb"
+   },
+   {
+    "item": "712311",
+    "key": "tomatoes",
+    "factor": 1.058,
+    "unit": "per lb"
+   },
+   {
+    "item": "702111",
+    "key": "bread",
+    "factor": 1.764,
+    "unit": "per lb"
+   },
+   {
+    "item": "709112",
+    "key": "milk",
+    "factor": 0.6,
+    "unit": "per gallon"
+   },
+   {
+    "item": "FS1101",
+    "key": "butter",
+    "factor": 0.551,
+    "unit": "per lb"
+   },
+   {
+    "item": "710212",
+    "key": "cheddar",
+    "factor": 0.772,
+    "unit": "per lb"
+   },
+   {
+    "item": "FF1101",
+    "key": "chicken-breast",
+    "factor": 1.323,
+    "unit": "per lb"
+   },
+   {
+    "item": "701312",
+    "key": "rice",
+    "factor": 2.205,
+    "unit": "per lb"
+   },
+   {
+    "item": "701322",
+    "key": "pasta",
+    "factor": 1.102,
+    "unit": "per lb"
+   },
+   {
+    "item": "715211",
+    "key": "sugar",
+    "factor": 2.205,
+    "unit": "per lb"
+   },
+   {
+    "item": "711111",
+    "key": "apple",
+    "factor": 1.984,
+    "unit": "per lb"
+   },
+   {
+    "item": "711311",
+    "key": "orange",
+    "factor": 0.397,
+    "unit": "per lb"
+   }
+  ]
+ },
+ "ca": {
+  "source": "Statistics Canada (table 18-10-0245-01)",
+  "products": [
+   {
+    "product": "Eggs, 1 dozen",
+    "key": "eggs",
+    "factor": 0.5,
+    "vectors": {
+     "Canada": 1353834290,
+     "Newfoundland and Labrador": 1159446994,
+     "Prince Edward Island": 1159447034,
+     "Nova Scotia": 1159447074,
+     "New Brunswick": 1159447114,
+     "Quebec": 1159447154,
+     "Ontario": 1159447194,
+     "Manitoba": 1159447234,
+     "Saskatchewan": 1159447274,
+     "Alberta": 1159447314,
+     "British Columbia": 1159447354,
+     "Whitehorse, Yukon": 1793770437
+    }
+   },
+   {
+    "product": "Bananas, per kilogram",
+    "key": "banana",
+    "factor": 0.6,
+    "vectors": {
+     "Canada": 1353834294,
+     "Newfoundland and Labrador": 1159446998,
+     "Prince Edward Island": 1159447038,
+     "Nova Scotia": 1159447078,
+     "New Brunswick": 1159447118,
+     "Quebec": 1159447158,
+     "Ontario": 1159447198,
+     "Manitoba": 1159447238,
+     "Saskatchewan": 1159447278,
+     "Alberta": 1159447318,
+     "British Columbia": 1159447358
+    }
+   },
+   {
+    "product": "Carrots, 1.36 kilograms",
+    "key": "carrots",
+    "factor": 0.735,
+    "vectors": {
+     "Canada": 1353834303,
+     "Newfoundland and Labrador": 1159447007,
+     "Prince Edward Island": 1159447047,
+     "Nova Scotia": 1159447087,
+     "New Brunswick": 1159447127,
+     "Quebec": 1159447167,
+     "Ontario": 1159447207,
+     "Manitoba": 1159447247,
+     "Saskatchewan": 1159447287,
+     "Alberta": 1159447327,
+     "British Columbia": 1159447367
+    }
+   },
+   {
+    "product": "Onions, per kilogram",
+    "key": "onion",
+    "factor": 0.9,
+    "vectors": {
+     "Canada": 1353834304,
+     "Newfoundland and Labrador": 1159447008,
+     "Prince Edward Island": 1159447048,
+     "Nova Scotia": 1159447088,
+     "New Brunswick": 1159447128,
+     "Quebec": 1159447168,
+     "Ontario": 1159447208,
+     "Manitoba": 1159447248,
+     "Saskatchewan": 1159447288,
+     "Alberta": 1159447328,
+     "British Columbia": 1159447368
+    }
+   },
+   {
+    "product": "Potatoes, per kilogram",
+    "key": "potatoes",
+    "factor": 2.5,
+    "vectors": {
+     "Canada": 1353834316,
+     "Newfoundland and Labrador": 1353834353,
+     "Prince Edward Island": 1353834389,
+     "Nova Scotia": 1353834426,
+     "New Brunswick": 1353834463,
+     "Quebec": 1353834500,
+     "Ontario": 1353834537,
+     "Manitoba": 1353834574,
+     "Saskatchewan": 1353834611,
+     "Alberta": 1353834648,
+     "British Columbia": 1353834685
+    }
+   },
+   {
+    "product": "Tomatoes, per kilogram",
+    "key": "tomatoes",
+    "factor": 0.48,
+    "vectors": {
+     "Canada": 1353834301,
+     "Newfoundland and Labrador": 1159447005,
+     "Prince Edward Island": 1159447045,
+     "Nova Scotia": 1159447085,
+     "New Brunswick": 1159447125,
+     "Quebec": 1159447165,
+     "Ontario": 1159447205,
+     "Manitoba": 1159447245,
+     "Saskatchewan": 1159447285,
+     "Alberta": 1159447325,
+     "British Columbia": 1159447365
+    }
+   },
+   {
+    "product": "Milk, 4 litres",
+    "key": "milk",
+    "factor": 0.568,
+    "vectors": {
+     "Canada": 1353834285,
+     "Prince Edward Island": 1159447029,
+     "Nova Scotia": 1159447069,
+     "New Brunswick": 1159447109,
+     "Quebec": 1159447149,
+     "Ontario": 1159447189,
+     "Manitoba": 1159447229,
+     "Saskatchewan": 1159447269,
+     "Alberta": 1159447309,
+     "British Columbia": 1159447349,
+     "Whitehorse, Yukon": 1793770434
+    }
+   },
+   {
+    "product": "Butter, 454 grams",
+    "key": "butter",
+    "factor": 0.551,
+    "vectors": {
+     "Canada": 1353834287,
+     "Newfoundland and Labrador": 1159446991,
+     "Prince Edward Island": 1159447031,
+     "Nova Scotia": 1159447071,
+     "New Brunswick": 1159447111,
+     "Quebec": 1159447151,
+     "Ontario": 1159447191,
+     "Manitoba": 1159447231,
+     "Saskatchewan": 1159447271,
+     "Alberta": 1159447311,
+     "British Columbia": 1159447351,
+     "Whitehorse, Yukon": 1793770435
+    }
+   },
+   {
+    "product": "Block cheese, 500 grams",
+    "key": "cheddar",
+    "factor": 0.7,
+    "vectors": {
+     "Canada": 1353834288,
+     "Newfoundland and Labrador": 1159446992,
+     "Prince Edward Island": 1159447032,
+     "Nova Scotia": 1159447072,
+     "New Brunswick": 1159447112,
+     "Quebec": 1159447152,
+     "Ontario": 1159447192,
+     "Manitoba": 1159447232,
+     "Saskatchewan": 1159447272,
+     "Alberta": 1159447312,
+     "British Columbia": 1159447352,
+     "Whitehorse, Yukon": 1793770436
+    }
+   },
+   {
+    "product": "Chicken breasts, per kilogram",
+    "key": "chicken-breast",
+    "factor": 0.6,
+    "vectors": {
+     "Canada": 1353834278,
+     "Newfoundland and Labrador": 1159446983,
+     "Prince Edward Island": 1159447022,
+     "Nova Scotia": 1159447062,
+     "New Brunswick": 1159447102,
+     "Quebec": 1159447142,
+     "Ontario": 1159447182,
+     "Manitoba": 1159447222,
+     "Saskatchewan": 1159447262,
+     "Alberta": 1159447302,
+     "British Columbia": 1159447342
+    }
+   },
+   {
+    "product": "Chicken thigh, per kilogram",
+    "key": "chicken-thighs",
+    "factor": 0.5,
+    "vectors": {
+     "Canada": 1353834279,
+     "Newfoundland and Labrador": 1159446984,
+     "Prince Edward Island": 1159447023,
+     "Nova Scotia": 1159447063,
+     "New Brunswick": 1159447103,
+     "Quebec": 1159447143,
+     "Ontario": 1159447183,
+     "Manitoba": 1159447223,
+     "Saskatchewan": 1159447263,
+     "Alberta": 1159447303,
+     "British Columbia": 1159447343
+    }
+   },
+   {
+    "product": "Dry or fresh pasta, 500 grams",
+    "key": "pasta",
+    "factor": 1,
+    "vectors": {
+     "Canada": 1353834327,
+     "Newfoundland and Labrador": 1353834363,
+     "Prince Edward Island": 1353834400,
+     "Nova Scotia": 1353834437,
+     "New Brunswick": 1353834474,
+     "Quebec": 1353834511,
+     "Ontario": 1353834548,
+     "Manitoba": 1353834585,
+     "Saskatchewan": 1353834622,
+     "Alberta": 1353834659,
+     "British Columbia": 1353834696,
+     "Whitehorse, Yukon": 1793770446,
+     "Yellowknife, Northwest Territories": 1793770491
+    }
+   },
+   {
+    "product": "White rice, 2 kilograms",
+    "key": "rice",
+    "factor": 0.5,
+    "vectors": {
+     "Canada": 1458869937,
+     "Newfoundland and Labrador": 1458869970,
+     "Prince Edward Island": 1458870003,
+     "Nova Scotia": 1458870036,
+     "New Brunswick": 1458870069,
+     "Quebec": 1458870102,
+     "Ontario": 1458870135,
+     "Manitoba": 1458870168,
+     "Saskatchewan": 1458870201,
+     "Alberta": 1458870234,
+     "British Columbia": 1458870267,
+     "Whitehorse, Yukon": 1793770475,
+     "Yellowknife, Northwest Territories": 1793770515
+    }
+   },
+   {
+    "product": "Canned tomatoes, 796 millilitres",
+    "key": "chopped-tomatoes",
+    "factor": 0.503,
+    "vectors": {
+     "Canada": 1353834341,
+     "Newfoundland and Labrador": 1353834377,
+     "Prince Edward Island": 1353834414,
+     "Nova Scotia": 1353834451,
+     "New Brunswick": 1353834488,
+     "Quebec": 1353834525,
+     "Ontario": 1353834562,
+     "Manitoba": 1353834599,
+     "Saskatchewan": 1353834636,
+     "Alberta": 1353834673,
+     "British Columbia": 1353834710,
+     "Whitehorse, Yukon": 1793770460,
+     "Yellowknife, Northwest Territories": 1793770505
+    }
+   },
+   {
+    "product": "Canned tuna, 170 grams",
+    "key": "tuna-tin",
+    "factor": 0.853,
+    "vectors": {
+     "Canada": 1353834282,
+     "Newfoundland and Labrador": 1159446987,
+     "Prince Edward Island": 1159447026,
+     "Nova Scotia": 1159447066,
+     "New Brunswick": 1159447106,
+     "Quebec": 1159447146,
+     "Ontario": 1159447186,
+     "Manitoba": 1159447226,
+     "Saskatchewan": 1159447266,
+     "Alberta": 1159447306,
+     "British Columbia": 1159447346,
+     "Whitehorse, Yukon": 1793770431,
+     "Yellowknife, Northwest Territories": 1793770488
+    }
+   },
+   {
+    "product": "Canned beans and lentils, 540 millilitres",
+    "key": "beans",
+    "factor": 0.741,
+    "vectors": {
+     "Canada": 1353834343,
+     "Newfoundland and Labrador": 1353834379,
+     "Prince Edward Island": 1353834416,
+     "Nova Scotia": 1353834453,
+     "New Brunswick": 1353834490,
+     "Quebec": 1353834527,
+     "Ontario": 1353834564,
+     "Manitoba": 1353834601,
+     "Saskatchewan": 1353834638,
+     "Alberta": 1353834675,
+     "British Columbia": 1353834712,
+     "Whitehorse, Yukon": 1793770462,
+     "Yellowknife, Northwest Territories": 1793770507
+    }
+   },
+   {
+    "product": "Canned corn, 341 millilitres",
+    "key": "sweetcorn",
+    "factor": 0.581,
+    "vectors": {
+     "Canada": 1458869907,
+     "Newfoundland and Labrador": 1458869940,
+     "Prince Edward Island": 1458869973,
+     "Nova Scotia": 1458870006,
+     "New Brunswick": 1458870039,
+     "Quebec": 1458870072,
+     "Ontario": 1458870105,
+     "Manitoba": 1458870138,
+     "Saskatchewan": 1458870171,
+     "Alberta": 1458870204,
+     "British Columbia": 1458870237,
+     "Whitehorse, Yukon": 1793770479,
+     "Yellowknife, Northwest Territories": 1793770519
+    }
+   },
+   {
+    "product": "Mushrooms, 227 grams",
+    "key": "mushrooms",
+    "factor": 1.322,
+    "vectors": {
+     "Canada": 1353834308,
+     "Newfoundland and Labrador": 1159447012,
+     "Prince Edward Island": 1159447052,
+     "Nova Scotia": 1159447092,
+     "New Brunswick": 1159447132,
+     "Quebec": 1159447172,
+     "Ontario": 1159447212,
+     "Manitoba": 1159447252,
+     "Saskatchewan": 1159447292,
+     "Alberta": 1159447332,
+     "British Columbia": 1159447372
+    }
+   },
+   {
+    "product": "Frozen peas, 750 grams",
+    "key": "peas",
+    "factor": 1.333,
+    "vectors": {
+     "Canada": 1353834325,
+     "Newfoundland and Labrador": 1353834361,
+     "Prince Edward Island": 1353834398,
+     "Nova Scotia": 1353834435,
+     "New Brunswick": 1353834472,
+     "Quebec": 1353834509,
+     "Ontario": 1353834546,
+     "Manitoba": 1353834583,
+     "Saskatchewan": 1353834620,
+     "Alberta": 1353834657,
+     "British Columbia": 1353834694,
+     "Whitehorse, Yukon": 1793770444
+    }
+   },
+   {
+    "product": "Peanut butter, 1 kilogram",
+    "key": "peanut-butter",
+    "factor": 0.34,
+    "vectors": {
+     "Canada": 1353834338,
+     "Newfoundland and Labrador": 1353834374,
+     "Prince Edward Island": 1353834411,
+     "Nova Scotia": 1353834448,
+     "New Brunswick": 1353834485,
+     "Quebec": 1353834522,
+     "Ontario": 1353834559,
+     "Manitoba": 1353834596,
+     "Saskatchewan": 1353834633,
+     "Alberta": 1353834670,
+     "British Columbia": 1353834707,
+     "Whitehorse, Yukon": 1793770457,
+     "Yellowknife, Northwest Territories": 1793770502
+    }
+   },
+   {
+    "product": "Olive oil, 1 litre",
+    "key": "olive-oil",
+    "factor": 0.5,
+    "vectors": {
+     "Canada": 1458869924,
+     "Newfoundland and Labrador": 1458869957,
+     "Prince Edward Island": 1458869990,
+     "Nova Scotia": 1458870023,
+     "New Brunswick": 1458870056,
+     "Quebec": 1458870089,
+     "Ontario": 1458870122,
+     "Manitoba": 1458870155,
+     "Saskatchewan": 1458870188,
+     "Alberta": 1458870221,
+     "British Columbia": 1458870254,
+     "Whitehorse, Yukon": 1793770477,
+     "Yellowknife, Northwest Territories": 1793770517
+    }
+   },
+   {
+    "product": "Vegetable oil, 3 litres",
+    "key": "oil",
+    "factor": 0.333,
+    "vectors": {
+     "Canada": 1353834336,
+     "Newfoundland and Labrador": 1353834372,
+     "Prince Edward Island": 1353834409,
+     "Nova Scotia": 1353834446,
+     "New Brunswick": 1353834483,
+     "Quebec": 1353834520,
+     "Ontario": 1353834557,
+     "Manitoba": 1353834594,
+     "Saskatchewan": 1353834631,
+     "Alberta": 1353834668,
+     "British Columbia": 1353834705,
+     "Whitehorse, Yukon": 1793770455,
+     "Yellowknife, Northwest Territories": 1793770500
+    }
+   },
+   {
+    "product": "Hummus, 227 grams",
+    "key": "hummus",
+    "factor": 0.881,
+    "vectors": {
+     "Canada": 1458869918,
+     "Newfoundland and Labrador": 1458869951,
+     "Prince Edward Island": 1458869984,
+     "Nova Scotia": 1458870017,
+     "New Brunswick": 1458870050,
+     "Quebec": 1458870083,
+     "Ontario": 1458870116,
+     "Manitoba": 1458870149,
+     "Saskatchewan": 1458870182,
+     "Alberta": 1458870215,
+     "British Columbia": 1458870248
+    }
+   },
+   {
+    "product": "Tofu, 350 grams ",
+    "key": "tofu",
+    "factor": 0.8,
+    "vectors": {
+     "Canada": 1458869936,
+     "Newfoundland and Labrador": 1458869969,
+     "Prince Edward Island": 1458870002,
+     "Nova Scotia": 1458870035,
+     "New Brunswick": 1458870068,
+     "Quebec": 1458870101,
+     "Ontario": 1458870134,
+     "Manitoba": 1458870167,
+     "Saskatchewan": 1458870200,
+     "Alberta": 1458870233,
+     "British Columbia": 1458870266
+    }
+   },
+   {
+    "product": "Yogurt, 500 grams",
+    "key": "yoghurt",
+    "factor": 1,
+    "vectors": {
+     "Canada": 1353834289,
+     "Newfoundland and Labrador": 1159446993,
+     "Prince Edward Island": 1159447033,
+     "Nova Scotia": 1159447073,
+     "New Brunswick": 1159447113,
+     "Quebec": 1159447153,
+     "Ontario": 1159447193,
+     "Manitoba": 1159447233,
+     "Saskatchewan": 1159447273,
+     "Alberta": 1159447313,
+     "British Columbia": 1159447353
+    }
+   },
+   {
+    "product": "White bread, 675 grams",
+    "key": "bread",
+    "factor": 1.185,
+    "vectors": {
+     "Canada": 1353834326,
+     "Newfoundland and Labrador": 1353834362,
+     "Prince Edward Island": 1353834399,
+     "Nova Scotia": 1353834436,
+     "New Brunswick": 1353834473,
+     "Quebec": 1353834510,
+     "Ontario": 1353834547,
+     "Manitoba": 1353834584,
+     "Saskatchewan": 1353834621,
+     "Alberta": 1353834658,
+     "British Columbia": 1353834695,
+     "Whitehorse, Yukon": 1793770445,
+     "Yellowknife, Northwest Territories": 1793770490
+    }
+   },
+   {
+    "product": "Wheat flour, 2.5 kilograms",
+    "key": "flour",
+    "factor": 0.6,
+    "vectors": {
+     "Canada": 1353834329,
+     "Newfoundland and Labrador": 1353834365,
+     "Prince Edward Island": 1353834402,
+     "Nova Scotia": 1353834439,
+     "New Brunswick": 1353834476,
+     "Quebec": 1353834513,
+     "Ontario": 1353834550,
+     "Manitoba": 1353834587,
+     "Saskatchewan": 1353834624,
+     "Alberta": 1353834661,
+     "British Columbia": 1353834698,
+     "Whitehorse, Yukon": 1793770448,
+     "Yellowknife, Northwest Territories": 1793770493
+    }
+   },
+   {
+    "product": "White sugar, 2 kilograms",
+    "key": "sugar",
+    "factor": 0.5,
+    "vectors": {
+     "Canada": 1353834330,
+     "Newfoundland and Labrador": 1353834366,
+     "Prince Edward Island": 1353834403,
+     "Nova Scotia": 1353834440,
+     "New Brunswick": 1353834477,
+     "Quebec": 1353834514,
+     "Ontario": 1353834551,
+     "Manitoba": 1353834588,
+     "Saskatchewan": 1353834625,
+     "Alberta": 1353834662,
+     "British Columbia": 1353834699,
+     "Whitehorse, Yukon": 1793770449,
+     "Yellowknife, Northwest Territories": 1793770494
+    }
+   },
+   {
+    "product": "Lemons, unit",
+    "key": "lemon",
+    "factor": 1,
+    "vectors": {
+     "Canada": 1353834296,
+     "Newfoundland and Labrador": 1159447000,
+     "Prince Edward Island": 1159447040,
+     "Nova Scotia": 1159447080,
+     "New Brunswick": 1159447120,
+     "Quebec": 1159447160,
+     "Ontario": 1159447200,
+     "Manitoba": 1159447240,
+     "Saskatchewan": 1159447280,
+     "Alberta": 1159447320,
+     "British Columbia": 1159447360
+    }
+   },
+   {
+    "product": "Limes, unit",
+    "key": "lime",
+    "factor": 1,
+    "vectors": {
+     "Canada": 1353834315,
+     "Newfoundland and Labrador": 1353834352,
+     "Prince Edward Island": 1353834388,
+     "Nova Scotia": 1353834425,
+     "New Brunswick": 1353834462,
+     "Quebec": 1353834499,
+     "Ontario": 1353834536,
+     "Manitoba": 1353834573,
+     "Saskatchewan": 1353834610,
+     "Alberta": 1353834647,
+     "British Columbia": 1353834684
+    }
+   },
+   {
+    "product": "Avocado, unit",
+    "key": "avocado",
+    "factor": 1,
+    "vectors": {
+     "Canada": 1353834299,
+     "Newfoundland and Labrador": 1159447003,
+     "Prince Edward Island": 1159447043,
+     "Nova Scotia": 1159447083,
+     "New Brunswick": 1159447123,
+     "Quebec": 1159447163,
+     "Ontario": 1159447203,
+     "Manitoba": 1159447243,
+     "Saskatchewan": 1159447283,
+     "Alberta": 1159447323,
+     "British Columbia": 1159447363
+    }
+   },
+   {
+    "product": "Cucumber, unit",
+    "key": "cucumber",
+    "factor": 1,
+    "vectors": {
+     "Canada": 1353834307,
+     "Newfoundland and Labrador": 1159447011,
+     "Prince Edward Island": 1159447051,
+     "Nova Scotia": 1159447091,
+     "New Brunswick": 1159447131,
+     "Quebec": 1159447171,
+     "Ontario": 1159447211,
+     "Manitoba": 1159447251,
+     "Saskatchewan": 1159447291,
+     "Alberta": 1159447331,
+     "British Columbia": 1159447371
+    }
+   },
+   {
+    "product": "Broccoli, unit",
+    "key": "broccoli",
+    "factor": 1,
+    "vectors": {
+     "Canada": 1353834309,
+     "Newfoundland and Labrador": 1159447013,
+     "Prince Edward Island": 1159447053,
+     "Nova Scotia": 1159447093,
+     "New Brunswick": 1159447133,
+     "Quebec": 1159447173,
+     "Ontario": 1159447213,
+     "Manitoba": 1159447253,
+     "Saskatchewan": 1159447293,
+     "Alberta": 1159447333,
+     "British Columbia": 1159447373
+    }
+   },
+   {
+    "product": "Celery, unit",
+    "key": "celery",
+    "factor": 1,
+    "vectors": {
+     "Canada": 1353834306,
+     "Newfoundland and Labrador": 1159447010,
+     "Prince Edward Island": 1159447050,
+     "Nova Scotia": 1159447090,
+     "New Brunswick": 1159447130,
+     "Quebec": 1159447170,
+     "Ontario": 1159447210,
+     "Manitoba": 1159447250,
+     "Saskatchewan": 1159447290,
+     "Alberta": 1159447330,
+     "British Columbia": 1159447370
+    }
+   },
+   {
+    "product": "Apples, per kilogram",
+    "key": "apple",
+    "factor": 0.9,
+    "vectors": {
+     "Canada": 1353834291,
+     "Newfoundland and Labrador": 1159446995,
+     "Prince Edward Island": 1159447035,
+     "Nova Scotia": 1159447075,
+     "New Brunswick": 1159447115,
+     "Quebec": 1159447155,
+     "Ontario": 1159447195,
+     "Manitoba": 1159447235,
+     "Saskatchewan": 1159447275,
+     "Alberta": 1159447315,
+     "British Columbia": 1159447355
+    }
+   },
+   {
+    "product": "Oranges, per kilogram",
+    "key": "orange",
+    "factor": 0.18,
+    "vectors": {
+     "Canada": 1353834292,
+     "Newfoundland and Labrador": 1159446996,
+     "Prince Edward Island": 1159447036,
+     "Nova Scotia": 1159447076,
+     "New Brunswick": 1159447116,
+     "Quebec": 1159447156,
+     "Ontario": 1159447196,
+     "Manitoba": 1159447236,
+     "Saskatchewan": 1159447276,
+     "Alberta": 1159447316,
+     "British Columbia": 1159447356
+    }
+   },
+   {
+    "product": "Grapes, per kilogram",
+    "key": "grapes",
+    "factor": 0.5,
+    "vectors": {
+     "Canada": 1353834297,
+     "Newfoundland and Labrador": 1159447001,
+     "Prince Edward Island": 1159447041,
+     "Nova Scotia": 1159447081,
+     "New Brunswick": 1159447121,
+     "Quebec": 1159447161,
+     "Ontario": 1159447201,
+     "Manitoba": 1159447241,
+     "Saskatchewan": 1159447281,
+     "Alberta": 1159447321,
+     "British Columbia": 1159447361
+    }
+   },
+   {
+    "product": "Pears, per kilogram",
+    "key": "pear",
+    "factor": 0.68,
+    "vectors": {
+     "Canada": 1353834295,
+     "Newfoundland and Labrador": 1159446999,
+     "Prince Edward Island": 1159447039,
+     "Nova Scotia": 1159447079,
+     "New Brunswick": 1159447119,
+     "Quebec": 1159447159,
+     "Ontario": 1159447199,
+     "Manitoba": 1159447239,
+     "Saskatchewan": 1159447279,
+     "Alberta": 1159447319,
+     "British Columbia": 1159447359
+    }
+   },
+   {
+    "product": "Cabbage, per kilogram",
+    "key": "cabbage",
+    "factor": 0.8,
+    "vectors": {
+     "Canada": 1353834302,
+     "Newfoundland and Labrador": 1159447006,
+     "Prince Edward Island": 1159447046,
+     "Nova Scotia": 1159447086,
+     "New Brunswick": 1159447126,
+     "Quebec": 1159447166,
+     "Ontario": 1159447206,
+     "Manitoba": 1159447246,
+     "Saskatchewan": 1159447286,
+     "Alberta": 1159447326,
+     "British Columbia": 1159447366
+    }
+   },
+   {
+    "product": "Peppers, per kilogram",
+    "key": "peppers",
+    "factor": 0.48,
+    "vectors": {
+     "Canada": 1353834310,
+     "Newfoundland and Labrador": 1159447014,
+     "Prince Edward Island": 1159447054,
+     "Nova Scotia": 1159447094,
+     "New Brunswick": 1159447134,
+     "Quebec": 1159447174,
+     "Ontario": 1159447214,
+     "Manitoba": 1159447254,
+     "Saskatchewan": 1159447294,
+     "Alberta": 1159447334,
+     "British Columbia": 1159447374
+    }
+   },
+   {
+    "product": "Sweet potatoes, per kilogram",
+    "key": "sweet-potato",
+    "factor": 1,
+    "vectors": {
+     "Canada": 1353834317,
+     "Newfoundland and Labrador": 1353834354,
+     "Prince Edward Island": 1353834390,
+     "Nova Scotia": 1353834427,
+     "New Brunswick": 1353834464,
+     "Quebec": 1353834501,
+     "Ontario": 1353834538,
+     "Manitoba": 1353834575,
+     "Saskatchewan": 1353834612,
+     "Alberta": 1353834649,
+     "British Columbia": 1353834686
+    }
+   },
+   {
+    "product": "Salmon, per kilogram",
+    "key": "salmon",
+    "factor": 0.24,
+    "vectors": {
+     "Canada": 1458869929,
+     "Newfoundland and Labrador": 1458869962,
+     "Prince Edward Island": 1458869995,
+     "Nova Scotia": 1458870028,
+     "New Brunswick": 1458870061,
+     "Quebec": 1458870094,
+     "Ontario": 1458870127,
+     "Manitoba": 1458870160,
+     "Saskatchewan": 1458870193,
+     "Alberta": 1458870226,
+     "British Columbia": 1458870259
+    }
+   },
+   {
+    "product": "Shrimp, 300 grams",
+    "key": "raw-prawns",
+    "factor": 0.667,
+    "vectors": {
+     "Canada": 1458869931,
+     "Newfoundland and Labrador": 1458869964,
+     "Prince Edward Island": 1458869997,
+     "Nova Scotia": 1458870030,
+     "New Brunswick": 1458870063,
+     "Quebec": 1458870096,
+     "Ontario": 1458870129,
+     "Manitoba": 1458870162,
+     "Saskatchewan": 1458870195,
+     "Alberta": 1458870228,
+     "British Columbia": 1458870261
+    }
+   },
+   {
+    "product": "Dried lentils, 900 grams",
+    "key": "red-lentils",
+    "factor": 0.556,
+    "vectors": {
+     "Canada": 1353834344,
+     "Newfoundland and Labrador": 1353834380,
+     "Prince Edward Island": 1353834417,
+     "Nova Scotia": 1353834454,
+     "New Brunswick": 1353834491,
+     "Quebec": 1353834528,
+     "Ontario": 1353834565,
+     "Manitoba": 1353834602,
+     "Saskatchewan": 1353834639,
+     "Alberta": 1353834676,
+     "British Columbia": 1353834713,
+     "Whitehorse, Yukon": 1793770463,
+     "Yellowknife, Northwest Territories": 1793770508
+    }
+   },
+   {
+    "product": "Almonds, 200 grams",
+    "key": "almonds",
+    "factor": 1,
+    "vectors": {
+     "Canada": 1458869905,
+     "Newfoundland and Labrador": 1458869938,
+     "Prince Edward Island": 1458869971,
+     "Nova Scotia": 1458870004,
+     "New Brunswick": 1458870037,
+     "Quebec": 1458870070,
+     "Ontario": 1458870103,
+     "Manitoba": 1458870136,
+     "Saskatchewan": 1458870169,
+     "Alberta": 1458870202,
+     "British Columbia": 1458870235,
+     "Whitehorse, Yukon": 1793770484,
+     "Yellowknife, Northwest Territories": 1793770524
+    }
+   },
+   {
+    "product": "Mayonnaise, 890 millilitres ",
+    "key": "mayo",
+    "factor": 0.449,
+    "vectors": {
+     "Canada": 1353834339,
+     "Newfoundland and Labrador": 1353834375,
+     "Prince Edward Island": 1353834412,
+     "Nova Scotia": 1353834449,
+     "New Brunswick": 1353834486,
+     "Quebec": 1353834523,
+     "Ontario": 1353834560,
+     "Manitoba": 1353834597,
+     "Saskatchewan": 1353834634,
+     "Alberta": 1353834671,
+     "British Columbia": 1353834708,
+     "Whitehorse, Yukon": 1793770458,
+     "Yellowknife, Northwest Territories": 1793770503
+    }
+   },
+   {
+    "product": "Salsa, 418 millilitres",
+    "key": "salsa",
+    "factor": 0.718,
+    "vectors": {
+     "Canada": 1458869930,
+     "Newfoundland and Labrador": 1458869963,
+     "Prince Edward Island": 1458869996,
+     "Nova Scotia": 1458870029,
+     "New Brunswick": 1458870062,
+     "Quebec": 1458870095,
+     "Ontario": 1458870128,
+     "Manitoba": 1458870161,
+     "Saskatchewan": 1458870194,
+     "Alberta": 1458870227,
+     "British Columbia": 1458870260
+    }
+   },
+   {
+    "product": "Cream, 1 litre",
+    "key": "double-cream",
+    "factor": 0.3,
+    "vectors": {
+     "Canada": 1353834286,
+     "Newfoundland and Labrador": 1159446990,
+     "Prince Edward Island": 1159447030,
+     "Nova Scotia": 1159447070,
+     "New Brunswick": 1159447110,
+     "Quebec": 1159447150,
+     "Ontario": 1159447190,
+     "Manitoba": 1159447230,
+     "Saskatchewan": 1159447270,
+     "Alberta": 1159447310,
+     "British Columbia": 1159447350
+    }
+   }
+  ]
+ }
+}

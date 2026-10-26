@@ -40,6 +40,7 @@ import { listProducts } from "../services/products";
 import { listRevisions } from "../services/revisions";
 import { loadSettings, saveWording, WORDING } from "../services/site-content";
 import { memberSavingsSummary } from "../services/meal-plans";
+import { loadOfficialPrices, refreshOfficialPrices } from "../services/official-prices";
 import { CONTACT_EMAIL_KEY, listContactMessages, markContactHandled } from "../services/contact";
 import { statsSummary } from "../services/stats";
 import type { AdminMeta } from "../views/admin/layout";
@@ -341,8 +342,14 @@ adminRoutes.post("/admin/wording", async (c) => {
 // --- System pages ---
 
 adminRoutes.get("/admin/stats", async (c) =>
-  c.html(<StatsPage meta={meta(c, "Stats")} s={await statsSummary(c.env.DB)} meals={await memberSavingsSummary(c.env.DB)} />),
+  c.html(<StatsPage meta={meta(c, "Stats")} s={await statsSummary(c.env.DB)} meals={await memberSavingsSummary(c.env.DB)} prices={await loadOfficialPrices(c.env.DB)} />),
 );
+
+adminRoutes.post("/admin/meal-prices/refresh", async (c) => {
+  const result = await refreshOfficialPrices(c.env, fetch, true);
+  await recordAudit(c.env.DB, { ...actorAudit(c), action: "meal-prices.refresh", detail: result });
+  return back(c, "/admin/stats", "saved");
+});
 adminRoutes.get("/admin/activity", async (c) => c.html(<ActivityPage meta={meta(c, "Activity")} rows={await listAudit(c.env.DB, 200)} />));
 adminRoutes.get("/admin/emails", async (c) => c.html(<EmailsPage meta={meta(c, "Emails")} rows={await listEmailLog(c.env.DB, 200)} />));
 adminRoutes.get("/admin/backups", async (c) => c.html(<BackupsPage meta={meta(c, "Backups")} rows={await listBackups(c.env.DB, 50)} />));
