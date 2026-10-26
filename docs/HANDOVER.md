@@ -407,6 +407,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Kitchen joining fee idea (owner, 2026-10-26, awaiting CH):** the normal joining fee is **19.99** (the owner says they've already sold a few at 19.99), and a friend's code gives **50% off: 9.99**. Shared as "join for £9.99 with my code (normally £19.99)". Claude advised: keep records of the full-price sales, only say "normally £19.99" while people really pay that without a code, and avoid a general "was/now" sale. The currency to confirm is £ (the owner said "$", but earlier said pounds to start).
 
+- **Registrations later (owner, 2026-10-26):** HMRC self-employment, ICO, trademark and insurance come later. Claude flagged that the ICO fee is due once the site processes customer data (launch); HMRC has until 5 Oct after the tax year.
+
 - **Kitchen domain (owner, 2026-10-26):** the owner asked "why buy if don't need to". No separate Kitchen domain for now: use `bodyregenerationmethod.com/kitchen` (plus the free `kitchen.` subdomain). bodyregenkitchen.com is optional later. Stripe: as a sole trader (Individual), with a personal bank account and no company needed; register as self-employed with HMRC.
 
 - **Domain (owner, 2026-10-26): `bodyregenerationmethod.com` bought on Cloudflare** (zone active). The owner asked for it to be set up for the Kitchen too. Code: `www` → the main address and `kitchen.` → `/kitchen` (301), see `src/index.tsx`. The production env isn't created yet: that waits for the owner's "GO LIVE" (GO_LIVE.md updated with the domains, vars and secrets).
