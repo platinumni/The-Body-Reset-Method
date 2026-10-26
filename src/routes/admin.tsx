@@ -18,6 +18,7 @@ import {
   moveLesson,
   restoreLessonRevision,
   restoreProductRevision,
+  setMonthlyPrice,
   setBundleItems,
   storeImage,
   updateLesson,
@@ -136,6 +137,16 @@ adminRoutes.post("/admin/programmes/:id", async (c) => {
   const { value, error } = validateProduct({ title: String(form.title ?? ""), price: String(form.price ?? ""), status: String(form.status ?? ""), sortOrder: String(form.sort_order ?? "0") });
   if (!value) return renderProduct(c, id, error);
   if (!(await updateProduct(c.env.DB, id, value, actor(c)))) return c.notFound();
+  return back(c, `/admin/programmes/${id}`, "saved");
+});
+
+adminRoutes.post("/admin/programmes/:id/monthly", async (c) => {
+  const id = idParam(c);
+  const raw = String((await c.req.parseBody()).monthly ?? "").replace(/[£,\s]/g, "");
+  const n = Number(raw);
+  if (raw && (!Number.isFinite(n) || n <= 0 || n > 1000)) return renderProduct(c, id, "Monthly price must be in pounds, e.g. 2.99, or empty.");
+  const pence = raw ? Math.round(n * 100) : null;
+  await setMonthlyPrice(c.env.DB, id, pence, actor(c));
   return back(c, `/admin/programmes/${id}`, "saved");
 });
 

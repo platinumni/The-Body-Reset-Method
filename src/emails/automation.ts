@@ -155,3 +155,10 @@ export function accessCodeEmail(i: { siteName: string; to: string; url: string; 
   const html = wrap(i.siteName, `<p>${intro}</p>${button(i.url, "Unlock my access")}${extra}<p style="font-size:14px;color:#4b5750">This link lasts 7 days. If you didn't ask for this, ignore this email.</p>`);
   return { to: i.to, template: "access_code", subject: "Unlock your access", html, text: `${i.beta ? "Thanks for helping test the programmes." : `Your access through ${i.label} is ready.`}\n\nUnlock it: ${i.url}\n\nThis link lasts 7 days.` };
 }
+
+export function membershipCancelledEmail(i: { siteName: string; to: string; until: string | null; url: string }): Email {
+  const until = i.until ? new Date(i.until.replace(" ", "T") + "Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : null;
+  const line = until ? `You won't be charged again. You keep access until ${until}.` : "You won't be charged again. You keep access until the end of the month you've paid for.";
+  const html = wrap(i.siteName, `<p>Your Body Regeneration Kitchen membership is cancelled.</p><p>${esc(line)}</p><p>Changed your mind? You can restart it before then, with no new joining fee.</p>${button(i.url, "Manage membership")}`);
+  return { to: i.to, template: "membership_cancelled", subject: "Your Kitchen membership is cancelled", html, text: `Your Body Regeneration Kitchen membership is cancelled.\n\n${line}\n\nChanged your mind? ${i.url}` };
+}

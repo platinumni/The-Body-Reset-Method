@@ -12,7 +12,7 @@ Keys go **straight into Cloudflare**. Never paste them into chat, email or code.
 4. Back in Stripe, add a webhook:
    1. Go to **Developers** → **Webhooks** → **Add endpoint**.
    2. **Endpoint URL:** `https://bodyregen-staging.michaeljmarden.workers.dev/webhooks/stripe`
-   3. **Events:** `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.expired`, `charge.refunded`, `charge.dispute.created` (chargebacks: cancels or deducts the partner's commission)
+   3. **Events:** `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.expired`, `charge.refunded`, `charge.dispute.created` (chargebacks: cancels or deducts the partner's commission), and for Kitchen memberships `invoice.paid`, `customer.subscription.updated`, `customer.subscription.deleted`
    4. Save it, then open the endpoint and **reveal the Signing secret**. It starts `whsec_`.
 5. Add that to Cloudflare the same way, with the name `STRIPE_WEBHOOK_SECRET`.
 6. Optional: to offer PayPal, go to Stripe **Settings** → **Payment methods** and turn on **PayPal**.

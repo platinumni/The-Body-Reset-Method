@@ -197,7 +197,7 @@ function Notes(props: { plan: Plan }) {
   );
 }
 
-function RecipeCard(props: { recipe: Recipe; times: number; scale: number; portions: number; swaps: Recipe[]; input: PlanInput; allIds: string[] }) {
+function RecipeCard(props: { recipe: Recipe; times: number; scale: number; portions: number; swaps: Recipe[]; input: PlanInput; allIds: string[]; favourite: boolean; csrfToken: string }) {
   const { recipe: r, input } = props;
   const made = Math.round(props.portions * props.times * 10) / 10;
   return (
@@ -207,6 +207,14 @@ function RecipeCard(props: { recipe: Recipe; times: number; scale: number; porti
       </div>
       <p class="eyebrow">{MEAL_LABELS[r.meal_type]}</p>
       <h3>{r.name}</h3>
+      <form method="post" action="/account/meal-plans/favourite" class="inline-form no-print">
+        <CsrfField token={props.csrfToken} />
+        <input type="hidden" name="recipe" value={r.id} />
+        <input type="hidden" name="query" value={planQuery(input).split("?")[1]} />
+        <button class="btn btn-ghost btn-small" type="submit" aria-pressed={props.favourite ? "true" : "false"}>
+          {props.favourite ? "★ Favourite" : "☆ Add to favourites"}
+        </button>
+      </form>
       <p class="small muted">
         Prep {r.prep_minutes} min{r.cook_minutes ? ` · cook ${r.cook_minutes} min` : ""} · makes {made} portion{made === 1 ? "" : "s"} this week (
         {props.scale === 1 ? "as written" : `${Math.round(props.scale * 10) / 10}× the amounts below`})
@@ -263,6 +271,8 @@ export function MealPlannerPage(props: {
   spent?: boolean;
   spend: import("../services/meal-plans").SpendSummary;
   regions: { us: string[]; ca: string[] };
+  favourites?: string[];
+  hasMembership?: boolean;
 }) {
   const { plan, input } = props;
   const cur = (n: number) => money(n, input.country);
@@ -286,6 +296,12 @@ export function MealPlannerPage(props: {
         <div class="wrap narrow">
           <p class="small">
             <a href="/account">← My programmes</a>
+            {props.hasMembership && (
+              <>
+                {" · "}
+                <a href="/account/membership">Manage membership</a>
+              </>
+            )}
           </p>
           <p class="eyebrow">Budget meal plans</p>
           <h1>Your week of meals</h1>
@@ -471,7 +487,7 @@ export function MealPlannerPage(props: {
 
               <h2 class="plan-heading">Recipes</h2>
               {plan.recipes.map((c) => (
-                <RecipeCard recipe={c.recipe} times={c.times} scale={c.scale} portions={plan.portions} swaps={plan.swaps[c.recipe.id] ?? []} input={{ ...input, picks: allIds }} allIds={allIds} />
+                <RecipeCard recipe={c.recipe} times={c.times} scale={c.scale} portions={plan.portions} swaps={plan.swaps[c.recipe.id] ?? []} input={{ ...input, picks: allIds }} allIds={allIds} favourite={!!props.favourites?.includes(c.recipe.id)} csrfToken={props.csrfToken} />
               ))}
               <Notes plan={plan} />
             </>

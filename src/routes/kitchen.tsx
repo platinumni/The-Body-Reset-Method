@@ -14,6 +14,16 @@ import { hitRateLimit } from "../services/rate-limit";
 import { openTrial, startTrial } from "../services/kitchen-trials";
 import { FreeWeekPage, FreeWeekResultPage } from "../views/kitchen-free-week";
 import { pageMeta } from "./meta";
+import { getCookie } from "hono/cookie";
+import { CONSENT_KINDS, MEMBERSHIP_CONSENTS } from "../content/consents";
+import { clientIp } from "../middleware/rate-limit";
+import { activeAffiliateByCode, REF_COOKIE } from "../services/affiliates";
+import { attachCheckoutSession, createPendingOrder, type ConsentAnswers } from "../services/orders";
+import { createMembershipCheckout } from "../services/payments/stripe";
+import { getProductsBySlugs, isMembership, isOnSale } from "../services/products";
+import { recordStat } from "../services/stats";
+import { MEAL_PLANS_SLUG } from "../services/meal-plans";
+
 
 // Body Regeneration Kitchen free week: email only, no card.
 
@@ -81,4 +91,46 @@ kitchenRoutes.get("/kitchen/week", async (c) => {
   const { plan, source } = await planFor(c.env.DB, trial.input);
   c.header("Referrer-Policy", "no-referrer");
   return c.html(<FreeWeekResultPage meta={meta} plan={plan} justStarted={false} emailSent={false} priceSource={source} />);
+});
+
+// --- Joining the Kitchen (monthly membership) ---
+
+kitchenRoutes.post("/kitchen/join", rateLimit("checkout", 10, 600), async (c) => {
+  const form = await c.req.parseBody();
+  const [product] = await getProductsBySlugs(c.env.DB, [MEAL_PLANS_SLUG]);
+  if (!product || !isOnSale(product) || !isMembership(product) || !c.env.STRIPE_SECRET_KEY) return c.redirect("/kitchen", 303);
+  const consents = Object.fromEntries(CONSENT_KINDS.map((k) => [k, form[k] === "yes"])) as ConsentAnswers;
+  if (MEMBERSHIP_CONSENTS.some((k) => !consents[k])) return c.redirect("/kitchen?missing=1#join", 303);
+
+  const typedRef = String(form.ref ?? "").trim().toLowerCase();
+  const refCandidate = typedRef || getCookie(c, REF_COOKIE) || "";
+  const refCode = refCandidate && (await activeAffiliateByCode(c.env.DB, refCandidate)) ? refCandidate : null;
+  const geRef = cleanGe(form.ge);
+  const join = product.price_pence!;
+  const monthly = product.monthly_pence!;
+  const order = await createPendingOrder(c.env.DB, {
+    items: [{ ...product, title: `${product.title} (joining fee and first month)`, price_pence: join + monthly }],
+    consents,
+    refCode,
+    geRef,
+    ip: clientIp(c.req.raw),
+  });
+  try {
+    const session = await createMembershipCheckout(c.env.STRIPE_SECRET_KEY, {
+      orderPublicId: order.public_id,
+      title: product.title,
+      joinPence: join,
+      monthlyPence: monthly,
+      currency: product.currency,
+      successUrl: `${c.env.SITE_URL}/checkout/complete?order=${order.public_id}`,
+      cancelUrl: `${c.env.SITE_URL}/kitchen`,
+      metadata: Object.fromEntries(Object.entries({ ge: geRef, ref: refCode }).filter(([, v]) => !!v)) as Record<string, string>,
+    });
+    await attachCheckoutSession(c.env.DB, order.id, session.id);
+    await recordStat(c.env.DB, "checkout_started");
+    return c.redirect(session.url, 303);
+  } catch (err) {
+    console.error("Stripe membership checkout failed", { order: order.public_id, err: String(err) });
+    return c.redirect("/kitchen?error=1#join", 303);
+  }
 });

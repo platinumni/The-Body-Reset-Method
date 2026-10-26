@@ -7,7 +7,7 @@ import { getRevision, saveRevisionStmt } from "./revisions";
 
 export type Actor = { userId: number; ip?: string };
 
-const PRODUCT_COLS = "id, slug, title, kind, price_pence, currency, status, sort_order";
+const PRODUCT_COLS = "id, slug, title, kind, price_pence, currency, status, sort_order, monthly_pence";
 
 export async function getProduct(db: D1Database, id: number): Promise<Product | null> {
   return db.prepare(`SELECT ${PRODUCT_COLS} FROM products WHERE id = ?1`).bind(id).first<Product>();
@@ -43,6 +43,12 @@ export function validateProduct(input: { title: string; price: string; status: s
   if (!status) return { error: "Choose a status." };
   if (status === "on_sale" && pricePence == null) return { error: "Set a price before putting it on sale." };
   return { value: { title, pricePence, status, sortOrder: Math.trunc(Number(input.sortOrder) || 0) } };
+}
+
+/** Kitchen only: a monthly price makes it a membership (the normal price is then the joining fee). Null = one-off. */
+export async function setMonthlyPrice(db: D1Database, id: number, pence: number | null, actor: Actor): Promise<void> {
+  await db.prepare("UPDATE products SET monthly_pence = ?1, updated_at = datetime('now') WHERE id = ?2 AND slug = 'meal-plans'").bind(pence, id).run();
+  await recordAudit(db, { actorUserId: actor.userId, action: "product.monthly_price", targetType: "product", targetId: id, ip: actor.ip, detail: { monthly_pence: pence } });
 }
 
 export async function updateProduct(db: D1Database, id: number, input: ProductInput, actor: Actor): Promise<boolean> {

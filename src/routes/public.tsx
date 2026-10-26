@@ -223,6 +223,7 @@ publicRoutes.get("/kitchen", async (c) => {
       inBasket={parseBasket(getCookie(c, BASKET_COOKIE)).includes(product.slug)}
       sample={sample}
       priceSource={book.source}
+      notice={c.req.query("missing") ? "Please tick both boxes to continue." : c.req.query("error") ? "Payment couldn't be started just now. Please try again in a minute." : null}
     />,
   );
 });

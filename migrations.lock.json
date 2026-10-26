@@ -16,5 +16,6 @@
   "0015_partners.sql": "cb61b5750f37e3e9fa37888fe632c1a8f19499e47ad667ddfb52c951199acf2e",
   "0016_growth.sql": "c6ae5c42fa2fcaa8c1a14cd937c5c6b960fa1c98ef9328f7d4c1c79348e78499",
   "0017_kitchen_free_week.sql": "b1e3b5b5effc56c5a6654992cf96538a131405e46b77dc0b665f6061ee44de71",
-  "0018_access_codes.sql": "0adf3b185961a5cbeead58f57ef9aa8ebb267d084f05f5d38344e57cbdd932d5"
+  "0018_access_codes.sql": "0adf3b185961a5cbeead58f57ef9aa8ebb267d084f05f5d38344e57cbdd932d5",
+  "0019_subscriptions.sql": "d792da13fc5c0c4b9e0f746dd4ac74bf6618c68047193c839e1fedefcc8e75fc"
 }

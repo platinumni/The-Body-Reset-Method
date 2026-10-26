@@ -1,4 +1,6 @@
+import { CHECKOUT_CONSENTS, MEMBERSHIP_CONSENTS } from "../content/consents";
 import type { CatalogueEntry } from "../services/catalogue";
+import { formatPrice } from "../services/products";
 import { DAYS, money, type Plan } from "../lib/meal-plans/planner";
 import { Text } from "./components";
 import { CsrfField, Layout, type PageMeta } from "./layout";
@@ -7,8 +9,9 @@ import { TrustStrip } from "./marketing";
 const MEAL_LABELS: Record<string, string> = { Breakfasts: "Breakfast", Lunches: "Lunch", "Evening meals": "Evening meal", Snacks: "Snack" };
 
 /** Body Regeneration Kitchen: the meal plans' own landing page, sold through the main site's checkout. */
-export function KitchenPage(props: { meta: PageMeta; csrfToken: string; product: CatalogueEntry; inBasket: boolean; sample: Plan; priceSource: string | null }) {
+export function KitchenPage(props: { meta: PageMeta; csrfToken: string; product: CatalogueEntry; inBasket: boolean; sample: Plan; priceSource: string | null; notice?: string | null }) {
   const p = props.product;
+  const membership = p.onSale && p.product?.monthly_pence != null ? { join: p.product.price_pence!, monthly: p.product.monthly_pence, currency: p.product.currency } : null;
   const s = props.sample;
   return (
     <Layout meta={props.meta}>
@@ -21,10 +24,21 @@ export function KitchenPage(props: { meta: PageMeta; csrfToken: string; product:
             priced with up-to-date official food prices.
           </p>
           <div class="hero-buy">
-            <p class="price-line large">
-              <Text copy={p.displayPrice} />
-            </p>
-            {p.onSale ? (
+            {membership ? (
+              <p class="price-line large">
+                {membership.join > 0 ? `${formatPrice(membership.join, membership.currency)} to join, then ` : ""}
+                {formatPrice(membership.monthly, membership.currency)} a month
+              </p>
+            ) : (
+              <p class="price-line large">
+                <Text copy={p.displayPrice} />
+              </p>
+            )}
+            {membership ? (
+              <a class="btn btn-primary" href="#join">
+                Join Body Regeneration Kitchen
+              </a>
+            ) : p.onSale ? (
               props.inBasket ? (
                 <a class="btn btn-primary" href="/basket">
                   In your basket: view basket
@@ -155,11 +169,60 @@ export function KitchenPage(props: { meta: PageMeta; csrfToken: string; product:
           <details class="faq">
             <summary>Can I get a refund?</summary>
             <p>
-              Budget Meal Plans aren't covered by our 90-day guarantee, and you get access straight away. If something isn't working, <a href="/contact">get in touch</a>.
+              The Kitchen isn't covered by our 90-day guarantee, and you get access straight away. You can cancel any time and won't be charged again. If
+              something isn't working, <a href="/contact">get in touch</a>.
             </p>
           </details>
         </div>
       </section>
+
+      {membership && (
+        <section class="band band-quiet" id="join">
+          <div class="wrap narrow">
+            <header class="section-head">
+              <h2>Join Body Regeneration Kitchen</h2>
+              <p>
+                {membership.join > 0
+                  ? `You pay ${formatPrice(membership.join + membership.monthly, membership.currency)} today (the ${formatPrice(membership.join, membership.currency)} joining fee and your first month), then ${formatPrice(membership.monthly, membership.currency)} every month until you cancel.`
+                  : `${formatPrice(membership.monthly, membership.currency)} every month until you cancel.`}{" "}
+                Cancel any time in your account, in two clicks. You keep access until the end of the month you've paid for.
+              </p>
+            </header>
+            {props.notice && (
+              <p class="form-errors" role="alert">
+                {props.notice}
+              </p>
+            )}
+            <form method="post" action="/kitchen/join" class="card">
+              <CsrfField token={props.csrfToken} />
+              {MEMBERSHIP_CONSENTS.map((k) => (
+                <div class="check">
+                  <input type="checkbox" id={`kj-${k}`} name={k} value="yes" required />
+                  <label for={`kj-${k}`}>
+                    {CHECKOUT_CONSENTS[k].label}
+                    {k === "terms" && (
+                      <>
+                        {" "}
+                        <a href="/legal/terms" target="_blank" rel="noopener">
+                          Read the terms
+                        </a>
+                      </>
+                    )}
+                  </label>
+                </div>
+              ))}
+              <div class="field">
+                <label for="kj-ref">Recommended by a member? Their code (optional)</label>
+                <input id="kj-ref" name="ref" type="text" maxlength={12} autocomplete="off" />
+              </div>
+              <button class="btn btn-primary" type="submit">
+                Continue to secure payment
+              </button>
+              <p class="small muted">Payments are handled by Stripe. We never see your card details.</p>
+            </form>
+          </div>
+        </section>
+      )}
 
       <section class="band" id="signup">
         <div class="wrap narrow center">

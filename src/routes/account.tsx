@@ -2,8 +2,14 @@ import { publishedReviews, reviewableProducts, reviewProblem, submitReview } fro
 import { ReviewPage } from "../views/reviews";
 import { priceBook, regionsFor } from "../lib/meal-plans/official";
 import { loadOfficialPrices } from "../services/official-prices";
-import { buildPlan, COUNTRIES } from "../lib/meal-plans/planner";
-import { canUseMealPlans, DEFAULT_PREFS, loadPrefs, readPlanInput, recordSpend, savePrefs, spendSummary } from "../services/meal-plans";
+import { buildPlan, COUNTRIES, weekSeed } from "../lib/meal-plans/planner";
+import { recipeById } from "../lib/meal-plans/recipes";
+import { membershipCancelledEmail } from "../emails/automation";
+import { sendEmail } from "../services/email";
+import { setCancelAtPeriodEnd } from "../services/payments/stripe";
+import { kitchenMembership, kitchenProduct, markCancelRequested } from "../services/subscriptions";
+import { MembershipPage } from "../views/membership";
+import { canUseMealPlans, DEFAULT_PREFS, listFavourites, loadPrefs, readPlanInput, recordSpend, savePrefs, spendSummary, toggleFavourite } from "../services/meal-plans";
 import { MealPlannerPage } from "../views/meal-plans";
 import { Hono, type Context } from "hono";
 import type { AppEnv } from "../env";
@@ -118,9 +124,13 @@ accountRoutes.get("/account/meal-plans", async (c) => {
   const hasSaved = prefs !== DEFAULT_PREFS;
   const spend = await spendSummary(c.env.DB, user.id);
   const prices = await loadOfficialPrices(c.env.DB);
+  // A fresh plan each week unless they've shuffled or swapped.
+  if (!params.has("seed")) params.set("seed", String(weekSeed()));
   const chosen = readPlanInput(mealQuery(params), prefs);
-  const input = { ...chosen, personalFactor: spend.personalFactor, book: priceBook(prices, chosen.country, chosen.region) };
+  const favourites = await listFavourites(c.env.DB, user.id);
+  const input = { ...chosen, favourites, personalFactor: spend.personalFactor, book: priceBook(prices, chosen.country, chosen.region) };
   const show = params.has("submitted") || hasSaved;
+  const membership = await kitchenMembership(c.env.DB, user.email);
   return c.html(
     <MealPlannerPage
       meta={pageMeta(c, { title: "Your meal plan", description: "Budget meal plans with recipes and a shopping list.", path: "/account/meal-plans", noindex: true })}
@@ -131,8 +141,47 @@ accountRoutes.get("/account/meal-plans", async (c) => {
       spent={params.has("spent")}
       spend={spend}
       regions={{ us: regionsFor(prices, "us"), ca: regionsFor(prices, "ca") }}
+      favourites={favourites}
+      hasMembership={!!membership}
     />,
   );
+});
+
+accountRoutes.post("/account/meal-plans/favourite", async (c) => {
+  const user = c.get("user")!;
+  if (user.role !== "admin" && !(await canUseMealPlans(c.env.DB, user.id))) return c.redirect("/kitchen", 303);
+  const form = await c.req.parseBody();
+  const recipe = recipeById(String(form.recipe ?? ""));
+  const query = new URLSearchParams(String(form.query ?? ""));
+  if (recipe) await toggleFavourite(c.env.DB, user.id, recipe.id);
+  return c.redirect(`/account/meal-plans?${query.toString()}${recipe ? `#r-${recipe.id}` : ""}`, 303);
+});
+
+// --- Kitchen membership: see it, cancel it (or change your mind) ---
+
+const membershipMeta = (c: Context<AppEnv>) => pageMeta(c, { title: "Your Kitchen membership", description: "Manage your membership.", path: "/account/membership", noindex: true });
+
+accountRoutes.get("/account/membership", async (c) => {
+  const user = c.get("user")!;
+  const sub = await kitchenMembership(c.env.DB, user.email);
+  const monthly = await kitchenProduct(c.env.DB);
+  return c.html(<MembershipPage meta={membershipMeta(c)} csrfToken={c.get("csrfToken")} sub={sub} monthly={monthly} done={c.req.query("done") ?? null} />);
+});
+
+accountRoutes.post("/account/membership", rateLimit("membership", 10, 3600), async (c) => {
+  const user = c.get("user")!;
+  const sub = await kitchenMembership(c.env.DB, user.email);
+  const cancel = (await c.req.parseBody()).action !== "resume";
+  if (!sub || !c.env.STRIPE_SECRET_KEY) return c.redirect("/account/membership", 303);
+  try {
+    await setCancelAtPeriodEnd(c.env.STRIPE_SECRET_KEY, sub.stripe_subscription_id, cancel);
+  } catch (err) {
+    console.error("Membership change failed", String(err));
+    return c.redirect("/account/membership?done=error", 303);
+  }
+  await markCancelRequested(c.env.DB, sub.id, cancel);
+  if (cancel) await sendEmail(c.env, membershipCancelledEmail({ siteName: c.env.SITE_NAME, to: user.email, until: sub.current_period_end, url: `${c.env.SITE_URL}/account/membership` }));
+  return c.redirect(`/account/membership?done=${cancel ? "cancelled" : "resumed"}`, 303);
 });
 
 accountRoutes.post("/account/meal-plans/spend", rateLimit("meal-spend", 30, 3600), async (c) => {

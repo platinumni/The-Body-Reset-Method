@@ -25,7 +25,8 @@ import {
   type Order,
   type PaidSession,
 } from "../services/orders";
-import { createCheckoutSession, verifyWebhook } from "../services/payments/stripe";
+import { cancelSubscriptionNow, createCheckoutSession, verifyWebhook } from "../services/payments/stripe";
+import { applySubscriptionUpdate, recordNewSubscription, recordRenewal, subscriptionForFirstOrder } from "../services/subscriptions";
 import { BasketPage, CheckoutResultPage } from "../views/shop";
 import { pageMeta } from "./meta";
 
@@ -140,6 +141,7 @@ shopRoutes.post("/webhooks/stripe", async (c) => {
       const result = await markOrderPaid(c.env.DB, obj as PaidSession);
       if (result.outcome === "paid") {
         await recordStat(c.env.DB, "purchase");
+        if (obj.mode === "subscription") await recordNewSubscription(c.env.DB, result.order, obj);
         await createCommissionForOrder(c.env.DB, result.order, result.email);
         await reportOrder(c.env.DB, "purchase", result.order);
         await inBackground(c, sendEngineEvents(c.env));
@@ -172,6 +174,11 @@ shopRoutes.post("/webhooks/stripe", async (c) => {
       if (obj.refunded === true && obj.payment_intent) {
         const refunded = await markOrderRefunded(c.env.DB, String(obj.payment_intent));
         if (refunded) {
+          // Refunding a membership's first payment ends the membership too.
+          const sub = await subscriptionForFirstOrder(c.env.DB, refunded.id);
+          if (sub && sub.status !== "ended" && c.env.STRIPE_SECRET_KEY) {
+            await cancelSubscriptionNow(c.env.STRIPE_SECRET_KEY, sub.stripe_subscription_id).catch((err) => console.error("Couldn't cancel membership after refund", String(err)));
+          }
           await reportOrder(c.env.DB, "refund", refunded);
           await inBackground(c, sendEngineEvents(c.env));
         }
@@ -179,6 +186,20 @@ shopRoutes.post("/webhooks/stripe", async (c) => {
           console.warn("Refunded order's commission was already paid out; it comes off the partner's next payout", { order: refunded.public_id });
         }
       }
+      break;
+    case "invoice.paid": {
+      // A membership's monthly payment (the first one is handled by checkout above).
+      const renewal = await recordRenewal(c.env.DB, obj);
+      if (renewal?.email) {
+        await createCommissionForOrder(c.env.DB, renewal, renewal.email);
+        await reportOrder(c.env.DB, "purchase", renewal);
+        await inBackground(c, sendEngineEvents(c.env));
+      }
+      break;
+    }
+    case "customer.subscription.updated":
+    case "customer.subscription.deleted":
+      await applySubscriptionUpdate(c.env.DB, obj);
       break;
     case "charge.dispute.created": {
       // A chargeback: the bank has taken the money back. The partner's commission is cancelled or deducted.

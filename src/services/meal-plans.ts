@@ -101,3 +101,18 @@ export async function memberSavingsSummary(db: D1Database): Promise<{ members: n
     .first<{ members: number; weeks: number; avg_saving: number | null }>();
   return { members: row?.members ?? 0, weeks: row?.weeks ?? 0, avgWeeklySavingPence: row?.avg_saving != null ? Math.round(row.avg_saving) : null };
 }
+
+// --- Favourite recipes ---
+
+export async function listFavourites(db: D1Database, userId: number): Promise<string[]> {
+  const { results } = await db.prepare("SELECT recipe_id FROM meal_plan_favourites WHERE user_id = ?1 ORDER BY created_at").bind(userId).all<{ recipe_id: string }>();
+  return results.map((r) => r.recipe_id);
+}
+
+/** Star or unstar a recipe. Returns true if it's now a favourite. */
+export async function toggleFavourite(db: D1Database, userId: number, recipeId: string): Promise<boolean> {
+  const removed = await db.prepare("DELETE FROM meal_plan_favourites WHERE user_id = ?1 AND recipe_id = ?2").bind(userId, recipeId).run();
+  if (removed.meta.changes) return false;
+  await db.prepare("INSERT INTO meal_plan_favourites (user_id, recipe_id) VALUES (?1, ?2) ON CONFLICT DO NOTHING").bind(userId, recipeId).run();
+  return true;
+}

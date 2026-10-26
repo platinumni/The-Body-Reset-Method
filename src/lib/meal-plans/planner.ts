@@ -33,6 +33,8 @@ export type PlanInput = {
   seed: number;
   have: string[];
   picks?: string[];
+  /** Recipes the member has starred: included where the budget allows. */
+  favourites?: string[];
   /** What they usually spend on food a week (optional), for the savings line. */
   usual?: number | null;
   /** How their real shop compares with our estimates (from what they actually paid). 1 = as estimated. */
@@ -225,6 +227,8 @@ export function buildPlan(input: PlanInput): Plan {
           const reach = Math.min(options.length, Math.max(level[meal], Math.ceil(options.length * Math.min(1, 0.25 + attempt * 0.08))));
           const candidates = options.slice(0, reach);
           const take = new Set<Recipe>();
+          // Favourites first (after the cheapest-possible attempt), if they fit the variety for this meal.
+          if (attempt > 0) for (const r of options) if (input.favourites?.includes(r.id) && take.size < level[meal]) take.add(r);
           while (take.size < Math.min(level[meal], candidates.length)) take.add(attempt === 0 ? candidates[take.size]! : candidates[Math.floor(rand() * candidates.length)]!);
           picks[meal] = [...take];
         }
@@ -263,6 +267,12 @@ export function buildPlan(input: PlanInput): Plan {
 
 /** Every ingredient word people can leave out, for the type-to-search list. */
 export const LEAVE_OUT_WORDS = [...new Set(PRICE_ITEMS.filter((p) => p.key !== "leftover").map((p) => p.label.replace(/\s*\(.*\)/, "")))].sort();
+
+/** A seed that changes each week, so members get a fresh plan every Monday without doing anything. */
+export function weekSeed(d = new Date()): number {
+  const day = Math.floor(d.getTime() / 86_400_000) + 3; // days since a Monday (1 Jan 1970 was a Thursday)
+  return Math.floor(day / 7) % 1_000_000 || 1;
+}
 
 export function money(amount: number, country: Country) {
   return `${COUNTRIES[country].symbol}${amount.toFixed(2)}`;

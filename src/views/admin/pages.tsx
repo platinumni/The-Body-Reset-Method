@@ -173,6 +173,25 @@ export function ProductEditPage(props: {
         </button>
       </form>
 
+      {p.slug === "meal-plans" && (
+        <form method="post" action={`/admin/programmes/${p.id}/monthly`} class="card">
+          <CsrfField token={props.meta.csrfToken} />
+          <h2 class="h3">Monthly membership</h2>
+          <p class="muted">
+            With a monthly price, the Kitchen is sold as a membership: the price above is the joining fee (it can be £0.01 or more), and this is taken every month
+            until they cancel. Leave empty to sell it as a one-off purchase.
+          </p>
+          <div class="field">
+            <label for="monthly">Monthly price (£)</label>
+            <input id="monthly" name="monthly" type="text" inputmode="decimal" value={p.monthly_pence != null ? (p.monthly_pence / 100).toFixed(2) : ""} placeholder="e.g. 2.99" />
+            <p class="hint">A new price applies to new members only. Existing members keep the price they joined on unless you change it in Stripe.</p>
+          </div>
+          <button class="btn btn-primary btn-small" type="submit">
+            Save monthly price
+          </button>
+        </form>
+      )}
+
       {p.kind === "bundle" && (
         <form method="post" action={`/admin/programmes/${p.id}/bundle`} class="card">
           <CsrfField token={props.meta.csrfToken} />

@@ -1,4 +1,4 @@
-import { getProductsBySlugs, isOnSale, listOnSale, programmesUnlockedBy, type Product } from "./products";
+import { getProductsBySlugs, isMembership, isOnSale, listOnSale, programmesUnlockedBy, type Product } from "./products";
 
 // The basket is a short list of product slugs kept in a cookie. Prices are always
 // looked up fresh from the database, so editing the cookie can't change what anyone pays.
@@ -26,7 +26,7 @@ export type Basket = {
 export async function loadBasket(db: D1Database, slugs: string[]): Promise<Basket> {
   const found = await getProductsBySlugs(db, slugs);
   // Keep the shopper's order; drop anything no longer on sale.
-  const items = slugs.map((s) => found.find((p) => p.slug === s)).filter((p): p is Product => !!p && isOnSale(p));
+  const items = slugs.map((s) => found.find((p) => p.slug === s)).filter((p): p is Product => !!p && isOnSale(p) && !isMembership(p));
 
   const covered = new Set<number>();
   for (const item of items) for (const id of await programmesUnlockedBy(db, item)) covered.add(id);
@@ -34,7 +34,7 @@ export async function loadBasket(db: D1Database, slugs: string[]): Promise<Baske
   const onSale = await listOnSale(db);
   const addOns: Product[] = [];
   for (const p of onSale) {
-    if (inBasket.has(p.id)) continue;
+    if (inBasket.has(p.id) || isMembership(p)) continue;
     // Skip anything the basket already unlocks (a programme, or a bundle of them, including free bonuses).
     const unlocks = await programmesUnlockedBy(db, p);
     if (unlocks.length && unlocks.every((id) => covered.has(id))) continue;

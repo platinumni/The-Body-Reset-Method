@@ -68,6 +68,52 @@ export async function createCheckoutSession(secretKey: string, req: CheckoutRequ
   );
 }
 
+export type MembershipCheckoutRequest = {
+  orderPublicId: string;
+  title: string;
+  joinPence: number;
+  monthlyPence: number;
+  currency: string;
+  successUrl: string;
+  cancelUrl: string;
+  metadata?: Record<string, string>;
+};
+
+/** A monthly membership: a one-off joining fee plus the monthly price, both taken today, then monthly. */
+export async function createMembershipCheckout(secretKey: string, req: MembershipCheckoutRequest): Promise<{ id: string; url: string }> {
+  const meta = { ...req.metadata, order_public_id: req.orderPublicId };
+  return stripePost(
+    secretKey,
+    "/checkout/sessions",
+    {
+      mode: "subscription",
+      client_reference_id: req.orderPublicId,
+      success_url: req.successUrl,
+      cancel_url: req.cancelUrl,
+      line_items: {
+        0: { quantity: 1, price_data: { currency: req.currency, unit_amount: req.monthlyPence, recurring: { interval: "month" }, product_data: { name: `${req.title} (monthly)` } } },
+        ...(req.joinPence > 0 ? { 1: { quantity: 1, price_data: { currency: req.currency, unit_amount: req.joinPence, product_data: { name: `${req.title} joining fee` } } } } : {}),
+      },
+      billing_address_collection: "auto",
+      allow_promotion_codes: true,
+      metadata: meta,
+      subscription_data: { metadata: meta },
+    },
+    `membership-${req.orderPublicId}`,
+  );
+}
+
+/** Cancel at the end of the period they've paid for (or undo that). */
+export async function setCancelAtPeriodEnd(secretKey: string, subscriptionId: string, cancel: boolean): Promise<void> {
+  await stripePost(secretKey, `/subscriptions/${encodeURIComponent(subscriptionId)}`, { cancel_at_period_end: cancel ? "true" : "false" });
+}
+
+/** End a membership straight away (used when its first payment is refunded in full). */
+export async function cancelSubscriptionNow(secretKey: string, subscriptionId: string): Promise<void> {
+  const res = await fetch(`${API}/subscriptions/${encodeURIComponent(subscriptionId)}`, { method: "DELETE", headers: { Authorization: `Bearer ${secretKey}` } });
+  if (!res.ok && res.status !== 404) throw new StripeError(`Stripe error ${res.status}`);
+}
+
 export async function refundPaymentIntent(secretKey: string, paymentIntent: string): Promise<void> {
   await stripePost(secretKey, "/refunds", { payment_intent: paymentIntent }, `refund-${paymentIntent}`);
 }

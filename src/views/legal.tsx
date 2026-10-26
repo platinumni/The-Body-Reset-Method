@@ -136,6 +136,21 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
           programme. If you do, and you confirm you understand, you lose that 14-day right once access begins. Our 90-day money-back guarantee still
           applies to movement programmes (not Budget Meal Plans): see our <a href="/legal/refunds">refund policy</a>.
         </p>
+        <h2>Body Regeneration Kitchen membership</h2>
+        <p>
+          The Kitchen is a monthly membership. When you join you pay the joining fee and your first month together. After that, the monthly price is taken
+          on the same date each month until you cancel. The prices are shown before you pay.
+        </p>
+        <p>
+          You can cancel at any time from your account, in two clicks, and we'll email you to confirm. You won't be charged again, and you keep access until
+          the end of the month you've paid for. If we ever change the monthly price, we'll tell you by email at least 30 days before it applies, and you can
+          cancel before then.
+        </p>
+        <h2>Access codes</h2>
+        <p>
+          If your club, gym, employer or charity gave you an access code, your access lasts while that arrangement is in place. If it ends, we may remove
+          access given by the code. Beta tester codes give free access in return for honest feedback; we only quote feedback with your permission.
+        </p>
         <h2>Your health and safety</h2>
         <p>
           The programmes are education and movement coaching, not medical treatment. Please read the <a href="/legal/health-disclaimer">health disclaimer</a>{" "}

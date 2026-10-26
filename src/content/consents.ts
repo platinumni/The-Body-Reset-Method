@@ -27,3 +27,6 @@ export const CHECKOUT_CONSENTS = {
 
 export type ConsentKind = keyof typeof CHECKOUT_CONSENTS;
 export const CONSENT_KINDS = Object.keys(CHECKOUT_CONSENTS) as ConsentKind[];
+
+/** What someone ticks to join Body Regeneration Kitchen. No health declaration: that's for the movement programmes. */
+export const MEMBERSHIP_CONSENTS: ConsentKind[] = ["terms", "immediate_access"];
