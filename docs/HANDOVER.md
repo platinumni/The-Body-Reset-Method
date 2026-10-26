@@ -407,7 +407,7 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Kitchen joining fee idea (owner, 2026-10-26, awaiting CH):** the normal joining fee is **19.99** (the owner says they've already sold a few at 19.99), and a friend's code gives **50% off: 9.99**. Shared as "join for £9.99 with my code (normally £19.99)". Claude advised: keep records of the full-price sales, only say "normally £19.99" while people really pay that without a code, and avoid a general "was/now" sale. The currency to confirm is £ (the owner said "$", but earlier said pounds to start).
 
-- **Resend decision (owner, 2026-10-26):** to "get the ball rolling", use **Platinum's existing Resend account** for now (a domain-limited sending key for bodyregenerationmethod.com), and switch to a separate Body Regen Resend account later (about 15 minutes: new account, re-verify the domain, swap the `RESEND_API_KEY` secret).
+- **Resend decision (owner, 2026-10-26, corrected):** a **new Resend account for Body Regen, signed up with the owner's own Gmail** (not Platinum's). The login email will be swapped to a bodyregen address once things are up and running. The domain was added and DNS was being checked at the time.
 
 - **Stripe/Resend (owner, 2026-10-26):** Stripe activation is done and 2FA reset (backup codes saved). The owner **already has a Resend account on a paid plan** (shared with their other work). Plan: add `bodyregenerationmethod.com` as a domain there, with an API key limited to sending from that domain, stored as `RESEND_API_KEY`.
 
