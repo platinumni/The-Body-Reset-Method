@@ -1,3 +1,4 @@
+import { publishedReviews } from "../services/reviews";
 import { Hono } from "hono";
 import { NOT_FOR, PRINCIPLES, WHO_FOR, type Copy } from "../content/site";
 import { GUIDES } from "../content/guides";
@@ -28,7 +29,7 @@ publicRoutes.get("/", async (c) => {
       headline={site.headline}
       lede={site.lede}
       trackRecord={site.trackRecord}
-      testimonials={site.testimonials}
+      testimonials={[...site.testimonials, ...(await publishedReviews(c.env.DB))].slice(0, 9)}
       offer={site.offer}
       csrfToken={c.get("csrfToken")}
       meta={pageMeta(c, {
@@ -128,7 +129,7 @@ publicRoutes.get("/programmes/:slug", async (c) => {
       csrfToken={c.get("csrfToken")}
       inBasket={parseBasket(getCookie(c, BASKET_COOKIE)).includes(programme.slug)}
       trackRecord={site.trackRecord}
-      testimonials={site.testimonials}
+      testimonials={[...site.testimonials, ...(await publishedReviews(c.env.DB, programme.slug))].slice(0, 9)}
       offer={site.offer}
       faqs={site.faqs}
     />,

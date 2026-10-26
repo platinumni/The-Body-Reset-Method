@@ -1,4 +1,4 @@
-import { checkInEmail, commissionReadyEmail, morningReportEmail, setupReminderEmail, usageAlertEmail } from "../emails/automation";
+import { checkInEmail, commissionReadyEmail, morningReportEmail, reviewRequestEmail, setupReminderEmail, usageAlertEmail } from "../emails/automation";
 import { dashboardNumbers } from "./admin-ops";
 import { createEmailToken } from "./email-tokens";
 import { sendEmail } from "./email";
@@ -53,6 +53,29 @@ export async function sendCheckIns(env: Env, now = new Date()): Promise<number> 
   for (const u of results) {
     if (!(await claim(env.DB, "check-in-7d", String(u.id)))) continue;
     await sendEmail(env, checkInEmail({ siteName: env.SITE_NAME, to: u.email, name: u.name, url: `${env.SITE_URL}/account` }));
+    sent++;
+  }
+  return sent;
+}
+
+/** About three weeks after joining, ask members (once) how it's going and invite a review. */
+export async function sendReviewRequests(env: Env, now = new Date()): Promise<number> {
+  const day = (n: number) => new Date(now.getTime() - n * 86_400_000).toISOString().replace("T", " ").slice(0, 19);
+  const { results } = await env.DB.prepare(
+    `SELECT u.id, u.email, u.name FROM users u
+     WHERE u.role = 'customer' AND u.deleted_at IS NULL AND u.password_hash IS NOT NULL
+       AND u.created_at <= ?1 AND u.created_at > ?2
+       AND EXISTS (SELECT 1 FROM entitlements e WHERE e.user_id = u.id AND e.revoked_at IS NULL)
+       AND NOT EXISTS (SELECT 1 FROM reviews r WHERE r.user_id = u.id)
+       AND NOT EXISTS (SELECT 1 FROM automation_sent a WHERE a.kind = 'review-request' AND a.ref = CAST(u.id AS TEXT))
+     LIMIT 200`,
+  )
+    .bind(day(21), day(45))
+    .all<{ id: number; email: string; name: string | null }>();
+  let sent = 0;
+  for (const u of results) {
+    if (!(await claim(env.DB, "review-request", String(u.id)))) continue;
+    await sendEmail(env, reviewRequestEmail({ siteName: env.SITE_NAME, to: u.email, name: u.name, url: `${env.SITE_URL}/account/review` }));
     sent++;
   }
   return sent;

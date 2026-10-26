@@ -52,6 +52,12 @@ export function Testimonials(props: { items: Testimonial[] }) {
               <blockquote>
                 <p>"{t.quote}"</p>
               </blockquote>
+              {t.rating && (
+                <p class="stars" aria-label={`${t.rating} out of 5 stars`}>
+                  {"★".repeat(t.rating)}
+                  <span class="stars-off">{"★".repeat(5 - t.rating)}</span>
+                </p>
+              )}
               <p class="testimonial-who">{t.who}</p>
             </li>
           ))}

@@ -13,6 +13,15 @@ export function setupReminderEmail(i: { siteName: string; to: string; url: strin
   return { to: i.to, template: "setup_reminder", subject: "Your programme is waiting for you", html, text: `Your programme is ready, but your account isn't set up yet.\n\nCreate your account: ${i.url}\n\nThis link works once and lasts 7 days.` };
 }
 
+export function reviewRequestEmail(i: { siteName: string; to: string; name: string | null; url: string }): Email {
+  const hello = i.name ? `Hi ${esc(i.name)},` : "Hi,";
+  const html = wrap(
+    i.siteName,
+    `<p>${hello}</p><p>You've had your programme for about three weeks now. How's it going?</p><p>An honest sentence or two, good or bad, helps other people decide whether it's right for them, and helps us improve. It takes a minute.</p>${button(i.url, "Leave a review")}<p style="font-size:13px;color:#666">We only publish reviews you allow us to.</p>`,
+  );
+  return { to: i.to, template: "review_request", subject: "How's it going?", html, text: `${i.name ? `Hi ${i.name},` : "Hi,"}\n\nYou've had your programme for about three weeks now. How's it going? An honest sentence or two helps other people decide, and helps us improve.\n\nLeave a review: ${i.url}\n\nWe only publish reviews you allow us to.` };
+}
+
 export function checkInEmail(i: { siteName: string; to: string; name: string | null; url: string }): Email {
   const hello = i.name ? `Hi ${esc(i.name)},` : "Hi,";
   const tips = [

@@ -138,6 +138,7 @@ export async function exportUserData(db: D1Database, userId: number): Promise<Re
     orderItems: await q("SELECT oi.order_id, oi.title, oi.price_pence FROM order_items oi JOIN orders o ON o.id = oi.order_id WHERE o.email = ?1", user.email),
     programmeAccess: await q("SELECT p.title, e.granted_at, e.revoked_at FROM entitlements e JOIN products p ON p.id = e.product_id WHERE e.email = ?1 OR e.user_id = ?2", user.email, userId),
     consents: await q("SELECT kind, granted, wording_version, source, created_at FROM consents WHERE email = ?1 OR user_id = ?2 ORDER BY id", user.email, userId),
+    reviews: await q("SELECT rating, body, display_name, may_publish, status, created_at FROM reviews WHERE user_id = ?1 ORDER BY id", userId),
     mealPlanSpending: await q("SELECT planned_pence, usual_pence, actual_pence, currency, created_at FROM meal_plan_spend WHERE user_id = ?1 ORDER BY id", userId),
     mealPlanSettings: await q("SELECT prefs_json, updated_at FROM meal_plan_prefs WHERE user_id = ?1", userId),
     progress: await q("SELECT l.title, lp.completed_at FROM lesson_progress lp JOIN programme_lessons l ON l.id = lp.lesson_id WHERE lp.user_id = ?1", userId),
@@ -164,6 +165,7 @@ export async function deleteAccount(db: D1Database, userId: number, actor: { use
     db.prepare("DELETE FROM lesson_progress WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM meal_plan_prefs WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM meal_plan_spend WHERE user_id = ?1").bind(userId),
+    db.prepare("DELETE FROM reviews WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM contact_messages WHERE email = ?1").bind(user.email),
     // Their share link stops working; any commission already owed stays on record for the owner to settle.
     db.prepare("UPDATE affiliates SET status = 'suspended', updated_at = datetime('now') WHERE user_id = ?1").bind(userId),

@@ -1238,3 +1238,50 @@ export function MessagesAdminPage(props: { meta: AdminMeta; messages: import("..
     </AdminLayout>
   );
 }
+
+export function ReviewsAdminPage(props: { meta: AdminMeta; reviews: import("../../services/reviews").Review[] }) {
+  return (
+    <AdminLayout meta={props.meta}>
+      <h1>Reviews</h1>
+      <p class="muted">
+        Publish every genuine review, good or bad: hiding negative reviews is against UK consumer law. Only reject abuse, personal information or posts
+        that aren't about the programme. Reviews the member didn't allow us to publish are private feedback for you.
+      </p>
+      {!props.reviews.length && <p class="muted">No reviews yet. Members are asked about three weeks after joining.</p>}
+      {props.reviews.map((r) => (
+        <article class="card message-card">
+          <p class="small muted">
+            {r.created_at} · {r.product_title ?? "General"} · {r.email} · <StatusPill status={r.status} />
+            {!r.may_publish && " · private (not for publishing)"}
+          </p>
+          <p class="stars" aria-label={`${r.rating} out of 5 stars`}>
+            {"★".repeat(r.rating)}
+            <span class="stars-off">{"★".repeat(5 - r.rating)}</span>
+          </p>
+          <p class="pre-wrap">{r.body}</p>
+          <p class="small">Shown as: {r.display_name}</p>
+          <div class="row">
+            {r.may_publish === 1 && r.status !== "approved" && (
+              <form method="post" action={`/admin/reviews/${r.id}/status`} class="inline-form">
+                <CsrfField token={props.meta.csrfToken} />
+                <input type="hidden" name="status" value="approved" />
+                <button class="btn btn-primary btn-small" type="submit">
+                  Publish
+                </button>
+              </form>
+            )}
+            {r.status !== "rejected" && (
+              <form method="post" action={`/admin/reviews/${r.id}/status`} class="inline-form">
+                <CsrfField token={props.meta.csrfToken} />
+                <input type="hidden" name="status" value="rejected" />
+                <button class="btn btn-ghost btn-small" type="submit">
+                  {r.status === "approved" ? "Unpublish" : "Reject"}
+                </button>
+              </form>
+            )}
+          </div>
+        </article>
+      ))}
+    </AdminLayout>
+  );
+}

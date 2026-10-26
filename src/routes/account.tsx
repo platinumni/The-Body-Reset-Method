@@ -1,3 +1,5 @@
+import { publishedReviews, reviewableProducts, reviewProblem, submitReview } from "../services/reviews";
+import { ReviewPage } from "../views/reviews";
 import { priceBook, regionsFor } from "../lib/meal-plans/official";
 import { loadOfficialPrices } from "../services/official-prices";
 import { buildPlan, COUNTRIES } from "../lib/meal-plans/planner";
@@ -78,6 +80,33 @@ function mealQuery(params: URLSearchParams): Record<string, unknown> {
   }
   return out;
 }
+
+// --- Reviews ---
+
+const reviewMeta = (c: Context<AppEnv>) => pageMeta(c, { title: "Leave a review", description: "Tell us how it's going.", path: "/account/review", noindex: true });
+
+accountRoutes.get("/account/review", async (c) => {
+  const user = c.get("user")!;
+  return c.html(<ReviewPage meta={reviewMeta(c)} csrfToken={c.get("csrfToken")} products={await reviewableProducts(c.env.DB, user.id)} sent={c.req.query("sent") !== undefined} />);
+});
+
+accountRoutes.post("/account/review", rateLimit("review", 5, 3600), async (c) => {
+  const user = c.get("user")!;
+  const form = await c.req.parseBody();
+  const products = await reviewableProducts(c.env.DB, user.id);
+  const values = {
+    productId: String(form.product ?? ""),
+    rating: String(form.rating ?? ""),
+    body: String(form.body ?? "").trim(),
+    displayName: String(form.display_name ?? "").trim(),
+    mayPublish: form.may_publish === "yes",
+  };
+  const input = { productId: values.productId ? Number(values.productId) : null, rating: Number(values.rating), body: values.body, displayName: values.displayName, mayPublish: values.mayPublish };
+  const error = products.length === 0 ? "Reviews are for members with a programme." : reviewProblem(input);
+  if (error) return c.html(<ReviewPage meta={reviewMeta(c)} csrfToken={c.get("csrfToken")} products={products} error={error} values={values} />, 422);
+  await submitReview(c.env.DB, user.id, input);
+  return c.redirect("/account/review?sent", 303);
+});
 
 accountRoutes.get("/account/programmes/meal-plans", (c) => c.redirect("/account/meal-plans", 302));
 

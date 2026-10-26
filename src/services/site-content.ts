@@ -27,7 +27,7 @@ export function parseFaqText(text: string): Faq[] {
     .filter((f): f is Faq => f !== null);
 }
 
-export type Testimonial = { quote: string; who: string };
+export type Testimonial = { quote: string; who: string; rating?: number };
 
 export function parseTestimonials(text: string): Testimonial[] {
   return text

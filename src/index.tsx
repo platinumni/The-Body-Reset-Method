@@ -18,7 +18,7 @@ import { unsubscribeRoutes } from "./routes/unsubscribe";
 import { shopRoutes } from "./routes/shop";
 import { backupDatabase } from "./services/backup";
 import { releaseHeldCommissions } from "./services/affiliates";
-import { adminEmails, checkUsage, notifyReleasedCommission, sendCheckIns, sendMorningReport, sendSetupReminders } from "./services/automation";
+import { adminEmails, checkUsage, notifyReleasedCommission, sendCheckIns, sendReviewRequests, sendMorningReport, sendSetupReminders } from "./services/automation";
 import { pruneRateLimits } from "./services/rate-limit";
 import { loadSiteContent } from "./services/site-content";
 import { isBot, recordStat } from "./services/stats";
@@ -87,6 +87,7 @@ export async function scheduled(controller: ScheduledController, env: Env): Prom
       ["commission", async () => notifyReleasedCommission(env, await releaseHeldCommissions(env.DB))],
       ["setup-reminders", () => sendSetupReminders(env)],
       ["check-ins", () => sendCheckIns(env)],
+      ["review-requests", () => sendReviewRequests(env)],
       ["usage", async () => checkUsage(env, await adminEmails(env.DB))],
       ["morning-report", () => sendMorningReport(env)],
       // Official food prices for the meal planner: refreshed about monthly (skips if recent).

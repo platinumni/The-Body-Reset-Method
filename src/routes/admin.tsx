@@ -40,6 +40,7 @@ import { listProducts } from "../services/products";
 import { listRevisions } from "../services/revisions";
 import { loadSettings, saveWording, WORDING } from "../services/site-content";
 import { memberSavingsSummary } from "../services/meal-plans";
+import { listReviewsAdmin, moderateReview } from "../services/reviews";
 import { loadOfficialPrices, refreshOfficialPrices } from "../services/official-prices";
 import { CONTACT_EMAIL_KEY, listContactMessages, markContactHandled } from "../services/contact";
 import { statsSummary } from "../services/stats";
@@ -48,6 +49,7 @@ import {
   ActivityPage,
   AffiliatesAdminPage,
   MessagesAdminPage,
+  ReviewsAdminPage,
   CampaignEditPage,
   CampaignsPage,
   LaunchPage,
@@ -387,6 +389,16 @@ adminRoutes.post("/admin/affiliates/:id/payout", async (c) => {
 adminRoutes.post("/admin/affiliates/:id/status", async (c) => {
   await setAffiliateStatus(c.env.DB, idParam(c), (await c.req.parseBody()).status === "active" ? "active" : "suspended", actor(c));
   return back(c, "/admin/affiliates", "saved");
+});
+
+// --- Reviews ---
+
+adminRoutes.get("/admin/reviews", async (c) => c.html(<ReviewsAdminPage meta={meta(c, "Reviews")} reviews={await listReviewsAdmin(c.env.DB)} />));
+
+adminRoutes.post("/admin/reviews/:id/status", async (c) => {
+  const status = (await c.req.parseBody()).status === "approved" ? "approved" : "rejected";
+  await moderateReview(c.env.DB, idParam(c), status, actor(c));
+  return back(c, "/admin/reviews", "saved");
 });
 
 // --- Contact messages ---

@@ -45,6 +45,10 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
             you've clicked the confirmation link we email you.
           </li>
           <li>
+            <strong>If you leave a review:</strong> your rating, what you wrote and the name you chose to show. We only publish it if you tick the box
+            allowing us to, and after we've checked it. You can ask us to remove it at any time.
+          </li>
+          <li>
             <strong>If you use the meal plans:</strong> the choices you ask us to remember (budget, household size, children's ages, foods to leave out)
             and, if you enter them, what you usually spend and what you actually paid. Allergy choices are never saved. We use spending figures to show your
             own savings and to make your price estimates more accurate. We may publish anonymous averages across all members (for example "members spend

@@ -69,6 +69,11 @@ export function AccountPage(props: {
               ))}
             </ul>
           )}
+          {props.programmes.length > 0 && (
+            <p class="small">
+              <a href="/account/review">How's it going? Leave a review</a>
+            </p>
+          )}
         </div>
       </section>
 
