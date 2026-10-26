@@ -363,6 +363,27 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - Ads must say "up-to-date official UK prices (updated monthly)", never "live".
 - Waiting for the owner's CH to build the landing page.
 
+**Batch built 2026-10-26 (owner CH), all on staging:**
+- **Official food prices:**
+  - Sources and conversions: `content/meal-plans/official-sources.json`. Fetcher: `scripts/fetch-official-prices.mjs` (run with `NODE_USE_ENV_PROXY=1` in the sandbox) writes the bundled `content/meal-plans/official-prices.json`.
+  - The website refreshes by itself about monthly (daily job step `meal-prices`, stored in settings `meal.official_prices`); Admin → Stats has a "Refresh now" button.
+  - **UK:** ONS RPI average prices stopped at Jan 2025, so 23 items are brought up to date with CPI food index D7C8 (currently to Sep 2026); other UK estimates are scaled by the same index.
+  - **Canada:** Statistics Canada 18-10-0245-01 via the WDS vectors API, national plus provinces, 48 items.
+  - **US:** BLS average prices, national plus 4 regions, 14 items. The BLS daily limit was hit from the sandbox's shared IP; a free `BLS_API_KEY` (Cloudflare secret) fixes it. Until then, US plans use estimates.
+  - A region picker covers US regions and Canadian provinces. Every plan states how many items use official prices, the source and the month.
+- **Reviews (migration 0014):**
+  - `/account/review` (rating, text, display name, publish permission) and a review-request email about 3 weeks after joining (once, daily job).
+  - Admin → Reviews: publish or reject, with guidance that genuine negative reviews must be published. Published reviews show with stars on the home page (general) and programme pages (per product).
+  - Privacy updated; reviews are in export and deletion.
+- **Partners (migration 0015):**
+  - A per-affiliate custom rate and note (Admin → Affiliates → Partner terms).
+  - 12 months of repeat-purchase commission via `referred_customers`.
+  - Refunds and chargebacks after payout go into `commission_clawbacks` and are deducted from the next payout. The webhook now handles `charge.dispute.created`, so **add that event in Stripe** (STRIPE_SETUP lists 5 events).
+  - Affiliate terms updated (version 2026-10-26).
+- **Kitchen landing page:** `/kitchen` ("Body Regeneration Kitchen · part of The Body Regeneration Method"), with a sample £30 week, how it works, FAQs, no guarantee, and "Coming soon" until priced. In the sitemap. kitchen.<domain> to point here at go-live.
+- **Calorie calculator:** an optional widget on the meal planner (Mifflin-St Jeor, adults only), worked out in the browser (`reader.js`) and never saved.
+- **Still waiting:** a `PEXELS_API_KEY` environment secret for the photos (new session needed after adding it); optionally a `BLS_API_KEY`.
+
 ## Next step
 - **Planned: go live Monday 2026-10-26**, as a sole trader with Stripe paying into the owner's personal bank account. Switch to the owner's Ltd later (the legal pages need about 15 minutes of updates then).
   - Needed from the owner: domain, Stripe, prices, legal details (name "trading as", postal address, contact email), Resend and the ICO fee.

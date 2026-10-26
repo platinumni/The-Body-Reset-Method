@@ -1,3 +1,7 @@
+import { buildPlan } from "../lib/meal-plans/planner";
+import { priceBook } from "../lib/meal-plans/official";
+import { loadOfficialPrices } from "../services/official-prices";
+import { KitchenPage } from "../views/kitchen";
 import { publishedReviews } from "../services/reviews";
 import { Hono } from "hono";
 import { NOT_FOR, PRINCIPLES, WHO_FOR, type Copy } from "../content/site";
@@ -201,6 +205,28 @@ publicRoutes.post("/contact", rateLimit("contact", 5, 900), async (c) => {
   return c.redirect("/contact?sent", 303);
 });
 
+// Body Regeneration Kitchen: the meal plans' own landing page (later also at kitchen.<domain>).
+publicRoutes.get("/kitchen", async (c) => {
+  const product = await getCatalogueEntry(c.env.DB, "meal-plans");
+  if (!product) return c.notFound();
+  const book = priceBook(await loadOfficialPrices(c.env.DB), "uk");
+  const sample = buildPlan({ budget: 30, country: "uk", store: "mid", adults: 1, childAges: [], diet: "any", exclude: [], avoidAllergens: [], snacks: true, seed: 3, have: [], book });
+  return c.html(
+    <KitchenPage
+      meta={pageMeta(c, {
+        title: "Body Regeneration Kitchen: budget meal plans",
+        description: "A healthy week of meals for your budget, to the pound. Recipes and a shopping list for your household, priced with up-to-date official food prices.",
+        path: "/kitchen",
+      })}
+      csrfToken={c.get("csrfToken")}
+      product={product}
+      inBasket={parseBasket(getCookie(c, BASKET_COOKIE)).includes(product.slug)}
+      sample={sample}
+      priceSource={book.source}
+    />,
+  );
+});
+
 export function sitemapPaths(): string[] {
   return [
     "/",
@@ -212,6 +238,7 @@ export function sitemapPaths(): string[] {
     "/about",
     "/faq",
     "/contact",
+    "/kitchen",
     ...Object.keys(LEGAL_PAGES).map((s) => `/legal/${s}`),
   ];
 }

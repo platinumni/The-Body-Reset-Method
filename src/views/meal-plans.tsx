@@ -1,5 +1,5 @@
 import { COUNTRIES, DAYS, LEAVE_OUT_WORDS, STORES, money, type Plan, type PlanInput } from "../lib/meal-plans/planner";
-import { REGION_LABELS } from "../lib/meal-plans/official";
+import { formatPeriod, REGION_LABELS } from "../lib/meal-plans/official";
 import { PRICES_AS_OF } from "../lib/meal-plans/prices";
 import { ALLERGEN_LABELS, type Recipe } from "../lib/meal-plans/recipes";
 import { assetUrl } from "../routes/assets";
@@ -166,10 +166,10 @@ function Notes(props: { plan: Plan }) {
     <aside class="meal-notes">
       {book?.source ? (
         <p>
-          <strong>Prices:</strong> {officialCount} of the {plan.shopping.length} items on your list use official average prices from the {book.source} (
-          {book.note}, latest {book.period}){book.region !== "national" ? `, for ${REGION_LABELS[book.region] ?? book.region}` : ""}. The rest are our
-          estimates, kept up to date with official food price changes. All prices are adjusted for {STORES[plan.input.store].label.split(" (")[0]!.toLowerCase()}{" "}
-          supermarkets. They're averages, so actual prices in store will vary.
+          <strong>Prices:</strong> {officialCount} of the {plan.shopping.length} items on your list use official average prices from {book.source} (
+          {book.note}, latest {formatPeriod(book.period)}){book.region !== "national" ? `, for ${REGION_LABELS[book.region] ?? book.region}` : ""}. The rest
+          are our estimates{plan.input.country === "uk" ? ", kept up to date with official food price changes" : ""}. All prices are adjusted for{" "}
+          {STORES[plan.input.store].label.split(" (")[0]!.toLowerCase()} supermarkets. They're averages, so actual prices in store will vary.
         </p>
       ) : (
         <p>
@@ -279,7 +279,7 @@ export function MealPlannerPage(props: {
           <p class="print-cover-sub">
             One week · budget {cur(input.budget)} · estimated {cur(plan.weeklyCost)} · {household}
           </p>
-          <p class="small">Prices: {input.book?.source ? `official averages (${input.book.period}) and estimates` : `estimated, ${PRICES_AS_OF}`}. Made for you on {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}.</p>
+          <p class="small">Prices: {input.book?.source ? `official averages (${formatPeriod(input.book.period)}) and estimates` : `estimated, ${PRICES_AS_OF}`}. Made for you on {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}.</p>
         </section>
       )}
       <section class="page-hero no-print">
@@ -300,6 +300,48 @@ export function MealPlannerPage(props: {
             </p>
           )}
           <PlanForm input={input} regions={props.regions} />
+          <details class="card calorie-calc no-print" data-calorie-calc hidden>
+            <summary>How many calories do I need? (optional)</summary>
+            <p class="small muted">
+              An estimate of the calories to maintain your weight, using a standard formula used by many health services and apps. It's worked out on
+              your phone and never saved. For adults only.
+            </p>
+            <div class="meal-form-grid">
+              <div class="field">
+                <label for="cc-sex">Sex</label>
+                <select id="cc-sex">
+                  <option value="f">Female</option>
+                  <option value="m">Male</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="cc-age">Age</label>
+                <input id="cc-age" type="number" inputmode="numeric" min={18} max={100} />
+              </div>
+              <div class="field">
+                <label for="cc-height">Height (cm)</label>
+                <input id="cc-height" type="number" inputmode="numeric" min={120} max={230} />
+              </div>
+              <div class="field">
+                <label for="cc-weight">Weight (kg)</label>
+                <input id="cc-weight" type="number" inputmode="decimal" min={30} max={300} step="0.1" />
+              </div>
+              <div class="field">
+                <label for="cc-activity">How active are you?</label>
+                <select id="cc-activity">
+                  <option value="1.2">Mostly sitting</option>
+                  <option value="1.375" selected>Lightly active (walks, light exercise 1-3 days a week)</option>
+                  <option value="1.55">Moderately active (exercise 3-5 days a week)</option>
+                  <option value="1.725">Very active (hard exercise most days)</option>
+                </select>
+              </div>
+            </div>
+            <p class="calorie-result" data-calorie-result aria-live="polite"></p>
+            <p class="small muted">
+              This is a rough guide, not advice. If you want to gain or lose weight, are pregnant, or have a medical condition, speak to your GP, a
+              registered dietitian or a registered nutritionist.
+            </p>
+          </details>
           {plan && (
             <>
               <div class="card plan-summary">

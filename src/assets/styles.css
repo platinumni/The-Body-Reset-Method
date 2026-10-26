@@ -595,3 +595,5 @@ html[data-text-size="3"] .reader-body { font-size: 1.36rem; }
 fieldset.field { border: 0; padding: 0; margin-left: 0; margin-right: 0; } fieldset.field legend { font-weight: 600; padding: 0; margin-bottom: .4rem; }
 .savings { font-size: 1.05rem; margin: .5rem 0; } .savings strong { color: var(--accent); } .spend-card { margin: 0 0 1.5rem; } .spend-row { display: flex; gap: .5rem; align-items: stretch; margin: .5rem 0; } .spend-row .input-prefix { flex: 1; }
 .stars { color: var(--accent); letter-spacing: .1em; margin: .25rem 0; } .stars-off { color: var(--line); }
+.kitchen-hero .lede { max-width: 38rem; } .kitchen-steps { list-style: none; padding: 0; display: grid; gap: 1rem; grid-template-columns: 1fr; } @media (min-width: 48rem) { .kitchen-steps { grid-template-columns: repeat(3, 1fr); } }
+.calorie-calc { margin-bottom: 1.5rem; } .calorie-calc summary { cursor: pointer; font-weight: 600; } .calorie-result { font-size: 1.15rem; font-weight: 600; color: var(--accent); min-height: 1.5em; }

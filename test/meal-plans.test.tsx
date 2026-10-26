@@ -100,3 +100,24 @@ describe("guarantee", () => {
     expect(refunds).toContain("Budget Meal Plans are not covered by this guarantee");
   });
 });
+
+describe("kitchen and calories", () => {
+  it("has a Kitchen landing page with a sample week and no guarantee", async () => {
+    const res = await new TestClient(env).get("/kitchen");
+    expect(res.status).toBe(200);
+    const html = await res.text();
+    expect(html).toContain("Body Regeneration Kitchen · part of The Body Regeneration Method");
+    expect(html).toContain("A sample week for one adult, on £30");
+    expect(html).toContain('rel="canonical" href="http://localhost:8787/kitchen"');
+    expect(html).not.toContain("90-day money-back guarantee</li>");
+  });
+
+  it("offers an optional calorie estimate, worked out on the device", async () => {
+    const client = await member(true);
+    const html = await (await client.get("/account/meal-plans")).text();
+    expect(html).toContain("data-calorie-calc");
+    expect(html).toContain("never saved");
+    const js = await (await new TestClient(env).get("/reader.js")).text();
+    expect(js).toContain("Mifflin-St Jeor");
+  });
+});

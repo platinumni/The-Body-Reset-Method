@@ -29,6 +29,10 @@ These are things only you can do. None of them block the build until go-live unl
 
 - [ ] **Meal plans:** add these to the environment's allowed network addresses: unsplash.com, images.unsplash.com, api.unsplash.com, pexels.com, images.pexels.com, api.pexels.com, ons.gov.uk. Optionally get free Pexels or Unsplash keys. Then check the recipes and allergens, and set a price.
 
+- [ ] **Photos:** get a free Pexels API key (pexels.com/api) and add it to the environment "Default" as `PEXELS_API_KEY` (Network secrets or an environment variable). Never paste it in chat. Then start a new chat with Claude for the photo job.
+- [ ] *(Optional)* **US prices:** a free BLS key (data.bls.gov/registrationEngine) stored as a Cloudflare secret `BLS_API_KEY`, so US plans use official prices.
+- [ ] **Network:** once the photos are done, remove this project's 16 addresses from the allow-list (listed in HANDOVER).
+
 ## Before go-live
 - [ ] Follow `docs/GO_LIVE.md`. Admin → **Launch checklist** shows what's left.
 - [ ] **ICO data protection fee** (about £52 a year): ico.org.uk/fee

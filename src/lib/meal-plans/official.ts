@@ -117,3 +117,17 @@ export async function fetchUs(fetcher: typeof fetch = fetch, key?: string): Prom
   }
   return { source: sources.us.source, period, note: "Average prices, US city average and by region", estimateAdjust: 1, regions };
 }
+
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+/** "2026 SEP", "2026-08-01" or "2026-09" as "September 2026". */
+export function formatPeriod(period: string | null): string {
+  if (!period) return "";
+  let m = /^(\d{4}) ([A-Z]{3})$/.exec(period);
+  if (m) {
+    const i = MONTHS.findIndex((x) => x.slice(0, 3).toUpperCase() === m![2]);
+    return i >= 0 ? `${MONTHS[i]} ${m[1]}` : period;
+  }
+  m = /^(\d{4})-(\d{2})/.exec(period);
+  return m ? `${MONTHS[Number(m[2]) - 1]} ${m[1]}` : period;
+}

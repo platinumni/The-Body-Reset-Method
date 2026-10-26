@@ -15,6 +15,23 @@ export default `(() => {
     applySize();
     try { localStorage.setItem("brm_text_size", String(size)); } catch (e) {}
   }));
+  // Meal plans: the optional calorie estimate (Mifflin-St Jeor), worked out on the device and never sent anywhere.
+  const calc = document.querySelector("[data-calorie-calc]");
+  if (calc) {
+    calc.hidden = false;
+    const val = (id) => Number((document.getElementById(id) || {}).value);
+    const out = calc.querySelector("[data-calorie-result]");
+    const update = () => {
+      const age = val("cc-age"), h = val("cc-height"), w = val("cc-weight"), act = val("cc-activity");
+      if (!age || !h || !w) { out.textContent = ""; return; }
+      if (age < 18) { out.textContent = "This estimate is for adults only. For children and teenagers, speak to your GP."; return; }
+      const male = (document.getElementById("cc-sex") || {}).value === "m";
+      const bmr = 10 * w + 6.25 * h - 5 * age + (male ? 5 : -161);
+      const kcal = Math.round((bmr * act) / 50) * 50;
+      out.textContent = "About " + kcal.toLocaleString("en-GB") + " calories a day to maintain your weight.";
+    };
+    calc.querySelectorAll("input, select").forEach((el) => el.addEventListener("input", update));
+  }
   // "Jump to": go straight away when an item is picked.
   document.querySelectorAll("[data-autosubmit]").forEach((sel) => sel.addEventListener("change", () => sel.form && sel.form.submit()));
   document.querySelectorAll("[data-autosubmit-button]").forEach((b) => (b.hidden = true));
