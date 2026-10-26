@@ -399,6 +399,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Currency and referral funnel (owner, 2026-10-26, not yet CH'd):** charge in **£ to start**, with access for customers in the EU, US and Canada. Refer a friend: the friend gets a discount on buying; once 1 (or maybe 2) referred friends have bought, the referrer gets **a full year's access free**. Claude's proposal: the reward is 12 months of the Kitchen, members get the free year while influencers and partners get commission, and the reward is taken back if the friend refunds. Flagged: selling to EU consumers means EU VAT from the first sale (non-Union OSS), so the EU block question comes back before launch.
 
+- **Referral tiers idea (owner, 2026-10-26, not yet CH'd):** 1 friend gives "X", 2 friends give **lifetime** (Kitchen). Confirmed again: **no 90-day refund on the meal plans** (already so). Claude's suggestion: 1 friend = 1 year of the Kitchen, 2 friends = lifetime of the Kitchen ("for as long as the Kitchen runs", in the terms).
+
 - **Growth batch (2026-10-26, owner: "Clear heart all of it. Build it all"):** migrations 0016-0019, all on staging (version 9292dbf0).
   - **Growth engine reporting** (`src/services/growth-engine.ts`, `src/middleware/ge.ts`):
     - `?ge=CODE` is carried through the visit without a cookie: an HTMLRewriter adds it to the site's own links and POST forms, and to redirects after a form post. It's lost if the visitor leaves and comes back later (the owner's choice: no tracking cookies).
