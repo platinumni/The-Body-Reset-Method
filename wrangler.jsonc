@@ -37,8 +37,8 @@
         "APP_ENV": "staging",
         "SITE_NAME": "The Body Regeneration Method",
         "SITE_URL": "https://bodyregen-staging.michaeljmarden.workers.dev",
-        // Resend's shared test sender: only delivers to the Resend account owner's own address.
-        "EMAIL_FROM": "The Body Regeneration Method <onboarding@resend.dev>",
+        // Sent through Resend from the verified domain (owner's Body Regen Resend account).
+        "EMAIL_FROM": "The Body Regeneration Method <hello@bodyregenerationmethod.com>",
         // Growth engine (test). The reporting key is a secret: GROWTH_ENGINE_KEY.
         "GROWTH_ENGINE_URL": "https://engine-staging.michaeljmarden.workers.dev/api/events"
       },
