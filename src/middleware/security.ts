@@ -14,7 +14,8 @@ const CSP = [
   "frame-src https://www.youtube-nocookie.com",
   "object-src 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  // Checkout forms redirect to Stripe's payment page, which the browser treats as part of the form.
+  "form-action 'self' https://checkout.stripe.com",
   "frame-ancestors 'none'",
   "upgrade-insecure-requests",
 ].join("; ");

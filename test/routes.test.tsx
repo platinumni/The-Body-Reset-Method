@@ -57,6 +57,8 @@ describe("security headers", () => {
     expect(csp).toContain("default-src 'self'");
     expect(csp).toContain("script-src 'self'");
     expect(csp).toContain("frame-ancestors 'none'");
+    // Checkout POSTs then redirect to Stripe: browsers apply form-action to that redirect.
+    expect(csp).toContain("form-action 'self' https://checkout.stripe.com");
     expect(res.headers.get("Strict-Transport-Security")).toContain("max-age=");
     expect(res.headers.get("X-Content-Type-Options")).toBe("nosniff");
     expect(res.headers.get("Referrer-Policy")).toBe("strict-origin-when-cross-origin");
