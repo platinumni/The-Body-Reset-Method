@@ -206,14 +206,18 @@ function Notes(props: { plan: Plan }) {
   );
 }
 
-function RecipeCard(props: { recipe: Recipe; times: number; scale: number; portions: number; swaps: Recipe[]; input: PlanInput; allIds: string[]; favourite: boolean; csrfToken: string }) {
+function RecipeCard(props: { recipe: Recipe; times: number; scale: number; portions: number; swaps: Recipe[]; input: PlanInput; allIds: string[]; favourite: boolean; csrfToken: string; photo?: string }) {
   const { recipe: r, input } = props;
   const made = Math.round(props.portions * props.times * 10) / 10;
   return (
     <article class="card recipe-card" id={`r-${r.id}`}>
-      <div class="recipe-photo" aria-hidden="true">
-        <span>{r.name}</span>
-      </div>
+      {props.photo ? (
+        <img class="recipe-img" src={props.photo} alt={r.name} loading="lazy" width={640} height={360} />
+      ) : (
+        <div class="recipe-photo" aria-hidden="true">
+          <span>{r.name}</span>
+        </div>
+      )}
       <p class="eyebrow">{MEAL_LABELS[r.meal_type]}</p>
       <h3>{r.name}</h3>
       <form method="post" action="/account/meal-plans/favourite" class="inline-form no-print">
@@ -282,6 +286,7 @@ export function MealPlannerPage(props: {
   regions: { uk?: string[]; us: string[]; ca: string[] };
   favourites?: string[];
   hasMembership?: boolean;
+  photos?: Record<string, string>;
 }) {
   const { plan, input } = props;
   const cur = (n: number) => money(n, input.country);
@@ -496,7 +501,7 @@ export function MealPlannerPage(props: {
 
               <h2 class="plan-heading">Recipes</h2>
               {plan.recipes.map((c) => (
-                <RecipeCard recipe={c.recipe} times={c.times} scale={c.scale} portions={plan.portions} swaps={plan.swaps[c.recipe.id] ?? []} input={{ ...input, picks: allIds }} allIds={allIds} favourite={!!props.favourites?.includes(c.recipe.id)} csrfToken={props.csrfToken} />
+                <RecipeCard recipe={c.recipe} times={c.times} scale={c.scale} portions={plan.portions} swaps={plan.swaps[c.recipe.id] ?? []} input={{ ...input, picks: allIds }} allIds={allIds} favourite={!!props.favourites?.includes(c.recipe.id)} csrfToken={props.csrfToken} photo={props.photos?.[c.recipe.id]} />
               ))}
               <Notes plan={plan} />
             </>

@@ -133,7 +133,7 @@ export function FreeWeekPage(props: { meta: PageMeta; csrfToken: string; input: 
 }
 
 /** The free week itself: every meal and the week's total, with a taste of each method. Ingredients and the shopping list are for members. */
-export function FreeWeekResultPage(props: { meta: PageMeta; plan: Plan; justStarted: boolean; emailSent: boolean; priceSource: string | null }) {
+export function FreeWeekResultPage(props: { meta: PageMeta; plan: Plan; justStarted: boolean; emailSent: boolean; priceSource: string | null; photos?: Record<string, string> }) {
   const { plan } = props;
   const country = plan.input.country;
   const cooked = plan.recipes.filter((r) => r.recipe.meal_type !== "Snacks");
@@ -188,6 +188,7 @@ export function FreeWeekResultPage(props: { meta: PageMeta; plan: Plan; justStar
           </header>
           {cooked.map(({ recipe }) => (
             <article class="card recipe-teaser">
+              {props.photos?.[recipe.id] && <img class="recipe-img" src={props.photos[recipe.id]} alt={recipe.name} loading="lazy" width={640} height={360} />}
               <h3>{recipe.name}</h3>
               <p class="small muted">
                 {recipe.timing} · serves {recipe.serves}

@@ -69,6 +69,10 @@ import {
 import { adminMeta } from "./admin-login";
 import { codeProblem, createAccessCode, listCodesWithResults, setCodeStatus, type CodeInput } from "../services/access-codes";
 import { CodesAdminPage } from "../views/admin/codes";
+import { RECIPES, recipeById } from "../lib/meal-plans/recipes";
+import { autoPickBatch, candidatesFor, isPixabayImage, listPhotos, removePhoto, savePhoto, searchPixabay, searchTerms } from "../services/recipe-photos";
+import { PhotoChoosePage, PhotosAdminPage } from "../views/admin/photos";
+import { noMatchCount } from "../services/recipe-photos";
 
 export const adminRoutes = new Hono<AppEnv>();
 
@@ -451,6 +455,64 @@ adminRoutes.post("/admin/codes/:id/status", async (c) => {
   const status = form.status === "ended" ? (form.confirm === "yes" ? "ended" : null) : form.status === "paused" ? "paused" : "active";
   if (status) await setCodeStatus(c.env.DB, idParam(c), status, actor(c));
   return back(c, "/admin/codes", "saved");
+});
+
+// --- Recipe photos (Pixabay) ---
+
+adminRoutes.get("/admin/photos", async (c) =>
+  c.html(<PhotosAdminPage meta={meta(c, "Recipe photos")} recipes={RECIPES} photos={await listPhotos(c.env.DB)} configured={!!c.env.PIXABAY_API_KEY} noMatch={await noMatchCount(c.env.DB)} />),
+);
+
+adminRoutes.post("/admin/photos/auto", async (c) => {
+  if (c.env.PIXABAY_API_KEY) await autoPickBatch(c.env, 12).catch((err) => console.error("Photo auto-pick failed", String(err)));
+  return back(c, "/admin/photos", "saved");
+});
+
+// Admin-only preview of Pixabay results, fetched by us so the strict security policy stays in place.
+adminRoutes.get("/admin/photos/preview", async (c) => {
+  const u = c.req.query("u") ?? "";
+  if (!isPixabayImage(u)) return c.notFound();
+  const res = await fetch(u);
+  if (!res.ok || !(res.headers.get("Content-Type") ?? "").startsWith("image/")) return c.notFound();
+  return new Response(res.body, { headers: { "Content-Type": res.headers.get("Content-Type")!, "Cache-Control": "private, max-age=3600" } });
+});
+
+adminRoutes.get("/admin/photos/:id", async (c) => {
+  const recipe = recipeById(c.req.param("id"));
+  if (!recipe) return c.notFound();
+  const current = (await listPhotos(c.env.DB)).get(recipe.id) ?? null;
+  const asked = (c.req.query("q") ?? "").trim().slice(0, 100);
+  let query = asked || searchTerms(recipe)[0] || recipe.name;
+  let hits: Awaited<ReturnType<typeof searchPixabay>> = [];
+  let error: string | null = null;
+  if (!c.env.PIXABAY_API_KEY) error = "Add the PIXABAY_API_KEY secret in Cloudflare first.";
+  else {
+    try {
+      if (asked) hits = await searchPixabay(c.env.PIXABAY_API_KEY, asked, 12);
+      else ({ query, hits } = await candidatesFor(c.env.PIXABAY_API_KEY, recipe, 12));
+    } catch (err) {
+      error = "Pixabay didn't answer just now. Try again in a minute.";
+      console.error("Pixabay search failed", String(err));
+    }
+  }
+  return c.html(<PhotoChoosePage meta={meta(c, recipe.name)} recipe={recipe} current={current} query={query} hits={hits} error={error} />);
+});
+
+adminRoutes.post("/admin/photos/:id", async (c) => {
+  const recipe = recipeById(c.req.param("id"));
+  if (!recipe) return c.notFound();
+  const f = await c.req.parseBody();
+  const candidate = { id: String(f.id ?? "").slice(0, 20), pageUrl: String(f.page ?? ""), largeUrl: String(f.large ?? ""), previewUrl: "", user: String(f.user ?? "").slice(0, 80), tags: "" };
+  const okPage = /^https:\/\/pixabay\.com\//.test(candidate.pageUrl);
+  if (!okPage || !(await savePhoto(c.env, recipe.id, candidate, String(f.q ?? "").slice(0, 100), "owner", actor(c)))) return c.redirect(`/admin/photos/${encodeURIComponent(recipe.id)}`, 303);
+  return back(c, "/admin/photos", "saved");
+});
+
+adminRoutes.post("/admin/photos/:id/remove", async (c) => {
+  const recipe = recipeById(c.req.param("id"));
+  if (!recipe) return c.notFound();
+  await removePhoto(c.env, recipe.id, actor(c));
+  return back(c, "/admin/photos", "saved");
 });
 
 // --- Reviews ---

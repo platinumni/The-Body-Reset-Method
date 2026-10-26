@@ -9,6 +9,7 @@ import { sendEmail } from "../services/email";
 import { setCancelAtPeriodEnd } from "../services/payments/stripe";
 import { kitchenMembership, kitchenProduct, markCancelRequested } from "../services/subscriptions";
 import { MembershipPage } from "../views/membership";
+import { photoUrls } from "../services/recipe-photos";
 import { canUseMealPlans, DEFAULT_PREFS, listFavourites, loadPrefs, readPlanInput, recordSpend, savePrefs, spendSummary, toggleFavourite } from "../services/meal-plans";
 import { MealPlannerPage } from "../views/meal-plans";
 import { Hono, type Context } from "hono";
@@ -143,6 +144,7 @@ accountRoutes.get("/account/meal-plans", async (c) => {
       regions={{ uk: regionsFor(prices, "uk"), us: regionsFor(prices, "us"), ca: regionsFor(prices, "ca") }}
       favourites={favourites}
       hasMembership={!!membership}
+      photos={await photoUrls(c.env.DB)}
     />,
   );
 });

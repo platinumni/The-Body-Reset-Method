@@ -12,6 +12,7 @@ const NAV = [
   { href: "/admin/codes", label: "Access codes" },
   { href: "/admin/messages", label: "Messages" },
   { href: "/admin/reviews", label: "Reviews" },
+  { href: "/admin/photos", label: "Recipe photos" },
   { href: "/admin/wording", label: "Site wording" },
   { href: "/admin/campaigns", label: "Email campaigns" },
   { href: "/admin/stats", label: "Stats" },

@@ -12,6 +12,7 @@ import { DEFAULT_PREFS, readPlanInput } from "../services/meal-plans";
 import { loadOfficialPrices } from "../services/official-prices";
 import { hitRateLimit } from "../services/rate-limit";
 import { openTrial, startTrial } from "../services/kitchen-trials";
+import { photoUrls } from "../services/recipe-photos";
 import { FreeWeekPage, FreeWeekResultPage } from "../views/kitchen-free-week";
 import { pageMeta } from "./meta";
 import { getCookie } from "hono/cookie";
@@ -58,7 +59,7 @@ kitchenRoutes.post("/kitchen/free-week", rateLimit("free-week", 6, 3600), async 
   const { plan, source } = await planFor(c.env.DB, input);
   const meta = pageMeta(c, { title: "Your free week", description: "Your free week of meals.", path: "/kitchen/week", noindex: true });
   // Bots fill in the hidden field: show a week, save nothing, send nothing.
-  if (flat.website) return c.html(<FreeWeekResultPage meta={meta} plan={plan} justStarted={true} emailSent={true} priceSource={source} />);
+  if (flat.website) return c.html(<FreeWeekResultPage meta={meta} plan={plan} justStarted={true} emailSent={true} priceSource={source} photos={await photoUrls(c.env.DB)} />);
 
   const geRef = cleanGe(flat.ge);
   const allowed = (await hitRateLimit(c.env.DB, `free-week-email:${email}`, 3, 86_400)).allowed;
@@ -77,7 +78,7 @@ kitchenRoutes.post("/kitchen/free-week", rateLimit("free-week", 6, 3600), async 
     }
     await sendEmail(c.env, freeWeekEmail({ siteName: c.env.SITE_NAME, to: email, url: `${c.env.SITE_URL}/kitchen/week?token=${trial.token}`, again: trial.status === "exists" }));
   }
-  return c.html(<FreeWeekResultPage meta={meta} plan={shown} justStarted={true} emailSent={emailSent} priceSource={source} />);
+  return c.html(<FreeWeekResultPage meta={meta} plan={shown} justStarted={true} emailSent={emailSent} priceSource={source} photos={await photoUrls(c.env.DB)} />);
 });
 
 kitchenRoutes.get("/kitchen/week", async (c) => {
@@ -90,7 +91,15 @@ kitchenRoutes.get("/kitchen/week", async (c) => {
   }
   const { plan, source } = await planFor(c.env.DB, trial.input);
   c.header("Referrer-Policy", "no-referrer");
-  return c.html(<FreeWeekResultPage meta={meta} plan={plan} justStarted={false} emailSent={false} priceSource={source} />);
+  return c.html(<FreeWeekResultPage meta={meta} plan={plan} justStarted={false} emailSent={false} priceSource={source} photos={await photoUrls(c.env.DB)} />);
+});
+
+// Recipe photos, copied into our storage from Pixabay (see Admin → Recipe photos).
+kitchenRoutes.get("/recipe-photos/:file", async (c) => {
+  const m = /^([A-Za-z0-9_-]{1,40})\.jpg$/.exec(c.req.param("file"));
+  const obj = m ? await c.env.MEDIA.get(`recipe-photos/${m[1]}.jpg`) : null;
+  if (!obj) return c.notFound();
+  return new Response(obj.body, { headers: { "Content-Type": obj.httpMetadata?.contentType ?? "image/jpeg", "Cache-Control": c.req.query("v") ? "public, max-age=31536000, immutable" : "public, max-age=3600" } });
 });
 
 // --- Joining the Kitchen (monthly membership) ---

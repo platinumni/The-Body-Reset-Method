@@ -600,3 +600,9 @@ fieldset.field { border: 0; padding: 0; margin-left: 0; margin-right: 0; } field
 .recipe-teaser { margin-bottom: 1rem; }
 .recipe-teaser h3 { margin: 0 0 .25rem; font-size: 1.1rem; }
 .recipe-teaser ol { margin: .5rem 0; padding-left: 1.25rem; }
+.photo-grid { list-style: none; padding: 0; display: grid; gap: .75rem; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); }
+.photo-tile { padding: .5rem; }
+.photo-tile a { display: grid; gap: .35rem; text-decoration: none; color: inherit; }
+.photo-tile img, .recipe-img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius-sm); }
+.photo-none { display: grid; place-items: center; aspect-ratio: 16 / 9; background: var(--bg-quiet); border-radius: var(--radius-sm); font-size: .85rem; color: var(--muted); }
+.recipe-img { display: block; margin-bottom: 1rem; }

@@ -37,7 +37,7 @@ app.use("*", loadUser); // only queries the database when a login cookie is pres
 app.use("*", carryGe);
 
 // Owner-edited wording for public pages, loaded once per request.
-const NO_CONTENT = ["/marketing-feed.json", "/admin", "/webhooks", "/fonts", "/styles.css", "/favicon", "/app.js", "/og.png", "/health", "/media", "/r/"];
+const NO_CONTENT = ["/recipe-photos", "/marketing-feed.json", "/admin", "/webhooks", "/fonts", "/styles.css", "/favicon", "/app.js", "/og.png", "/health", "/media", "/r/"];
 app.use("*", async (c, next) => {
   if (c.req.method === "GET" && !NO_CONTENT.some((p) => c.req.path.startsWith(p))) c.set("siteContent", await loadSiteContent(c.env.DB));
   await next();

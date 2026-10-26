@@ -9,6 +9,8 @@ interface Env {
   /** Growth engine events address (a var in wrangler.jsonc) and its reporting key (a secret). */
   GROWTH_ENGINE_URL?: string;
   GROWTH_ENGINE_KEY?: string;
+  /** Pixabay API key, for choosing recipe photos in admin. */
+  PIXABAY_API_KEY?: string;
 }
 declare namespace Cloudflare {
   interface Env {
@@ -18,5 +20,6 @@ declare namespace Cloudflare {
     ADMIN_ENC_KEY?: string;
     GROWTH_ENGINE_URL?: string;
     GROWTH_ENGINE_KEY?: string;
+    PIXABAY_API_KEY?: string;
   }
 }
