@@ -407,6 +407,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Kitchen joining fee idea (owner, 2026-10-26, awaiting CH):** the normal joining fee is **19.99** (the owner says they've already sold a few at 19.99), and a friend's code gives **50% off: 9.99**. Shared as "join for £9.99 with my code (normally £19.99)". Claude advised: keep records of the full-price sales, only say "normally £19.99" while people really pay that without a code, and avoid a general "was/now" sale. The currency to confirm is £ (the owner said "$", but earlier said pounds to start).
 
+- **Socials (owner, 2026-10-26):** the owner referred to the brands as **"Body Regen Kitchen" and "Body Regen Method"** for socials, and asked for the best platforms and a plan for each. Written in `docs/marketing/social-plan.md`: Kitchen = TikTok, Facebook groups, Instagram, then Pinterest; Method = Instagram, YouTube, Facebook, then TikTok. Suggested handles `@bodyregenkitchen` / `@bodyregenmethod` (availability not checked). The website names are unchanged unless the owner says. The owner wants **no daytime updates: deliver in the 7pm drop**.
+
 - **Growth batch (2026-10-26, owner: "Clear heart all of it. Build it all"):** migrations 0016-0019, all on staging (version 9292dbf0).
   - **Growth engine reporting** (`src/services/growth-engine.ts`, `src/middleware/ge.ts`):
     - `?ge=CODE` is carried through the visit without a cookie: an HTMLRewriter adds it to the site's own links and POST forms, and to redirects after a form post. It's lost if the visitor leaves and comes back later (the owner's choice: no tracking cookies).
