@@ -248,7 +248,7 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Preview accounts on staging:** see "Next step". The course is published on staging only. A content `--update` import resets staging to draft, so re-run the publish SQL afterwards: `UPDATE programme_lessons SET status='published' WHERE content_key IS NOT NULL AND status='draft'`.
 - **Owner's voice-note captures:** `docs/owner-notes/`.
 
-## Decisions made in chat (2026-10-24/25)
+## Decisions made in chat (2026-10-24/25/26)
 - **Pricing:** to be decided. The owner mentioned 29.99 for Lower Body (£ or $ still to confirm). Core & Hips, Hips and Core each have their own buy page. Lower Body includes Core & Hips free.
 - **Access:** lifetime.
 - **Guarantee:** 90-day money-back on every programme, no conditions, with "we recommend giving it a proper go".
@@ -383,6 +383,40 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - **Kitchen landing page:** `/kitchen` ("Body Regeneration Kitchen · part of The Body Regeneration Method"), with a sample £30 week, how it works, FAQs, no guarantee, and "Coming soon" until priced. In the sitemap. kitchen.<domain> to point here at go-live.
 - **Calorie calculator:** an optional widget on the meal planner (Mifflin-St Jeor, adults only), worked out in the browser (`reader.js`) and never saved.
 - **Still waiting:** a `PEXELS_API_KEY` environment secret for the photos (new session needed after adding it); optionally a `BLS_API_KEY`.
+
+**Growth engine handoff (2026-10-26)**
+- The owner pasted a handoff from their Growth Engine chat, then replied (voice): "Clear heart all of it. Build it all. I'm too busy. I'll check it all later… have a summary."
+- Name: **Body Regeneration Kitchen** (not "Body Regen Kitchen").
+- EU block: "I wouldn't even worry about the EU block for now." Not built.
+- Pricing: "sort pricing out later". The Kitchen structure (£9.99 to join + about £2.99 a month) is "good for now" and is built as settings with no prices entered. Lower Body + Kitchen: "sort out later".
+- Free week: show the meals, but **not** the ingredients or shopping list; maybe "the first three parts of the cooking list… something that looks good when I market it". Built as the first 3 method steps.
+- Taster: "a couple" of exercises; built as 3 (one a day).
+- Partner codes: "yes. Or it'll be commission." Both are supported: an organisation-paid code, optionally linked to a commission partner.
+- UK prices: the owner said "live tracked prices" was nonsense and wanted real UK averages. Built from ONS shop price quotes (see below).
+- **Flagged to the owner:** they mentioned marketing the free week "as AI". The planner is rule-based, not AI, so calling it AI could be misleading under UK consumer law (CMA/ASA). Suggested "smart planner" wording instead. Awaiting the owner's view.
+
+- **Growth batch (2026-10-26, owner: "Clear heart all of it. Build it all"):** migrations 0016-0019, all on staging (version 9292dbf0).
+  - **Growth engine reporting** (`src/services/growth-engine.ts`, `src/middleware/ge.ts`):
+    - `?ge=CODE` is carried through the visit without a cookie: an HTMLRewriter adds it to the site's own links and POST forms, and to redirects after a form post. It's lost if the visitor leaves and comes back later (the owner's choice: no tracking cookies).
+    - `ge` is saved on orders (`orders.ge_ref`) and sign-ups (`subscribers.ge_ref`), and goes into Stripe session and payment metadata with the share code.
+    - Events (lead = sign-up asked for, signup = email confirmed, purchase, refund) are saved in `engine_events` first, then POSTed with `Authorization: Bearer GROWTH_ENGINE_KEY` to `GROWTH_ENGINE_URL` (a staging var). The daily job retries failures, giving up after 10 tries. No names or emails. `external_id` is the order id, `refund-<order>`, or `signup-sub-N` / `lead-kfw-N` / `signup-code-N`. Nothing is sent until the owner adds the `GROWTH_ENGINE_KEY` secret.
+    - `/marketing-feed.json`: public pages to market (programmes, Kitchen, taster, free week, guides).
+  - **Method taster** (`/taster`, `src/content/taster.ts`, `src/services/sequences.ts`): double opt-in, then 3 emails (short foot, toe yoga, single-leg balance, worded from the programme) 20+ hours apart via the daily job. Day 3 links to Lower Body. It stops if they unsubscribe. The sign-up says news follows afterwards (marketing consent).
+  - **Kitchen free week** (`/kitchen/free-week`, `/kitchen/week?token=`, `kitchen_trials`): email only, no card, one per email. It shows the 7 days of meals, the week's total and the **first 3 method steps** of each recipe (owner: no ingredients or shopping list). The emailed link confirms the address (and any news opt-in). Exactly one follow-up, "Want next week's plan?", goes 7 days later to confirmed addresses only. Allergies are never saved: the chosen recipe ids are stored instead.
+  - **Kitchen membership** (`/kitchen/join`, `subscriptions`, `src/services/subscriptions.ts`, `/account/membership`):
+    - If the Kitchen product has a monthly price (Admin → Programmes → Budget Meal Plans → Monthly membership), it's sold as a Stripe subscription: the normal price is the joining fee, charged with the first month. It's never sold through the basket.
+    - Each `invoice.paid` (subscription_cycle) becomes its own paid order, so commission (12-month partner repeat), refunds and reports work. Renewals carry no share code, so the 12-month limit applies.
+    - `customer.subscription.updated/deleted` keeps the status; when it ends, access is removed. A full refund of the first payment cancels the subscription in Stripe.
+    - Members cancel in two clicks (`cancel_at_period_end`) and get a confirmation email; they can undo it. The terms have a membership section, including a **30-day notice of price changes (Claude's suggested default; owner to confirm)**.
+    - Also built: **favourite recipes** (starred recipes are preferred where the budget allows) and a **fresh plan every week** (the seed changes each Monday).
+  - **Access codes** (`/redeem`, Admin → Access codes, `access_codes` + `access_code_claims`):
+    - Partner codes (an organisation pays monthly, invoiced from Stripe by hand; the fee is a note) and beta codes (free).
+    - Using a code needs email confirmation. It's a £0 order with `orders.access_code`, plus consents (health declaration and terms), and an account-setup link. There's a maximum number of uses, the same person isn't counted twice, and pausing stops new people. Ending a code (with a confirm tick) removes the access it gave.
+    - A code can link to an affiliate share code, so the partner earns commission on later purchases (`referred_customers`).
+    - Results per code: joined, active in the last 30 days, and later sales.
+    - **Beta testers' published reviews say "Given free access as a beta tester"** (the law on incentivised reviews).
+  - **UK prices from real shop data:** the ONS price-quotes files stopped including supermarket food after **January 2026** (ONS moved to supermarket till data, which isn't published by item). `scripts/build-ons-quotes.mjs` takes the Jan 2026 file and produces `content/meal-plans/ons-price-quotes.json`: median shop prices for 61 mapped foods, national plus 12 UK regions (at least 8 quotes each). These are brought up to the latest month with CPI food index D7C8 (food prices were flat in 2026: 143.3 → 143.4). UK regions now appear in the planner's region picker. The mapping and pack factors are in `official-sources.json` → `uk.quotes`. The old RPI series list remains in the JSON but isn't used.
+  - **Not built (owner: later or skip):** the EU checkout block (owner: don't worry for now), final prices, and a Lower Body + Kitchen bundle.
 
 ## Next step
 - **Planned: go live Monday 2026-10-26**, as a sole trader with Stripe paying into the owner's personal bank account. Switch to the owner's Ltd later (the legal pages need about 15 minutes of updates then).

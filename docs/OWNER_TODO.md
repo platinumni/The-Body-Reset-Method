@@ -27,11 +27,21 @@ These are things only you can do. None of them block the build until go-live unl
 
 - [ ] **When the course content is final:** choose an AI voice from samples Claude sends (a one-off cost of about £2–£20).
 
-- [ ] **Meal plans:** add these to the environment's allowed network addresses: unsplash.com, images.unsplash.com, api.unsplash.com, pexels.com, images.pexels.com, api.pexels.com, ons.gov.uk. Optionally get free Pexels or Unsplash keys. Then check the recipes and allergens, and set a price.
+- [x] Network addresses for meal plans added (2026-10-25). Still to do: check the recipes and allergens.
 
 - [ ] **Photos:** get a free Pexels API key (pexels.com/api) and add it to the environment "Default" as `PEXELS_API_KEY` (Network secrets or an environment variable). Never paste it in chat. Then start a new chat with Claude for the photo job.
 - [ ] *(Optional)* **US prices:** a free BLS key (data.bls.gov/registrationEngine) stored as a Cloudflare secret `BLS_API_KEY`, so US plans use official prices.
 - [ ] **Network:** once the photos are done, remove this project's 16 addresses from the allow-list (listed in HANDOVER).
+
+## New from the growth batch (2026-10-26). Check when you have time
+- [ ] **Have a look on the test site:** `/taster`, `/kitchen/free-week`, `/kitchen` and `/redeem`. In admin: **Access codes**, and Programmes → Budget Meal Plans → **Monthly membership**.
+- [ ] **"AI" wording:** you mentioned marketing the free week as AI. The planner is built on rules, not AI, so calling it AI could count as misleading advertising (CMA/ASA). Safer: "smart meal planner" or "built for your budget". Your call.
+- [ ] **Growth engine key:** in Cloudflare → Workers → `bodyregen-staging` → Settings → Variables and secrets, add a **Secret** called `GROWTH_ENGINE_KEY` with the reporting key from your growth engine. Never paste it in chat. Events are saved and sent once it's there.
+- [ ] **Kitchen prices:** the joining fee is the normal "Price" box, and the monthly price is the new box below it. Set them when you're ready (e.g. 9.99 and 2.99), then put the product on sale.
+- [ ] **Stripe:** when you set up the webhook, also tick `invoice.paid`, `customer.subscription.updated` and `customer.subscription.deleted` (now 8 events; `docs/STRIPE_SETUP.md`). In Stripe → Settings → Emails, turn on receipts and failed-payment emails for memberships.
+- [ ] **Check the new terms wording:** the membership section promises 30 days' notice of any price change. Claude suggested that as a fair default; change it if you want.
+- [ ] **Taster emails:** read the 3 days in `src/content/taster.ts` (or ask Claude for screenshots). They use the programme's own wording.
+- [ ] **Partner codes:** for each club or gym, create a code in Admin → Access codes, invoice them monthly from Stripe, and share `…/redeem?code=THEIRCODE`. **Beta testers:** create one "Beta" code for your 10-20 testers.
 
 ## Before go-live
 - [ ] Follow `docs/GO_LIVE.md`. Admin → **Launch checklist** shows what's left.
