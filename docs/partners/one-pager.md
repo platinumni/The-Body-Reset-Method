@@ -1,6 +1,6 @@
 # Body Regeneration Kitchen: for your members, staff or tenants
 
-**Healthy-eating meal plans built for any weekly budget, to the pound.**
+**Simple home-cooked meal plans, built for any weekly budget, to the pound.**
 
 ## The problem
 Food costs are one of the biggest pressures on household budgets. People want to eat well but don't know how to make the money stretch.
@@ -23,7 +23,7 @@ Food costs are one of the biggest pressures on household budgets. People want to
 3. **Commission partner:** share your link and earn `[PLACEHOLDER: %]` of every sale it brings.
 
 ## Good to know
-- General healthy-eating guidance, not a diet or medical advice. Always check product labels for allergens.
+- Everyday home cooking, not a diet or medical advice. Always check product labels for allergens.
 - UK GDPR: we never sell data, and allergies are never stored.
 
 **Contact:** `[PLACEHOLDER: your name]` · `[PLACEHOLDER: email]` · `[PLACEHOLDER: phone]`
