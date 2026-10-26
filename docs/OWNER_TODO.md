@@ -29,7 +29,8 @@ These are things only you can do. None of them block the build until go-live unl
 
 - [x] Network addresses for meal plans added (2026-10-25). Still to do: check the recipes and allergens.
 
-- [ ] **Photos:** get a free Pexels API key (pexels.com/api) and add it to the environment "Default" as `PEXELS_API_KEY` (Network secrets or an environment variable). Never paste it in chat. Then start a new chat with Claude for the photo job.
+- [ ] **Photos (Pixabay for now; Pexels has paused new keys):** sign up at pixabay.com, copy your key from pixabay.com/api/docs, and add it to the environment "Default" as `PIXABAY_API_KEY` (Network secrets or an environment variable). Add `pixabay.com` and `cdn.pixabay.com` to the allowed network addresses. Never paste it in chat. Then start a new chat: "do the recipe photos with Pixabay".
+- [ ] **Reminder:** check whether Pexels API keys are available again (pexels.com/api). Claude will remind you in the 9 Nov drop.
 - [ ] *(Optional)* **US prices:** a free BLS key (data.bls.gov/registrationEngine) stored as a Cloudflare secret `BLS_API_KEY`, so US plans use official prices.
 - [ ] **Network:** once the photos are done, remove this project's 16 addresses from the allow-list (listed in HANDOVER).
 
