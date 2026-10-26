@@ -239,6 +239,8 @@ export function sitemapPaths(): string[] {
     "/faq",
     "/contact",
     "/kitchen",
+    "/kitchen/free-week",
+    "/taster",
     ...Object.keys(LEGAL_PAGES).map((s) => `/legal/${s}`),
   ];
 }
@@ -249,4 +251,20 @@ publicRoutes.get("/sitemap.xml", (c) => {
     .join("\n");
   c.header("Content-Type", "application/xml; charset=utf-8");
   return c.body(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
+});
+
+// What the growth engine may market: public pages only, with a plain description.
+publicRoutes.get("/marketing-feed.json", async (c) => {
+  const url = (path: string) => new URL(path, c.env.SITE_URL).toString();
+  const catalogue = await listCatalogue(c.env.DB);
+  const items = [
+    ...catalogue
+      .filter((p) => p.status === "available")
+      .map((p) => ({ name: p.food ? "Body Regeneration Kitchen" : p.title, url: url(p.food ? "/kitchen" : `/programmes/${p.slug}`), description: p.short })),
+    { name: "Free Method taster", url: url("/taster"), description: "Three short emails over three days, each with one foot exercise from Lower Body Regeneration. Free." },
+    { name: "Body Regeneration Kitchen: free week", url: url("/kitchen/free-week"), description: "A free sample week of budget meals: tell us your budget and household and see your week's meals and total." },
+    ...GUIDES.map((g) => ({ name: g.title, url: url(`/guides/${g.slug}`), description: g.description })),
+  ];
+  c.header("Cache-Control", "public, max-age=3600");
+  return c.json({ items });
 });

@@ -1,8 +1,9 @@
-import { checkInEmail, commissionReadyEmail, morningReportEmail, reviewRequestEmail, setupReminderEmail, usageAlertEmail } from "../emails/automation";
+import { checkInEmail, commissionReadyEmail, freeWeekFollowUpEmail, morningReportEmail, reviewRequestEmail, setupReminderEmail, usageAlertEmail } from "../emails/automation";
 import { dashboardNumbers } from "./admin-ops";
 import { createEmailToken } from "./email-tokens";
 import { sendEmail } from "./email";
 import { loadSettings } from "./site-content";
+import { claimDueFollowUps } from "./kitchen-trials";
 
 // Daily automatic jobs. Each email is recorded in automation_sent so it goes once only,
 // even if the job runs twice.
@@ -79,6 +80,13 @@ export async function sendReviewRequests(env: Env, now = new Date()): Promise<nu
     sent++;
   }
   return sent;
+}
+
+/** A week after a Kitchen free week, its one follow-up: "Want next week's plan?" */
+export async function sendFreeWeekFollowUps(env: Env, now = new Date()): Promise<number> {
+  const due = await claimDueFollowUps(env.DB, now);
+  for (const t of due) await sendEmail(env, freeWeekFollowUpEmail({ siteName: env.SITE_NAME, to: t.email, url: `${env.SITE_URL}/kitchen` }));
+  return due.length;
 }
 
 /** Tell affiliates when held commission becomes theirs. */

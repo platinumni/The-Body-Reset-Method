@@ -1,6 +1,10 @@
 import { Hono } from "hono";
 import { GUIDES, getGuide } from "../content/guides";
-import { confirmSignupEmail, welcomeEmail } from "../emails/automation";
+import { confirmSignupEmail, tasterConfirmEmail, welcomeEmail } from "../emails/automation";
+import { inBackground } from "../lib/background";
+import { cleanGe, queueEngineEvent, sendEngineEvents } from "../services/growth-engine";
+import { runSequences, startSequence } from "../services/sequences";
+import { TasterPage } from "../views/taster";
 import type { AppEnv } from "../env";
 import { rateLimit } from "../middleware/rate-limit";
 import { looksLikeEmail, normaliseEmail } from "../services/accounts";
@@ -99,9 +103,16 @@ marketingRoutes.post("/subscribe", rateLimit("subscribe", 8, 3600), async (c) =>
     return c.html(<MessagePage c={c} title="That email doesn't look right"><p><a href="/#signup">Please try again</a>.</p></MessagePage>, 422);
   }
   if ((await hitRateLimit(c.env.DB, `subscribe-email:${email}`, 3, 3600)).allowed) {
-    const result = await subscribe(c.env.DB, email, source);
+    const ge = cleanGe(form.ge);
+    const result = await subscribe(c.env.DB, email, source, ge);
     if (result.status === "confirm-sent") {
-      await sendEmail(c.env, confirmSignupEmail({ siteName: c.env.SITE_NAME, to: email, url: `${c.env.SITE_URL}/subscribe/confirm?token=${result.token}` }));
+      const url = `${c.env.SITE_URL}/subscribe/confirm?token=${result.token}`;
+      await sendEmail(c.env, source === "taster" ? tasterConfirmEmail({ siteName: c.env.SITE_NAME, to: email, url }) : confirmSignupEmail({ siteName: c.env.SITE_NAME, to: email, url }));
+      await queueEngineEvent(c.env.DB, { type: "lead", ref: ge, code: null, value_pence: 0, confirmed: false, external_id: `lead-sub-${result.id}` });
+      await inBackground(c, sendEngineEvents(c.env));
+    } else if (source === "taster" && (await startSequence(c.env.DB, email, "taster"))) {
+      // Already on the list: no need to confirm again, the taster just starts.
+      await runSequences(c.env, new Date(), email);
     }
   }
   // Same answer either way, so nobody can test whether an address is on the list.
@@ -122,8 +133,25 @@ marketingRoutes.get("/subscribe/confirm", async (c) => {
     return c.html(<MessagePage c={c} title="That link has expired"><p>Confirmation links last 7 days. <a href="/#signup">Sign up again</a> and we'll send a fresh one.</p></MessagePage>, 400);
   }
   const content = await loadSiteContent(c.env.DB);
-  if (confirmed.firstTime) {
+  const taster = confirmed.source === "taster";
+  if (taster) {
+    if (await startSequence(c.env.DB, confirmed.email, "taster")) await runSequences(c.env, new Date(), confirmed.email);
+  } else if (confirmed.firstTime) {
     await sendEmail(c.env, welcomeEmail({ siteName: c.env.SITE_NAME, to: confirmed.email, offer: content.offer, siteUrl: c.env.SITE_URL, unsubscribeUrl: await unsubscribeUrl(c.env, confirmed.email) }));
+  }
+  if (confirmed.firstTime) {
+    await queueEngineEvent(c.env.DB, { type: "signup", ref: confirmed.geRef, code: null, value_pence: 0, external_id: `signup-sub-${confirmed.id}` });
+    await inBackground(c, sendEngineEvents(c.env));
+  }
+  if (taster) {
+    return c.html(
+      <MessagePage c={c} title="You're in">
+        <p class="lede">Your first exercise is on its way to your inbox now. The next two follow over the next two days.</p>
+        <p>
+          <a href="/guides">Read our free guides while you wait →</a>
+        </p>
+      </MessagePage>,
+    );
   }
   return c.html(
     <MessagePage c={c} title="You're in">
@@ -136,3 +164,18 @@ marketingRoutes.get("/subscribe/confirm", async (c) => {
     </MessagePage>,
   );
 });
+
+// --- Free Method taster: 3 emails, 3 foot exercises ---
+
+marketingRoutes.get("/taster", (c) =>
+  c.html(
+    <TasterPage
+      meta={pageMeta(c, {
+        title: "Try the method free: 3 days, 3 foot exercises",
+        description: "Three short emails over three days, each with one exercise from Stage 1 of Lower Body Regeneration. Free, and you can unsubscribe in one click.",
+        path: "/taster",
+      })}
+      csrfToken={c.get("csrfToken")}
+    />,
+  ),
+);

@@ -41,6 +41,9 @@ export function KitchenPage(props: { meta: PageMeta; csrfToken: string; product:
             ) : (
               <p class="notice">Coming soon.</p>
             )}
+            <a class="btn btn-ghost" href="/kitchen/free-week">
+              Try a free week
+            </a>
           </div>
           <TrustStrip guarantee={false} />
         </div>
@@ -94,6 +97,11 @@ export function KitchenPage(props: { meta: PageMeta; csrfToken: string; product:
             ))}
           </ol>
           <p class="small muted">…and the rest of the week, with every recipe and the full shopping list.</p>
+          <p>
+            <a class="btn btn-primary" href="/kitchen/free-week">
+              See your own week free
+            </a>
+          </p>
         </div>
       </section>
 

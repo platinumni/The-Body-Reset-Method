@@ -13,6 +13,8 @@ export type CheckoutRequest = {
   currency: string;
   successUrl: string;
   cancelUrl: string;
+  /** Extra labels saved on the Stripe payment (campaign and partner codes). No personal data. */
+  metadata?: Record<string, string>;
 };
 
 /** Flatten nested params into Stripe's form encoding: line_items[0][price_data][currency]=gbp */
@@ -59,8 +61,8 @@ export async function createCheckoutSession(secretKey: string, req: CheckoutRequ
       billing_address_collection: "auto",
       // Lets customers enter discount codes the owner creates in Stripe (e.g. WELCOME10).
       allow_promotion_codes: true,
-      metadata: { order_public_id: req.orderPublicId },
-      payment_intent_data: { metadata: { order_public_id: req.orderPublicId } },
+      metadata: { ...req.metadata, order_public_id: req.orderPublicId },
+      payment_intent_data: { metadata: { ...req.metadata, order_public_id: req.orderPublicId } },
     },
     `checkout-${req.orderPublicId}`,
   );

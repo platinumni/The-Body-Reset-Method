@@ -38,7 +38,9 @@
         "SITE_NAME": "The Body Regeneration Method",
         "SITE_URL": "https://bodyregen-staging.michaeljmarden.workers.dev",
         // Resend's shared test sender: only delivers to the Resend account owner's own address.
-        "EMAIL_FROM": "The Body Regeneration Method <onboarding@resend.dev>"
+        "EMAIL_FROM": "The Body Regeneration Method <onboarding@resend.dev>",
+        // Growth engine (test). The reporting key is a secret: GROWTH_ENGINE_KEY.
+        "GROWTH_ENGINE_URL": "https://engine-staging.michaeljmarden.workers.dev/api/events"
       },
       "d1_databases": [
         { "binding": "DB", "database_name": "bodyregen-staging", "database_id": "21f8e44a-bae4-499a-bacc-7417d7efebe5", "migrations_dir": "migrations" }

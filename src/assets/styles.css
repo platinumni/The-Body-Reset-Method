@@ -597,3 +597,6 @@ fieldset.field { border: 0; padding: 0; margin-left: 0; margin-right: 0; } field
 .stars { color: var(--accent); letter-spacing: .1em; margin: .25rem 0; } .stars-off { color: var(--line); }
 .kitchen-hero .lede { max-width: 38rem; } .kitchen-steps { list-style: none; padding: 0; display: grid; gap: 1rem; grid-template-columns: 1fr; } @media (min-width: 48rem) { .kitchen-steps { grid-template-columns: repeat(3, 1fr); } }
 .calorie-calc { margin-bottom: 1.5rem; } .calorie-calc summary { cursor: pointer; font-weight: 600; } .calorie-result { font-size: 1.15rem; font-weight: 600; color: var(--accent); min-height: 1.5em; }
+.recipe-teaser { margin-bottom: 1rem; }
+.recipe-teaser h3 { margin: 0 0 .25rem; font-size: 1.1rem; }
+.recipe-teaser ol { margin: .5rem 0; padding-left: 1.25rem; }

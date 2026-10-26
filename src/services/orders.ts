@@ -19,28 +19,32 @@ export type Order = {
   stripe_session_id: string | null;
   stripe_payment_intent: string | null;
   ref_code: string | null;
+  /** Growth engine campaign reference the buyer arrived with. */
+  ge_ref: string | null;
+  /** Partner access code used, if any. */
+  access_code: string | null;
   marketing_opt_in: number;
   created_at: string;
   paid_at: string | null;
 };
 
-const ORDER_COLUMNS = "id, public_id, email, name, status, total_pence, amount_paid_pence, currency, stripe_session_id, stripe_payment_intent, ref_code, marketing_opt_in, created_at, paid_at";
+const ORDER_COLUMNS = "id, public_id, email, name, status, total_pence, amount_paid_pence, currency, stripe_session_id, stripe_payment_intent, ref_code, ge_ref, access_code, marketing_opt_in, created_at, paid_at";
 
 export type ConsentAnswers = Record<ConsentKind, boolean>;
 
 export async function createPendingOrder(
   db: D1Database,
-  input: { items: Product[]; consents: ConsentAnswers; refCode?: string | null; ip?: string },
+  input: { items: Product[]; consents: ConsentAnswers; refCode?: string | null; geRef?: string | null; accessCode?: string | null; ip?: string },
 ): Promise<Order> {
   const publicId = `BRM-${randomToken(6).toUpperCase()}`;
   const total = input.items.reduce((s, i) => s + (i.price_pence ?? 0), 0);
   const snapshot = Object.fromEntries(CONSENT_KINDS.map((k) => [k, { given: input.consents[k], version: CHECKOUT_CONSENTS[k].version, label: CHECKOUT_CONSENTS[k].label }]));
   const order = await db
     .prepare(
-      `INSERT INTO orders (public_id, total_pence, currency, ref_code, consents_json, marketing_opt_in, ip)
-       VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7) RETURNING ${ORDER_COLUMNS}`,
+      `INSERT INTO orders (public_id, total_pence, currency, ref_code, consents_json, marketing_opt_in, ip, ge_ref, access_code)
+       VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) RETURNING ${ORDER_COLUMNS}`,
     )
-    .bind(publicId, total, input.items[0]?.currency ?? "gbp", input.refCode ?? null, JSON.stringify(snapshot), input.consents.marketing_email ? 1 : 0, input.ip ?? null)
+    .bind(publicId, total, input.items[0]?.currency ?? "gbp", input.refCode ?? null, JSON.stringify(snapshot), input.consents.marketing_email ? 1 : 0, input.ip ?? null, input.geRef ?? null, input.accessCode ?? null)
     .first<Order>();
   await db.batch(
     input.items.map((i) => db.prepare("INSERT INTO order_items (order_id, product_id, title, price_pence) VALUES (?1, ?2, ?3, ?4)").bind(order!.id, i.id, i.title, i.price_pence)),

@@ -102,3 +102,47 @@ export function welcomeEmail(i: { siteName: string; to: string; offer: Offer | n
     headers: i.unsubscribeUrl ? { "List-Unsubscribe": `<${i.unsubscribeUrl}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" } : undefined,
   };
 }
+
+export function tasterConfirmEmail(i: { siteName: string; to: string; url: string }): Email {
+  const html = wrap(
+    i.siteName,
+    `<p>Please confirm your email and we'll send your first free exercise straight away.</p><p>You'll get three short emails over three days, then occasional news about programmes and guides. You can unsubscribe in one click at any time.</p>${button(i.url, "Send my first exercise")}<p style="font-size:14px;color:#4b5750">If you didn't ask for this, ignore this email and you won't hear from us.</p>`,
+  );
+  return { to: i.to, template: "taster_confirm", subject: "Confirm to get your 3 free exercises", html, text: `Confirm your email and we'll send your first free exercise:\n${i.url}\n\nThree short emails over three days, then occasional news. Unsubscribe in one click at any time.` };
+}
+
+export function tasterDayEmail(i: { siteName: string; to: string; day: number; content: import("../content/taster").TasterDay; safety: string; buyUrl: string | null; unsubscribeUrl: string | null }): Email {
+  const d = i.content;
+  const last = i.buyUrl !== null;
+  const footer = i.unsubscribeUrl ? `<br><a href="${esc(i.unsubscribeUrl)}" style="color:#6d756f">Unsubscribe</a>` : "";
+  const html = wrap(
+    i.siteName,
+    `<p>${esc(d.intro)}</p><h2 style="font-family:Georgia,serif;font-size:20px;margin:20px 0 8px">${esc(d.exercise)}</h2><ol>${d.steps.map((s) => `<li style="margin-bottom:8px">${esc(s)}</li>`).join("")}</ol><p><strong>Watch for:</strong> ${esc(d.watch)}</p><p>${esc(d.close)}</p>${last ? `<p>Lower Body Regeneration takes you through all four stages: feet and balance, shins and calves, hips and knees, then putting it all together, with demonstration videos and an exercise sheet.</p>${button(i.buyUrl!, "See the full programme")}` : ""}<p style="font-size:13px;color:#4b5750">${esc(i.safety)}</p>`,
+    footer,
+  );
+  const text = [d.intro, "", d.exercise.toUpperCase(), ...d.steps.map((s, n) => `${n + 1}. ${s}`), "", `Watch for: ${d.watch}`, "", d.close, last ? `\nSee the full programme: ${i.buyUrl}` : "", "", i.safety, i.unsubscribeUrl ? `\nUnsubscribe: ${i.unsubscribeUrl}` : ""].join("\n");
+  return {
+    to: i.to,
+    template: `taster_day_${i.day}`,
+    subject: d.subject,
+    html,
+    text,
+    headers: i.unsubscribeUrl ? { "List-Unsubscribe": `<${i.unsubscribeUrl}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" } : undefined,
+  };
+}
+
+export function freeWeekEmail(i: { siteName: string; to: string; url: string; again: boolean }): Email {
+  const html = wrap(
+    i.siteName,
+    `<p>${i.again ? "Here's a fresh link to your free week from Body Regeneration Kitchen." : "Your free week from Body Regeneration Kitchen is ready."}</p>${button(i.url, "See my week")}<p>At the end of the week we'll send you one email asking if you'd like next week's plan. That's all, unless you asked for news too.</p><p style="font-size:13px;color:#4b5750">Always check product labels for allergens. If you didn't ask for this, ignore this email.</p>`,
+  );
+  return { to: i.to, template: "kitchen_free_week", subject: i.again ? "Your free week: a fresh link" : "Your free week of meals is ready", html, text: `Your free week from Body Regeneration Kitchen:\n${i.url}\n\nAt the end of the week we'll send one email asking if you'd like next week's plan.\n\nAlways check product labels for allergens.` };
+}
+
+export function freeWeekFollowUpEmail(i: { siteName: string; to: string; url: string }): Email {
+  const html = wrap(
+    i.siteName,
+    `<p>Hi,</p><p>That's your free week from Body Regeneration Kitchen. Want next week's plan?</p><p>Members get a new week of meals whenever they like, with every recipe and ingredient, a full shopping list priced for their budget, swaps, and plans that change when their budget or household does.</p>${button(i.url, "Get next week's plan")}<p style="font-size:13px;color:#4b5750">This is the one follow-up we said we'd send. We won't email you again unless you asked for news.</p>`,
+  );
+  return { to: i.to, template: "kitchen_free_week_followup", subject: "Want next week's plan?", html, text: `That's your free week from Body Regeneration Kitchen. Want next week's plan?\n\n${i.url}\n\nThis is the one follow-up we said we'd send.` };
+}

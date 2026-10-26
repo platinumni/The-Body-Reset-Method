@@ -9,6 +9,8 @@ import { activeAffiliateByCode, cancelCommissionForOrder, createCommissionForOrd
 import { BASKET_COOKIE, loadBasket, parseBasket, serializeBasket } from "../services/basket";
 import { sendEmail } from "../services/email";
 import { recordStat } from "../services/stats";
+import { cleanGe, queueEngineEvent, sendEngineEvents } from "../services/growth-engine";
+import { inBackground } from "../lib/background";
 import {
   attachCheckoutSession,
   createPendingOrder,
@@ -20,6 +22,7 @@ import {
   markOrderRefunded, orderIdByPaymentIntent,
   recordStripeEvent,
   type ConsentAnswers,
+  type Order,
   type PaidSession,
 } from "../services/orders";
 import { createCheckoutSession, verifyWebhook } from "../services/payments/stripe";
@@ -27,6 +30,17 @@ import { BasketPage, CheckoutResultPage } from "../views/shop";
 import { pageMeta } from "./meta";
 
 export const shopRoutes = new Hono<AppEnv>();
+
+/** Tell the growth engine about a confirmed sale or refund (no names or emails). */
+async function reportOrder(db: D1Database, type: "purchase" | "refund", o: Order) {
+  await queueEngineEvent(db, {
+    type,
+    ref: o.ge_ref,
+    code: o.access_code ?? o.ref_code,
+    value_pence: o.amount_paid_pence ?? o.total_pence,
+    external_id: type === "purchase" ? o.public_id : `refund-${o.public_id}`,
+  });
+}
 
 const basketSlugs = (c: Context<AppEnv>) => parseBasket(getCookie(c, BASKET_COOKIE));
 
@@ -79,7 +93,8 @@ shopRoutes.post("/checkout", rateLimit("checkout", 10, 600), async (c) => {
   const typedRef = String(form.ref ?? "").trim().toLowerCase();
   const refCandidate = typedRef || getCookie(c, REF_COOKIE) || "";
   const refCode = refCandidate && (await activeAffiliateByCode(c.env.DB, refCandidate)) ? refCandidate : null;
-  const order = await createPendingOrder(c.env.DB, { items: basket.items, consents, refCode, ip: clientIp(c.req.raw) });
+  const geRef = cleanGe(form.ge);
+  const order = await createPendingOrder(c.env.DB, { items: basket.items, consents, refCode, geRef, ip: clientIp(c.req.raw) });
   try {
     const session = await createCheckoutSession(c.env.STRIPE_SECRET_KEY!, {
       orderPublicId: order.public_id,
@@ -87,6 +102,7 @@ shopRoutes.post("/checkout", rateLimit("checkout", 10, 600), async (c) => {
       lines: basket.items.map((i) => ({ title: i.title, pence: i.price_pence! })),
       successUrl: `${c.env.SITE_URL}/checkout/complete?order=${order.public_id}`,
       cancelUrl: `${c.env.SITE_URL}/basket`,
+      metadata: Object.fromEntries(Object.entries({ ge: geRef, ref: refCode }).filter(([, v]) => !!v)) as Record<string, string>,
     });
     await attachCheckoutSession(c.env.DB, order.id, session.id);
     await recordStat(c.env.DB, "checkout_started");
@@ -125,6 +141,8 @@ shopRoutes.post("/webhooks/stripe", async (c) => {
       if (result.outcome === "paid") {
         await recordStat(c.env.DB, "purchase");
         await createCommissionForOrder(c.env.DB, result.order, result.email);
+        await reportOrder(c.env.DB, "purchase", result.order);
+        await inBackground(c, sendEngineEvents(c.env));
         const lines = await getOrderLines(c.env.DB, result.order.id);
         await sendEmail(
           c.env,
@@ -153,6 +171,10 @@ shopRoutes.post("/webhooks/stripe", async (c) => {
       // Only a full refund removes access; partial refunds keep it.
       if (obj.refunded === true && obj.payment_intent) {
         const refunded = await markOrderRefunded(c.env.DB, String(obj.payment_intent));
+        if (refunded) {
+          await reportOrder(c.env.DB, "refund", refunded);
+          await inBackground(c, sendEngineEvents(c.env));
+        }
         if (refunded && (await cancelCommissionForOrder(c.env.DB, refunded.id, "refund")) === "clawed-back") {
           console.warn("Refunded order's commission was already paid out; it comes off the partner's next payout", { order: refunded.public_id });
         }
