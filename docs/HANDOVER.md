@@ -395,6 +395,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 - UK prices: the owner said "live tracked prices" was nonsense and wanted real UK averages. Built from ONS shop price quotes (see below).
 - **Flagged to the owner:** they mentioned marketing the free week "as AI". The planner is rule-based, not AI, so calling it AI could be misleading under UK consumer law (CMA/ASA). Suggested "smart planner" wording instead. Awaiting the owner's view.
 
+- **Follow-up (2026-10-26):** the owner will **never advertise the planner as AI**. Ideas, not yet CH'd: a price of **19.99 (currency to confirm; the site currently charges in £)**; a refer-a-friend scheme; influencers offering about 50% off. On "latest trends / market" price labels, Claude advised against "market" or anything that suggests real-time prices, and suggested "Based on official UK shop prices, updated monthly".
+
 - **Growth batch (2026-10-26, owner: "Clear heart all of it. Build it all"):** migrations 0016-0019, all on staging (version 9292dbf0).
   - **Growth engine reporting** (`src/services/growth-engine.ts`, `src/middleware/ge.ts`):
     - `?ge=CODE` is carried through the visit without a cookie: an HTMLRewriter adds it to the site's own links and POST forms, and to redirects after a form post. It's lost if the visitor leaves and comes back later (the owner's choice: no tracking cookies).

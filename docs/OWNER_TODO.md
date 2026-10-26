@@ -35,7 +35,7 @@ These are things only you can do. None of them block the build until go-live unl
 
 ## New from the growth batch (2026-10-26). Check when you have time
 - [ ] **Have a look on the test site:** `/taster`, `/kitchen/free-week`, `/kitchen` and `/redeem`. In admin: **Access codes**, and Programmes → Budget Meal Plans → **Monthly membership**.
-- [ ] **"AI" wording:** you mentioned marketing the free week as AI. The planner is built on rules, not AI, so calling it AI could count as misleading advertising (CMA/ASA). Safer: "smart meal planner" or "built for your budget". Your call.
+- [x] **"AI" wording:** decided (2026-10-26): never advertised as AI.
 - [ ] **Growth engine key:** in Cloudflare → Workers → `bodyregen-staging` → Settings → Variables and secrets, add a **Secret** called `GROWTH_ENGINE_KEY` with the reporting key from your growth engine. Never paste it in chat. Events are saved and sent once it's there.
 - [ ] **Kitchen prices:** the joining fee is the normal "Price" box, and the monthly price is the new box below it. Set them when you're ready (e.g. 9.99 and 2.99), then put the product on sale.
 - [ ] **Stripe:** when you set up the webhook, also tick `invoice.paid`, `customer.subscription.updated` and `customer.subscription.deleted` (now 8 events; `docs/STRIPE_SETUP.md`). In Stripe → Settings → Emails, turn on receipts and failed-payment emails for memberships.
