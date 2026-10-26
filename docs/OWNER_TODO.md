@@ -46,6 +46,7 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Partner codes:** for each club or gym, create a code in Admin → Access codes, invoice them monthly from Stripe, and share `…/redeem?code=THEIRCODE`. **Beta testers:** create one "Beta" code for your 10-20 testers.
 
 ## Before go-live
+- [ ] *(Later)* Move Body Regen's emails to its own Resend account (signed up with a Body Regen Gmail), then swap `RESEND_API_KEY`. About 15 minutes.
 - [x] **Done 2026-10-26:** Stripe account activated, 2FA reset with backup codes saved, sandbox test passed. ~~Stripe two-step login:** your Stripe 2FA is from years ago. Remove the old one and set it up again on your current phone (Stripe → Profile/Settings → Security), then **save the new backup (recovery) codes** somewhere safe offline. Do this before activating live payments.
 - [ ] Follow `docs/GO_LIVE.md`. Admin → **Launch checklist** shows what's left.
 - [ ] **ICO data protection fee** (about £52 a year): ico.org.uk/fee
