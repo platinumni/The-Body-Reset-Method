@@ -397,6 +397,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Follow-up (2026-10-26):** the owner will **never advertise the planner as AI**. Ideas, not yet CH'd: a price of **19.99 (currency to confirm; the site currently charges in £)**; a refer-a-friend scheme; influencers offering about 50% off. On "latest trends / market" price labels, Claude advised against "market" or anything that suggests real-time prices, and suggested "Based on official UK shop prices, updated monthly".
 
+- **Currency and referral funnel (owner, 2026-10-26, not yet CH'd):** charge in **£ to start**, with access for customers in the EU, US and Canada. Refer a friend: the friend gets a discount on buying; once 1 (or maybe 2) referred friends have bought, the referrer gets **a full year's access free**. Claude's proposal: the reward is 12 months of the Kitchen, members get the free year while influencers and partners get commission, and the reward is taken back if the friend refunds. Flagged: selling to EU consumers means EU VAT from the first sale (non-Union OSS), so the EU block question comes back before launch.
+
 - **Growth batch (2026-10-26, owner: "Clear heart all of it. Build it all"):** migrations 0016-0019, all on staging (version 9292dbf0).
   - **Growth engine reporting** (`src/services/growth-engine.ts`, `src/middleware/ge.ts`):
     - `?ge=CODE` is carried through the visit without a cookie: an HTMLRewriter adds it to the site's own links and POST forms, and to redirects after a form post. It's lost if the visitor leaves and comes back later (the owner's choice: no tracking cookies).
