@@ -405,6 +405,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Kitchen refer-a-friend: DECIDED (owner, 2026-10-26), build awaiting CH:** **Kitchen only** (programmes untouched; Lower Body stays one fee, lifetime). A Kitchen member shares their code. When **1 friend or family member joins the Kitchen**, the member gets **a year free**; with **2 friends**, **lifetime free**. Claude suggested the friend gets 50% off the joining fee (the monthly price stays the same), and "lifetime" in the terms means "for as long as the Kitchen runs". Friend discount awaiting the owner.
 
+- **Kitchen joining fee idea (owner, 2026-10-26, awaiting CH):** the normal joining fee is **19.99** (the owner says they've already sold a few at 19.99), and a friend's code gives **50% off: 9.99**. Shared as "join for £9.99 with my code (normally £19.99)". Claude advised: keep records of the full-price sales, only say "normally £19.99" while people really pay that without a code, and avoid a general "was/now" sale. The currency to confirm is £ (the owner said "$", but earlier said pounds to start).
+
 - **Growth batch (2026-10-26, owner: "Clear heart all of it. Build it all"):** migrations 0016-0019, all on staging (version 9292dbf0).
   - **Growth engine reporting** (`src/services/growth-engine.ts`, `src/middleware/ge.ts`):
     - `?ge=CODE` is carried through the visit without a cookie: an HTMLRewriter adds it to the site's own links and POST forms, and to redirects after a form post. It's lost if the visitor leaves and comes back later (the owner's choice: no tracking cookies).
