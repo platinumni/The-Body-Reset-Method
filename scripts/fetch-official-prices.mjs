@@ -13,6 +13,12 @@ const DIR = join(ROOT, "content", "meal-plans");
 const SRC = JSON.parse(readFileSync(join(DIR, "official-sources.json"), "utf8"));
 const OUT = join(DIR, "official-prices.json");
 const round = (n) => Math.round(n * 100) / 100;
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const monthName = (p) => {
+  const m = /^(\d{4}) ([A-Z]{3})$/.exec(p ?? "");
+  const i = m ? MONTHS.findIndex((x) => x.slice(0, 3).toUpperCase() === m[2]) : -1;
+  return i >= 0 ? `${MONTHS[i]} ${m[1]}` : p;
+};
 
 async function getJson(url, init) {
   const res = await fetch(url, init);
@@ -24,22 +30,26 @@ const onsSeries = async (cdid) => (await getJson(`https://www.ons.gov.uk/economy
 const valueAt = (months, period) => Number(months.find((m) => m.date === period)?.value);
 
 export async function fetchUk() {
+  // Real shop prices from ONS (January 2026, the last month of published food quotes), by region,
+  // brought up to date with the CPI food index. Rebuild the quotes with scripts/build-ons-quotes.mjs.
   const uk = SRC.uk;
+  const quotes = JSON.parse(readFileSync(join(DIR, "ons-price-quotes.json"), "utf8"));
   const index = await onsSeries(uk.index.cdid);
   const latest = index[index.length - 1];
-  const scale = Number(latest.value) / valueAt(index, uk.basePeriod);
-  const prices = {};
-  for (const s of uk.series) {
-    const months = await onsSeries(s.cdid);
-    const v = valueAt(months, uk.basePeriod);
-    if (Number.isFinite(v)) prices[s.key] = round((v / 100) * s.factor * scale);
+  const scale = Number(latest.value) / valueAt(index, uk.quotes.period);
+  const regions = { national: {} };
+  for (const m of uk.quotes.items) {
+    const q = quotes.items[m.id];
+    if (!q) continue;
+    regions.national[m.key] = round(q.national * m.factor * scale);
+    for (const [region, price] of Object.entries(q.regions)) (regions[region] ??= {})[m.key] = round(price * m.factor * scale);
   }
   return {
     source: uk.source,
     period: latest.date,
-    note: `Average prices from ${uk.basePeriod.toLowerCase()} brought up to ${latest.date.toLowerCase()} with the official food price index`,
+    note: `Real shop prices recorded by ONS in ${monthName(uk.quotes.period)}, brought up to ${monthName(latest.date)} with the official food price index`,
     estimateAdjust: round(Number(latest.value) / valueAt(index, uk.estimatesIndexPeriod) * 1000) / 1000,
-    regions: { national: prices },
+    regions,
   };
 }
 

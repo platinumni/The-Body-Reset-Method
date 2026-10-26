@@ -10,9 +10,9 @@ export type Store = "discount" | "mid" | "premium";
 export type Diet = "any" | "pescatarian" | "vegetarian" | "vegan";
 
 export const COUNTRIES: Record<Country, { label: string; currency: string; symbol: string; factor: number; source: string }> = {
-  uk: { label: "United Kingdom", currency: "GBP", symbol: "£", factor: 1, source: "Office for National Statistics average prices (to be connected); currently estimated" },
-  us: { label: "United States", currency: "USD", symbol: "$", factor: 1.3, source: "Bureau of Labor Statistics average prices (to be connected); currently estimated" },
-  ca: { label: "Canada", currency: "CAD", symbol: "C$", factor: 1.75, source: "Statistics Canada average prices (to be connected); currently estimated" },
+  uk: { label: "United Kingdom", currency: "GBP", symbol: "£", factor: 1, source: "Office for National Statistics shop prices" },
+  us: { label: "United States", currency: "USD", symbol: "$", factor: 1.3, source: "Bureau of Labor Statistics average prices" },
+  ca: { label: "Canada", currency: "CAD", symbol: "C$", factor: 1.75, source: "Statistics Canada average prices" },
 };
 export const STORES: Record<Store, { label: string; factor: number }> = {
   discount: { label: "Discount (e.g. Aldi, Lidl)", factor: 0.85 },

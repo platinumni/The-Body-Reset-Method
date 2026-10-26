@@ -30,7 +30,7 @@ export function planQuery(input: PlanInput, change: Partial<PlanInput> = {}): st
   return `/account/meal-plans?${q.toString()}`;
 }
 
-function PlanForm(props: { input: PlanInput; regions: { us: string[]; ca: string[] } }) {
+function PlanForm(props: { input: PlanInput; regions: { uk?: string[]; us: string[]; ca: string[] } }) {
   const i = props.input;
   return (
     <form method="get" action="/account/meal-plans" class="card meal-form no-print">
@@ -55,11 +55,20 @@ function PlanForm(props: { input: PlanInput; regions: { us: string[]; ca: string
           </select>
         </div>
         <div class="field">
-          <label for="mp-region">Region (US and Canada only)</label>
+          <label for="mp-region">Region</label>
           <select id="mp-region" name="region">
             <option value="national" selected={!i.region || i.region === "national"}>
               National average
             </option>
+            {props.regions.uk?.length ? (
+              <optgroup label="United Kingdom">
+                {props.regions.uk.map((r) => (
+                  <option value={r} selected={i.region === r}>
+                    {r}
+                  </option>
+                ))}
+              </optgroup>
+            ) : null}
             <optgroup label="United States">
               {props.regions.us.map((r) => (
                 <option value={r} selected={i.region === r}>
@@ -270,7 +279,7 @@ export function MealPlannerPage(props: {
   saved?: boolean;
   spent?: boolean;
   spend: import("../services/meal-plans").SpendSummary;
-  regions: { us: string[]; ca: string[] };
+  regions: { uk?: string[]; us: string[]; ca: string[] };
   favourites?: string[];
   hasMembership?: boolean;
 }) {

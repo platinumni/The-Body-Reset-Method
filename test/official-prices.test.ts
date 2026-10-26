@@ -12,7 +12,7 @@ const json = (body: unknown) => new Response(JSON.stringify(body), { headers: { 
 describe("official prices", () => {
   it("every mapped ingredient exists in the price list", () => {
     const keys = new Set(PRICE_ITEMS.map((p) => p.key));
-    const mapped = [...sources.uk.series.map((s) => s.key), ...sources.us.series.map((s) => s.key), ...sources.ca.products.map((p) => p.key)];
+    const mapped = [...sources.uk.quotes.items.map((s) => s.key), ...sources.us.series.map((s) => s.key), ...sources.ca.products.map((p) => p.key)];
     expect(mapped.filter((k) => !keys.has(k))).toEqual([]);
   });
 
@@ -41,13 +41,15 @@ describe("official prices", () => {
 
   it("brings UK prices up to date with the food index", async () => {
     const fake = (async (url: string) => {
-      if (url.includes("/d7c8/")) return json({ months: [{ date: "2025 JAN", value: "100" }, { date: "2026 SEP", value: "110" }] });
-      return json({ months: [{ date: "2025 JAN", value: "200" }] });
+      if (url.includes("/d7c8/")) return json({ months: [{ date: "2026 JAN", value: "100" }, { date: "2026 SEP", value: "110" }] });
+      throw new Error("only the food index is fetched");
     }) as unknown as typeof fetch;
     const uk = await fetchUk(fake);
     expect(uk.period).toBe("2026 SEP");
-    expect(uk.regions.national!.carrots).toBeCloseTo(2 * 1 * 1.1, 2);
-    expect(uk.regions.national!.eggs).toBeCloseTo(2 * 0.5 * 1.1, 2);
+    // Real ONS shop prices for January 2026 (median £3.60 a dozen), scaled by the index, for a box of 6.
+    expect(uk.regions.national!.eggs).toBeCloseTo(3.6 * 0.5 * 1.1, 2);
+    expect(uk.regions["Northern Ireland"]!.eggs).toBeGreaterThan(0);
+    expect(uk.note).toContain("January 2026");
     expect(uk.estimateAdjust).toBe(1);
   });
 
@@ -67,7 +69,7 @@ describe("official prices", () => {
 
   it("refreshes into settings, keeping a country's previous prices if it fails", async () => {
     const fake = (async (url: string) => {
-      if (url.includes("ons.gov.uk")) return json({ months: [{ date: "2025 JAN", value: "100" }, { date: "2026 OCT", value: "120" }] });
+      if (url.includes("ons.gov.uk")) return json({ months: [{ date: "2026 JAN", value: "100" }, { date: "2026 SEP", value: "100" }, { date: "2026 OCT", value: "120" }] });
       return new Response("down", { status: 503 });
     }) as unknown as typeof fetch;
     const result = await refreshOfficialPrices(env, fake, true);

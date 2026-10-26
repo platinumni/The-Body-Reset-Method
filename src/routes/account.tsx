@@ -140,7 +140,7 @@ accountRoutes.get("/account/meal-plans", async (c) => {
       saved={params.has("saved")}
       spent={params.has("spent")}
       spend={spend}
-      regions={{ us: regionsFor(prices, "us"), ca: regionsFor(prices, "ca") }}
+      regions={{ uk: regionsFor(prices, "uk"), us: regionsFor(prices, "us"), ca: regionsFor(prices, "ca") }}
       favourites={favourites}
       hasMembership={!!membership}
     />,

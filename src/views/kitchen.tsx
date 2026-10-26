@@ -147,9 +147,11 @@ export function KitchenPage(props: { meta: PageMeta; csrfToken: string; product:
           <details class="faq">
             <summary>Where do the prices come from?</summary>
             <p>
-              From official national average food prices{props.priceSource ? ` (${props.priceSource})` : ""}, updated monthly, adjusted for the kind of
-              supermarket you use. For anything without an official average, we use our own estimate, kept up to date with official food price changes.
-              They're averages, so your local shop may differ, and you can tell us what you actually paid to make your plans more accurate.
+              In the UK, from the typical prices the Office for National Statistics recorded in shops across the country, for your region, brought up to
+              date each month with the official food price index{props.priceSource ? ` (${props.priceSource})` : ""}. In the US and Canada, from official
+              monthly average prices. They're adjusted for the kind of supermarket you use. For anything without an official price, we use our own estimate,
+              kept in line with official food price changes. Your local shop may differ, and you can tell us what you actually paid to make your plans more
+              accurate.
             </p>
           </details>
           <details class="faq">

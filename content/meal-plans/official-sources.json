@@ -2,7 +2,7 @@
  "_about": "Which official average prices feed which meal-plan ingredients. factor = our pack size divided by the official unit (so pack price = official price x factor). Used by scripts/fetch-official-prices.mjs and the website's monthly refresh.",
  "uk": {
   "source": "Office for National Statistics (ONS)",
-  "basePeriod": "2025 JAN",
+  "basePeriod": "2026 JAN",
   "index": {
    "cdid": "d7c8",
    "title": "CPI index 01.1: Food"
@@ -148,7 +148,333 @@
     "factor": 0.6,
     "unit": "whole chicken per kg (used as a guide)"
    }
-  ]
+  ],
+  "quotes": {
+   "period": "2026 JAN",
+   "note": "January 2026 is the last month ONS published individual supermarket food prices. Each factor converts the ONS item to our pack size (see prices.ts).",
+   "items": [
+    {
+     "id": "211604",
+     "key": "eggs",
+     "factor": 0.5
+    },
+    {
+     "id": "212719",
+     "key": "banana",
+     "factor": 0.6
+    },
+    {
+     "id": "212518",
+     "key": "carrots",
+     "factor": 1
+    },
+    {
+     "id": "212515",
+     "key": "tomatoes",
+     "factor": 0.48
+    },
+    {
+     "id": "212519",
+     "key": "onion",
+     "factor": 0.9
+    },
+    {
+     "id": "212520",
+     "key": "mushrooms",
+     "factor": 0.3
+    },
+    {
+     "id": "212310",
+     "key": "potatoes",
+     "factor": 2.5
+    },
+    {
+     "id": "212309",
+     "key": "new-potatoes",
+     "factor": 1
+    },
+    {
+     "id": "212535",
+     "key": "sweet-potato",
+     "factor": 1
+    },
+    {
+     "id": "210113",
+     "key": "bread",
+     "factor": 1
+    },
+    {
+     "id": "211501",
+     "key": "cheddar",
+     "factor": 0.35
+    },
+    {
+     "id": "211306",
+     "key": "butter",
+     "factor": 1
+    },
+    {
+     "id": "211709",
+     "key": "milk",
+     "factor": 1
+    },
+    {
+     "id": "212101",
+     "key": "sugar",
+     "factor": 1
+    },
+    {
+     "id": "212516",
+     "key": "cabbage",
+     "factor": 0.8
+    },
+    {
+     "id": "212530",
+     "key": "broccoli",
+     "factor": 0.35
+    },
+    {
+     "id": "212504",
+     "key": "cauliflower",
+     "factor": 1
+    },
+    {
+     "id": "212510",
+     "key": "cucumber",
+     "factor": 1
+    },
+    {
+     "id": "211105",
+     "key": "salmon",
+     "factor": 0.24
+    },
+    {
+     "id": "212722",
+     "key": "grapes",
+     "factor": 0.5
+    },
+    {
+     "id": "212718",
+     "key": "pear",
+     "factor": 0.68
+    },
+    {
+     "id": "212717",
+     "key": "apple",
+     "factor": 0.9
+    },
+    {
+     "id": "212709",
+     "key": "orange",
+     "factor": 1
+    },
+    {
+     "id": "212710",
+     "key": "avocado",
+     "factor": 1
+    },
+    {
+     "id": "210910",
+     "key": "chicken-breast",
+     "factor": 0.6
+    },
+    {
+     "id": "211101",
+     "key": "white-fish",
+     "factor": 0.4
+    },
+    {
+     "id": "211106",
+     "key": "raw-prawns",
+     "factor": 0.2
+    },
+    {
+     "id": "211207",
+     "key": "tuna-tin",
+     "factor": 1
+    },
+    {
+     "id": "210406",
+     "key": "steak",
+     "factor": 0.3
+    },
+    {
+     "id": "211014",
+     "key": "sausages",
+     "factor": 0.454
+    },
+    {
+     "id": "211409",
+     "key": "peanut-butter",
+     "factor": 1
+    },
+    {
+     "id": "211510",
+     "key": "hard-cheese",
+     "factor": 0.1
+    },
+    {
+     "id": "211815",
+     "key": "double-cream",
+     "factor": 1
+    },
+    {
+     "id": "211714",
+     "key": "plant-milk",
+     "factor": 1
+    },
+    {
+     "id": "210204",
+     "key": "pasta",
+     "factor": 1
+    },
+    {
+     "id": "210212",
+     "key": "rice",
+     "factor": 1
+    },
+    {
+     "id": "210221",
+     "key": "couscous",
+     "factor": 1
+    },
+    {
+     "id": "210115",
+     "key": "tortillas",
+     "factor": 1
+    },
+    {
+     "id": "210201",
+     "key": "flour",
+     "factor": 1
+    },
+    {
+     "id": "212601",
+     "key": "chopped-tomatoes",
+     "factor": 1
+    },
+    {
+     "id": "212603",
+     "key": "baked-beans",
+     "factor": 1
+    },
+    {
+     "id": "212608",
+     "key": "sweetcorn",
+     "factor": 1
+    },
+    {
+     "id": "212609",
+     "key": "peas",
+     "factor": 1
+    },
+    {
+     "id": "212613",
+     "key": "chickpeas",
+     "factor": 1
+    },
+    {
+     "id": "212613",
+     "key": "beans",
+     "factor": 1
+    },
+    {
+     "id": "212613",
+     "key": "green-lentils",
+     "factor": 1
+    },
+    {
+     "id": "212732",
+     "key": "lemon",
+     "factor": 1
+    },
+    {
+     "id": "212732",
+     "key": "lemon-juice",
+     "factor": 1
+    },
+    {
+     "id": "212712",
+     "key": "kiwi",
+     "factor": 4
+    },
+    {
+     "id": "212736",
+     "key": "melon",
+     "factor": 1
+    },
+    {
+     "id": "212737",
+     "key": "pineapple",
+     "factor": 1
+    },
+    {
+     "id": "212738",
+     "key": "mango",
+     "factor": 1
+    },
+    {
+     "id": "212809",
+     "key": "berries",
+     "factor": 1
+    },
+    {
+     "id": "212806",
+     "key": "peanuts",
+     "factor": 1
+    },
+    {
+     "id": "212107",
+     "key": "honey",
+     "factor": 1
+    },
+    {
+     "id": "212930",
+     "key": "mayo",
+     "factor": 1
+    },
+    {
+     "id": "212532",
+     "key": "peppers",
+     "factor": 3
+    },
+    {
+     "id": "212531",
+     "key": "courgette",
+     "factor": 0.6
+    },
+    {
+     "id": "212537",
+     "key": "rocket",
+     "factor": 1
+    },
+    {
+     "id": "212945",
+     "key": "spices",
+     "factor": 1
+    },
+    {
+     "id": "210223",
+     "key": "noodles",
+     "factor": 1
+    },
+    {
+     "id": "210222",
+     "key": "rice-cakes",
+     "factor": 1
+    },
+    {
+     "id": "212006",
+     "key": "apple-juice",
+     "factor": 1
+    },
+    {
+     "id": "212946",
+     "key": "seeds",
+     "factor": 1
+    }
+   ]
+  }
  },
  "us": {
   "source": "US Bureau of Labor Statistics (BLS)",

@@ -4,6 +4,7 @@
 
 import bundled from "../../../content/meal-plans/official-prices.json";
 import sources from "../../../content/meal-plans/official-sources.json";
+import onsQuotes from "../../../content/meal-plans/ons-price-quotes.json";
 import type { Country } from "./planner";
 
 export type CountryPrices = { source: string; period: string | null; note: string; estimateAdjust: number; regions: Record<string, Record<string, number>> };
@@ -49,23 +50,37 @@ type OnsMonth = { date: string; value: string };
 const valueAt = (months: OnsMonth[], period: string) => Number(months.find((m) => m.date === period)?.value);
 
 /** UK: ONS average prices (last published January 2025), brought up to date with the official food price index. */
+type QuoteItem = { national: number; regions: Record<string, number> };
+
+/** UK prices from ONS shop price quotes, scaled by the CPI food index to a later month. Pure, for testing. */
+export function ukFromQuotes(quotes: { items: Record<string, QuoteItem> }, map: { id: string; key: string; factor: number }[], scale: number): Record<string, Record<string, number>> {
+  const regions: Record<string, Record<string, number>> = { national: {} };
+  for (const m of map) {
+    const q = quotes.items[m.id];
+    if (!q) continue;
+    regions.national![m.key] = round(q.national * m.factor * scale);
+    for (const [region, price] of Object.entries(q.regions)) (regions[region] ??= {})[m.key] = round(price * m.factor * scale);
+  }
+  return regions;
+}
+
+/**
+ * UK: the real prices ONS collectors recorded in shops in January 2026 (the last month ONS published
+ * supermarket food prices item by item), national and by region, brought up to the latest month
+ * with the official CPI food index.
+ */
 export async function fetchUk(fetcher: typeof fetch = fetch): Promise<CountryPrices> {
   const uk = sources.uk;
-  const series = async (cdid: string): Promise<OnsMonth[]> => (await getJson(fetcher, `https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/${cdid}/mm23/data`)).months ?? [];
-  const index = await series(uk.index.cdid);
+  const index: OnsMonth[] = (await getJson(fetcher, `https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/${uk.index.cdid}/mm23/data`)).months ?? [];
   const latest = index[index.length - 1]!;
-  const scale = Number(latest.value) / valueAt(index, uk.basePeriod);
-  const prices: Record<string, number> = {};
-  for (const s of uk.series) {
-    const v = valueAt(await series(s.cdid), uk.basePeriod);
-    if (Number.isFinite(v)) prices[s.key] = round((v / 100) * s.factor * scale);
-  }
+  const scale = Number(latest.value) / valueAt(index, uk.quotes.period);
+  if (!Number.isFinite(scale) || scale <= 0) throw new Error("UK food price index missing");
   return {
     source: uk.source,
     period: latest.date,
-    note: `Average prices from ${uk.basePeriod.toLowerCase()} brought up to ${latest.date.toLowerCase()} with the official food price index`,
+    note: `Real shop prices recorded by ONS in ${formatPeriod(uk.quotes.period)}, brought up to ${formatPeriod(latest.date)} with the official food price index`,
     estimateAdjust: Math.round((Number(latest.value) / valueAt(index, uk.estimatesIndexPeriod)) * 1000) / 1000,
-    regions: { national: prices },
+    regions: ukFromQuotes(onsQuotes as { items: Record<string, QuoteItem> }, uk.quotes.items, scale),
   };
 }
 

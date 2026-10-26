@@ -1,0 +1,1135 @@
+{
+ "source": "Office for National Statistics (ONS) consumer price quotes",
+ "period": "202601",
+ "items": {
+  "210113": {
+   "desc": "WHOLEMEAL SLICED LOAF BRANDED",
+   "quotes": 144,
+   "national": 1.35,
+   "regions": {
+    "London": 1.5,
+    "South East": 1.33,
+    "South West": 1.35,
+    "East Anglia": 1.33,
+    "East Midlands": 1.5,
+    "West Midlands": 1.35,
+    "Yorkshire and the Humber": 1.23,
+    "North West": 1.35,
+    "Scotland": 1.35
+   }
+  },
+  "210115": {
+   "desc": "WRAP / TORTILLA PACK 6-8",
+   "quotes": 233,
+   "national": 1.45,
+   "regions": {
+    "London": 1.45,
+    "South East": 1.5,
+    "South West": 1.55,
+    "East Anglia": 1.4,
+    "East Midlands": 1.53,
+    "West Midlands": 1.45,
+    "Yorkshire and the Humber": 1.4,
+    "North West": 1.5,
+    "North East": 1.5,
+    "Wales": 1.45,
+    "Scotland": 1.4,
+    "Northern Ireland": 1.4
+   }
+  },
+  "210201": {
+   "desc": "FLOUR-SELF-RAISING-1.5KG",
+   "quotes": 138,
+   "national": 0.77,
+   "regions": {
+    "London": 0.83,
+    "South East": 0.75,
+    "South West": 0.7,
+    "East Anglia": 0.74,
+    "East Midlands": 0.78,
+    "West Midlands": 0.78,
+    "Yorkshire and the Humber": 0.78,
+    "North West": 0.75,
+    "Scotland": 0.7
+   }
+  },
+  "210204": {
+   "desc": "DRY SPAGHETTI OR PASTA 500G",
+   "quotes": 243,
+   "national": 0.75,
+   "regions": {
+    "London": 0.8,
+    "South East": 0.75,
+    "South West": 0.75,
+    "East Anglia": 0.75,
+    "East Midlands": 0.75,
+    "West Midlands": 0.78,
+    "Yorkshire and the Humber": 0.75,
+    "North West": 0.75,
+    "North East": 0.8,
+    "Wales": 0.78,
+    "Scotland": 0.75,
+    "Northern Ireland": 0.75
+   }
+  },
+  "210212": {
+   "desc": "BASMATI RICE 500G-1KG",
+   "quotes": 137,
+   "national": 1.79,
+   "regions": {
+    "London": 2.15,
+    "South East": 1.79,
+    "South West": 2,
+    "East Anglia": 1.79,
+    "East Midlands": 1.79,
+    "West Midlands": 1.79,
+    "Yorkshire and the Humber": 1.79,
+    "North West": 1.79,
+    "Scotland": 1.85
+   }
+  },
+  "210221": {
+   "desc": "COUSCOUS PLAIN/FLAVOURED",
+   "quotes": 155,
+   "national": 0.95,
+   "regions": {
+    "London": 1.2,
+    "South East": 0.95,
+    "South West": 0.85,
+    "East Anglia": 1.08,
+    "East Midlands": 0.95,
+    "West Midlands": 1.2,
+    "Yorkshire and the Humber": 0.95,
+    "North West": 0.95,
+    "North East": 0.95,
+    "Wales": 1.23,
+    "Scotland": 1.02,
+    "Northern Ireland": 1.08
+   }
+  },
+  "210222": {
+   "desc": "RICE CAKES PACK 100-180G",
+   "quotes": 212,
+   "national": 1.65,
+   "regions": {
+    "London": 1.75,
+    "South East": 1.65,
+    "South West": 1.68,
+    "East Anglia": 1.75,
+    "East Midlands": 1.65,
+    "West Midlands": 1.8,
+    "Yorkshire and the Humber": 1.55,
+    "North West": 1.6,
+    "North East": 1.55,
+    "Wales": 1.7,
+    "Scotland": 1.6,
+    "Northern Ireland": 1.7
+   }
+  },
+  "210223": {
+   "desc": "NOODLES RDY TO USE 250-300G",
+   "quotes": 201,
+   "national": 1.35,
+   "regions": {
+    "London": 1.3,
+    "South East": 1.35,
+    "South West": 1.3,
+    "East Anglia": 1.15,
+    "East Midlands": 1.35,
+    "West Midlands": 1.39,
+    "Yorkshire and the Humber": 1.6,
+    "North West": 1.35,
+    "North East": 1.35,
+    "Wales": 1.35,
+    "Scotland": 1.35,
+    "Northern Ireland": 1.31
+   }
+  },
+  "210406": {
+   "desc": "HOME KLD BEEF-RUMP/POPES STEAK",
+   "quotes": 245,
+   "national": 21.95,
+   "regions": {
+    "London": 26.39,
+    "South East": 22.24,
+    "South West": 20.66,
+    "East Anglia": 22.03,
+    "East Midlands": 20.42,
+    "West Midlands": 22.03,
+    "Yorkshire and the Humber": 20.35,
+    "North West": 23.56,
+    "North East": 23.65,
+    "Wales": 22.99,
+    "Scotland": 21,
+    "Northern Ireland": 19.49
+   }
+  },
+  "210910": {
+   "desc": "FRESH BONELESS CHICKEN BREAST",
+   "quotes": 262,
+   "national": 8.1,
+   "regions": {
+    "London": 7.19,
+    "South East": 9.17,
+    "South West": 8.1,
+    "East Anglia": 7.98,
+    "East Midlands": 7.65,
+    "West Midlands": 8.68,
+    "Yorkshire and the Humber": 8.3,
+    "North West": 9.58,
+    "North East": 8.78,
+    "Wales": 8.34,
+    "Scotland": 8.75,
+    "Northern Ireland": 7.15
+   }
+  },
+  "211014": {
+   "desc": "SAUSAGES-PORK-PER KG",
+   "quotes": 276,
+   "national": 6.23,
+   "regions": {
+    "London": 7.18,
+    "South East": 6.23,
+    "South West": 6.23,
+    "East Anglia": 6.23,
+    "East Midlands": 5.37,
+    "West Midlands": 6.71,
+    "Yorkshire and the Humber": 6.9,
+    "North West": 8.09,
+    "North East": 7.5,
+    "Wales": 6.5,
+    "Scotland": 6.68,
+    "Northern Ireland": 6.01
+   }
+  },
+  "211101": {
+   "desc": "FRESH WHITE FISH FILLETS KG",
+   "quotes": 131,
+   "national": 24.79,
+   "regions": {
+    "London": 26.02,
+    "South East": 24.79,
+    "South West": 24.02,
+    "East Anglia": 24.35,
+    "East Midlands": 24.79,
+    "West Midlands": 26,
+    "Yorkshire and the Humber": 24,
+    "North West": 24.79,
+    "Scotland": 21
+   }
+  },
+  "211105": {
+   "desc": "FRESH FISH-SALMON FILLETS-KG",
+   "quotes": 146,
+   "national": 18.19,
+   "regions": {
+    "London": 18.51,
+    "South East": 18.18,
+    "South West": 18.27,
+    "East Anglia": 18.13,
+    "East Midlands": 18.75,
+    "West Midlands": 18.23,
+    "Yorkshire and the Humber": 18.18,
+    "North West": 18.18,
+    "Scotland": 18.18
+   }
+  },
+  "211106": {
+   "desc": "FROZEN PRAWNS PER KG",
+   "quotes": 159,
+   "national": 18.4,
+   "regions": {
+    "London": 18.4,
+    "South East": 18.4,
+    "South West": 18.4,
+    "East Anglia": 18.4,
+    "East Midlands": 18.4,
+    "West Midlands": 18.4,
+    "Yorkshire and the Humber": 18.4,
+    "North West": 18.4,
+    "North East": 17.95,
+    "Wales": 18.4,
+    "Scotland": 17.5,
+    "Northern Ireland": 16.67
+   }
+  },
+  "211207": {
+   "desc": "CANNED FISH, TUNA, 130G-200G",
+   "quotes": 144,
+   "national": 0.8,
+   "regions": {
+    "London": 0.85,
+    "South East": 0.8,
+    "South West": 0.72,
+    "East Anglia": 0.76,
+    "East Midlands": 1,
+    "West Midlands": 0.83,
+    "Yorkshire and the Humber": 0.8,
+    "North West": 0.74,
+    "Scotland": 0.78
+   }
+  },
+  "211306": {
+   "desc": "BUTTER 200-250G SPEC COO",
+   "quotes": 243,
+   "national": 2.5,
+   "regions": {
+    "London": 2.48,
+    "South East": 2.28,
+    "South West": 2.47,
+    "East Anglia": 2.48,
+    "East Midlands": 2.5,
+    "West Midlands": 2.46,
+    "Yorkshire and the Humber": 2.5,
+    "North West": 2,
+    "North East": 2.65,
+    "Wales": 2.6,
+    "Scotland": 2.48,
+    "Northern Ireland": 2.6
+   }
+  },
+  "211409": {
+   "desc": "PEANUT BUTTER, JAR, 225-350G",
+   "quotes": 254,
+   "national": 2.2,
+   "regions": {
+    "London": 2.8,
+    "South East": 2,
+    "South West": 1.75,
+    "East Anglia": 1.75,
+    "East Midlands": 1.7,
+    "West Midlands": 2,
+    "Yorkshire and the Humber": 2,
+    "North West": 1.7,
+    "North East": 2.8,
+    "Wales": 2.2,
+    "Scotland": 1.95,
+    "Northern Ireland": 2.9
+   }
+  },
+  "211501": {
+   "desc": "CHEDDAR-HOME PRODUCED PER KG",
+   "quotes": 148,
+   "national": 8.57,
+   "regions": {
+    "London": 8.87,
+    "South East": 8.38,
+    "South West": 8.38,
+    "East Anglia": 8.38,
+    "East Midlands": 8.75,
+    "West Midlands": 8.38,
+    "Yorkshire and the Humber": 9.09,
+    "North West": 8.05,
+    "Scotland": 8.38
+   }
+  },
+  "211510": {
+   "desc": "PARMESAN CHEESE-PER KG",
+   "quotes": 136,
+   "national": 24.86,
+   "regions": {
+    "London": 26,
+    "South East": 23.24,
+    "South West": 24.71,
+    "East Anglia": 21,
+    "East Midlands": 25,
+    "West Midlands": 27.5,
+    "Yorkshire and the Humber": 21.5,
+    "North West": 20,
+    "Scotland": 23.24
+   }
+  },
+  "211604": {
+   "desc": "EGGS PER DOZEN OR 2 X 6 BOX",
+   "quotes": 242,
+   "national": 3.6,
+   "regions": {
+    "London": 3.6,
+    "South East": 3.5,
+    "South West": 3.6,
+    "East Anglia": 4,
+    "East Midlands": 3.4,
+    "West Midlands": 4,
+    "Yorkshire and the Humber": 4,
+    "North West": 3.54,
+    "North East": 3.4,
+    "Wales": 4,
+    "Scotland": 3.4,
+    "Northern Ireland": 4
+   }
+  },
+  "211709": {
+   "desc": "SHOP MILK-WHOLE MILK-4PT/2LTR",
+   "quotes": 243,
+   "national": 1.8,
+   "regions": {
+    "London": 1.8,
+    "South East": 1.65,
+    "South West": 1.65,
+    "East Anglia": 1.65,
+    "East Midlands": 1.8,
+    "West Midlands": 1.8,
+    "Yorkshire and the Humber": 1.8,
+    "North West": 1.65,
+    "North East": 1.8,
+    "Wales": 1.8,
+    "Scotland": 1.8,
+    "Northern Ireland": 1.65
+   }
+  },
+  "211714": {
+   "desc": "NON-DAIRY MILK DRINK 900ML-1LT",
+   "quotes": 242,
+   "national": 1.8,
+   "regions": {
+    "London": 1.88,
+    "South East": 1.8,
+    "South West": 1.7,
+    "East Anglia": 1.8,
+    "East Midlands": 1.8,
+    "West Midlands": 1.8,
+    "Yorkshire and the Humber": 1.8,
+    "North West": 1.8,
+    "North East": 1.8,
+    "Wales": 1.8,
+    "Scotland": 1.8,
+    "Northern Ireland": 1.92
+   }
+  },
+  "211815": {
+   "desc": "FRESH DOUBLE CREAM 250ML-300ML",
+   "quotes": 147,
+   "national": 1.62,
+   "regions": {
+    "London": 1.75,
+    "South East": 1.65,
+    "South West": 1.6,
+    "East Anglia": 1.6,
+    "East Midlands": 1.7,
+    "West Midlands": 1.7,
+    "Yorkshire and the Humber": 1.63,
+    "North West": 1.6,
+    "Scotland": 1.58
+   }
+  },
+  "212006": {
+   "desc": "FRUIT JUICE NOT ORANGE 1L",
+   "quotes": 147,
+   "national": 1.6,
+   "regions": {
+    "London": 1.68,
+    "South East": 1.6,
+    "South West": 1.5,
+    "East Anglia": 1.6,
+    "East Midlands": 1.6,
+    "West Midlands": 1.65,
+    "Yorkshire and the Humber": 1.75,
+    "North West": 1.5,
+    "Scotland": 1.6
+   }
+  },
+  "212101": {
+   "desc": "SUGAR -GRANULATED-WHITE-PER KG",
+   "quotes": 244,
+   "national": 1.09,
+   "regions": {
+    "London": 1.09,
+    "South East": 1.09,
+    "South West": 1.09,
+    "East Anglia": 1.09,
+    "East Midlands": 1.09,
+    "West Midlands": 1.09,
+    "Yorkshire and the Humber": 1.09,
+    "North West": 1.09,
+    "North East": 1.09,
+    "Wales": 1.09,
+    "Scotland": 1.09,
+    "Northern Ireland": 1.09
+   }
+  },
+  "212107": {
+   "desc": "HONEY JAR/BOTTLE 340G-454G",
+   "quotes": 226,
+   "national": 2,
+   "regions": {
+    "London": 2.5,
+    "South East": 1.48,
+    "South West": 1.92,
+    "East Anglia": 1.75,
+    "East Midlands": 2,
+    "West Midlands": 2,
+    "Yorkshire and the Humber": 1.85,
+    "North West": 1.98,
+    "North East": 1.88,
+    "Wales": 2.88,
+    "Scotland": 2.25,
+    "Northern Ireland": 2.68
+   }
+  },
+  "212309": {
+   "desc": "POTATOES-NEW-PER KG",
+   "quotes": 422,
+   "national": 1.47,
+   "regions": {
+    "London": 1.58,
+    "South East": 1.47,
+    "South West": 1.3,
+    "East Anglia": 1.35,
+    "East Midlands": 1.47,
+    "West Midlands": 1.59,
+    "Yorkshire and the Humber": 1.47,
+    "North West": 1.52,
+    "North East": 1.76,
+    "Wales": 1.58,
+    "Scotland": 1.45,
+    "Northern Ireland": 1.33
+   }
+  },
+  "212310": {
+   "desc": "POTATOES- OLD WHITE PER KG",
+   "quotes": 410,
+   "national": 0.9,
+   "regions": {
+    "London": 1.04,
+    "South East": 0.9,
+    "South West": 0.9,
+    "East Anglia": 0.9,
+    "East Midlands": 0.9,
+    "West Midlands": 0.95,
+    "Yorkshire and the Humber": 0.88,
+    "North West": 0.9,
+    "North East": 0.9,
+    "Wales": 1.1,
+    "Scotland": 0.9,
+    "Northern Ireland": 1
+   }
+  },
+  "212504": {
+   "desc": "FRESH VEG-CAULIFLOWER-EACH",
+   "quotes": 403,
+   "national": 1.19,
+   "regions": {
+    "London": 1.19,
+    "South East": 1.19,
+    "South West": 1.19,
+    "East Anglia": 1.19,
+    "East Midlands": 1.27,
+    "West Midlands": 1.35,
+    "Yorkshire and the Humber": 1.19,
+    "North West": 1.19,
+    "North East": 1.2,
+    "Wales": 1.19,
+    "Scotland": 1.19,
+    "Northern Ireland": 1.19
+   }
+  },
+  "212510": {
+   "desc": "FRESH VEG-CUCUMBER-WHOLE",
+   "quotes": 417,
+   "national": 0.99,
+   "regions": {
+    "London": 0.99,
+    "South East": 0.99,
+    "South West": 0.89,
+    "East Anglia": 0.94,
+    "East Midlands": 0.9,
+    "West Midlands": 1,
+    "Yorkshire and the Humber": 0.99,
+    "North West": 0.95,
+    "North East": 1,
+    "Wales": 1,
+    "Scotland": 0.89,
+    "Northern Ireland": 1
+   }
+  },
+  "212515": {
+   "desc": "FRESH VEG-TOMATOES-PER KG",
+   "quotes": 405,
+   "national": 2.99,
+   "regions": {
+    "London": 2.78,
+    "South East": 3.33,
+    "South West": 2.78,
+    "East Anglia": 2.38,
+    "East Midlands": 3.3,
+    "West Midlands": 3.81,
+    "Yorkshire and the Humber": 3.3,
+    "North West": 2.65,
+    "North East": 3.69,
+    "Wales": 3.31,
+    "Scotland": 2.7,
+    "Northern Ireland": 3
+   }
+  },
+  "212516": {
+   "desc": "FRESH VEG-CABBAGE-WHOLE-PER KG",
+   "quotes": 415,
+   "national": 0.85,
+   "regions": {
+    "London": 0.79,
+    "South East": 0.85,
+    "South West": 0.85,
+    "East Anglia": 0.85,
+    "East Midlands": 0.9,
+    "West Midlands": 0.95,
+    "Yorkshire and the Humber": 0.85,
+    "North West": 0.79,
+    "North East": 0.9,
+    "Wales": 0.95,
+    "Scotland": 0.79,
+    "Northern Ireland": 0.79
+   }
+  },
+  "212518": {
+   "desc": "FRESH VEG-CARROTS-PER KG",
+   "quotes": 422,
+   "national": 0.7,
+   "regions": {
+    "London": 0.9,
+    "South East": 0.69,
+    "South West": 0.7,
+    "East Anglia": 0.69,
+    "East Midlands": 0.7,
+    "West Midlands": 0.7,
+    "Yorkshire and the Humber": 0.7,
+    "North West": 0.69,
+    "North East": 0.7,
+    "Wales": 0.69,
+    "Scotland": 0.69,
+    "Northern Ireland": 0.8
+   }
+  },
+  "212519": {
+   "desc": "FRESH VEG-ONIONS-PER KG",
+   "quotes": 397,
+   "national": 0.99,
+   "regions": {
+    "London": 1.05,
+    "South East": 0.99,
+    "South West": 0.99,
+    "East Anglia": 0.99,
+    "East Midlands": 0.99,
+    "West Midlands": 1.08,
+    "Yorkshire and the Humber": 0.99,
+    "North West": 0.99,
+    "North East": 1.05,
+    "Wales": 1.05,
+    "Scotland": 0.99,
+    "Northern Ireland": 0.99
+   }
+  },
+  "212520": {
+   "desc": "FRESH VEG-MUSHROOMS-PER KG",
+   "quotes": 428,
+   "national": 3.75,
+   "regions": {
+    "London": 3.8,
+    "South East": 3.8,
+    "South West": 3.23,
+    "East Anglia": 3.8,
+    "East Midlands": 3.4,
+    "West Midlands": 3.8,
+    "Yorkshire and the Humber": 3.67,
+    "North West": 3.8,
+    "North East": 3.4,
+    "Wales": 3.4,
+    "Scotland": 3.37,
+    "Northern Ireland": 3.63
+   }
+  },
+  "212530": {
+   "desc": "FRESH VEG-BROCCOLI-PER KG",
+   "quotes": 411,
+   "national": 2.3,
+   "regions": {
+    "London": 2.4,
+    "South East": 2.28,
+    "South West": 2.19,
+    "East Anglia": 2.26,
+    "East Midlands": 2.28,
+    "West Midlands": 2.4,
+    "Yorkshire and the Humber": 2.35,
+    "North West": 2.26,
+    "North East": 2.55,
+    "Wales": 2.4,
+    "Scotland": 2.19,
+    "Northern Ireland": 2.19
+   }
+  },
+  "212531": {
+   "desc": "FRESH VEG-COURGETTE-PER KG",
+   "quotes": 359,
+   "national": 2.85,
+   "regions": {
+    "London": 3,
+    "South East": 2.78,
+    "South West": 2.78,
+    "East Anglia": 2.78,
+    "East Midlands": 2.9,
+    "West Midlands": 3.32,
+    "Yorkshire and the Humber": 2.78,
+    "North West": 2.85,
+    "North East": 3.24,
+    "Wales": 2.98,
+    "Scotland": 2.78,
+    "Northern Ireland": 3.24
+   }
+  },
+  "212532": {
+   "desc": "FRESH VEG-PEPPERS -LOOSE OR KG",
+   "quotes": 395,
+   "national": 0.67,
+   "regions": {
+    "London": 0.67,
+    "South East": 0.67,
+    "South West": 0.67,
+    "East Anglia": 0.67,
+    "East Midlands": 0.67,
+    "West Midlands": 0.7,
+    "Yorkshire and the Humber": 0.67,
+    "North West": 0.7,
+    "North East": 0.75,
+    "Wales": 0.7,
+    "Scotland": 0.67,
+    "Northern Ireland": 0.67
+   }
+  },
+  "212535": {
+   "desc": "SWEET POTATO PER KG OR EACH",
+   "quotes": 496,
+   "national": 1.19,
+   "regions": {
+    "London": 1.27,
+    "South East": 1.19,
+    "South West": 1.19,
+    "East Anglia": 1.19,
+    "East Midlands": 1.21,
+    "West Midlands": 1.19,
+    "Yorkshire and the Humber": 1.19,
+    "North West": 1.19,
+    "North East": 1.19,
+    "Wales": 1.21,
+    "Scotland": 1.19,
+    "Northern Ireland": 1.19
+   }
+  },
+  "212537": {
+   "desc": "PREPACKED SALAD 75 - 250G",
+   "quotes": 428,
+   "national": 1.17,
+   "regions": {
+    "London": 1.5,
+    "South East": 1.1,
+    "South West": 1.1,
+    "East Anglia": 1.19,
+    "East Midlands": 1.2,
+    "West Midlands": 1.42,
+    "Yorkshire and the Humber": 1.1,
+    "North West": 1.2,
+    "North East": 1.17,
+    "Wales": 1.14,
+    "Scotland": 1,
+    "Northern Ireland": 1.19
+   }
+  },
+  "212601": {
+   "desc": "CANNED TOMATOES 390-400G",
+   "quotes": 322,
+   "national": 0.62,
+   "regions": {
+    "London": 0.62,
+    "South East": 0.62,
+    "South West": 0.64,
+    "East Anglia": 0.65,
+    "East Midlands": 0.61,
+    "West Midlands": 0.5,
+    "Yorkshire and the Humber": 0.5,
+    "North West": 0.5,
+    "North East": 0.56,
+    "Wales": 0.56,
+    "Scotland": 0.5,
+    "Northern Ireland": 0.74
+   }
+  },
+  "212603": {
+   "desc": "BAKED BEANS, 400-425G TIN",
+   "quotes": 326,
+   "national": 1.38,
+   "regions": {
+    "London": 1.4,
+    "South East": 1.38,
+    "South West": 0.45,
+    "East Anglia": 1.38,
+    "East Midlands": 1.38,
+    "West Midlands": 1.4,
+    "Yorkshire and the Humber": 1.39,
+    "North West": 1.38,
+    "North East": 1.38,
+    "Wales": 1.39,
+    "Scotland": 0.5,
+    "Northern Ireland": 1.38
+   }
+  },
+  "212608": {
+   "desc": "CANNED SWEETCORN 198-340G",
+   "quotes": 229,
+   "national": 1,
+   "regions": {
+    "London": 1.1,
+    "South East": 1,
+    "South West": 1,
+    "East Anglia": 1,
+    "East Midlands": 1,
+    "West Midlands": 1,
+    "Yorkshire and the Humber": 1,
+    "North West": 1,
+    "North East": 1,
+    "Wales": 1,
+    "Scotland": 1,
+    "Northern Ireland": 1
+   }
+  },
+  "212609": {
+   "desc": "FROZEN GARDEN PEAS 800G-1KG",
+   "quotes": 197,
+   "national": 1.85,
+   "regions": {
+    "London": 2,
+    "South East": 2,
+    "South West": 2.49,
+    "East Anglia": 2.25,
+    "East Midlands": 2,
+    "West Midlands": 2.49,
+    "Yorkshire and the Humber": 1.65,
+    "North West": 1.55,
+    "North East": 1.63,
+    "Wales": 2.49,
+    "Scotland": 2,
+    "Northern Ireland": 1.6
+   }
+  },
+  "212613": {
+   "desc": "PULSES CAN 390 - 420G",
+   "quotes": 318,
+   "national": 0.65,
+   "regions": {
+    "London": 0.75,
+    "South East": 0.65,
+    "South West": 0.63,
+    "East Anglia": 0.69,
+    "East Midlands": 0.65,
+    "West Midlands": 0.55,
+    "Yorkshire and the Humber": 0.65,
+    "North West": 0.65,
+    "North East": 0.65,
+    "Wales": 0.68,
+    "Scotland": 0.65,
+    "Northern Ireland": 0.89
+   }
+  },
+  "212709": {
+   "desc": "ORANGES-CLASS 1-EACH",
+   "quotes": 409,
+   "national": 0.45,
+   "regions": {
+    "London": 0.35,
+    "South East": 0.4,
+    "South West": 0.32,
+    "East Anglia": 0.46,
+    "East Midlands": 0.47,
+    "West Midlands": 0.47,
+    "Yorkshire and the Humber": 0.47,
+    "North West": 0.48,
+    "North East": 0.55,
+    "Wales": 0.49,
+    "Scotland": 0.35,
+    "Northern Ireland": 0.34
+   }
+  },
+  "212710": {
+   "desc": "AVOCADO PEAR-EACH",
+   "quotes": 384,
+   "national": 0.88,
+   "regions": {
+    "London": 0.88,
+    "South East": 0.88,
+    "South West": 0.87,
+    "East Anglia": 0.95,
+    "East Midlands": 0.88,
+    "West Midlands": 1,
+    "Yorkshire and the Humber": 0.88,
+    "North West": 0.88,
+    "North East": 0.88,
+    "Wales": 0.98,
+    "Scotland": 0.88,
+    "Northern Ireland": 0.88
+   }
+  },
+  "212712": {
+   "desc": "KIWI FRUIT-EACH",
+   "quotes": 384,
+   "national": 0.4,
+   "regions": {
+    "London": 0.35,
+    "South East": 0.39,
+    "South West": 0.53,
+    "East Anglia": 0.38,
+    "East Midlands": 0.44,
+    "West Midlands": 0.5,
+    "Yorkshire and the Humber": 0.38,
+    "North West": 0.43,
+    "North East": 0.38,
+    "Wales": 0.5,
+    "Scotland": 0.5,
+    "Northern Ireland": 0.35
+   }
+  },
+  "212717": {
+   "desc": "APPLES-DESSERT-PER KG",
+   "quotes": 266,
+   "national": 2.25,
+   "regions": {
+    "London": 2.2,
+    "South East": 2.2,
+    "South West": 2.25,
+    "East Anglia": 2.1,
+    "East Midlands": 2.27,
+    "West Midlands": 2.5,
+    "Yorkshire and the Humber": 2.2,
+    "North West": 2.25,
+    "North East": 2.24,
+    "Wales": 2.65,
+    "Scotland": 2.08,
+    "Northern Ireland": 2.1
+   }
+  },
+  "212718": {
+   "desc": "PEARS-DESSERT-PER KG",
+   "quotes": 332,
+   "national": 2.44,
+   "regions": {
+    "London": 2.25,
+    "South East": 2.39,
+    "South West": 2.44,
+    "East Anglia": 2.45,
+    "East Midlands": 2.45,
+    "West Midlands": 2.5,
+    "Yorkshire and the Humber": 2.47,
+    "North West": 2.42,
+    "North East": 2.66,
+    "Wales": 2.57,
+    "Scotland": 2.39,
+    "Northern Ireland": 2.7
+   }
+  },
+  "212719": {
+   "desc": "BANANAS-PER KG",
+   "quotes": 314,
+   "national": 0.9,
+   "regions": {
+    "London": 0.9,
+    "South East": 0.9,
+    "South West": 0.9,
+    "East Anglia": 0.9,
+    "East Midlands": 0.9,
+    "West Midlands": 1.05,
+    "Yorkshire and the Humber": 0.95,
+    "North West": 0.9,
+    "North East": 1.1,
+    "Wales": 0.99,
+    "Scotland": 0.9,
+    "Northern Ireland": 0.9
+   }
+  },
+  "212722": {
+   "desc": "GRAPES-PER KG",
+   "quotes": 392,
+   "national": 4,
+   "regions": {
+    "London": 4.8,
+    "South East": 4,
+    "South West": 4,
+    "East Anglia": 4,
+    "East Midlands": 4.7,
+    "West Midlands": 5,
+    "Yorkshire and the Humber": 4,
+    "North West": 3.89,
+    "North East": 5,
+    "Wales": 4.8,
+    "Scotland": 3.78,
+    "Northern Ireland": 4
+   }
+  },
+  "212732": {
+   "desc": "LEMON EACH",
+   "quotes": 496,
+   "national": 0.35,
+   "regions": {
+    "London": 0.4,
+    "South East": 0.35,
+    "South West": 0.35,
+    "East Anglia": 0.35,
+    "East Midlands": 0.35,
+    "West Midlands": 0.4,
+    "Yorkshire and the Humber": 0.35,
+    "North West": 0.35,
+    "North East": 0.38,
+    "Wales": 0.35,
+    "Scotland": 0.35,
+    "Northern Ireland": 0.35
+   }
+  },
+  "212736": {
+   "desc": "MELON EACH EG HONEYDEW",
+   "quotes": 471,
+   "national": 1.87,
+   "regions": {
+    "London": 2,
+    "South East": 1.87,
+    "South West": 1.87,
+    "East Anglia": 1.87,
+    "East Midlands": 1.94,
+    "West Midlands": 1.98,
+    "Yorkshire and the Humber": 1.87,
+    "North West": 1.87,
+    "North East": 2,
+    "Wales": 1.94,
+    "Scotland": 1.87,
+    "Northern Ireland": 1.92
+   }
+  },
+  "212737": {
+   "desc": "PINEAPPLE EACH",
+   "quotes": 432,
+   "national": 1,
+   "regions": {
+    "London": 1.15,
+    "South East": 0.98,
+    "South West": 1.15,
+    "East Anglia": 0.98,
+    "East Midlands": 1.15,
+    "West Midlands": 1.15,
+    "Yorkshire and the Humber": 0.98,
+    "North West": 0.98,
+    "North East": 1.2,
+    "Wales": 1.2,
+    "Scotland": 0.98,
+    "Northern Ireland": 1.6
+   }
+  },
+  "212738": {
+   "desc": "MANGO EACH",
+   "quotes": 226,
+   "national": 0.88,
+   "regions": {
+    "London": 0.88,
+    "South East": 0.99,
+    "South West": 1.18,
+    "East Anglia": 1.24,
+    "East Midlands": 0.88,
+    "West Midlands": 0.88,
+    "Yorkshire and the Humber": 0.88,
+    "North West": 0.88,
+    "North East": 0.88,
+    "Wales": 0.88,
+    "Scotland": 0.88,
+    "Northern Ireland": 0.88
+   }
+  },
+  "212806": {
+   "desc": "PACKET OF PEANUTS 150-300G",
+   "quotes": 216,
+   "national": 1.4,
+   "regions": {
+    "London": 1.7,
+    "South East": 1.5,
+    "South West": 1.63,
+    "East Anglia": 1.35,
+    "East Midlands": 1.7,
+    "West Midlands": 1.4,
+    "Yorkshire and the Humber": 1.4,
+    "North West": 1.35,
+    "North East": 1.4,
+    "Wales": 1.45,
+    "Scotland": 1.5,
+    "Northern Ireland": 1.35
+   }
+  },
+  "212809": {
+   "desc": "BERRIES FROZEN PACK",
+   "quotes": 294,
+   "national": 3,
+   "regions": {
+    "London": 3,
+    "South East": 3,
+    "South West": 3,
+    "East Anglia": 3,
+    "East Midlands": 3,
+    "West Midlands": 3,
+    "Yorkshire and the Humber": 3,
+    "North West": 3,
+    "North East": 3,
+    "Wales": 3,
+    "Scotland": 3,
+    "Northern Ireland": 3.3
+   }
+  },
+  "212930": {
+   "desc": "MAYONNAISE 390-500G/420-540MLS",
+   "quotes": 236,
+   "national": 2,
+   "regions": {
+    "London": 2,
+    "South East": 2,
+    "South West": 2,
+    "East Anglia": 1.75,
+    "East Midlands": 2,
+    "West Midlands": 2,
+    "Yorkshire and the Humber": 2,
+    "North West": 2,
+    "North East": 2,
+    "Wales": 2,
+    "Scotland": 2,
+    "Northern Ireland": 2
+   }
+  },
+  "212945": {
+   "desc": "HERBS DRIED JAR 3 - 20G",
+   "quotes": 231,
+   "national": 1.2,
+   "regions": {
+    "London": 1.5,
+    "South East": 1.5,
+    "South West": 1.1,
+    "East Anglia": 1.1,
+    "East Midlands": 1.5,
+    "West Midlands": 1.1,
+    "Yorkshire and the Humber": 1.2,
+    "North West": 1.3,
+    "North East": 1.5,
+    "Wales": 1.1,
+    "Scotland": 1.5,
+    "Northern Ireland": 1.1
+   }
+  },
+  "212946": {
+   "desc": "SUNFLOW/PUMPK SDS PK 100-300G",
+   "quotes": 210,
+   "national": 1.4,
+   "regions": {
+    "London": 1.36,
+    "South East": 1.48,
+    "South West": 1.48,
+    "East Anglia": 1.23,
+    "East Midlands": 1.48,
+    "West Midlands": 1.48,
+    "Yorkshire and the Humber": 1.3,
+    "North West": 1.37,
+    "North East": 1.64,
+    "Wales": 1.48,
+    "Scotland": 1.48,
+    "Northern Ireland": 1.23
+   }
+  }
+ }
+}
