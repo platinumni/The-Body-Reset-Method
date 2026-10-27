@@ -407,6 +407,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Kitchen joining fee idea (owner, 2026-10-26, awaiting CH):** the normal joining fee is **19.99** (the owner says they've already sold a few at 19.99), and a friend's code gives **50% off: 9.99**. Shared as "join for £9.99 with my code (normally £19.99)". Claude advised: keep records of the full-price sales, only say "normally £19.99" while people really pay that without a code, and avoid a general "was/now" sale. The currency to confirm is £ (the owner said "$", but earlier said pounds to start).
 
+- **Recipe overhaul brief (owner, 2026-10-27, awaiting CH):** "delete the bad ones… tell me how many left, add loads from other cookbooks that are big hitters, rename, rebrand, add own flavour". Proposed cut list: `docs/meal-plans/recipe-review-2026-10-27.md` (57 cut, 105 left). Claude advised writing popular dishes from scratch in our own words: no copying cookbook text or photos, and no chef or restaurant brand names.
+
 - **Recipe feedback (owner, 2026-10-27):** "the meals aren't great". Meals should **look and taste delicious for breakfast, lunch and dinner**, while staying budget. Examples from the owner: their partner's **mince fried with loads of goodness, on a sweet potato with cheese**; **chicken legs and thighs**; **stews**. The sausage, bacon and eggs breakfasts are "yeah ok… we all know that" (too obvious). Claude proposed a "tasty on a budget" refresh (awaiting CH).
 
 - **Meal planner: meat and food style (owner CH, 2026-10-27):** the owner noticed plans had no meat even at £70. Causes: only 3 everyday meat evening meals in the catalogue, and the planner chose purely on price. Built:
