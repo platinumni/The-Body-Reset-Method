@@ -45,7 +45,7 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Taster emails:** read the 3 days in `src/content/taster.ts` (or ask Claude for screenshots). They use the programme's own wording.
 - [ ] **Partner codes:** for each club or gym, create a code in Admin → Access codes, invoice them monthly from Stripe, and share `…/redeem?code=THEIRCODE`. **Beta testers:** create one "Beta" code for your 10-20 testers.
 
-- [ ] **Check the 22 new classic recipes** (bolognese, cottage pie, sausage and mash...) on the test site meal planner. Tick "Plain and simple" to see most of them.
+- [ ] **Check the new recipes** (77 family and fakeaway favourites, including your partner's loaded sweet potatoes) on the test site meal planner, and the 57 cut ones in `docs/meal-plans/recipe-review-2026-10-27.md` (say if any should come back).
 
 ## Before go-live
 - [ ] *(Later)* Change the Body Regen Resend account's login email from your Gmail to a bodyregen address.

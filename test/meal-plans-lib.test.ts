@@ -132,7 +132,7 @@ describe("food style and the everyday meat mix", () => {
 
   it("'Plain and simple' leans to classic family meals", () => {
     const p = buildPlan({ ...base, budget: 120, adults: 2, childAges: [8, 5], diet: "any", seed: 2, styles: ["plain"] });
-    expect(mains(p).filter((r) => r.tier === "Classic family favourites").length).toBeGreaterThanOrEqual(3);
+    expect(mains(p).filter((r) => ["Classic family favourites", "Family favourites", "Fakeaway favourites"].includes(r.tier)).length).toBeGreaterThanOrEqual(3);
   });
 
 });

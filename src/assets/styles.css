@@ -606,3 +606,4 @@ fieldset.field { border: 0; padding: 0; margin-left: 0; margin-right: 0; } field
 .photo-tile img, .recipe-img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius-sm); }
 .photo-none { display: grid; place-items: center; aspect-ratio: 16 / 9; background: var(--bg-quiet); border-radius: var(--radius-sm); font-size: .85rem; color: var(--muted); }
 .recipe-img { display: block; margin-bottom: 1rem; }
+.recipe-tagline { font-style: italic; color: var(--ink-soft); margin: 0 0 .5rem; }

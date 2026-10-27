@@ -343,6 +343,7 @@ function RecipeCard(props: { recipe: Recipe; times: number; scale: number; porti
       )}
       <p class="eyebrow">{MEAL_LABELS[r.meal_type]}</p>
       <h3>{r.name}</h3>
+      {r.tagline && <p class="recipe-tagline">{r.tagline}</p>}
       <form method="post" action="/account/meal-plans/favourite" class="inline-form no-print">
         <CsrfField token={props.csrfToken} />
         <input type="hidden" name="recipe" value={r.id} />

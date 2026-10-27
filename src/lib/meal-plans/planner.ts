@@ -160,8 +160,8 @@ const hasMeat = (r: Recipe) => !r.pescatarian;
 const hasMeatOrFish = (r: Recipe) => !r.vegetarian;
 const CARBS = /\b(pasta|spaghetti|potato(es)?|rice|bread|noodles|wraps?|tortilla|rolls?|gnocchi|couscous|chips)\b/i;
 const carbHeavy = (r: Recipe) => r.ingredients.some((i) => CARBS.test(i.name) && !/cakes|vinegar|noodles? \(optional\)/i.test(i.name));
-const PLAIN_TIER = "Classic family favourites";
-const isPlain = (r: Recipe) => r.tier === PLAIN_TIER;
+const PLAIN_TIERS = ["Classic family favourites", "Family favourites", "Fakeaway favourites"];
+const isPlain = (r: Recipe) => PLAIN_TIERS.includes(r.tier);
 const isLuxury = (r: Recipe) => r.tier.startsWith("Luxury");
 
 /** How well a recipe fits what the person asked for (0 = neutral). Used to steer which recipes are tried. */
@@ -177,6 +177,8 @@ function recipeLean(r: Recipe, input: Pick<PlanInput, "diet" | "styles">): numbe
   return w;
 }
 
+const STAPLES = [/sausages/i, /beef mince|minced beef/i, /bacon/i, /pork mince/i];
+
 /** How well a whole week fits. The planner takes the week that uses the budget well AND fits best. */
 export function preferenceScore(picks: Recipe[], input: Pick<PlanInput, "diet" | "styles">): number {
   const styles = input.styles ?? [];
@@ -187,6 +189,11 @@ export function preferenceScore(picks: Recipe[], input: Pick<PlanInput, "diet" |
   if (styles.includes("meat")) score += 1.5 * share(mains, hasMeat);
   if (styles.includes("hearty")) score += 0.6 * share(picks, carbHeavy);
   if (styles.includes("plain")) score += share(picks, isPlain) - share(picks, isLuxury);
+  // Variety: no more than two main meals built on the same cheap staple (e.g. sausages three nights running).
+  for (const re of STAPLES) {
+    const n = mains.filter((r) => r.ingredients.some((i) => re.test(i.name))).length;
+    if (n > 2) score -= 0.5 * (n - 2);
+  }
   return score;
 }
 

@@ -19,6 +19,8 @@ export type Recipe = {
   ingredients: Ingredient[];
   method: string[];
   notes: string[];
+  /** One mouth-watering line shown on the plan. */
+  tagline: string | null;
   allergens: string[];
   image_url: string | null;
 };

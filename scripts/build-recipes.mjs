@@ -29,6 +29,7 @@ export function parseRecipes(text) {
       cur.ingredients.push({ amount, name, cupboard: flag === "c" });
     } else if (tag === "M") cur.method.push(body);
     else if (tag === "N") cur.notes.push(body);
+    else if (tag === "T") cur.tagline = body;
     else throw new Error(`Unknown line in recipe ${cur.id}: ${line}`);
   }
   return out;
@@ -96,7 +97,9 @@ export function build() {
   const original = JSON.parse(readFileSync(join(DIR, "recipe-catalogue-2026-10-25.json"), "utf8"));
   // Additions and renames live in their own file, so the owner's original catalogue is never edited.
   const additions = JSON.parse(readFileSync(join(DIR, "recipe-catalogue-additions.json"), "utf8"));
-  const catalogue = { recipes: [...original.recipes.map((m) => ({ ...m, ...(additions.overrides?.[m.id] ?? {}) })), ...additions.recipes] };
+  // Recipes the owner asked to take out are dropped from plans (they stay in the original catalogue).
+  const removed = new Set(additions.removed ?? []);
+  const catalogue = { recipes: [...original.recipes.map((m) => ({ ...m, ...(additions.overrides?.[m.id] ?? {}) })), ...additions.recipes].filter((m) => !removed.has(m.id)) };
   const files = readdirSync(join(DIR, "recipes")).filter((f) => f.endsWith(".txt")).sort();
   const drafts = new Map(files.flatMap((f) => parseRecipes(readFileSync(join(DIR, "recipes", f), "utf8"))).map((r) => [r.id, r]));
   const problems = [];
@@ -118,12 +121,14 @@ export function build() {
       ingredients: r.ingredients,
       method: r.method,
       notes: r.notes,
+      tagline: r.tagline ?? additions.taglines?.[meta.id] ?? null,
       allergens: allergensFor(r.ingredients),
       allergens_status: "auto-tagged; owner to check",
       recipe_status: "draft_for_owner_review",
     };
   });
-  for (const id of drafts.keys()) if (!catalogue.recipes.some((m) => m.id === id)) problems.push(`${id}: recipe written but not in the catalogue`);
+  for (const id of drafts.keys()) if (!catalogue.recipes.some((m) => m.id === id) && !removed.has(id)) problems.push(`${id}: recipe written but not in the catalogue`);
+  for (const r of recipes) if (!r.tagline) problems.push(`${r.id} ${r.name}: no one-line description`);
   return { recipes, problems };
 }
 

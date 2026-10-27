@@ -187,6 +187,7 @@ export function FreeWeekResultPage(props: { meta: PageMeta; plan: Plan; justStar
             <article class="card recipe-teaser">
               {props.photos?.[recipe.id] && <img class="recipe-img" src={props.photos[recipe.id]} alt={recipe.name} loading="lazy" width={640} height={360} />}
               <h3>{recipe.name}</h3>
+              {recipe.tagline && <p class="recipe-tagline">{recipe.tagline}</p>}
               <p class="small muted">
                 {recipe.timing} · serves {recipe.serves}
               </p>
