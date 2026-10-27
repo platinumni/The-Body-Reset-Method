@@ -1,4 +1,4 @@
-import { COUNTRIES, DAYS, FOOD_STYLES, LEAVE_OUT_WORDS, STORES, money, type Plan, type PlanInput } from "../lib/meal-plans/planner";
+import { COUNTRIES, DAYS, FOOD_STYLES, LEAVE_OUT_WORDS, PORTION_SIZES, STORES, money, type Plan, type PlanInput } from "../lib/meal-plans/planner";
 import { formatPeriod, REGION_LABELS } from "../lib/meal-plans/official";
 import { PRICES_AS_OF } from "../lib/meal-plans/prices";
 import { ALLERGEN_LABELS, type Recipe } from "../lib/meal-plans/recipes";
@@ -17,6 +17,7 @@ export function planQuery(input: PlanInput, change: Partial<PlanInput> = {}): st
     store: i.store,
     adults: String(i.adults),
     children: i.childAges.join(","),
+    sizes: (i.adultSizes ?? []).join(","),
     diet: i.diet,
     exclude: i.exclude.join(","),
     allergens: i.avoidAllergens.join(","),
@@ -29,6 +30,116 @@ export function planQuery(input: PlanInput, change: Partial<PlanInput> = {}): st
   });
   if (i.picks?.length) q.set("picks", i.picks.join(","));
   return `/account/meal-plans?${q.toString()}`;
+}
+
+const MAX_PEOPLE = 8;
+const ACTIVITY: [string, string][] = [
+  ["1.2", "Mostly sitting"],
+  ["1.375", "Lightly active"],
+  ["1.55", "Moderately active"],
+  ["1.725", "Very active"],
+];
+
+/**
+ * Who's eating: a portion size for each adult (with an optional calorie estimate that suggests one),
+ * and an age for each child. Boxes appear for as many people as chosen (with JavaScript; without it,
+ * choosing a number and pressing the button shows the right boxes).
+ */
+export function HouseholdFields(props: { prefix: string; adults: number; sizes: number[]; childAges: number[] }) {
+  const p = props.prefix;
+  const range = (n: number) => Array.from({ length: n }, (_, k) => k);
+  return (
+    <div class="household" data-household>
+      <div class="meal-form-grid">
+        <div class="field">
+          <label for={`${p}-adults`}>Adults (18 and over)</label>
+          <select id={`${p}-adults`} name="adults" data-count="adult">
+            {range(MAX_PEOPLE).map((k) => (
+              <option value={String(k + 1)} selected={k + 1 === props.adults}>
+                {k + 1}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div class="field">
+          <label for={`${p}-kids`}>Children (17 and under)</label>
+          <select id={`${p}-kids`} name="kidcount" data-count="child">
+            {range(MAX_PEOPLE + 1).map((k) => (
+              <option value={String(k)} selected={k === props.childAges.length}>
+                {k}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div class="people">
+        {range(MAX_PEOPLE).map((k) => (
+          <div class="person card" data-person="adult" data-index={String(k + 1)} hidden={k >= props.adults}>
+            <label for={`${p}-size-${k}`}>Adult {k + 1}: portion size</label>
+            <select id={`${p}-size-${k}`} name="size" data-size>
+              {PORTION_SIZES.map((s) => (
+                <option value={String(s.value)} selected={(props.sizes[k] ?? 1) === s.value}>
+                  {s.label}
+                </option>
+              ))}
+            </select>
+            <details class="calorie-calc" data-calorie-calc hidden>
+              <summary>Not sure? Work it out from calories</summary>
+              <div class="meal-form-grid">
+                <label>
+                  Sex
+                  <select data-cc="sex">
+                    <option value="f">Female</option>
+                    <option value="m">Male</option>
+                  </select>
+                </label>
+                <label>
+                  Age
+                  <input data-cc="age" type="number" inputmode="numeric" min={18} max={100} />
+                </label>
+                <label>
+                  Height (cm)
+                  <input data-cc="height" type="number" inputmode="numeric" min={120} max={230} />
+                </label>
+                <label>
+                  Weight (kg)
+                  <input data-cc="weight" type="number" inputmode="decimal" min={30} max={300} step="0.1" />
+                </label>
+                <label>
+                  How active?
+                  <select data-cc="activity">
+                    {ACTIVITY.map(([v, label]) => (
+                      <option value={v} selected={v === "1.375"}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <p class="calorie-result" data-calorie-result aria-live="polite"></p>
+              <p class="small muted">
+                A rough guide to maintain weight, worked out on your phone and never saved. Not advice: if you want to gain or lose weight, are pregnant, or
+                have a medical condition, speak to your GP, a registered dietitian or a registered nutritionist.
+              </p>
+            </details>
+          </div>
+        ))}
+        {range(MAX_PEOPLE).map((k) => (
+          <div class="person card" data-person="child" data-index={String(k + 1)} hidden={k >= props.childAges.length}>
+            <label for={`${p}-child-${k}`}>Child {k + 1}: age</label>
+            <select id={`${p}-child-${k}`} name="child">
+              {range(18).map((a) => (
+                <option value={String(a)} selected={(props.childAges[k] ?? 8) === a}>
+                  {a === 0 ? "Under 1" : a}
+                </option>
+              ))}
+            </select>
+          </div>
+        ))}
+      </div>
+      <p class="hint">Portions are sized for each person. Bigger portions mean a bigger shop, and your plan's total shows the cost.</p>
+    </div>
+  );
 }
 
 /** "Food style": guides the plan towards more meat, more filling carbs, or plain food. Nothing is ruled out. */
@@ -122,16 +233,8 @@ function PlanForm(props: { input: PlanInput; regions: { uk?: string[]; us: strin
           </div>
           <p class="hint">So we can show what you could save.</p>
         </div>
-        <div class="field">
-          <label for="mp-adults">Adults (teenagers count as adults)</label>
-          <input id="mp-adults" name="adults" type="number" inputmode="numeric" min={1} max={12} value={String(i.adults)} />
-        </div>
-        <div class="field">
-          <label for="mp-children">Children's ages (optional)</label>
-          <input id="mp-children" name="children" type="text" inputmode="numeric" placeholder="e.g. 4, 9" value={i.childAges.join(", ")} />
-          <p class="hint">Leave empty if it's just adults. Portions are sized to standard guidance for each age.</p>
-        </div>
       </div>
+      <HouseholdFields prefix="mp" adults={i.adults} sizes={i.adultSizes ?? []} childAges={i.childAges} />
       <fieldset class="field">
         <legend>Diet</legend>
         <div class="pill-choices">
@@ -350,48 +453,6 @@ export function MealPlannerPage(props: {
             </p>
           )}
           <PlanForm input={input} regions={props.regions} />
-          <details class="card calorie-calc no-print" data-calorie-calc hidden>
-            <summary>How many calories do I need? (optional)</summary>
-            <p class="small muted">
-              An estimate of the calories to maintain your weight, using a standard formula used by many health services and apps. It's worked out on
-              your phone and never saved. For adults only.
-            </p>
-            <div class="meal-form-grid">
-              <div class="field">
-                <label for="cc-sex">Sex</label>
-                <select id="cc-sex">
-                  <option value="f">Female</option>
-                  <option value="m">Male</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="cc-age">Age</label>
-                <input id="cc-age" type="number" inputmode="numeric" min={18} max={100} />
-              </div>
-              <div class="field">
-                <label for="cc-height">Height (cm)</label>
-                <input id="cc-height" type="number" inputmode="numeric" min={120} max={230} />
-              </div>
-              <div class="field">
-                <label for="cc-weight">Weight (kg)</label>
-                <input id="cc-weight" type="number" inputmode="decimal" min={30} max={300} step="0.1" />
-              </div>
-              <div class="field">
-                <label for="cc-activity">How active are you?</label>
-                <select id="cc-activity">
-                  <option value="1.2">Mostly sitting</option>
-                  <option value="1.375" selected>Lightly active (walks, light exercise 1-3 days a week)</option>
-                  <option value="1.55">Moderately active (exercise 3-5 days a week)</option>
-                  <option value="1.725">Very active (hard exercise most days)</option>
-                </select>
-              </div>
-            </div>
-            <p class="calorie-result" data-calorie-result aria-live="polite"></p>
-            <p class="small muted">
-              This is a rough guide, not advice. If you want to gain or lose weight, are pregnant, or have a medical condition, speak to your GP, a
-              registered dietitian or a registered nutritionist.
-            </p>
-          </details>
           {plan && (
             <>
               <div class="card plan-summary">

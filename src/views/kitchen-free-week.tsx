@@ -1,7 +1,8 @@
 import { COUNTRIES, DAYS, STORES, money, type Plan, type PlanInput } from "../lib/meal-plans/planner";
 import { ALLERGEN_LABELS } from "../lib/meal-plans/recipes";
 import { CsrfField, Layout, type PageMeta } from "./layout";
-import { FoodStyleField } from "./meal-plans";
+import { FoodStyleField, HouseholdFields } from "./meal-plans";
+import { assetUrl } from "../routes/assets";
 
 const MEAL_LABELS: Record<string, string> = { Breakfasts: "Breakfast", Lunches: "Lunch", "Evening meals": "Evening meal", Snacks: "Snack" };
 /** How much of each method the free week shows. */
@@ -63,15 +64,8 @@ export function FreeWeekPage(props: { meta: PageMeta; csrfToken: string; input: 
                   ))}
                 </select>
               </div>
-              <div class="field">
-                <label for="fw-adults">Adults (teenagers count as adults)</label>
-                <input id="fw-adults" name="adults" type="number" inputmode="numeric" min={1} max={12} value={String(i.adults)} />
-              </div>
-              <div class="field">
-                <label for="fw-children">Children's ages (optional)</label>
-                <input id="fw-children" name="children" type="text" inputmode="numeric" placeholder="e.g. 4, 9" value={i.childAges.join(", ")} />
-              </div>
             </div>
+            <HouseholdFields prefix="fw" adults={i.adults} sizes={i.adultSizes ?? []} childAges={i.childAges} />
             <fieldset class="field">
               <legend>Diet</legend>
               <div class="pill-choices">
@@ -128,6 +122,7 @@ export function FreeWeekPage(props: { meta: PageMeta; csrfToken: string; input: 
               See our <a href="/legal/privacy">privacy policy</a>. General healthy eating, not a diet or medical advice.
             </p>
           </form>
+          <script src={assetUrl("/reader.js")} defer />
         </div>
       </section>
     </Layout>

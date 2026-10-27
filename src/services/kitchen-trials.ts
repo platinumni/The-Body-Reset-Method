@@ -8,7 +8,7 @@ import { readPlanInput } from "./meal-plans";
 
 export type Trial = { id: number; email: string; input: PlanInput; weeklyPence: number; verified: boolean; geRef: string | null };
 
-const storedInput = (i: PlanInput) => ({ budget: i.budget, country: i.country, store: i.store, adults: i.adults, children: i.childAges.join(","), diet: i.diet, exclude: i.exclude.join(","), snacks: i.snacks ? "yes" : "no", seed: i.seed, region: i.region ?? "national", style: (i.styles ?? []).join(","), submitted: "yes" });
+const storedInput = (i: PlanInput) => ({ budget: i.budget, country: i.country, store: i.store, adults: i.adults, children: i.childAges.join(","), sizes: (i.adultSizes ?? []).join(","), diet: i.diet, exclude: i.exclude.join(","), snacks: i.snacks ? "yes" : "no", seed: i.seed, region: i.region ?? "national", style: (i.styles ?? []).join(","), submitted: "yes" });
 
 export type StartTrialResult = { status: "new"; id: number; token: string } | { status: "exists"; id: number; token: string };
 

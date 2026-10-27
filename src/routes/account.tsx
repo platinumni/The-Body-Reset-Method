@@ -76,7 +76,7 @@ function readMode(value: string | undefined): Mode {
 
 // --- Budget meal plans ---
 
-const MEAL_MULTI = ["allergens", "have", "picks", "exclude", "children", "style"];
+const MEAL_MULTI = ["allergens", "have", "picks", "exclude", "children", "style", "child", "size", "sizes"];
 
 /** Reads the planner's choices from a query string, joining repeated fields (checkboxes). */
 function mealQuery(params: URLSearchParams): Record<string, unknown> {

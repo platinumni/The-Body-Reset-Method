@@ -136,3 +136,18 @@ describe("food style and the everyday meat mix", () => {
   });
 
 });
+
+describe("household: a box per person", () => {
+  it("reads one age per child and a portion size per adult, ignoring hidden extra boxes", async () => {
+    const { readPlanInput } = await import("../src/services/meal-plans");
+    const i = readPlanInput({ submitted: "yes", adults: "2", size: ["1.25", "0.8", "1.5"], kidcount: "2", child: ["4", "11", "9"] });
+    expect(i.adultSizes).toEqual([1.25, 0.8]);
+    expect(i.childAges).toEqual([4, 11]);
+  });
+
+  it("bigger portions make a bigger (dearer) shop", () => {
+    expect(householdPortions(2, [], [1.25, 1.5])).toBe(2.75);
+    const plan = (sizes: number[]) => buildPlan({ ...base, budget: 500, adults: 2, adultSizes: sizes, seed: 4, picks: buildPlan({ ...base, budget: 500, adults: 2, seed: 4 }).recipes.map((r) => r.recipe.id) });
+    expect(plan([1.5, 1.5]).weeklyCost).toBeGreaterThan(plan([1, 1]).weeklyCost);
+  });
+});

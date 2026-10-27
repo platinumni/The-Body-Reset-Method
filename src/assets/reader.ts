@@ -15,23 +15,35 @@ export default `(() => {
     applySize();
     try { localStorage.setItem("brm_text_size", String(size)); } catch (e) {}
   }));
-  // Meal plans: the optional calorie estimate (Mifflin-St Jeor), worked out on the device and never sent anywhere.
-  const calc = document.querySelector("[data-calorie-calc]");
-  if (calc) {
+  // Meal plans: one box per person. Show as many adult and child boxes as chosen.
+  document.querySelectorAll("[data-household]").forEach((h) => {
+    h.querySelectorAll("[data-count]").forEach((sel) => {
+      const kind = sel.dataset.count;
+      const show = () => h.querySelectorAll('[data-person="' + kind + '"]').forEach((row) => (row.hidden = Number(row.dataset.index) > Number(sel.value)));
+      sel.addEventListener("change", show);
+      show();
+    });
+  });
+  // Optional calorie estimate for each adult (Mifflin-St Jeor), worked out on the device and never sent:
+  // it suggests a portion size. The figures themselves have no name, so they're never submitted.
+  document.querySelectorAll("[data-calorie-calc]").forEach((calc) => {
     calc.hidden = false;
-    const val = (id) => Number((document.getElementById(id) || {}).value);
+    const field = (k) => calc.querySelector('[data-cc="' + k + '"]');
     const out = calc.querySelector("[data-calorie-result]");
+    const size = calc.closest(".person") && calc.closest(".person").querySelector("[data-size]");
     const update = () => {
-      const age = val("cc-age"), h = val("cc-height"), w = val("cc-weight"), act = val("cc-activity");
+      const age = Number(field("age").value), h = Number(field("height").value), w = Number(field("weight").value), act = Number(field("activity").value);
       if (!age || !h || !w) { out.textContent = ""; return; }
-      if (age < 18) { out.textContent = "This estimate is for adults only. For children and teenagers, speak to your GP."; return; }
-      const male = (document.getElementById("cc-sex") || {}).value === "m";
-      const bmr = 10 * w + 6.25 * h - 5 * age + (male ? 5 : -161);
-      const kcal = Math.round((bmr * act) / 50) * 50;
-      out.textContent = "About " + kcal.toLocaleString("en-GB") + " calories a day to maintain your weight.";
+      if (age < 18) { out.textContent = "This estimate is for adults only."; return; }
+      const male = field("sex").value === "m";
+      const kcal = Math.round(((10 * w + 6.25 * h - 5 * age + (male ? 5 : -161)) * act) / 50) * 50;
+      const suggest = kcal < 1750 ? "0.8" : kcal <= 2350 ? "1" : kcal <= 2900 ? "1.25" : "1.5";
+      if (size) size.value = suggest;
+      const label = size ? size.options[size.selectedIndex].text : "";
+      out.textContent = "About " + kcal.toLocaleString("en-GB") + " calories a day to maintain weight. We've set their portion size to " + label + ".";
     };
     calc.querySelectorAll("input, select").forEach((el) => el.addEventListener("input", update));
-  }
+  });
   // "Jump to": go straight away when an item is picked.
   document.querySelectorAll("[data-autosubmit]").forEach((sel) => sel.addEventListener("change", () => sel.form && sel.form.submit()));
   document.querySelectorAll("[data-autosubmit-button]").forEach((b) => (b.hidden = true));

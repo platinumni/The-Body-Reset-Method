@@ -37,6 +37,8 @@ export type PlanInput = {
   picks?: string[];
   /** Recipes the member has starred: included where the budget allows. */
   favourites?: string[];
+  /** Each adult's portion size (1 = standard), in order. Missing = standard. */
+  adultSizes?: number[];
   /** Food style: lean towards more meat, more filling carbs, or plain familiar food. Guides the plan; nothing is ruled out. */
   styles?: FoodStyle[];
   /** What they usually spend on food a week (optional), for the savings line. */
@@ -78,8 +80,17 @@ export function portionFor(age: number): number {
   return 1;
 }
 
-export function householdPortions(adults: number, childAges: number[]): number {
-  return Math.max(1, adults + childAges.reduce((t, a) => t + portionFor(a), 0));
+/** Adult portion sizes people can choose (1 = a standard adult portion). */
+export const PORTION_SIZES: { value: number; label: string }[] = [
+  { value: 0.8, label: "Small" },
+  { value: 1, label: "Standard" },
+  { value: 1.25, label: "Large" },
+  { value: 1.5, label: "Extra large" },
+];
+
+export function householdPortions(adults: number, childAges: number[], adultSizes: number[] = []): number {
+  const grown = Array.from({ length: adults }, (_, i) => adultSizes[i] ?? 1).reduce((t, n) => t + n, 0);
+  return Math.max(1, grown + childAges.reduce((t, a) => t + portionFor(a), 0));
 }
 
 type PriceInput = Pick<PlanInput, "country" | "store" | "personalFactor" | "book">;
@@ -232,7 +243,7 @@ function assemble(picks: Record<MealType, Recipe[]>, input: PlanInput, portions:
 }
 
 export function buildPlan(input: PlanInput): Plan {
-  const portions = householdPortions(input.adults, input.childAges);
+  const portions = householdPortions(input.adults, input.childAges, input.adultSizes);
   const babies = input.childAges.filter((a) => a < 1).length;
   const pool: Record<MealType, Recipe[]> = { Breakfasts: [], Lunches: [], "Evening meals": [], Snacks: [] };
   // Recipes made from another recipe's leftovers aren't planned on their own.

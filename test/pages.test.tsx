@@ -28,8 +28,8 @@ describe("every sitemap page", () => {
   it.each(paths)("%s has no inline styles or scripts (strict CSP)", async (path) => {
     const html = await (await get(path)).text();
     expect(html).not.toMatch(/\sstyle=/);
-    // Only JSON-LD data blocks and our own external file (/app.js) are allowed; never inline code.
-    expect(html.match(/<script(?![^>]*application\/ld\+json)(?![^>]*src="\/app\.js\?v=[a-z0-9]+")/g)).toBeNull();
+    // Only JSON-LD data blocks and our own external files (/app.js, /reader.js) are allowed; never inline code.
+    expect(html.match(/<script(?![^>]*application\/ld\+json)(?![^>]*src="\/(app|reader)\.js\?v=[a-z0-9]+")/g)).toBeNull();
     expect(html).not.toMatch(/<script src="[^"]*"[^>]*>[^<]+<\/script>/);
   });
 
