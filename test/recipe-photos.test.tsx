@@ -95,3 +95,22 @@ describe("daily photo job", () => {
     expect(await dailyPhotoPick({ ...env, PIXABAY_API_KEY: undefined } as Env)).toBe("no key");
   });
 });
+
+describe("Pixabay limits", () => {
+  it("keeps what it picked and stops quietly when Pixabay says slow down", async () => {
+    const { autoPickBatch } = await import("../src/services/recipe-photos");
+    let calls = 0;
+    vi.spyOn(globalThis, "fetch").mockImplementation(async (input) => {
+      const u = new URL(String(input));
+      if (u.pathname === "/api/") {
+        if (++calls > 1) return new Response("slow down", { status: 429 });
+        return Response.json({ hits: [{ id: 9, pageURL: "https://pixabay.com/photos/q-9/", previewURL: "https://cdn.pixabay.com/a.jpg", webformatURL: "https://cdn.pixabay.com/a.jpg", largeImageURL: "https://pixabay.com/get/a.jpg", user: "U", tags: "" }] });
+      }
+      return new Response(new Uint8Array([1]), { headers: { "Content-Type": "image/jpeg" } });
+    });
+    const before = await env.DB.prepare("SELECT COUNT(*) AS n FROM recipe_photos").first<number>("n");
+    const r = await autoPickBatch(pEnv, 10);
+    expect(r).toMatchObject({ done: 1, limited: true });
+    expect(await env.DB.prepare("SELECT COUNT(*) AS n FROM recipe_photos").first<number>("n")).toBe(before! + 1);
+  });
+});

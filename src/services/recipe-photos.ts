@@ -8,6 +8,9 @@ import { recordAudit } from "./audit";
 export const PIXABAY_LICENCE = "Pixabay Content License (https://pixabay.com/service/license-summary/)";
 const API = "https://pixabay.com/api/";
 
+/** Pixabay said "too many requests": stop for now and try again on the next run. */
+export class RateLimited extends Error {}
+
 export type Candidate = { id: string; pageUrl: string; previewUrl: string; largeUrl: string; user: string; tags: string };
 export type RecipePhoto = { recipe_id: string; r2_key: string; source_id: string; page_url: string; photographer: string | null; chosen_by: "auto" | "owner"; version: number };
 
@@ -22,6 +25,7 @@ export function searchTerms(r: Pick<Recipe, "name">): string[] {
 export async function searchPixabay(key: string, query: string, perPage = 6): Promise<Candidate[]> {
   const url = `${API}?${new URLSearchParams({ key, q: query, image_type: "photo", category: "food", safesearch: "true", orientation: "horizontal", per_page: String(Math.max(3, perPage)) })}`;
   const res = await fetch(url);
+  if (res.status === 429) throw new RateLimited("Pixabay rate limit");
   if (!res.ok) throw new Error(`Pixabay HTTP ${res.status}`);
   const body = (await res.json()) as { hits?: { id: number; pageURL: string; previewURL: string; largeImageURL: string; webformatURL: string; user: string; tags: string }[] };
   return (body.hits ?? []).map((h) => ({ id: String(h.id), pageUrl: h.pageURL, previewUrl: h.webformatURL || h.previewURL, largeUrl: h.largeImageURL || h.webformatURL, user: h.user, tags: h.tags }));
@@ -80,7 +84,7 @@ export async function photoUrls(db: D1Database): Promise<Record<string, string>>
 }
 
 /** Auto-pick the top match for recipes that don't have a photo yet, a batch at a time. Returns how many were done and how many are left. */
-export async function autoPickBatch(env: Env, batch = 12, pauseMs = 0): Promise<{ done: number; none: string[]; left: number }> {
+export async function autoPickBatch(env: Env, batch = 12, pauseMs = 0): Promise<{ done: number; none: string[]; left: number; limited: boolean }> {
   const have = await listPhotos(env.DB);
   // Recipes with no match last time are skipped (choose those by hand), so the batches keep moving.
   const { results } = await env.DB.prepare("SELECT ref FROM automation_sent WHERE kind = 'photo-no-match'").all<{ ref: string }>();
@@ -91,14 +95,22 @@ export async function autoPickBatch(env: Env, batch = 12, pauseMs = 0): Promise<
   for (const r of missing.slice(0, batch)) {
     // Pixabay allows 100 searches a minute; the daily job paces itself.
     if (pauseMs) await new Promise((ok) => setTimeout(ok, pauseMs));
-    const { query, hits } = await candidatesFor(env.PIXABAY_API_KEY!, r, 3);
+    let found: Awaited<ReturnType<typeof candidatesFor>>;
+    try {
+      found = await candidatesFor(env.PIXABAY_API_KEY!, r, 3);
+    } catch (err) {
+      // Keep what's done so far; the next run carries on from here.
+      if (err instanceof RateLimited) return { done, none, left: missing.length - done - none.length, limited: true };
+      throw err;
+    }
+    const { query, hits } = found;
     if (hits[0] && (await savePhoto(env, r.id, hits[0], query, "auto"))) done++;
     else {
       none.push(r.id);
       await env.DB.prepare("INSERT INTO automation_sent (kind, ref) VALUES ('photo-no-match', ?1) ON CONFLICT DO NOTHING").bind(r.id).run();
     }
   }
-  return { done, none, left: Math.max(0, missing.length - batch) };
+  return { done, none, left: Math.max(0, missing.length - batch), limited: false };
 }
 
 export async function noMatchCount(db: D1Database): Promise<number> {
@@ -109,5 +121,5 @@ export async function noMatchCount(db: D1Database): Promise<number> {
 export async function dailyPhotoPick(env: Env): Promise<string> {
   if (!env.PIXABAY_API_KEY) return "no key";
   const r = await autoPickBatch(env, 200, 1500);
-  return `${r.done} picked, ${r.none.length} no match`;
+  return `${r.done} picked, ${r.none.length} no match, ${r.left} left${r.limited ? " (Pixabay asked us to slow down; carries on next run)" : ""}`;
 }
