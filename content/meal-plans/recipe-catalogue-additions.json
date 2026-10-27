@@ -1,5 +1,5 @@
 {
- "notes": "Recipes added by Claude at the owner's request (2026-10-27): classic, no-fuss family meals with everyday meat. Owner to check. 'overrides' changes names in the owner's original catalogue without editing it. 'removed' lists recipes taken out of plans at the owner's request (2026-10-27): too fancy, health-food or too obvious. 'taglines' are the one-line descriptions.",
+ "notes": "Recipes added by Claude at the owner's request (2026-10-27): classic, no-fuss family meals with everyday meat. Owner to check. 'overrides' changes names in the owner's original catalogue without editing it. 'removed' lists recipes taken out of plans at the owner's request (2026-10-27): too fancy, health-food or too obvious. 'taglines' are the one-line descriptions. Also removed (owner, 2026-10-27, 'I love beans on toast but I don't need anyone to tell me'): recipes too simple to need a recipe.",
  "overrides": {
   "127": {
    "name": "Beans on toast"
@@ -1706,7 +1706,22 @@
   "155",
   "160",
   "161",
-  "162"
+  "162",
+  "127",
+  "135",
+  "136",
+  "077",
+  "078",
+  "222",
+  "225",
+  "218",
+  "224",
+  "221",
+  "157",
+  "158",
+  "125",
+  "079",
+  "080"
  ],
  "taglines": {
   "002": "Golden saffron rice with seafood and charred lemon. A weekend showstopper.",

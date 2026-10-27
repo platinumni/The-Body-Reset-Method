@@ -197,8 +197,8 @@ export function preferenceScore(picks: Recipe[], input: Pick<PlanInput, "diet" |
   return score;
 }
 
-/** Fit matters, but never more than a sensible use of the budget: 0.35 of score ≈ 35% of the budget. */
-const PREFERENCE_WEIGHT = 0.35;
+/** How much fit counts against using the budget: one more main meal that fits (a fifth of the mains) ≈ 20% of the budget. */
+const PREFERENCE_WEIGHT = 1;
 
 // Small seeded random, so the same choices give the same plan, and "shuffle" gives a new one.
 function rng(seed: number) {
@@ -319,15 +319,22 @@ export function buildPlan(input: PlanInput): Plan {
       let improved = false;
       // Main meals first, so the budget goes where it matters most.
       for (const meal of ["Evening meals", "Lunches", "Breakfasts", "Snacks"] as MealType[]) {
-        const preferred = pool[meal].filter((r) => recipeLean(r, input) > 0).sort((a, b) => recipeLean(b, input) - recipeLean(a, input) || costPerPortion(a) - costPerPortion(b)).slice(0, 15);
+        // Shuffle decides which of the good fits are tried first, so "Shuffle meals" gives a different week.
+        const order = rng(input.seed * 7919 + ORDER.indexOf(meal) * 31 + pass);
+        const preferred = pool[meal]
+          .filter((r) => recipeLean(r, input) > 0)
+          // Best fits first, cheaper ones before dearer ones (so the budget stretches to more meals), varied by the shuffle.
+          .map((r) => ({ r, lean: recipeLean(r, input), cost: costPerPortion(r) * (0.6 + order() * 0.8) }))
+          .sort((a, b) => b.lean - a.lean || a.cost - b.cost)
+          .slice(0, 15)
+          .map((x) => x.r);
         for (let i = 0; i < best.picks[meal].length; i++) {
           const current = best.picks[meal][i]!;
           if (input.favourites?.includes(current.id)) continue;
           for (const r of preferred) {
             if (best.picks[meal].includes(r) || recipeLean(r, input) <= recipeLean(current, input)) continue;
-            const picks = { ...best.picks, [meal]: best.picks[meal].map((x, j) => (j === i ? r : x)) };
             const before: Candidate | null = best;
-            consider(picks);
+            consider({ ...best.picks, [meal]: best.picks[meal].map((x, j) => (j === i ? r : x)) });
             if (best !== before) {
               improved = true;
               break;

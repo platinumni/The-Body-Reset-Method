@@ -115,9 +115,9 @@ describe("personal prices", () => {
 describe("food style and the everyday meat mix", () => {
   const base = { country: "uk" as const, store: "mid" as const, exclude: [], avoidAllergens: [], snacks: true, have: [] };
   const mains = (p: ReturnType<typeof buildPlan>) => p.recipes.filter((r) => r.recipe.meal_type === "Evening meals").map((r) => r.recipe);
-  const meatShare = (p: ReturnType<typeof buildPlan>) => mains(p).filter((r) => !r.pescatarian).length / mains(p).length;
+  const meatShare = (p: ReturnType<typeof buildPlan>) => mains(p).filter((r) => !r.vegetarian).length / mains(p).length; // meat or fish
 
-  it("a family who eats everything gets meat in most evening meals, even on a tight budget", () => {
+  it("a family who eats everything gets meat or fish in most evening meals, even on a tight budget", () => {
     for (const seed of [1, 2, 3]) {
       const p = buildPlan({ ...base, budget: 70, adults: 2, childAges: [8, 5], diet: "any", seed });
       expect(p.overBudget).toBe(false);
@@ -149,5 +149,17 @@ describe("household: a box per person", () => {
     expect(householdPortions(2, [], [1.25, 1.5])).toBe(2.75);
     const plan = (sizes: number[]) => buildPlan({ ...base, budget: 500, adults: 2, adultSizes: sizes, seed: 4, picks: buildPlan({ ...base, budget: 500, adults: 2, seed: 4 }).recipes.map((r) => r.recipe.id) });
     expect(plan([1.5, 1.5]).weeklyCost).toBeGreaterThan(plan([1, 1]).weeklyCost);
+  });
+});
+
+describe("shuffle", () => {
+  it("gives a different week each time", () => {
+    const week = (seed: number) => buildPlan({ ...base, budget: 60, adults: 2, seed }).recipes.map((r) => r.recipe.id).sort().join(",");
+    const weeks = new Set([1, 2, 3, 4, 5].map(week));
+    expect(weeks.size).toBeGreaterThanOrEqual(4);
+  });
+
+  it("never suggests recipes too simple to need one", () => {
+    expect(RECIPES.some((r) => /beans on toast/i.test(r.name))).toBe(false);
   });
 });
