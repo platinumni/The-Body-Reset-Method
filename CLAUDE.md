@@ -9,11 +9,11 @@ Read `docs/HANDOVER.md` first. It says where the project is up to and what's nex
 - **Never invent** prices, reviews, testimonials, statistics, credentials or results. Use clearly marked placeholders: `[PLACEHOLDER: …]`.
 - Health wording: this is **education and movement coaching, not medical treatment**. No claims to cure, heal, treat or fix conditions or pain. Flag any borderline wording for the owner.
 - After each step, update `docs/HANDOVER.md`, `docs/ROADMAP.md` and `docs/OWNER_TODO.md`.
-- **Backups (owner's standing request, 2026-10-25):** whenever anything changes, or a decision is made in chat:
-  1. write the decision into `docs/HANDOVER.md` ("Decisions made in chat"); voice notes go in `docs/owner-notes/`;
-  2. commit and push;
-  3. make a bundle (`bash scripts/make-bundle.sh <scratchpad>`);
-  4. **don't send anything during the day.** The latest two bundles go to the owner only in the daily scheduled drop (about 6:48pm UK time), or when the owner asks (owner, 2026-10-25: "never again" outside the drop).
+- **Backups (owner's standing request, 2026-10-25; updated 2026-10-27):**
+  1. Whenever anything changes, or a decision is made in chat, write it into `docs/HANDOVER.md` ("Decisions made in chat"). Voice notes go in `docs/owner-notes/`.
+  2. Commit and push.
+  3. **Every chat must log its decisions in HANDOVER, then commit and push, before it ends.** The owner moves to fresh chats to save usage, so anything not written down is lost.
+  4. **Don't send anything during the day.** Backups reach the owner only through the daily scheduled task, "Body Regen daily backup" (about 6:48pm UK time). It starts its own fresh session, makes a bundle with `bash scripts/make-bundle.sh <scratchpad>`, and sends only the latest one. It sends nothing if nothing changed since `docs/backups/last-sent.txt`. Send outside the drop only if the owner asks (owner, 2026-10-25: "never again" outside the drop).
 
 ## Engineering rules (non-negotiable)
 - `npm run check` (type check + migration check + all tests) must pass before every commit.
