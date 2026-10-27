@@ -208,10 +208,10 @@ function rng(seed: number) {
 
 /** How many different recipes of each kind, from most to least variety. */
 const VARIETY: Record<MealType, number>[] = [
-  { Breakfasts: 3, Lunches: 4, "Evening meals": 5, Snacks: 3 },
-  { Breakfasts: 2, Lunches: 3, "Evening meals": 4, Snacks: 2 },
-  { Breakfasts: 2, Lunches: 2, "Evening meals": 3, Snacks: 2 },
-  { Breakfasts: 1, Lunches: 2, "Evening meals": 2, Snacks: 1 },
+  { Breakfasts: 3, Lunches: 4, "Evening meals": 5, Snacks: 4 },
+  { Breakfasts: 2, Lunches: 3, "Evening meals": 4, Snacks: 3 },
+  { Breakfasts: 2, Lunches: 2, "Evening meals": 3, Snacks: 3 },
+  { Breakfasts: 1, Lunches: 2, "Evening meals": 2, Snacks: 2 },
 ];
 
 /** Spread n recipes over 7 days: the first ones cover more days. Evening meals are cooked once and eaten on following days. */

@@ -38,7 +38,7 @@ export function parseRecipes(text) {
 // The 14 allergens UK law requires businesses to declare. Matched on ingredient names.
 // It's a first pass for the owner to check, not a guarantee.
 export const ALLERGENS = {
-  "cereals containing gluten": /\b(flour|bread|brioche|sourdough|baguette|ciabatta|pitta|pita|tortilla|wrap|flatbread|rye|pasta|spaghetti|linguine|orzo|ditalini|couscous|noodles|udon|soba|gnocchi|panko|breadcrumbs|puff pastry|oats|granola|soy sauce|gochujang|chilli bean paste|doubanjiang|rolls?|buns?|soldiers)\b/i,
+  "cereals containing gluten": /\b(flour|bread|brioche|sourdough|baguette|ciabatta|pitta|pita|tortilla|wrap|flatbread|rye|pasta|spaghetti|linguine|orzo|ditalini|couscous|noodles|udon|soba|gnocchi|panko|breadcrumbs|puff pastry|oats|granola|soy sauce|gochujang|chilli bean paste|doubanjiang|rolls?|buns?|soldiers|crackers|bagels?|muffins?|naan|lasagne|macaroni|scones?)\b/i,
   crustaceans: /\b(prawns?|crab|lobster|shrimp)\b/i,
   eggs: /\b(eggs?|mayonnaise|mayo|brioche|egg noodles)\b/i,
   fish: /\b(cod|salmon|sea bass|sardines?|mackerel|tuna|fish sauce|fish fillets|anchov\w*|white fish|pollock)\b/i,

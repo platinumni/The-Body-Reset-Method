@@ -1,7 +1,7 @@
 import { COUNTRIES, DAYS, STORES, money, type Plan, type PlanInput } from "../lib/meal-plans/planner";
 import { ALLERGEN_LABELS } from "../lib/meal-plans/recipes";
 import { CsrfField, Layout, type PageMeta } from "./layout";
-import { FoodStyleField, HouseholdFields } from "./meal-plans";
+import { FoodStyleField, HouseholdFields, WeekMenu } from "./meal-plans";
 import { assetUrl } from "../routes/assets";
 
 const MEAL_LABELS: Record<string, string> = { Breakfasts: "Breakfast", Lunches: "Lunch", "Evening meals": "Evening meal", Snacks: "Snack" };
@@ -158,23 +158,7 @@ export function FreeWeekResultPage(props: { meta: PageMeta; plan: Plan; justStar
       </section>
       <section class="band">
         <div class="wrap">
-          <ol class="week">
-            {DAYS.map((day, d) => (
-              <li class="day card">
-                <h3>{day}</h3>
-                <ul>
-                  {plan.slots
-                    .filter((x) => x.day === d)
-                    .map((x) => (
-                      <li>
-                        <span class="meal-label">{MEAL_LABELS[x.meal]}</span> {x.recipe.name}
-                        {x.note ? <span class="small muted"> · {x.note}</span> : null}
-                      </li>
-                    ))}
-                </ul>
-              </li>
-            ))}
-          </ol>
+          <WeekMenu plan={plan} link={false} />
         </div>
       </section>
       <section class="band band-quiet">

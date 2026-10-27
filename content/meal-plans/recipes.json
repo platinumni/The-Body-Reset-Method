@@ -8146,6 +8146,7 @@
       "notes": [],
       "tagline": "Rich, mild and creamy: the takeaway favourite at a fraction of the price.",
       "allergens": [
+        "cereals containing gluten",
         "milk"
       ],
       "allergens_status": "auto-tagged; owner to check"
@@ -11201,6 +11202,7 @@
       "notes": [],
       "tagline": "Bagel pizzas: crispy, cheesy and ready in 15 minutes.",
       "allergens": [
+        "cereals containing gluten",
         "milk"
       ],
       "allergens_status": "auto-tagged; owner to check"
@@ -11552,6 +11554,7 @@
       "notes": [],
       "tagline": "Homemade breakfast muffins: sausage patty, egg and cheese in a toasted muffin.",
       "allergens": [
+        "cereals containing gluten",
         "eggs",
         "milk"
       ],
@@ -11806,6 +11809,7 @@
       "notes": [],
       "tagline": "Toasted bagels with cream cheese and crispy bacon. Simple and so good.",
       "allergens": [
+        "cereals containing gluten",
         "milk"
       ],
       "allergens_status": "auto-tagged; owner to check"
@@ -12228,6 +12232,394 @@
       "tagline": "Creamy fruit and yoghurt ice lollies: a cool treat with no added sugar.",
       "allergens": [
         "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "218",
+      "name": "Cheese, crackers and grapes",
+      "tier": "Family favourites",
+      "meal_type": "Snacks",
+      "diet": "VEGETARIAN",
+      "timing": "15 min total",
+      "vegetarian": true,
+      "pescatarian": true,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 5,
+      "total_minutes": 5,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 0,
+      "ingredients": [
+        {
+          "amount": "8",
+          "name": "crackers",
+          "cupboard": false
+        },
+        {
+          "amount": "60g",
+          "name": "cheddar",
+          "cupboard": false
+        },
+        {
+          "amount": "150g",
+          "name": "grapes",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Slice the cheese and serve with the crackers and grapes."
+      ],
+      "notes": [],
+      "tagline": "A little cheeseboard: crackers, cheddar and sweet grapes.",
+      "allergens": [
+        "cereals containing gluten",
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "219",
+      "name": "Peanut butter banana pinwheels",
+      "tier": "Family favourites",
+      "meal_type": "Snacks",
+      "diet": "VEGAN",
+      "timing": "15 min total",
+      "vegetarian": true,
+      "pescatarian": true,
+      "vegan": true,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 5,
+      "total_minutes": 5,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 0,
+      "ingredients": [
+        {
+          "amount": "1",
+          "name": "tortilla wraps",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tbsp",
+          "name": "peanut butter",
+          "cupboard": true
+        },
+        {
+          "amount": "1",
+          "name": "banana",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Spread the wrap with peanut butter, lay the banana at one edge and roll up tightly.",
+        "Slice into rounds."
+      ],
+      "notes": [],
+      "tagline": "Banana rolled up in a peanut butter wrap and sliced into pinwheels.",
+      "allergens": [
+        "cereals containing gluten",
+        "peanuts"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "220",
+      "name": "Cinnamon sugar popcorn",
+      "tier": "Family favourites",
+      "meal_type": "Snacks",
+      "diet": "VEGAN",
+      "timing": "15 min total",
+      "vegetarian": true,
+      "pescatarian": true,
+      "vegan": true,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 2,
+      "total_minutes": 7,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 5,
+      "ingredients": [
+        {
+          "amount": "60g",
+          "name": "popcorn kernels",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "sugar",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tsp",
+          "name": "ground cinnamon",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Heat the oil in a large lidded pan, add the kernels, cover and shake over a medium heat until the popping stops.",
+        "Toss with the sugar and cinnamon while warm."
+      ],
+      "notes": [],
+      "tagline": "Warm popcorn with a crunchy cinnamon-sugar coating.",
+      "allergens": [],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "221",
+      "name": "Jam-swirl yoghurt pots",
+      "tier": "Family favourites",
+      "meal_type": "Snacks",
+      "diet": "VEGETARIAN",
+      "timing": "15 min total",
+      "vegetarian": true,
+      "pescatarian": true,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 3,
+      "total_minutes": 3,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 0,
+      "ingredients": [
+        {
+          "amount": "250g",
+          "name": "natural yoghurt",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tbsp",
+          "name": "jam",
+          "cupboard": true
+        },
+        {
+          "amount": "100g",
+          "name": "frozen berries",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Spoon the yoghurt into two pots, swirl through the jam and top with berries (thawed or frozen)."
+      ],
+      "notes": [],
+      "tagline": "Creamy yoghurt with a sweet jam swirl and berries.",
+      "allergens": [
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "222",
+      "name": "Apple and cheddar",
+      "tier": "Family favourites",
+      "meal_type": "Snacks",
+      "diet": "VEGETARIAN",
+      "timing": "15 min total",
+      "vegetarian": true,
+      "pescatarian": true,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 3,
+      "total_minutes": 3,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 0,
+      "ingredients": [
+        {
+          "amount": "1",
+          "name": "apple",
+          "cupboard": false
+        },
+        {
+          "amount": "60g",
+          "name": "cheddar",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Slice the apple and cheese and serve together."
+      ],
+      "notes": [],
+      "tagline": "Crisp apple and tangy cheddar: a simple classic.",
+      "allergens": [
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "223",
+      "name": "Pitta chips and hummus",
+      "tier": "Family favourites",
+      "meal_type": "Snacks",
+      "diet": "VEGAN",
+      "timing": "15 min total",
+      "vegetarian": true,
+      "pescatarian": true,
+      "vegan": true,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 5,
+      "total_minutes": 15,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 10,
+      "ingredients": [
+        {
+          "amount": "4",
+          "name": "pitta breads",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tsp",
+          "name": "smoked paprika",
+          "cupboard": true
+        },
+        {
+          "amount": "200g",
+          "name": "hummus",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Heat the oven to 200C (180C fan). Cut the pittas into triangles, toss with the oil and paprika and bake for 8-10 minutes until crisp.",
+        "Serve with the hummus."
+      ],
+      "notes": [],
+      "tagline": "Crunchy homemade pitta chips with creamy hummus.",
+      "allergens": [
+        "cereals containing gluten",
+        "sesame"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "224",
+      "name": "Fresh fruit salad cups",
+      "tier": "Family favourites",
+      "meal_type": "Snacks",
+      "diet": "VEGAN",
+      "timing": "15 min total",
+      "vegetarian": true,
+      "pescatarian": true,
+      "vegan": true,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 10,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 0,
+      "ingredients": [
+        {
+          "amount": "2",
+          "name": "apples",
+          "cupboard": false
+        },
+        {
+          "amount": "2",
+          "name": "bananas",
+          "cupboard": false
+        },
+        {
+          "amount": "2",
+          "name": "oranges",
+          "cupboard": false
+        },
+        {
+          "amount": "150g",
+          "name": "grapes",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Chop the fruit, mix with any juice from the oranges and share into cups."
+      ],
+      "notes": [],
+      "tagline": "A colourful bowl of fresh fruit salad.",
+      "allergens": [],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "225",
+      "name": "Honey banana toast fingers",
+      "tier": "Family favourites",
+      "meal_type": "Snacks",
+      "diet": "VEGETARIAN",
+      "timing": "15 min total",
+      "vegetarian": true,
+      "pescatarian": true,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 2,
+      "total_minutes": 5,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 3,
+      "ingredients": [
+        {
+          "amount": "2 slices",
+          "name": "bread",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "banana",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "honey",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Toast the bread, top with sliced banana and honey, and cut into fingers."
+      ],
+      "notes": [],
+      "tagline": "Warm toast fingers with banana and a drizzle of honey.",
+      "allergens": [
+        "cereals containing gluten"
       ],
       "allergens_status": "auto-tagged; owner to check"
     }

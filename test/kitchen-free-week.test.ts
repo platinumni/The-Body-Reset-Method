@@ -37,7 +37,7 @@ describe("Kitchen free week", () => {
     const html = await res.text();
     expect(res.status).toBe(200);
     expect(html).toContain("Your week of meals: about £");
-    expect(html).toContain("Sunday");
+    expect(html).toContain("Teas");
     expect(html).toContain("A taste of the recipes");
     expect(html).not.toContain("Shopping list</h2>");
     expect(html).not.toMatch(/<li[^>]*>\s*\d+ ?g /); // no ingredient amounts

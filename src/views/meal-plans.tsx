@@ -142,6 +142,41 @@ export function HouseholdFields(props: { prefix: string; adults: number; sizes: 
   );
 }
 
+const MENU_SECTIONS: { meal: Plan["slots"][number]["meal"]; title: string; intro: string }[] = [
+  { meal: "Breakfasts", title: "Breakfasts", intro: "Pick one each morning." },
+  { meal: "Lunches", title: "Lunches", intro: "Pick one each day." },
+  { meal: "Evening meals", title: "Teas", intro: "Cook once and some make enough for another night: leftovers are planned in." },
+  { meal: "Snacks", title: "Snack cupboard", intro: "Snacks for the week, to have whenever you like." },
+];
+
+/** The week as a menu: what's in it for each meal, not a timetable. */
+export function WeekMenu(props: { plan: Plan; link?: boolean }) {
+  const { plan } = props;
+  return (
+    <div class="week-menu">
+      {MENU_SECTIONS.map((sec) => {
+        const items = plan.recipes.filter((r) => r.recipe.meal_type === sec.meal);
+        if (!items.length) return null;
+        return (
+          <section class="card menu-section">
+            <h3>{sec.title}</h3>
+            <p class="small muted">{sec.intro}</p>
+            <ul>
+              {items.map(({ recipe, times }) => (
+                <li>
+                  {props.link === false ? <strong>{recipe.name}</strong> : <a href={`#r-${recipe.id}`}>{recipe.name}</a>}
+                  {sec.meal !== "Snacks" && times > 1 && <span class="small muted"> · {times} days</span>}
+                  {recipe.tagline && <span class="small muted menu-tagline">{recipe.tagline}</span>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
 /** "Food style": guides the plan towards more meat, more filling carbs, or plain food. Nothing is ruled out. */
 export function FoodStyleField(props: { styles: string[] }) {
   return (
@@ -411,6 +446,8 @@ export function MealPlannerPage(props: {
   favourites?: string[];
   hasMembership?: boolean;
   photos?: Record<string, string>;
+  /** "days" shows Monday to Sunday; otherwise the week is shown as a menu. */
+  view?: string | null;
 }) {
   const { plan, input } = props;
   const cur = (n: number) => money(n, input.country);
@@ -538,24 +575,35 @@ export function MealPlannerPage(props: {
                 )}
               </form>
 
-              <h2 class="plan-heading">The week at a glance</h2>
-              <ol class="week">
-                {DAYS.map((day, d) => (
-                  <li class="day card">
-                    <h3>{day}</h3>
-                    <ul>
-                      {plan.slots
-                        .filter((s) => s.day === d)
-                        .map((s) => (
-                          <li>
-                            <span class="meal-label">{MEAL_LABELS[s.meal]}</span> <a href={`#r-${s.recipe.id}`}>{s.recipe.name}</a>
-                            {s.note && <span class="small muted"> ({s.note})</span>}
-                          </li>
-                        ))}
-                    </ul>
-                  </li>
-                ))}
-              </ol>
+              <h2 class="plan-heading" id="week">{props.view === "days" ? "Day by day" : "This week's menu"}</h2>
+              <p class="small no-print">
+                {props.view === "days" ? (
+                  <a href={`${planQuery(input, { picks: allIds })}#week`}>Show as a menu instead</a>
+                ) : (
+                  <a href={`${planQuery(input, { picks: allIds })}&view=days#week`}>Show day by day instead</a>
+                )}
+              </p>
+              {props.view === "days" ? (
+                <ol class="week">
+                  {DAYS.map((day, d) => (
+                    <li class="day card">
+                      <h3>{day}</h3>
+                      <ul>
+                        {plan.slots
+                          .filter((s) => s.day === d)
+                          .map((s) => (
+                            <li>
+                              <span class="meal-label">{MEAL_LABELS[s.meal]}</span> <a href={`#r-${s.recipe.id}`}>{s.recipe.name}</a>
+                              {s.note && <span class="small muted"> ({s.note})</span>}
+                            </li>
+                          ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <WeekMenu plan={plan} />
+              )}
 
               <h2 class="plan-heading">Shopping list</h2>
               <form method="get" action="/account/meal-plans" class="card shopping">

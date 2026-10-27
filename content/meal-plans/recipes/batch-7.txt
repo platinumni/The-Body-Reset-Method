@@ -1,0 +1,62 @@
+# Batch 7 (2026-10-27): cheap, simple snacks so the week's snack cupboard has variety. Written by Claude.
+
+R 218 | serves 2 | prep 5 | cook 0
+T A little cheeseboard: crackers, cheddar and sweet grapes.
+I 8 | crackers
+I 60g | cheddar
+I 150g | grapes
+M Slice the cheese and serve with the crackers and grapes.
+
+R 219 | serves 2 | prep 5 | cook 0
+T Banana rolled up in a peanut butter wrap and sliced into pinwheels.
+I 1 | tortilla wraps
+I 2 tbsp | peanut butter | c
+I 1 | banana
+M Spread the wrap with peanut butter, lay the banana at one edge and roll up tightly.
+M Slice into rounds.
+
+R 220 | serves 4 | prep 2 | cook 5
+T Warm popcorn with a crunchy cinnamon-sugar coating.
+I 60g | popcorn kernels
+I 1 tbsp | vegetable oil | c
+I 1 tbsp | sugar | c
+I 1 tsp | ground cinnamon | c
+M Heat the oil in a large lidded pan, add the kernels, cover and shake over a medium heat until the popping stops.
+M Toss with the sugar and cinnamon while warm.
+
+R 221 | serves 2 | prep 3 | cook 0
+T Creamy yoghurt with a sweet jam swirl and berries.
+I 250g | natural yoghurt
+I 2 tbsp | jam | c
+I 100g | frozen berries
+M Spoon the yoghurt into two pots, swirl through the jam and top with berries (thawed or frozen).
+
+R 222 | serves 2 | prep 3 | cook 0
+T Crisp apple and tangy cheddar: a simple classic.
+I 1 | apple
+I 60g | cheddar
+M Slice the apple and cheese and serve together.
+
+R 223 | serves 4 | prep 5 | cook 10
+T Crunchy homemade pitta chips with creamy hummus.
+I 4 | pitta breads
+I 1 tbsp | vegetable oil | c
+I 1 tsp | smoked paprika | c
+I 200g | hummus
+M Heat the oven to 200C (180C fan). Cut the pittas into triangles, toss with the oil and paprika and bake for 8-10 minutes until crisp.
+M Serve with the hummus.
+
+R 224 | serves 4 | prep 10 | cook 0
+T A colourful bowl of fresh fruit salad.
+I 2 | apples
+I 2 | bananas
+I 2 | oranges
+I 150g | grapes
+M Chop the fruit, mix with any juice from the oranges and share into cups.
+
+R 225 | serves 2 | prep 2 | cook 3
+T Warm toast fingers with banana and a drizzle of honey.
+I 2 slices | bread
+I 1 | banana
+I 1 tbsp | honey | c
+M Toast the bread, top with sliced banana and honey, and cut into fingers.

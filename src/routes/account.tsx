@@ -144,6 +144,7 @@ accountRoutes.get("/account/meal-plans", async (c) => {
       regions={{ uk: regionsFor(prices, "uk"), us: regionsFor(prices, "us"), ca: regionsFor(prices, "ca") }}
       favourites={favourites}
       hasMembership={!!membership}
+      view={c.req.query("view") ?? null}
       photos={await photoUrls(c.env.DB)}
     />,
   );

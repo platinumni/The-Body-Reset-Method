@@ -28,10 +28,15 @@ describe("budget meal plans", () => {
     const client = await member(true);
     const first = await (await client.get("/account/meal-plans")).text();
     expect(first).toContain("Make my plan");
-    expect(first).not.toContain("The week at a glance");
+    expect(first).not.toContain("This week&#39;s menu");
 
     const html = await (await client.get("/account/meal-plans?submitted=yes&budget=40&country=uk&store=mid&adults=1&diet=vegetarian&snacks=yes")).text();
-    expect(html).toContain("The week at a glance");
+    // A menu by default (breakfasts, lunches, teas, snack cupboard), with a day-by-day view on request.
+    expect(html).toContain("This week&#39;s menu");
+    expect(html).toContain("Snack cupboard");
+    expect(html).toContain("Show day by day instead");
+    const days = await (await client.get("/account/meal-plans?submitted=yes&budget=40&country=uk&store=mid&adults=1&diet=vegetarian&snacks=yes&view=days")).text();
+    expect(days).toContain("Sunday");
     expect(html).toMatch(/Estimated <strong>£\d+\.\d\d<\/strong> of your £40\.00 budget/);
     expect(html).toContain("Shopping list");
     expect(html).toContain("maintain your current weight");

@@ -90,6 +90,7 @@ export const PRICE_ITEMS: PriceItem[] = [
   item("tortilla-chips", "Tortilla chips", "Tins & jars", /tortilla chips|nachos/i, 1.1, 200, "g"),
   item("oven-chips", "Oven chips", "Frozen", /oven chips|frozen chips/i, 2.0, 1000, "g"),
   item("tortillas", "Tortilla wraps", "Bakery", /tortilla/i, 1.2, 8, "each", 60),
+  item("crackers", "Crackers", "Bakery", /crackers/i, 1.3, 30, "each", 8),
   item("rice-cakes", "Rice cakes", "Bakery", /rice cakes/i, 0.85, 20, "each", 8),
   item("bagels", "Bagels", "Bakery", /bagels?/i, 1.2, 5, "each", 85),
   item("english-muffins", "English muffins", "Bakery", /english muffins?/i, 1.0, 6, "each", 65),
