@@ -1,6 +1,7 @@
 import { COUNTRIES, DAYS, STORES, money, type Plan, type PlanInput } from "../lib/meal-plans/planner";
 import { ALLERGEN_LABELS } from "../lib/meal-plans/recipes";
 import { CsrfField, Layout, type PageMeta } from "./layout";
+import { FoodStyleField } from "./meal-plans";
 
 const MEAL_LABELS: Record<string, string> = { Breakfasts: "Breakfast", Lunches: "Lunch", "Evening meals": "Evening meal", Snacks: "Snack" };
 /** How much of each method the free week shows. */
@@ -89,6 +90,7 @@ export function FreeWeekPage(props: { meta: PageMeta; csrfToken: string; input: 
                 ))}
               </div>
             </fieldset>
+            <FoodStyleField styles={i.styles ?? []} />
             <div class="field">
               <label for="fw-exclude">Foods to leave out (optional)</label>
               <input id="fw-exclude" name="exclude" type="text" placeholder="e.g. mushrooms, pork" value={i.exclude.join(", ")} />

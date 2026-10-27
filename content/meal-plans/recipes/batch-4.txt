@@ -311,11 +311,11 @@ M Serve with yoghurt and fruit.
 
 R 127 | serves 2 | prep 2 | cook 5
 I 1 x 415g | tin baked beans
-I 1 pinch | chilli flakes | c
 I 4 slices | bread
 I 1 tsp | olive oil or dairy-free spread | c
 N Check the label: some breads contain milk.
-M Heat the beans with the chilli flakes.
+N Like a kick? Add a pinch of chilli flakes or a dash of hot sauce.
+M Heat the beans.
 M Toast the bread and spread lightly.
 M Spoon the beans over the toast.
 

@@ -1,5 +1,5 @@
 {
-  "generated_from": "recipe-catalogue-2026-10-25.json + recipes/*.txt",
+  "generated_from": "recipe-catalogue-2026-10-25.json + recipe-catalogue-additions.json + recipes/*.txt",
   "recipes": [
     {
       "id": "001",
@@ -9578,7 +9578,7 @@
     },
     {
       "id": "127",
-      "name": "Baked beans with chilli on toast",
+      "name": "Beans on toast",
       "tier": "Affordable, high-flavour staples",
       "meal_type": "Breakfasts",
       "diet": "VEGAN",
@@ -9603,11 +9603,6 @@
           "cupboard": false
         },
         {
-          "amount": "1 pinch",
-          "name": "chilli flakes",
-          "cupboard": true
-        },
-        {
           "amount": "4 slices",
           "name": "bread",
           "cupboard": false
@@ -9619,12 +9614,13 @@
         }
       ],
       "method": [
-        "Heat the beans with the chilli flakes.",
+        "Heat the beans.",
         "Toast the bread and spread lightly.",
         "Spoon the beans over the toast."
       ],
       "notes": [
-        "Check the label: some breads contain milk."
+        "Check the label: some breads contain milk.",
+        "Like a kick? Add a pinch of chilli flakes or a dash of hot sauce."
       ],
       "allergens": [
         "cereals containing gluten"
@@ -10332,6 +10328,1604 @@
       ],
       "notes": [],
       "allergens": [],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "141",
+      "name": "Spaghetti bolognese",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 45,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 35,
+      "ingredients": [
+        {
+          "amount": "500g",
+          "name": "beef mince",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "onion",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "carrot",
+          "cupboard": false
+        },
+        {
+          "amount": "2 cloves",
+          "name": "garlic",
+          "cupboard": false
+        },
+        {
+          "amount": "2 x 400g",
+          "name": "tins chopped tomatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "tomato purée",
+          "cupboard": true
+        },
+        {
+          "amount": "1",
+          "name": "beef stock cube",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tsp",
+          "name": "dried mixed herbs",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        },
+        {
+          "amount": "400g",
+          "name": "spaghetti",
+          "cupboard": true
+        },
+        {
+          "amount": "30g",
+          "name": "cheddar",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Fry the chopped onion and grated carrot in the oil for 5 minutes. Add the garlic for 1 minute.",
+        "Add the mince and brown it, breaking it up with a spoon.",
+        "Stir in the tomatoes, purée, crumbled stock cube, herbs and 150ml water. Simmer for 25 minutes until thick.",
+        "Cook the spaghetti, drain and serve with the sauce and a little grated cheese."
+      ],
+      "notes": [
+        "Leftover sauce freezes well for up to 3 months."
+      ],
+      "allergens": [
+        "celery",
+        "cereals containing gluten",
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "142",
+      "name": "Chilli con carne with rice",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 45,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 35,
+      "ingredients": [
+        {
+          "amount": "500g",
+          "name": "beef mince",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "onion",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "pepper",
+          "cupboard": false
+        },
+        {
+          "amount": "2 cloves",
+          "name": "garlic",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tsp",
+          "name": "chilli powder",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tsp",
+          "name": "ground cumin",
+          "cupboard": true
+        },
+        {
+          "amount": "1 x 400g",
+          "name": "tin chopped tomatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "1 x 400g",
+          "name": "tin kidney beans",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "beef stock cube",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        },
+        {
+          "amount": "300g",
+          "name": "rice",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Fry the chopped onion and pepper in the oil for 5 minutes. Add the garlic and spices for 1 minute.",
+        "Add the mince and brown it.",
+        "Add the tomatoes, drained beans, crumbled stock cube and 150ml water. Simmer for 25 minutes.",
+        "Cook the rice and serve with the chilli."
+      ],
+      "notes": [],
+      "allergens": [
+        "celery"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "143",
+      "name": "Cottage pie",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 15,
+      "total_minutes": 60,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 45,
+      "ingredients": [
+        {
+          "amount": "500g",
+          "name": "beef mince",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "onion",
+          "cupboard": false
+        },
+        {
+          "amount": "2",
+          "name": "carrots",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "plain flour",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "tomato purée",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "Worcestershire sauce",
+          "cupboard": true
+        },
+        {
+          "amount": "1",
+          "name": "beef stock cube",
+          "cupboard": true
+        },
+        {
+          "amount": "150g",
+          "name": "frozen peas",
+          "cupboard": false
+        },
+        {
+          "amount": "1kg",
+          "name": "potatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "30g",
+          "name": "butter",
+          "cupboard": true
+        },
+        {
+          "amount": "50ml",
+          "name": "milk",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Heat the oven to 200C (180C fan). Peel the potatoes, cut into chunks and boil for 15-20 minutes until soft.",
+        "Meanwhile fry the chopped onion and diced carrots in the oil for 5 minutes, then brown the mince.",
+        "Stir in the flour and purée, then the Worcestershire sauce, crumbled stock cube and 300ml water. Simmer for 15 minutes, adding the peas for the last 2.",
+        "Mash the potatoes with the butter and milk. Spoon the mince into a dish, top with the mash and bake for 20 minutes until golden."
+      ],
+      "notes": [],
+      "allergens": [
+        "celery",
+        "cereals containing gluten",
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "144",
+      "name": "Sausage and mash with onion gravy",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 40,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 30,
+      "ingredients": [
+        {
+          "amount": "8",
+          "name": "pork sausages",
+          "cupboard": false
+        },
+        {
+          "amount": "1kg",
+          "name": "potatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "2",
+          "name": "onions",
+          "cupboard": false
+        },
+        {
+          "amount": "30g",
+          "name": "butter",
+          "cupboard": true
+        },
+        {
+          "amount": "50ml",
+          "name": "milk",
+          "cupboard": false
+        },
+        {
+          "amount": "4 tbsp",
+          "name": "gravy granules",
+          "cupboard": true
+        },
+        {
+          "amount": "200g",
+          "name": "frozen peas",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Heat the oven to 200C (180C fan) and cook the sausages on a tray for 25 minutes, turning once.",
+        "Peel and chop the potatoes and boil for 15-20 minutes until soft. Drain and mash with the butter and milk.",
+        "Slice the onions and cook slowly in the oil for 15 minutes until soft and golden. Make the gravy with boiling water as the packet says and stir in the onions.",
+        "Cook the peas and serve everything together."
+      ],
+      "notes": [],
+      "allergens": [
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "145",
+      "name": "Toad in the hole",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 45,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 35,
+      "ingredients": [
+        {
+          "amount": "8",
+          "name": "pork sausages",
+          "cupboard": false
+        },
+        {
+          "amount": "140g",
+          "name": "plain flour",
+          "cupboard": true
+        },
+        {
+          "amount": "3",
+          "name": "eggs",
+          "cupboard": false
+        },
+        {
+          "amount": "200ml",
+          "name": "milk",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        },
+        {
+          "amount": "4 tbsp",
+          "name": "gravy granules",
+          "cupboard": true
+        },
+        {
+          "amount": "500g",
+          "name": "potatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "200g",
+          "name": "frozen peas",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Heat the oven to 220C (200C fan). Put the sausages and oil in a roasting tin and cook for 10 minutes.",
+        "Whisk the flour, eggs, milk and a pinch of salt into a smooth batter.",
+        "Pour the batter around the hot sausages and bake for 25 minutes until risen and golden. Don't open the oven door.",
+        "Meanwhile boil the potatoes and peas. Make the gravy as the packet says and serve."
+      ],
+      "notes": [],
+      "allergens": [
+        "cereals containing gluten",
+        "eggs",
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "146",
+      "name": "Chicken curry with rice",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 45,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 35,
+      "ingredients": [
+        {
+          "amount": "600g",
+          "name": "chicken thighs",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "onion",
+          "cupboard": false
+        },
+        {
+          "amount": "2 cloves",
+          "name": "garlic",
+          "cupboard": false
+        },
+        {
+          "amount": "3cm piece",
+          "name": "fresh ginger",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tbsp",
+          "name": "curry powder",
+          "cupboard": true
+        },
+        {
+          "amount": "1 x 400g",
+          "name": "tin chopped tomatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "150g",
+          "name": "natural yoghurt",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        },
+        {
+          "amount": "300g",
+          "name": "rice",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Cut the chicken into bite-sized pieces. Fry the chopped onion in the oil for 5 minutes, then add the garlic, grated ginger and curry powder for 1 minute.",
+        "Add the chicken and cook for 5 minutes, then add the tomatoes and 100ml water. Simmer for 20 minutes until the chicken is cooked through.",
+        "Take off the heat and stir in the yoghurt.",
+        "Cook the rice and serve with the curry."
+      ],
+      "notes": [],
+      "allergens": [
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "147",
+      "name": "Chicken fajitas",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 25,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 15,
+      "ingredients": [
+        {
+          "amount": "500g",
+          "name": "chicken breasts",
+          "cupboard": false
+        },
+        {
+          "amount": "2",
+          "name": "peppers",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "onion",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tsp",
+          "name": "smoked paprika",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tsp",
+          "name": "ground cumin",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        },
+        {
+          "amount": "8",
+          "name": "tortilla wraps",
+          "cupboard": false
+        },
+        {
+          "amount": "100g",
+          "name": "cheddar",
+          "cupboard": false
+        },
+        {
+          "amount": "4 tbsp",
+          "name": "natural yoghurt",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "little gem lettuce",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Slice the chicken, peppers and onion into strips. Toss with the spices and oil.",
+        "Fry in a hot pan for 10-12 minutes until the chicken is cooked through.",
+        "Warm the wraps and fill with the chicken, grated cheese, shredded lettuce and a spoonful of yoghurt."
+      ],
+      "notes": [],
+      "allergens": [
+        "cereals containing gluten",
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "148",
+      "name": "Beef stew",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 15,
+      "total_minutes": 135,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 120,
+      "ingredients": [
+        {
+          "amount": "600g",
+          "name": "diced stewing beef",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tbsp",
+          "name": "plain flour",
+          "cupboard": true
+        },
+        {
+          "amount": "1",
+          "name": "onion",
+          "cupboard": false
+        },
+        {
+          "amount": "3",
+          "name": "carrots",
+          "cupboard": false
+        },
+        {
+          "amount": "500g",
+          "name": "potatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "beef stock cube",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "tomato purée",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tsp",
+          "name": "dried mixed herbs",
+          "cupboard": true
+        },
+        {
+          "amount": "2 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        },
+        {
+          "amount": "4 slices",
+          "name": "bread",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Heat the oven to 160C (140C fan). Toss the beef in the flour and brown it in batches in the oil in an ovenproof pan.",
+        "Add the chopped onion and cook for 5 minutes. Add the carrots and potatoes in chunks, the purée, herbs, crumbled stock cube and 600ml water.",
+        "Cover and cook in the oven for 2 hours until the beef is tender. Serve with bread."
+      ],
+      "notes": [
+        "Also works in a slow cooker: 7-8 hours on low."
+      ],
+      "allergens": [
+        "celery",
+        "cereals containing gluten"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "149",
+      "name": "Sausage pasta bake",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 45,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 35,
+      "ingredients": [
+        {
+          "amount": "6",
+          "name": "pork sausages",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "onion",
+          "cupboard": false
+        },
+        {
+          "amount": "2 cloves",
+          "name": "garlic",
+          "cupboard": false
+        },
+        {
+          "amount": "2 x 400g",
+          "name": "tins chopped tomatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tsp",
+          "name": "dried mixed herbs",
+          "cupboard": true
+        },
+        {
+          "amount": "400g",
+          "name": "pasta",
+          "cupboard": true
+        },
+        {
+          "amount": "100g",
+          "name": "cheddar",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Heat the oven to 200C (180C fan). Squeeze the sausages out of their skins in small pieces and fry in the oil until browned.",
+        "Add the chopped onion and garlic for 5 minutes, then the tomatoes and herbs. Simmer for 10 minutes.",
+        "Cook the pasta for 2 minutes less than the packet says, drain and mix with the sauce.",
+        "Tip into a dish, top with the grated cheese and bake for 15 minutes."
+      ],
+      "notes": [],
+      "allergens": [
+        "cereals containing gluten",
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "150",
+      "name": "Chicken and mushroom pie",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 15,
+      "total_minutes": 50,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 35,
+      "ingredients": [
+        {
+          "amount": "500g",
+          "name": "chicken thighs",
+          "cupboard": false
+        },
+        {
+          "amount": "250g",
+          "name": "mushrooms",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "onion",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tbsp",
+          "name": "plain flour",
+          "cupboard": true
+        },
+        {
+          "amount": "1",
+          "name": "chicken stock cube",
+          "cupboard": true
+        },
+        {
+          "amount": "150ml",
+          "name": "milk",
+          "cupboard": false
+        },
+        {
+          "amount": "320g",
+          "name": "puff pastry",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "egg",
+          "cupboard": false
+        },
+        {
+          "amount": "500g",
+          "name": "potatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "200g",
+          "name": "frozen peas",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Heat the oven to 200C (180C fan). Cut the chicken into pieces and fry with the chopped onion and sliced mushrooms in the oil for 10 minutes.",
+        "Stir in the flour, then the milk and the stock cube dissolved in 200ml boiling water. Simmer until thick.",
+        "Tip into a pie dish, cover with the pastry, brush with beaten egg and bake for 25 minutes until golden.",
+        "Serve with boiled potatoes and peas."
+      ],
+      "notes": [],
+      "allergens": [
+        "celery",
+        "cereals containing gluten",
+        "eggs",
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "151",
+      "name": "Mince and mash",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 45,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 35,
+      "ingredients": [
+        {
+          "amount": "500g",
+          "name": "beef mince",
+          "cupboard": false
+        },
+        {
+          "amount": "2",
+          "name": "onions",
+          "cupboard": false
+        },
+        {
+          "amount": "3",
+          "name": "carrots",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "beef stock cube",
+          "cupboard": true
+        },
+        {
+          "amount": "3 tbsp",
+          "name": "gravy granules",
+          "cupboard": true
+        },
+        {
+          "amount": "1kg",
+          "name": "potatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "30g",
+          "name": "butter",
+          "cupboard": true
+        },
+        {
+          "amount": "50ml",
+          "name": "milk",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Brown the mince in a large pan. Add the chopped onions and diced carrots and cook for 5 minutes.",
+        "Add the crumbled stock cube and 400ml water and simmer for 25 minutes. Stir in the gravy granules to thicken.",
+        "Meanwhile boil the peeled potatoes until soft and mash with the butter and milk.",
+        "Serve the mince with the mash."
+      ],
+      "notes": [],
+      "allergens": [
+        "celery",
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "152",
+      "name": "Bacon and pea pasta",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 5,
+      "total_minutes": 20,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 15,
+      "ingredients": [
+        {
+          "amount": "200g",
+          "name": "bacon",
+          "cupboard": false
+        },
+        {
+          "amount": "400g",
+          "name": "pasta",
+          "cupboard": true
+        },
+        {
+          "amount": "200g",
+          "name": "frozen peas",
+          "cupboard": false
+        },
+        {
+          "amount": "2",
+          "name": "eggs",
+          "cupboard": false
+        },
+        {
+          "amount": "50g",
+          "name": "cheddar",
+          "cupboard": false
+        },
+        {
+          "amount": "1 clove",
+          "name": "garlic",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Cook the pasta, adding the peas for the last 3 minutes.",
+        "Meanwhile chop the bacon and fry until crisp, adding the garlic for the last minute.",
+        "Beat the eggs with the grated cheese.",
+        "Drain the pasta, keeping a mugful of the water. Off the heat, toss the pasta with the bacon, then the egg mix and a splash of the water until creamy."
+      ],
+      "notes": [],
+      "allergens": [
+        "cereals containing gluten",
+        "eggs",
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "153",
+      "name": "One-pot chicken and rice",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 45,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 35,
+      "ingredients": [
+        {
+          "amount": "600g",
+          "name": "chicken thighs",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "onion",
+          "cupboard": false
+        },
+        {
+          "amount": "2 cloves",
+          "name": "garlic",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tsp",
+          "name": "smoked paprika",
+          "cupboard": true
+        },
+        {
+          "amount": "300g",
+          "name": "rice",
+          "cupboard": true
+        },
+        {
+          "amount": "1",
+          "name": "chicken stock cube",
+          "cupboard": true
+        },
+        {
+          "amount": "200g",
+          "name": "frozen peas",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "pepper",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Brown the chicken pieces in the oil in a large pan, then add the chopped onion, pepper and garlic for 5 minutes.",
+        "Stir in the paprika and rice, then the stock cube dissolved in 750ml boiling water.",
+        "Cover and simmer for 20 minutes, adding the peas for the last 5, until the rice is tender and the chicken cooked through."
+      ],
+      "notes": [],
+      "allergens": [
+        "celery"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "154",
+      "name": "Spaghetti and meatballs",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 15,
+      "total_minutes": 45,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 30,
+      "ingredients": [
+        {
+          "amount": "500g",
+          "name": "beef mince",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "onion",
+          "cupboard": false
+        },
+        {
+          "amount": "2 cloves",
+          "name": "garlic",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tsp",
+          "name": "dried mixed herbs",
+          "cupboard": true
+        },
+        {
+          "amount": "2 x 400g",
+          "name": "tins chopped tomatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "tomato purée",
+          "cupboard": true
+        },
+        {
+          "amount": "400g",
+          "name": "spaghetti",
+          "cupboard": true
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Mix the mince with half the finely chopped onion and the herbs and roll into about 20 meatballs.",
+        "Brown the meatballs in the oil, then set aside. Soften the rest of the onion and the garlic in the same pan.",
+        "Add the tomatoes and purée, return the meatballs and simmer for 20 minutes until cooked through.",
+        "Cook the spaghetti and serve with the meatballs and sauce."
+      ],
+      "notes": [],
+      "allergens": [
+        "cereals containing gluten"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "155",
+      "name": "Ham, egg and chips",
+      "tier": "Classic family favourites",
+      "meal_type": "Evening meals",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 40,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 30,
+      "ingredients": [
+        {
+          "amount": "250g",
+          "name": "ham",
+          "cupboard": false
+        },
+        {
+          "amount": "4",
+          "name": "eggs",
+          "cupboard": false
+        },
+        {
+          "amount": "700g",
+          "name": "potatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tbsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        },
+        {
+          "amount": "1 x 400g",
+          "name": "tin baked beans",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Heat the oven to 220C (200C fan). Cut the potatoes into chips, toss with the oil and bake for 30 minutes, turning halfway.",
+        "Warm the beans. Fry the eggs.",
+        "Serve the ham with the chips, eggs and beans."
+      ],
+      "notes": [],
+      "allergens": [
+        "eggs"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "156",
+      "name": "Chicken wraps",
+      "tier": "Classic family favourites",
+      "meal_type": "Lunches",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 20,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 10,
+      "ingredients": [
+        {
+          "amount": "300g",
+          "name": "chicken breasts",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tsp",
+          "name": "smoked paprika",
+          "cupboard": true
+        },
+        {
+          "amount": "4",
+          "name": "tortilla wraps",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "little gem lettuce",
+          "cupboard": false
+        },
+        {
+          "amount": "2",
+          "name": "tomatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tbsp",
+          "name": "mayonnaise",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Slice the chicken thinly, toss with the paprika and fry for 8-10 minutes until cooked through.",
+        "Fill the wraps with lettuce, sliced tomato, the chicken and a little mayonnaise, and roll up."
+      ],
+      "notes": [],
+      "allergens": [
+        "cereals containing gluten",
+        "eggs"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "157",
+      "name": "Ham and cheese toastie",
+      "tier": "Classic family favourites",
+      "meal_type": "Lunches",
+      "diet": "MEAT",
+      "timing": "15 min total",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 5,
+      "total_minutes": 13,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 8,
+      "ingredients": [
+        {
+          "amount": "4 slices",
+          "name": "bread",
+          "cupboard": false
+        },
+        {
+          "amount": "100g",
+          "name": "ham",
+          "cupboard": false
+        },
+        {
+          "amount": "80g",
+          "name": "cheddar",
+          "cupboard": false
+        },
+        {
+          "amount": "15g",
+          "name": "butter",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Butter the outside of each slice of bread.",
+        "Make two sandwiches with the ham and grated cheese inside, buttered sides out.",
+        "Cook in a frying pan over a medium heat for 3-4 minutes each side until golden and melted."
+      ],
+      "notes": [],
+      "allergens": [
+        "cereals containing gluten",
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "158",
+      "name": "Bacon, lettuce and tomato sandwich",
+      "tier": "Classic family favourites",
+      "meal_type": "Lunches",
+      "diet": "MEAT",
+      "timing": "15 min total",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 5,
+      "total_minutes": 13,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 8,
+      "ingredients": [
+        {
+          "amount": "6 rashers",
+          "name": "bacon",
+          "cupboard": false
+        },
+        {
+          "amount": "4 slices",
+          "name": "bread",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "little gem lettuce",
+          "cupboard": false
+        },
+        {
+          "amount": "2",
+          "name": "tomatoes",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "mayonnaise",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Grill or fry the bacon until crisp.",
+        "Toast the bread if you like, spread with a little mayonnaise and fill with the bacon, lettuce and sliced tomato."
+      ],
+      "notes": [],
+      "allergens": [
+        "cereals containing gluten",
+        "eggs"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "159",
+      "name": "Chicken and sweetcorn pasta salad",
+      "tier": "Classic family favourites",
+      "meal_type": "Lunches",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 10,
+      "total_minutes": 25,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 4,
+      "cook_minutes": 15,
+      "ingredients": [
+        {
+          "amount": "300g",
+          "name": "pasta",
+          "cupboard": true
+        },
+        {
+          "amount": "300g",
+          "name": "chicken breasts",
+          "cupboard": false
+        },
+        {
+          "amount": "1 x 198g",
+          "name": "tin sweetcorn",
+          "cupboard": false
+        },
+        {
+          "amount": "1",
+          "name": "pepper",
+          "cupboard": false
+        },
+        {
+          "amount": "3 tbsp",
+          "name": "mayonnaise",
+          "cupboard": true
+        },
+        {
+          "amount": "3 tbsp",
+          "name": "natural yoghurt",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Cook the pasta, then rinse under cold water and drain.",
+        "Poach or fry the chicken for 10-12 minutes until cooked through, then cool and slice.",
+        "Mix the pasta with the chicken, drained sweetcorn, chopped pepper, mayonnaise and yoghurt."
+      ],
+      "notes": [
+        "Keeps in the fridge for 2 days: good for packed lunches."
+      ],
+      "allergens": [
+        "cereals containing gluten",
+        "eggs",
+        "milk"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "160",
+      "name": "Bacon roll",
+      "tier": "Classic family favourites",
+      "meal_type": "Breakfasts",
+      "diet": "MEAT",
+      "timing": "15 min total",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 2,
+      "total_minutes": 10,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 8,
+      "ingredients": [
+        {
+          "amount": "6 rashers",
+          "name": "bacon",
+          "cupboard": false
+        },
+        {
+          "amount": "2",
+          "name": "bread rolls",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tbsp",
+          "name": "ketchup or brown sauce",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Grill or fry the bacon until done the way you like it.",
+        "Split the rolls and fill with the bacon and your sauce of choice."
+      ],
+      "notes": [],
+      "allergens": [
+        "cereals containing gluten"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "161",
+      "name": "Sausage, egg and beans",
+      "tier": "Classic family favourites",
+      "meal_type": "Breakfasts",
+      "diet": "MEAT",
+      "timing": "15 min prep",
+      "vegetarian": false,
+      "pescatarian": false,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 2,
+      "total_minutes": 22,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 20,
+      "ingredients": [
+        {
+          "amount": "4",
+          "name": "pork sausages",
+          "cupboard": false
+        },
+        {
+          "amount": "2",
+          "name": "eggs",
+          "cupboard": false
+        },
+        {
+          "amount": "1 x 400g",
+          "name": "tin baked beans",
+          "cupboard": false
+        },
+        {
+          "amount": "2 slices",
+          "name": "bread",
+          "cupboard": false
+        },
+        {
+          "amount": "1 tsp",
+          "name": "vegetable oil",
+          "cupboard": true
+        }
+      ],
+      "method": [
+        "Grill or fry the sausages for 15-20 minutes, turning, until cooked through.",
+        "Warm the beans, fry the eggs in the oil and toast the bread.",
+        "Serve together."
+      ],
+      "notes": [],
+      "allergens": [
+        "cereals containing gluten",
+        "eggs"
+      ],
+      "allergens_status": "auto-tagged; owner to check"
+    },
+    {
+      "id": "162",
+      "name": "Scrambled eggs on toast",
+      "tier": "Classic family favourites",
+      "meal_type": "Breakfasts",
+      "diet": "VEGETARIAN",
+      "timing": "15 min total",
+      "vegetarian": true,
+      "pescatarian": true,
+      "vegan": false,
+      "image_status": "lookup_required",
+      "image_url": null,
+      "image_credit": null,
+      "image_license": null,
+      "image_source": null,
+      "prep_minutes": 2,
+      "total_minutes": 7,
+      "recipe_status": "draft_for_owner_review",
+      "serves": 2,
+      "cook_minutes": 5,
+      "ingredients": [
+        {
+          "amount": "4",
+          "name": "eggs",
+          "cupboard": false
+        },
+        {
+          "amount": "2 tbsp",
+          "name": "milk",
+          "cupboard": false
+        },
+        {
+          "amount": "10g",
+          "name": "butter",
+          "cupboard": true
+        },
+        {
+          "amount": "4 slices",
+          "name": "bread",
+          "cupboard": false
+        }
+      ],
+      "method": [
+        "Beat the eggs with the milk and a pinch of salt and pepper.",
+        "Melt the butter in a pan over a low heat, add the eggs and stir gently until just set.",
+        "Serve on hot buttered toast."
+      ],
+      "notes": [],
+      "allergens": [
+        "cereals containing gluten",
+        "eggs",
+        "milk"
+      ],
       "allergens_status": "auto-tagged; owner to check"
     }
   ]

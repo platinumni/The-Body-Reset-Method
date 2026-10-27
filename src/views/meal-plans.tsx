@@ -1,4 +1,4 @@
-import { COUNTRIES, DAYS, LEAVE_OUT_WORDS, STORES, money, type Plan, type PlanInput } from "../lib/meal-plans/planner";
+import { COUNTRIES, DAYS, FOOD_STYLES, LEAVE_OUT_WORDS, STORES, money, type Plan, type PlanInput } from "../lib/meal-plans/planner";
 import { formatPeriod, REGION_LABELS } from "../lib/meal-plans/official";
 import { PRICES_AS_OF } from "../lib/meal-plans/prices";
 import { ALLERGEN_LABELS, type Recipe } from "../lib/meal-plans/recipes";
@@ -25,9 +25,28 @@ export function planQuery(input: PlanInput, change: Partial<PlanInput> = {}): st
     have: i.have.join(","),
     usual: i.usual ? String(i.usual) : "",
     region: i.region ?? "national",
+    style: (i.styles ?? []).join(","),
   });
   if (i.picks?.length) q.set("picks", i.picks.join(","));
   return `/account/meal-plans?${q.toString()}`;
+}
+
+/** "Food style": guides the plan towards more meat, more filling carbs, or plain food. Nothing is ruled out. */
+export function FoodStyleField(props: { styles: string[] }) {
+  return (
+    <fieldset class="field">
+      <legend>Food style (optional)</legend>
+      <div class="pill-choices">
+        {Object.entries(FOOD_STYLES).map(([v, label]) => (
+          <label class="diet-pill">
+            <input type="checkbox" name="style" value={v} checked={props.styles.includes(v)} />
+            <span>{label}</span>
+          </label>
+        ))}
+      </div>
+      <p class="hint">Tick any. Your plan leans that way where your budget allows, and you can still swap any meal.</p>
+    </fieldset>
+  );
 }
 
 function PlanForm(props: { input: PlanInput; regions: { uk?: string[]; us: string[]; ca: string[] } }) {
@@ -131,6 +150,7 @@ function PlanForm(props: { input: PlanInput; regions: { uk?: string[]; us: strin
           ))}
         </div>
       </fieldset>
+      <FoodStyleField styles={i.styles ?? []} />
       <div class="field">
         <label for="mp-exclude">Foods to leave out</label>
         <input id="mp-exclude" name="exclude" type="text" list="mp-foods" placeholder="e.g. mushrooms, pork, fish" value={i.exclude.join(", ")} />

@@ -93,7 +93,10 @@ export function dietProblems(recipe, meta) {
 const timingLabel = (r) => (r.prep_minutes + r.cook_minutes <= 15 ? "15 min total" : r.prep_minutes <= 15 ? "15 min prep" : "standard");
 
 export function build() {
-  const catalogue = JSON.parse(readFileSync(join(DIR, "recipe-catalogue-2026-10-25.json"), "utf8"));
+  const original = JSON.parse(readFileSync(join(DIR, "recipe-catalogue-2026-10-25.json"), "utf8"));
+  // Additions and renames live in their own file, so the owner's original catalogue is never edited.
+  const additions = JSON.parse(readFileSync(join(DIR, "recipe-catalogue-additions.json"), "utf8"));
+  const catalogue = { recipes: [...original.recipes.map((m) => ({ ...m, ...(additions.overrides?.[m.id] ?? {}) })), ...additions.recipes] };
   const files = readdirSync(join(DIR, "recipes")).filter((f) => f.endsWith(".txt")).sort();
   const drafts = new Map(files.flatMap((f) => parseRecipes(readFileSync(join(DIR, "recipes", f), "utf8"))).map((r) => [r.id, r]));
   const problems = [];
@@ -126,7 +129,7 @@ export function build() {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const { recipes, problems } = build();
-  writeFileSync(join(DIR, "recipes.json"), JSON.stringify({ generated_from: "recipe-catalogue-2026-10-25.json + recipes/*.txt", recipes }, null, 2) + "\n");
+  writeFileSync(join(DIR, "recipes.json"), JSON.stringify({ generated_from: "recipe-catalogue-2026-10-25.json + recipe-catalogue-additions.json + recipes/*.txt", recipes }, null, 2) + "\n");
   console.log(`${recipes.length} recipes written to content/meal-plans/recipes.json`);
   if (problems.length) {
     console.error(problems.map((p) => `✗ ${p}`).join("\n"));

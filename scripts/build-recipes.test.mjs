@@ -4,7 +4,7 @@ import { allergensFor, build, dietProblems, parseRecipes } from "./build-recipes
 
 test("every catalogue recipe has a full draft and consistent diet labels", () => {
   const { recipes, problems } = build();
-  assert.equal(recipes.length, 140);
+  assert.equal(recipes.length, 162); // the owner's 140 plus 22 classic family meals (2026-10-27)
   assert.deepEqual(problems, []);
   for (const r of recipes) {
     assert.ok(r.ingredients.length && r.method.length && r.serves > 0, r.id);

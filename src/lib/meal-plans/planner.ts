@@ -8,6 +8,8 @@ import { RECIPES, type MealType, type Recipe } from "./recipes";
 export type Country = "uk" | "us" | "ca";
 export type Store = "discount" | "mid" | "premium";
 export type Diet = "any" | "pescatarian" | "vegetarian" | "vegan";
+export type FoodStyle = "meat" | "hearty" | "plain";
+export const FOOD_STYLES: Record<FoodStyle, string> = { meat: "More meat", hearty: "Hearty (more pasta, potatoes, rice and bread)", plain: "Plain and simple" };
 
 export const COUNTRIES: Record<Country, { label: string; currency: string; symbol: string; factor: number; source: string }> = {
   uk: { label: "United Kingdom", currency: "GBP", symbol: "£", factor: 1, source: "Office for National Statistics shop prices" },
@@ -35,6 +37,8 @@ export type PlanInput = {
   picks?: string[];
   /** Recipes the member has starred: included where the budget allows. */
   favourites?: string[];
+  /** Food style: lean towards more meat, more filling carbs, or plain familiar food. Guides the plan; nothing is ruled out. */
+  styles?: FoodStyle[];
   /** What they usually spend on food a week (optional), for the savings line. */
   usual?: number | null;
   /** How their real shop compares with our estimates (from what they actually paid). 1 = as estimated. */
@@ -139,6 +143,45 @@ export function shoppingList(chosen: { recipe: Recipe; scale: number }[], input:
   return { lines, weeklyCost, starterCupboard };
 }
 
+// --- Food style -------------------------------------------------------------
+
+const hasMeat = (r: Recipe) => !r.pescatarian;
+const hasMeatOrFish = (r: Recipe) => !r.vegetarian;
+const CARBS = /\b(pasta|spaghetti|potato(es)?|rice|bread|noodles|wraps?|tortilla|rolls?|gnocchi|couscous|chips)\b/i;
+const carbHeavy = (r: Recipe) => r.ingredients.some((i) => CARBS.test(i.name) && !/cakes|vinegar|noodles? \(optional\)/i.test(i.name));
+const PLAIN_TIER = "Classic family favourites";
+const isPlain = (r: Recipe) => r.tier === PLAIN_TIER;
+const isLuxury = (r: Recipe) => r.tier.startsWith("Luxury");
+
+/** How well a recipe fits what the person asked for (0 = neutral). Used to steer which recipes are tried. */
+function recipeLean(r: Recipe, input: Pick<PlanInput, "diet" | "styles">): number {
+  const styles = input.styles ?? [];
+  const main = r.meal_type === "Evening meals" || r.meal_type === "Lunches";
+  let w = 0;
+  // Most people who eat everything expect meat or fish in most main meals.
+  if (main && input.diet !== "vegetarian" && input.diet !== "vegan" && hasMeatOrFish(r)) w += 1;
+  if (styles.includes("meat") && hasMeat(r)) w += 2;
+  if (styles.includes("hearty") && carbHeavy(r)) w += 1.5;
+  if (styles.includes("plain")) w += isPlain(r) ? 2 : isLuxury(r) ? -2 : r.tier.startsWith("Affordable") ? 0.5 : -0.5;
+  return w;
+}
+
+/** How well a whole week fits. The planner takes the week that uses the budget well AND fits best. */
+export function preferenceScore(picks: Recipe[], input: Pick<PlanInput, "diet" | "styles">): number {
+  const styles = input.styles ?? [];
+  const mains = picks.filter((r) => r.meal_type === "Evening meals" || r.meal_type === "Lunches");
+  const share = (list: Recipe[], f: (r: Recipe) => boolean) => (list.length ? list.filter(f).length / list.length : 0);
+  let score = 0;
+  if (input.diet !== "vegetarian" && input.diet !== "vegan") score += Math.min(share(mains, hasMeatOrFish), 0.6);
+  if (styles.includes("meat")) score += 1.5 * share(mains, hasMeat);
+  if (styles.includes("hearty")) score += 0.6 * share(picks, carbHeavy);
+  if (styles.includes("plain")) score += share(picks, isPlain) - share(picks, isLuxury);
+  return score;
+}
+
+/** Fit matters, but never more than a sensible use of the budget: 0.35 of score ≈ 35% of the budget. */
+const PREFERENCE_WEIGHT = 0.35;
+
 // Small seeded random, so the same choices give the same plan, and "shuffle" gives a new one.
 function rng(seed: number) {
   let s = seed >>> 0 || 1;
@@ -203,10 +246,20 @@ export function buildPlan(input: PlanInput): Plan {
   let best = null as Candidate | null;
   let cheapest = null as Candidate | null;
 
+  const value = (c: Candidate) => c.weeklyCost / Math.max(1, input.budget) + PREFERENCE_WEIGHT * preferenceScore(ORDER.flatMap((m) => c.picks[m]), input);
   const consider = (picks: Record<MealType, Recipe[]>) => {
     const a = { ...assemble(picks, input, portions), picks };
     if (!cheapest || a.weeklyCost < cheapest.weeklyCost) cheapest = a;
-    if (a.weeklyCost <= input.budget && (!best || a.weeklyCost > best.weeklyCost)) best = a;
+    if (a.weeklyCost <= input.budget && (!best || value(a) > value(best))) best = a;
+  };
+  const leaning = ORDER.some((m) => pool[m].some((r) => recipeLean(r, input) !== 0));
+  /** Pick one, favouring recipes that fit what they asked for. */
+  const weighted = (list: Recipe[], rand: () => number, taken: Set<Recipe>) => {
+    const open = list.filter((r) => !taken.has(r));
+    const weights = open.map((r) => Math.exp(recipeLean(r, input)));
+    let x = rand() * weights.reduce((t, w) => t + w, 0);
+    for (let i = 0; i < open.length; i++) if ((x -= weights[i]!) <= 0) return open[i]!;
+    return open[open.length - 1]!;
   };
 
   if (fixed && fixed.length) {
@@ -229,12 +282,42 @@ export function buildPlan(input: PlanInput): Plan {
           const take = new Set<Recipe>();
           // Favourites first (after the cheapest-possible attempt), if they fit the variety for this meal.
           if (attempt > 0) for (const r of options) if (input.favourites?.includes(r.id) && take.size < level[meal]) take.add(r);
-          while (take.size < Math.min(level[meal], candidates.length)) take.add(attempt === 0 ? candidates[take.size]! : candidates[Math.floor(rand() * candidates.length)]!);
+          // Every other attempt leans towards what they asked for (more meat, hearty, plain), across all prices.
+          const lean = leaning && attempt % 2 === 1;
+          const from = lean ? options : candidates;
+          while (take.size < Math.min(level[meal], from.length)) take.add(attempt === 0 ? from[take.size]! : lean ? weighted(from, rand, take) : from[Math.floor(rand() * from.length)]!);
           picks[meal] = [...take];
         }
         consider(picks);
       }
       if (best) break;
+    }
+  }
+
+  // Then improve the chosen week one meal at a time: swap in recipes that fit what they asked for
+  // (e.g. meat in most main meals) wherever the budget allows. Picked or starred meals are left alone.
+  if (best && !(fixed && fixed.length)) {
+    for (let pass = 0; pass < 3; pass++) {
+      let improved = false;
+      // Main meals first, so the budget goes where it matters most.
+      for (const meal of ["Evening meals", "Lunches", "Breakfasts", "Snacks"] as MealType[]) {
+        const preferred = pool[meal].filter((r) => recipeLean(r, input) > 0).sort((a, b) => recipeLean(b, input) - recipeLean(a, input) || costPerPortion(a) - costPerPortion(b)).slice(0, 15);
+        for (let i = 0; i < best.picks[meal].length; i++) {
+          const current = best.picks[meal][i]!;
+          if (input.favourites?.includes(current.id)) continue;
+          for (const r of preferred) {
+            if (best.picks[meal].includes(r) || recipeLean(r, input) <= recipeLean(current, input)) continue;
+            const picks = { ...best.picks, [meal]: best.picks[meal].map((x, j) => (j === i ? r : x)) };
+            const before: Candidate | null = best;
+            consider(picks);
+            if (best !== before) {
+              improved = true;
+              break;
+            }
+          }
+        }
+      }
+      if (!improved) break;
     }
   }
 

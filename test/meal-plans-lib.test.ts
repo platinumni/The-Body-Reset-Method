@@ -111,3 +111,28 @@ describe("personal prices", () => {
     expect(dearer.weeklyCost).toBeCloseTo(normal.weeklyCost * 1.2, 1);
   });
 });
+
+describe("food style and the everyday meat mix", () => {
+  const base = { country: "uk" as const, store: "mid" as const, exclude: [], avoidAllergens: [], snacks: true, have: [] };
+  const mains = (p: ReturnType<typeof buildPlan>) => p.recipes.filter((r) => r.recipe.meal_type === "Evening meals").map((r) => r.recipe);
+  const meatShare = (p: ReturnType<typeof buildPlan>) => mains(p).filter((r) => !r.pescatarian).length / mains(p).length;
+
+  it("a family who eats everything gets meat in most evening meals, even on a tight budget", () => {
+    for (const seed of [1, 2, 3]) {
+      const p = buildPlan({ ...base, budget: 70, adults: 2, childAges: [8, 5], diet: "any", seed });
+      expect(p.overBudget).toBe(false);
+      expect(meatShare(p)).toBeGreaterThanOrEqual(0.6);
+    }
+  });
+
+  it("vegetarians still get no meat", () => {
+    const p = buildPlan({ ...base, budget: 70, adults: 1, childAges: [], diet: "vegetarian", seed: 1, styles: ["meat"] });
+    expect(p.recipes.every((r) => r.recipe.vegetarian)).toBe(true);
+  });
+
+  it("'Plain and simple' leans to classic family meals", () => {
+    const p = buildPlan({ ...base, budget: 120, adults: 2, childAges: [8, 5], diet: "any", seed: 2, styles: ["plain"] });
+    expect(mains(p).filter((r) => r.tier === "Classic family favourites").length).toBeGreaterThanOrEqual(3);
+  });
+
+});

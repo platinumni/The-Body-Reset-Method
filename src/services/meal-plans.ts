@@ -1,7 +1,7 @@
 // Budget meal plans: who can use them, and each member's saved choices.
 // The plan itself is worked out by src/lib/meal-plans/planner.ts (no database needed).
 
-import { COUNTRIES, STORES, type Country, type Diet, type PlanInput, type Store } from "../lib/meal-plans/planner";
+import { COUNTRIES, FOOD_STYLES, STORES, type Country, type Diet, type FoodStyle, type PlanInput, type Store } from "../lib/meal-plans/planner";
 import { ALLERGEN_LABELS } from "../lib/meal-plans/recipes";
 import { ownedProgrammeBySlug } from "./library";
 
@@ -10,9 +10,9 @@ export const MEAL_PLANS_SLUG = "meal-plans";
 export const canUseMealPlans = async (db: D1Database, userId: number) => !!(await ownedProgrammeBySlug(db, userId, MEAL_PLANS_SLUG));
 
 /** Choices that are remembered between visits (not the budget or which recipes were picked). */
-export type MealPrefs = Pick<PlanInput, "country" | "store" | "adults" | "childAges" | "diet" | "exclude" | "avoidAllergens" | "snacks" | "have"> & { budget: number; usual: number | null; region: string };
+export type MealPrefs = Pick<PlanInput, "country" | "store" | "adults" | "childAges" | "diet" | "exclude" | "avoidAllergens" | "snacks" | "have"> & { budget: number; usual: number | null; region: string; styles: FoodStyle[] };
 
-export const DEFAULT_PREFS: MealPrefs = { budget: 40, country: "uk", store: "mid", adults: 1, childAges: [], diet: "any", exclude: [], avoidAllergens: [], snacks: true, have: [], usual: null, region: "national" };
+export const DEFAULT_PREFS: MealPrefs = { budget: 40, country: "uk", store: "mid", adults: 1, childAges: [], diet: "any", exclude: [], avoidAllergens: [], snacks: true, have: [], usual: null, region: "national", styles: [] };
 
 const clampInt = (v: unknown, min: number, max: number, fallback: number) => {
   const n = Math.round(Number(v));
@@ -40,6 +40,7 @@ export function readPlanInput(src: Record<string, unknown>, fallback: MealPrefs 
     have: (has("have") ? list(src.have) : fallback.have).slice(0, 200),
     picks: has("picks") ? list(src.picks).slice(0, 30) : undefined,
     region: has("region") ? String(src.region).slice(0, 60) || "national" : fallback.region,
+    styles: (has("submitted") || has("style") ? list(src.style) : fallback.styles).filter((x): x is FoodStyle => x in FOOD_STYLES),
     usual: has("usual") ? (String(src.usual).trim() === "" ? null : clampInt(src.usual, 1, 5000, 0) || null) : fallback.usual,
   };
 }
@@ -48,8 +49,9 @@ export async function loadPrefs(db: D1Database, userId: number): Promise<MealPre
   const row = await db.prepare("SELECT prefs_json FROM meal_plan_prefs WHERE user_id = ?1").bind(userId).first<string>("prefs_json");
   if (!row) return DEFAULT_PREFS;
   try {
-    const saved = readPlanInput({ ...JSON.parse(row), submitted: "yes", snacks: JSON.parse(row).snacks ? "yes" : "no" });
-    return { budget: saved.budget, country: saved.country, store: saved.store, adults: saved.adults, childAges: saved.childAges, diet: saved.diet, exclude: saved.exclude, avoidAllergens: [], snacks: saved.snacks, have: saved.have, usual: saved.usual ?? null, region: saved.region ?? "national" };
+    const raw = JSON.parse(row);
+    const saved = readPlanInput({ ...raw, submitted: "yes", snacks: raw.snacks ? "yes" : "no", style: raw.styles ?? [] });
+    return { budget: saved.budget, country: saved.country, store: saved.store, adults: saved.adults, childAges: saved.childAges, diet: saved.diet, exclude: saved.exclude, avoidAllergens: [], snacks: saved.snacks, have: saved.have, usual: saved.usual ?? null, region: saved.region ?? "national", styles: saved.styles ?? [] };
   } catch {
     return DEFAULT_PREFS;
   }
@@ -57,7 +59,7 @@ export async function loadPrefs(db: D1Database, userId: number): Promise<MealPre
 
 export async function savePrefs(db: D1Database, userId: number, input: PlanInput): Promise<void> {
   // Allergies are health information, so they're never saved: members tick them each time.
-  const prefs: MealPrefs = { budget: input.budget, country: input.country, store: input.store, adults: input.adults, childAges: input.childAges, diet: input.diet, exclude: input.exclude, avoidAllergens: [], snacks: input.snacks, have: input.have, usual: input.usual ?? null, region: input.region ?? "national" };
+  const prefs: MealPrefs = { budget: input.budget, country: input.country, store: input.store, adults: input.adults, childAges: input.childAges, diet: input.diet, exclude: input.exclude, avoidAllergens: [], snacks: input.snacks, have: input.have, usual: input.usual ?? null, region: input.region ?? "national", styles: input.styles ?? [] };
   await db
     .prepare("INSERT INTO meal_plan_prefs (user_id, prefs_json) VALUES (?1, ?2) ON CONFLICT (user_id) DO UPDATE SET prefs_json = excluded.prefs_json, updated_at = datetime('now')")
     .bind(userId, JSON.stringify(prefs))
