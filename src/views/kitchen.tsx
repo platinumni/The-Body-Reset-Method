@@ -1,5 +1,6 @@
 import { CHECKOUT_CONSENTS, MEMBERSHIP_CONSENTS } from "../content/consents";
 import type { CatalogueEntry } from "../services/catalogue";
+import { friendJoinPence as friendJoin } from "../services/kitchen-friends";
 import { formatPrice } from "../services/products";
 import { DAYS, money, type Plan } from "../lib/meal-plans/planner";
 import { Text } from "./components";
@@ -195,33 +196,7 @@ export function KitchenPage(props: { meta: PageMeta; csrfToken: string; product:
                 {props.notice}
               </p>
             )}
-            <form method="post" action="/kitchen/join" class="card">
-              <CsrfField token={props.csrfToken} />
-              {MEMBERSHIP_CONSENTS.map((k) => (
-                <div class="check">
-                  <input type="checkbox" id={`kj-${k}`} name={k} value="yes" required />
-                  <label for={`kj-${k}`}>
-                    {CHECKOUT_CONSENTS[k].label}
-                    {k === "terms" && (
-                      <>
-                        {" "}
-                        <a href="/legal/terms" target="_blank" rel="noopener">
-                          Read the terms
-                        </a>
-                      </>
-                    )}
-                  </label>
-                </div>
-              ))}
-              <div class="field">
-                <label for="kj-ref">Recommended by a member? Their code (optional)</label>
-                <input id="kj-ref" name="ref" type="text" maxlength={12} autocomplete="off" />
-              </div>
-              <button class="btn btn-primary" type="submit">
-                Continue to secure payment
-              </button>
-              <p class="small muted">Payments are handled by Stripe. We never see your card details.</p>
-            </form>
+            <JoinForm csrfToken={props.csrfToken} />
           </div>
         </section>
       )}
@@ -233,6 +208,111 @@ export function KitchenPage(props: { meta: PageMeta; csrfToken: string; product:
           </p>
         </div>
       </section>
+    </Layout>
+  );
+}
+
+/** The Kitchen join form. With a friend's code it also asks for the email the offer is for. */
+function JoinForm(props: { csrfToken: string; friend?: { code: string; email?: string } }) {
+  return (
+    <form method="post" action="/kitchen/join" class="card">
+      <CsrfField token={props.csrfToken} />
+      {props.friend && (
+        <>
+          <input type="hidden" name="friend" value={props.friend.code} />
+          <div class="field">
+            <label for="kj-email">Your email</label>
+            <input id="kj-email" name="email" type="email" autocomplete="email" required value={props.friend.email ?? ""} />
+            <p class="small muted">The friend offer is for new members. You'll pay with this email.</p>
+          </div>
+        </>
+      )}
+      {MEMBERSHIP_CONSENTS.map((k) => (
+        <div class="check">
+          <input type="checkbox" id={`kj-${k}`} name={k} value="yes" required />
+          <label for={`kj-${k}`}>
+            {CHECKOUT_CONSENTS[k].label}
+            {k === "terms" && (
+              <>
+                {" "}
+                <a href="/legal/terms" target="_blank" rel="noopener">
+                  Read the terms
+                </a>
+              </>
+            )}
+          </label>
+        </div>
+      ))}
+      {!props.friend && (
+        <div class="field">
+          <label for="kj-ref">Recommended by a member? Their code (optional)</label>
+          <input id="kj-ref" name="ref" type="text" maxlength={12} autocomplete="off" />
+        </div>
+      )}
+      <button class="btn btn-primary" type="submit">
+        Continue to secure payment
+      </button>
+      <p class="small muted">Payments are handled by Stripe. We never see your card details.</p>
+    </form>
+  );
+}
+
+/** A Kitchen member's invite: half off the joining fee for a new member. */
+export function FriendInvitePage(props: {
+  meta: PageMeta;
+  csrfToken: string;
+  code: string;
+  inviter: string | null;
+  price: { join: number; monthly: number; currency: string } | null;
+  email?: string;
+  error?: string | null;
+}) {
+  const p = props.price;
+  const who = props.inviter ?? "A friend";
+  return (
+    <Layout meta={props.meta}>
+      <section class="hero kitchen-hero">
+        <div class="wrap narrow">
+          <p class="eyebrow">Body Regeneration Kitchen · part of The Body Regeneration Method</p>
+          <h1>{who} invited you to the Kitchen.</h1>
+          <p class="lede">A healthy week of meals for your budget, to the pound, with the recipes and a shopping list for your household.</p>
+          {p ? (
+            <p class="price-line large">
+              {p.join > 0 ? (
+                <>
+                  Join for {formatPrice(friendJoin(p.join), p.currency)} with this invite (normally {formatPrice(p.join, p.currency)}), then {formatPrice(p.monthly, p.currency)} a month.
+                </>
+              ) : (
+                <>{formatPrice(p.monthly, p.currency)} a month.</>
+              )}
+            </p>
+          ) : (
+            <p class="notice">The Kitchen opens soon. Keep this link: the offer will be here when it does.</p>
+          )}
+          <p>
+            <a href="/kitchen">See what's in the Kitchen</a> · <a href="/kitchen/free-week">Try a free week first</a>
+          </p>
+        </div>
+      </section>
+      {p && (
+        <section class="band band-quiet" id="join">
+          <div class="wrap narrow">
+            <header class="section-head">
+              <h2>Join with {props.inviter ? `${props.inviter}'s` : "your friend's"} invite</h2>
+              <p>
+                You pay {formatPrice(friendJoin(p.join) + p.monthly, p.currency)} today (the joining fee and your first month), then {formatPrice(p.monthly, p.currency)} every month until you cancel. Cancel any time in
+                your account, in two clicks.
+              </p>
+            </header>
+            {props.error && (
+              <p class="form-errors" role="alert">
+                {props.error}
+              </p>
+            )}
+            <JoinForm csrfToken={props.csrfToken} friend={{ code: props.code, email: props.email }} />
+          </div>
+        </section>
+      )}
     </Layout>
   );
 }

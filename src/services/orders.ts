@@ -52,6 +52,11 @@ export async function createPendingOrder(
   return order!;
 }
 
+/** The order uses a Kitchen friend's invite (the referral is recorded when it's paid). */
+export async function setOrderFriendCode(db: D1Database, orderId: number, code: string): Promise<void> {
+  await db.prepare("UPDATE orders SET friend_code = ?1 WHERE id = ?2").bind(code, orderId).run();
+}
+
 export async function attachCheckoutSession(db: D1Database, orderId: number, sessionId: string): Promise<void> {
   await db.prepare("UPDATE orders SET stripe_session_id = ?1 WHERE id = ?2").bind(sessionId, orderId).run();
 }

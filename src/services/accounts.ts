@@ -1,3 +1,4 @@
+import { friendDataFor } from "./kitchen-friends";
 import { CHECKOUT_CONSENTS } from "../content/consents";
 import { hashPassword, verifyPassword } from "../lib/crypto";
 import { recordAudit } from "./audit";
@@ -148,6 +149,7 @@ export async function exportUserData(db: D1Database, userId: number): Promise<Re
     affiliate: await q("SELECT code, status, payout_email, created_at FROM affiliates WHERE user_id = ?1", userId),
     commissions: await q("SELECT c.amount_pence, c.status, c.created_at FROM commissions c JOIN affiliates a ON a.id = c.affiliate_id WHERE a.user_id = ?1 ORDER BY c.id", userId),
     contactMessages: await q("SELECT name, message, created_at FROM contact_messages WHERE email = ?1 ORDER BY id", user.email),
+    ...(await friendDataFor(db, user.email)),
     payouts: await q("SELECT p.amount_pence, p.method, p.created_at FROM payouts p JOIN affiliates a ON a.id = p.affiliate_id WHERE a.user_id = ?1 ORDER BY p.id", userId),
   };
 }
@@ -167,6 +169,10 @@ export async function deleteAccount(db: D1Database, userId: number, actor: { use
     db.prepare("DELETE FROM meal_plan_spend WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM reviews WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM contact_messages WHERE email = ?1").bind(user.email),
+    // Kitchen refer-a-friend: their invite link stops working and their email is replaced (records of who counted stay, unnamed).
+    db.prepare("UPDATE kitchen_friend_codes SET email = ?1, show_name = 0 WHERE email = ?2").bind(`deleted-${userId}@deleted.invalid`, user.email),
+    db.prepare("UPDATE kitchen_friend_rewards SET email = ?1 WHERE email = ?2").bind(`deleted-${userId}@deleted.invalid`, user.email),
+    db.prepare("UPDATE kitchen_referrals SET friend_email = ?1 WHERE friend_email = ?2").bind(`deleted-friend-${userId}@deleted.invalid`, user.email),
     // Their share link stops working; any commission already owed stays on record for the owner to settle.
     db.prepare("UPDATE affiliates SET status = 'suspended', updated_at = datetime('now') WHERE user_id = ?1").bind(userId),
     db.prepare("UPDATE sessions SET revoked_at = COALESCE(revoked_at, datetime('now')), ip = NULL, user_agent = NULL WHERE user_id = ?1").bind(userId),

@@ -26,6 +26,7 @@ import {
   type PaidSession,
 } from "../services/orders";
 import { cancelSubscriptionNow, createCheckoutSession, verifyWebhook } from "../services/payments/stripe";
+import { cancelFriendJoin, recordFriendJoin } from "../services/kitchen-friends";
 import { applySubscriptionUpdate, recordNewSubscription, recordRenewal, subscriptionForFirstOrder } from "../services/subscriptions";
 import { BasketPage, CheckoutResultPage } from "../views/shop";
 import { pageMeta } from "./meta";
@@ -141,7 +142,10 @@ shopRoutes.post("/webhooks/stripe", async (c) => {
       const result = await markOrderPaid(c.env.DB, obj as PaidSession);
       if (result.outcome === "paid") {
         await recordStat(c.env.DB, "purchase");
-        if (obj.mode === "subscription") await recordNewSubscription(c.env.DB, result.order, obj);
+        if (obj.mode === "subscription") {
+          await recordNewSubscription(c.env.DB, result.order, obj);
+          await recordFriendJoin(c.env.DB, { id: result.order.id, email: result.email });
+        }
         await createCommissionForOrder(c.env.DB, result.order, result.email);
         await reportOrder(c.env.DB, "purchase", result.order);
         await inBackground(c, sendEngineEvents(c.env));
@@ -174,6 +178,7 @@ shopRoutes.post("/webhooks/stripe", async (c) => {
       if (obj.refunded === true && obj.payment_intent) {
         const refunded = await markOrderRefunded(c.env.DB, String(obj.payment_intent));
         if (refunded) {
+          await cancelFriendJoin(c.env.DB, refunded.id);
           // Refunding a membership's first payment ends the membership too.
           const sub = await subscriptionForFirstOrder(c.env.DB, refunded.id);
           if (sub && sub.status !== "ended" && c.env.STRIPE_SECRET_KEY) {

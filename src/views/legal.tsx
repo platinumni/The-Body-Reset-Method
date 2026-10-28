@@ -9,7 +9,7 @@ import { Layout, type PageMeta } from "./layout";
 const BUSINESS = placeholder("Business or trading name");
 const ADDRESS = placeholder("Business postal address");
 const EMAIL = placeholder("Contact email address");
-const UPDATED = "23 October 2026";
+const UPDATED = "28 October 2026";
 
 export type LegalSlug = "privacy" | "terms" | "cookies" | "refunds" | "health-disclaimer" | "affiliate-terms";
 
@@ -53,6 +53,10 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
             and, if you enter them, what you usually spend and what you actually paid. Allergy choices are never saved. We use spending figures to show your
             own savings and to make your price estimates more accurate. We may publish anonymous averages across all members (for example "members spend
             about £X a week less than their usual shop"), which never identify anyone.
+          </li>
+          <li>
+            <strong>If you share the Kitchen with friends:</strong> your invite code, which friends joined with it (their email address, kept so each friend
+            only counts once) and the reward you've earned. Your invite page says "A friend" unless you choose to show your first name.
           </li>
           <li>
             <strong>Security information:</strong> IP address and browser details, used to keep accounts secure and block abuse.
@@ -145,6 +149,17 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
           You can cancel at any time from your account, in two clicks, and we'll email you to confirm. You won't be charged again, and you keep access until
           the end of the month you've paid for. If we ever change the monthly price, we'll tell you by email at least 30 days before it applies, and you can
           cancel before then.
+        </p>
+        <h2 id="friends">Kitchen refer-a-friend</h2>
+        <p>
+          Kitchen members can share an invite link. A friend who joins with it pays half the joining fee; the monthly price is the same. The offer is for
+          people who haven't been Kitchen members before, and you can't use your own link.
+        </p>
+        <p>
+          A friend counts once they've been a member for 14 days without a refund. When 1 friend counts, your monthly payments are free for the next 12
+          months. When 2 friends count, your membership is free for life, which means for as long as Body Regeneration Kitchen runs. The reward stays
+          with your membership: if you cancel, it ends with it. Rewards have no cash value. We may change or end the offer for new invites, but rewards
+          already earned stay.
         </p>
         <h2>Access codes</h2>
         <p>

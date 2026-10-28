@@ -77,6 +77,8 @@ export type MembershipCheckoutRequest = {
   successUrl: string;
   cancelUrl: string;
   metadata?: Record<string, string>;
+  /** Fixes the email at checkout (a friend's offer is for the email we checked). */
+  email?: string;
 };
 
 /** A monthly membership: a one-off joining fee plus the monthly price, both taken today, then monthly. */
@@ -96,6 +98,7 @@ export async function createMembershipCheckout(secretKey: string, req: Membershi
       },
       billing_address_collection: "auto",
       allow_promotion_codes: true,
+      customer_email: req.email,
       metadata: meta,
       subscription_data: { metadata: meta },
     },
@@ -106,6 +109,23 @@ export async function createMembershipCheckout(secretKey: string, req: Membershi
 /** Cancel at the end of the period they've paid for (or undo that). */
 export async function setCancelAtPeriodEnd(secretKey: string, subscriptionId: string, cancel: boolean): Promise<void> {
   await stripePost(secretKey, `/subscriptions/${encodeURIComponent(subscriptionId)}`, { cancel_at_period_end: cancel ? "true" : "false" });
+}
+
+/** Refer-a-friend reward: 100% off the member's monthly payments, for 12 months or for good. The coupons are made the first time. */
+const FRIEND_COUPONS = {
+  year: { id: "bodyregen-friend-year", name: "Friend reward: a year free", percent_off: 100, duration: "repeating", duration_in_months: 12 },
+  lifetime: { id: "bodyregen-friend-lifetime", name: "Friend reward: free for life", percent_off: 100, duration: "forever" },
+} as const;
+
+export async function applyFriendReward(secretKey: string, subscriptionId: string, reward: keyof typeof FRIEND_COUPONS): Promise<void> {
+  const coupon = FRIEND_COUPONS[reward];
+  try {
+    await stripePost(secretKey, "/coupons", coupon);
+  } catch (err) {
+    if (!/already exists/i.test(String(err))) throw err;
+  }
+  // Replaces any earlier reward (a year free becomes lifetime).
+  await stripePost(secretKey, `/subscriptions/${encodeURIComponent(subscriptionId)}`, { discounts: { 0: { coupon: coupon.id } } });
 }
 
 /** End a membership straight away (used when its first payment is refunded in full). */

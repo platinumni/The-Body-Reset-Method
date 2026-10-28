@@ -162,3 +162,13 @@ export function membershipCancelledEmail(i: { siteName: string; to: string; unti
   const html = wrap(i.siteName, `<p>Your Body Regeneration Kitchen membership is cancelled.</p><p>${esc(line)}</p><p>Changed your mind? You can restart it before then, with no new joining fee.</p>${button(i.url, "Manage membership")}`);
   return { to: i.to, template: "membership_cancelled", subject: "Your Kitchen membership is cancelled", html, text: `Your Body Regeneration Kitchen membership is cancelled.\n\n${line}\n\nChanged your mind? ${i.url}` };
 }
+
+/** Refer-a-friend: a friend's membership has counted, and the member's reward is on their membership. */
+export function friendRewardEmail(i: { siteName: string; to: string; reward: "year" | "lifetime"; url: string }): Email {
+  const line =
+    i.reward === "lifetime"
+      ? "Two friends have joined Body Regeneration Kitchen with your code, so your membership is now free for life (for as long as the Kitchen runs). There's nothing to do: you won't be charged again."
+      : "A friend has joined Body Regeneration Kitchen with your code, so your next 12 months are free. There's nothing to do: your monthly payments are switched off for a year. One more friend makes it free for life.";
+  const html = wrap(i.siteName, `<p>Thank you for sharing the Kitchen.</p><p>${esc(line)}</p>${button(i.url, "See your membership")}`);
+  return { to: i.to, template: "friend_reward", subject: i.reward === "lifetime" ? "Your Kitchen membership is now free for life" : "A friend joined: your next year of the Kitchen is free", html, text: `Thank you for sharing the Kitchen.\n\n${line}\n\n${i.url}` };
+}

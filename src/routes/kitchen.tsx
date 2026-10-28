@@ -14,12 +14,14 @@ import { hitRateLimit } from "../services/rate-limit";
 import { openTrial, startTrial } from "../services/kitchen-trials";
 import { photoUrls } from "../services/recipe-photos";
 import { FreeWeekPage, FreeWeekResultPage } from "../views/kitchen-free-week";
+import { FriendInvitePage } from "../views/kitchen";
+import { friendJoinPence, friendOfferAllowed, openFriendCode } from "../services/kitchen-friends";
 import { pageMeta } from "./meta";
 import { getCookie } from "hono/cookie";
 import { CONSENT_KINDS, MEMBERSHIP_CONSENTS } from "../content/consents";
 import { clientIp } from "../middleware/rate-limit";
 import { activeAffiliateByCode, REF_COOKIE } from "../services/affiliates";
-import { attachCheckoutSession, createPendingOrder, type ConsentAnswers } from "../services/orders";
+import { attachCheckoutSession, createPendingOrder, setOrderFriendCode, type ConsentAnswers } from "../services/orders";
 import { createMembershipCheckout } from "../services/payments/stripe";
 import { getProductsBySlugs, isMembership, isOnSale } from "../services/products";
 import { recordStat } from "../services/stats";
@@ -104,26 +106,57 @@ kitchenRoutes.get("/recipe-photos/:file", async (c) => {
 
 // --- Joining the Kitchen (monthly membership) ---
 
+const inviteMeta = (c: Parameters<typeof pageMeta>[0], code: string) =>
+  pageMeta(c, { title: "You're invited to Body Regeneration Kitchen", description: "A friend's invite: join Body Regeneration Kitchen with half off the joining fee.", path: `/kitchen/friend/${code}`, noindex: true });
+
+async function kitchenPrice(db: D1Database) {
+  const [product] = await getProductsBySlugs(db, [MEAL_PLANS_SLUG]);
+  return product && isOnSale(product) && isMembership(product) ? { product, price: { join: product.price_pence!, monthly: product.monthly_pence!, currency: product.currency } } : null;
+}
+
+// A Kitchen member's invite link.
+kitchenRoutes.get("/kitchen/friend/:code", async (c) => {
+  const invite = await openFriendCode(c.env.DB, c.req.param("code"));
+  if (!invite) return c.redirect("/kitchen", 302);
+  const sale = await kitchenPrice(c.env.DB);
+  return c.html(<FriendInvitePage meta={inviteMeta(c, invite.code)} csrfToken={c.get("csrfToken")} code={invite.code} inviter={invite.inviter} price={sale?.price ?? null} />);
+});
+
 kitchenRoutes.post("/kitchen/join", rateLimit("checkout", 10, 600), async (c) => {
   const form = await c.req.parseBody();
-  const [product] = await getProductsBySlugs(c.env.DB, [MEAL_PLANS_SLUG]);
-  if (!product || !isOnSale(product) || !isMembership(product) || !c.env.STRIPE_SECRET_KEY) return c.redirect("/kitchen", 303);
+  const sale = await kitchenPrice(c.env.DB);
+  if (!sale || !c.env.STRIPE_SECRET_KEY) return c.redirect("/kitchen", 303);
+  const { product } = sale;
   const consents = Object.fromEntries(CONSENT_KINDS.map((k) => [k, form[k] === "yes"])) as ConsentAnswers;
-  if (MEMBERSHIP_CONSENTS.some((k) => !consents[k])) return c.redirect("/kitchen?missing=1#join", 303);
+
+  // Joining with a friend's invite: half off the joining fee, for a new member's email.
+  let friend: { code: string; email: string } | null = null;
+  if (form.friend) {
+    const invite = await openFriendCode(c.env.DB, form.friend);
+    if (!invite) return c.redirect("/kitchen", 303);
+    const email = normaliseEmail(String(form.email ?? ""));
+    const again = (error: string) =>
+      c.html(<FriendInvitePage meta={inviteMeta(c, invite.code)} csrfToken={c.get("csrfToken")} code={invite.code} inviter={invite.inviter} price={sale.price} email={email} error={error} />, 422);
+    if (!looksLikeEmail(email)) return again("Please enter a valid email address.");
+    if (MEMBERSHIP_CONSENTS.some((k) => !consents[k])) return again("Please tick the boxes to continue.");
+    if (!(await friendOfferAllowed(c.env.DB, invite, email))) return again("Sorry, the friend offer is for new members only. You can still join from the Kitchen page.");
+    friend = { code: invite.code, email };
+  } else if (MEMBERSHIP_CONSENTS.some((k) => !consents[k])) return c.redirect("/kitchen?missing=1#join", 303);
 
   const typedRef = String(form.ref ?? "").trim().toLowerCase();
   const refCandidate = typedRef || getCookie(c, REF_COOKIE) || "";
   const refCode = refCandidate && (await activeAffiliateByCode(c.env.DB, refCandidate)) ? refCandidate : null;
   const geRef = cleanGe(form.ge);
-  const join = product.price_pence!;
+  const join = friend ? friendJoinPence(product.price_pence!) : product.price_pence!;
   const monthly = product.monthly_pence!;
   const order = await createPendingOrder(c.env.DB, {
-    items: [{ ...product, title: `${product.title} (joining fee and first month)`, price_pence: join + monthly }],
+    items: [{ ...product, title: `${product.title} (joining fee${friend ? ", friend's offer," : ""} and first month)`, price_pence: join + monthly }],
     consents,
     refCode,
     geRef,
     ip: clientIp(c.req.raw),
   });
+  if (friend) await setOrderFriendCode(c.env.DB, order.id, friend.code);
   try {
     const session = await createMembershipCheckout(c.env.STRIPE_SECRET_KEY, {
       orderPublicId: order.public_id,
@@ -132,8 +165,9 @@ kitchenRoutes.post("/kitchen/join", rateLimit("checkout", 10, 600), async (c) =>
       monthlyPence: monthly,
       currency: product.currency,
       successUrl: `${c.env.SITE_URL}/checkout/complete?order=${order.public_id}`,
-      cancelUrl: `${c.env.SITE_URL}/kitchen`,
-      metadata: Object.fromEntries(Object.entries({ ge: geRef, ref: refCode }).filter(([, v]) => !!v)) as Record<string, string>,
+      cancelUrl: friend ? `${c.env.SITE_URL}/kitchen/friend/${friend.code}` : `${c.env.SITE_URL}/kitchen`,
+      email: friend?.email,
+      metadata: Object.fromEntries(Object.entries({ ge: geRef, ref: refCode, friend: friend?.code }).filter(([, v]) => !!v)) as Record<string, string>,
     });
     await attachCheckoutSession(c.env.DB, order.id, session.id);
     await recordStat(c.env.DB, "checkout_started");

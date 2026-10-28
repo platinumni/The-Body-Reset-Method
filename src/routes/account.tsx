@@ -9,6 +9,9 @@ import { sendEmail } from "../services/email";
 import { setCancelAtPeriodEnd } from "../services/payments/stripe";
 import { kitchenMembership, kitchenProduct, markCancelRequested } from "../services/subscriptions";
 import { MembershipPage } from "../views/membership";
+import { getProductsBySlugs, isOnSale } from "../services/products";
+import { MEAL_PLANS_SLUG } from "../services/meal-plans";
+import { friendStatus, setShowName } from "../services/kitchen-friends";
 import { photoUrls } from "../services/recipe-photos";
 import { canUseMealPlans, DEFAULT_PREFS, listFavourites, loadPrefs, readPlanInput, recordSpend, savePrefs, spendSummary, toggleFavourite } from "../services/meal-plans";
 import { MealPlannerPage } from "../views/meal-plans";
@@ -168,7 +171,25 @@ accountRoutes.get("/account/membership", async (c) => {
   const user = c.get("user")!;
   const sub = await kitchenMembership(c.env.DB, user.email);
   const monthly = await kitchenProduct(c.env.DB);
-  return c.html(<MembershipPage meta={membershipMeta(c)} csrfToken={c.get("csrfToken")} sub={sub} monthly={monthly} done={c.req.query("done") ?? null} />);
+  const friends = sub ? await friendStatus(c.env.DB, user.email) : null;
+  const [kitchen] = await getProductsBySlugs(c.env.DB, [MEAL_PLANS_SLUG]);
+  const joinPence = kitchen && isOnSale(kitchen) ? kitchen.price_pence : null;
+  return c.html(
+    <MembershipPage
+      meta={membershipMeta(c)}
+      csrfToken={c.get("csrfToken")}
+      sub={sub}
+      monthly={monthly}
+      done={c.req.query("done") ?? null}
+      friends={friends && { ...friends, url: `${c.env.SITE_URL}/kitchen/friend/${friends.code}`, joinPence: joinPence ?? null }}
+    />,
+  );
+});
+
+accountRoutes.post("/account/membership/friend-name", async (c) => {
+  const user = c.get("user")!;
+  await setShowName(c.env.DB, user.email, (await c.req.parseBody()).show === "yes");
+  return c.redirect("/account/membership#friends", 303);
 });
 
 accountRoutes.post("/account/membership", rateLimit("membership", 10, 3600), async (c) => {

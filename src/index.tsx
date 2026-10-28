@@ -26,6 +26,7 @@ import { pruneRateLimits } from "./services/rate-limit";
 import { runSequences } from "./services/sequences";
 import { sendEngineEvents } from "./services/growth-engine";
 import { dailyPhotoPick } from "./services/recipe-photos";
+import { settleFriendRewards } from "./services/kitchen-friends";
 import { loadSiteContent } from "./services/site-content";
 import { isBot, recordStat } from "./services/stats";
 import { NotFoundPage, ServerErrorPage } from "./views/errors";
@@ -115,6 +116,7 @@ export async function scheduled(controller: ScheduledController, env: Env): Prom
       ["review-requests", () => sendReviewRequests(env)],
       ["email-series", () => runSequences(env)],
       ["kitchen-follow-ups", () => sendFreeWeekFollowUps(env)],
+      ["kitchen-friends", () => settleFriendRewards(env)],
       ["recipe-photos", () => dailyPhotoPick(env, 3 * 60_000)],
       ["growth-engine", () => sendEngineEvents(env)],
       ["usage", async () => checkUsage(env, await adminEmails(env.DB))],
