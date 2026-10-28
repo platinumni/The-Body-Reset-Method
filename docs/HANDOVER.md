@@ -421,6 +421,7 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - photos checked and rejected are listed in `photo_rejects` and never picked again; the 17 bad ones were removed from staging to be re-picked;
   - on Pixabay's "too many requests" it waits a minute and carries on (12 minutes per hourly run, 3 in the daily job) instead of stopping.
 
+  First run with the new picker: 14 photos in one hour (was about 1), and about 9 of 15 were good. The misses were raw ingredients and one photo used twice, so the picker now also skips photos tagged raw, isolated, ingredient and so on, and photos already used for another recipe. 6 more were rejected and removed to be re-picked.
   Cause of the slowness: Pixabay throttles Cloudflare's shared servers (about 1 photo per hourly run before). The sandbox's own `PIXABAY_API_KEY` is rejected by Pixabay ("invalid key"), so Claude can't pick and check photos directly from the chat. If the owner re-adds the right key to the environment (new session needed), Claude can hand-check every photo.
 - **(3) Kitchen refer-a-friend** (migration 0021):
   - Every Kitchen member gets an invite link `/kitchen/friend/CODE` on `/account/membership`, with text to send. The invite page says "A friend" unless the member chooses to show their first name.

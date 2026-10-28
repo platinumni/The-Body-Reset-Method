@@ -50,12 +50,15 @@ describe("recipe photos", () => {
   });
 
   it("searches with the short hand-written search first, and only picks a photo of the right dish", () => {
-    expect(photoSearchesFor({ id: "039", name: "Crispy chilli beef with sesame greens" })[0]).toBe("chilli beef");
+    expect(photoSearchesFor({ id: "039", name: "Crispy chilli beef with sesame greens" })[0]).toBe("beef stir fry");
     expect(RECIPES.every((r) => photoSearchesFor(r).length > 0)).toBe(true);
     const hit = (id: string, tags: string, likes = 0) => ({ id, pageUrl: "", previewUrl: "", largeUrl: "", user: "", tags, likes });
     // bread rolls never win a "chilli beef" search; the best-liked matching photo does
     expect(bestMatch("x", "chilli beef", [hit("1", "bread, rolls, bakery", 900), hit("2", "beef, chili, stew", 5), hit("3", "beef, chilli, rice", 50)])?.id).toBe("3");
     expect(bestMatch("x", "chilli beef", [hit("1", "bread, rolls")])).toBeNull();
+    // raw ingredients and photos already used for another recipe are skipped
+    expect(bestMatch("x", "eggplant parmigiana", [hit("1", "eggplant, raw, vegetable", 900), hit("2", "eggplant, parmigiana, baked")])?.id).toBe("2");
+    expect(bestMatch("x", "laksa", [hit("1", "laksa, soup", 900), hit("2", "laksa, noodles")], new Set(["1"]))?.id).toBe("2");
     // a photo checked and rejected for this recipe is never picked again
     expect(bestMatch("039", "chilli beef", [hit("8447394", "chilli, beef")])).toBeNull();
   });

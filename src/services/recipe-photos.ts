@@ -34,15 +34,20 @@ const STOP = new Set(["and", "with", "the", "style", "homemade", "easy", "proper
 const stem = (w: string) => w.replace(/(ies)$/, "y").replace(/(es|s)$/, "");
 const words = (t: string) => t.toLowerCase().split(/[^\p{L}]+/u).filter((w) => w.length > 2 && !STOP.has(w)).map(stem);
 
-/** The best photo for a recipe from one search: it must share a word with the search in its tags (so a "chilli beef" search can't pick bread rolls), it must not be a photo already rejected for this recipe, then the most matching words and likes win. */
-export function bestMatch(recipeId: string, query: string, hits: Candidate[]): Candidate | null {
+// Tags that mean raw ingredients rather than a finished dish.
+const RAW = new Set(["raw", "isolated", "ingredient", "uncooked", "market", "grocery", "harvest", "produce"].map(stem));
+
+/** The best photo for a recipe from one search: it must share a word with the search in its tags (so a "chilli beef" search can't pick bread rolls),
+ *  it mustn't be raw ingredients, a photo already rejected for this recipe, or one already used for another recipe; then the most matching words and likes win. */
+export function bestMatch(recipeId: string, query: string, hits: Candidate[], used: Set<string> = new Set()): Candidate | null {
   const want = new Set(words(query));
   const rejected = new Set(REJECTS[recipeId] ?? []);
   let best: Candidate | null = null;
   let bestScore = 0;
   for (const h of hits) {
-    if (rejected.has(h.id)) continue;
+    if (rejected.has(h.id) || used.has(h.id)) continue;
     const tags = new Set(words(h.tags));
+    if ([...tags].some((t) => RAW.has(t))) continue;
     const matched = [...want].filter((w) => tags.has(w)).length;
     if (!matched) continue;
     const score = matched * 1000 + Math.min(h.likes ?? 0, 999);
@@ -123,6 +128,7 @@ export async function autoPickBatch(env: Env, batch = 12, pauseMs = 0, budgetMs 
   const { results } = await env.DB.prepare("SELECT ref FROM automation_sent WHERE kind = 'photo-no-match'").all<{ ref: string }>();
   const skip = new Set(results.map((r) => r.ref));
   const missing = RECIPES.filter((r) => !have.has(r.id) && !skip.has(r.id));
+  const used = new Set([...have.values()].map((p) => p.source_id));
   let done = 0;
   const none: string[] = [];
   for (const r of missing.slice(0, batch)) {
@@ -141,13 +147,16 @@ export async function autoPickBatch(env: Env, batch = 12, pauseMs = 0, budgetMs 
           await sleep(61_000);
         }
       }
-      const hit = bestMatch(r.id, query, hits);
+      const hit = bestMatch(r.id, query, hits, used);
       if (hit) {
         pick = { query, hit };
         break;
       }
     }
-    if (pick && (await savePhoto(env, r.id, pick.hit, pick.query, "auto"))) done++;
+    if (pick && (await savePhoto(env, r.id, pick.hit, pick.query, "auto"))) {
+      used.add(pick.hit.id);
+      done++;
+    }
     else {
       none.push(r.id);
       await env.DB.prepare("INSERT INTO automation_sent (kind, ref) VALUES ('photo-no-match', ?1) ON CONFLICT DO NOTHING").bind(r.id).run();
