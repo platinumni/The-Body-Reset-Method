@@ -453,6 +453,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
       - the closer needs a written contract as self-employed;
       - renewal commission "for as long as the closer stays" isn't built (now 12 months), about 1-2 hours.
 
+- **UK business counts (owner asked, 2026-10-28, for partner and closer sales):** DBT Business Population Estimates 2025 (secondary sources quoting it): about 5.7m private businesses. 4.27m have no employees, 1.15m have 1-9, about 220,000 have 10-49, about 38,000 have 50-249 and about 8,300 have 250+. Businesses with 5-9 employees: roughly 300,000 (Claude's recollection of ONS counts, not checked). So about 1.4m businesses in total have 1-49 employees, or about 560,000 with 5-49.
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).
