@@ -47,6 +47,12 @@ These are things only you can do. None of them block the build until go-live unl
 
 - [ ] **Check the new recipes** (77 family and fakeaway favourites, including your partner's loaded sweet potatoes) on the test site meal planner, and the 57 cut ones in `docs/meal-plans/recipe-review-2026-10-27.md` (say if any should come back).
 
+## New 2026-10-28. Check when you have time
+- [ ] **Put the site on your phone:** log in on the test site, open your account, and follow "Put it on your phone".
+- [ ] **Refer-a-friend:** two choices to confirm. (a) A friend counts after 14 days (so a quick refund doesn't earn a reward). (b) The free year or lifetime ends if the member cancels. Both are in the terms now.
+- [ ] **Partner page** (`/kitchen/partners`) and the email in `docs/marketing/partner-pitch.md`: read them, and decide a partner price when you're ready (a monthly fee per organisation, or per place).
+- [ ] *(Optional, speeds up photos)* **Pixabay key for Claude:** the key in the environment settings is rejected by Pixabay. Copy it again from pixabay.com/api/docs into the environment as `PIXABAY_API_KEY` (never in chat). It takes effect in a new chat. Then Claude can hand-check every photo.
+
 ## Before go-live
 - [ ] *(Later)* Change the Body Regen Resend account's login email from your Gmail to a bodyregen address.
 - [x] **Done 2026-10-26:** Stripe account activated, 2FA reset with backup codes saved, sandbox test passed. ~~Stripe two-step login:** your Stripe 2FA is from years ago. Remove the old one and set it up again on your current phone (Stripe → Profile/Settings → Security), then **save the new backup (recovery) codes** somewhere safe offline. Do this before activating live payments.

@@ -1,7 +1,7 @@
 import { buildPlan } from "../lib/meal-plans/planner";
 import { priceBook } from "../lib/meal-plans/official";
 import { loadOfficialPrices } from "../services/official-prices";
-import { KitchenPage } from "../views/kitchen";
+import { KitchenPage, KitchenPartnersPage } from "../views/kitchen";
 import { publishedReviews } from "../services/reviews";
 import { Hono } from "hono";
 import { NOT_FOR, PRINCIPLES, WHO_FOR, type Copy } from "../content/site";
@@ -192,7 +192,31 @@ publicRoutes.get("/robots.txt", (c) =>
 const contactMeta = (c: Parameters<typeof pageMeta>[0]) =>
   pageMeta(c, { title: "Contact", description: "Get in touch with The Body Regeneration Method. Send us a message and we'll reply by email.", path: "/contact" });
 
-publicRoutes.get("/contact", (c) => c.html(<ContactPage meta={contactMeta(c)} csrfToken={c.get("csrfToken")} sent={c.req.query("sent") !== undefined} />));
+const PARTNER_MESSAGE = "We're interested in Body Regeneration Kitchen for our organisation.\n\nOrganisation:\nWho we support (and roughly how many):\nBest way to reach us:\n";
+
+publicRoutes.get("/contact", (c) =>
+  c.html(
+    <ContactPage
+      meta={contactMeta(c)}
+      csrfToken={c.get("csrfToken")}
+      sent={c.req.query("sent") !== undefined}
+      values={c.req.query("about") === "partners" ? { name: "", email: "", message: PARTNER_MESSAGE } : undefined}
+    />,
+  ),
+);
+
+// Body Regeneration Kitchen for organisations (partner codes).
+publicRoutes.get("/kitchen/partners", (c) =>
+  c.html(
+    <KitchenPartnersPage
+      meta={pageMeta(c, {
+        title: "Body Regeneration Kitchen for organisations",
+        description: "Give the people you support free access to budget meal plans: a week of meals for their budget and household, with recipes and a shopping list. For housing associations, councils, charities and employers.",
+        path: "/kitchen/partners",
+      })}
+    />,
+  ),
+);
 
 publicRoutes.post("/contact", rateLimit("contact", 5, 900), async (c) => {
   const form = await c.req.parseBody();
@@ -241,6 +265,7 @@ export function sitemapPaths(): string[] {
     "/contact",
     "/kitchen",
     "/kitchen/free-week",
+    "/kitchen/partners",
     "/taster",
     ...Object.keys(LEGAL_PAGES).map((s) => `/legal/${s}`),
   ];

@@ -177,3 +177,15 @@ describe("Kitchen refer-a-friend", () => {
     expect(data).toHaveProperty("friendReward");
   });
 });
+
+describe("Kitchen for organisations", () => {
+  it("has a page for partners, in the sitemap, with a pre-filled enquiry", async () => {
+    const html = await (await app.request("/kitchen/partners", {}, env)).text();
+    expect(html).toContain("Help the people you support eat well on a tight budget.");
+    expect(html).toContain("we never share anyone&#39;s details with you");
+    expect(html).toContain("PLACEHOLDER");
+    expect(await (await app.request("/sitemap.xml", {}, env)).text()).toContain("/kitchen/partners");
+    const contact = await (await app.request("/contact?about=partners", {}, env)).text();
+    expect(contact).toContain("interested in Body Regeneration Kitchen for our organisation");
+  });
+});

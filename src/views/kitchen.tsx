@@ -3,6 +3,7 @@ import type { CatalogueEntry } from "../services/catalogue";
 import { friendJoinPence as friendJoin } from "../services/kitchen-friends";
 import { formatPrice } from "../services/products";
 import { DAYS, money, type Plan } from "../lib/meal-plans/planner";
+import { placeholder } from "../content/site";
 import { Text } from "./components";
 import { CsrfField, Layout, type PageMeta } from "./layout";
 import { TrustStrip } from "./marketing";
@@ -313,6 +314,111 @@ export function FriendInvitePage(props: {
           </div>
         </section>
       )}
+    </Layout>
+  );
+}
+
+/** Body Regeneration Kitchen for organisations: housing associations, councils, charities and employers give their people free access with a partner code. */
+export function KitchenPartnersPage(props: { meta: PageMeta }) {
+  return (
+    <Layout meta={props.meta}>
+      <section class="hero kitchen-hero">
+        <div class="wrap narrow">
+          <p class="eyebrow">Body Regeneration Kitchen · for organisations</p>
+          <h1>Help the people you support eat well on a tight budget.</h1>
+          <p class="lede">
+            Give your tenants, residents, clients or staff free access to Body Regeneration Kitchen. They tell it their weekly food budget and household, and
+            get a week of meals that fits, with the recipes and a shopping list, priced with official UK food prices.
+          </p>
+          <div class="hero-buy">
+            <a class="btn btn-primary" href="/contact?about=partners">
+              Talk to us about a partnership
+            </a>
+            <a class="btn btn-ghost" href="/kitchen/free-week">
+              Try a free week yourself
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="wrap">
+          <header class="section-head">
+            <h2>Who it's for</h2>
+          </header>
+          <ul class="kitchen-steps">
+            <li class="card">
+              <h3>Housing associations and councils</h3>
+              <p>A practical cost-of-living offer for tenants and residents, alongside your money and wellbeing advice.</p>
+            </li>
+            <li class="card">
+              <h3>Food support and advice charities</h3>
+              <p>Something to hand people once the crisis has passed: a way to plan a week's food on what they have.</p>
+            </li>
+            <li class="card">
+              <h3>Employers</h3>
+              <p>A wellbeing benefit that helps with the weekly shop, for staff and their families.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="band band-quiet">
+        <div class="wrap narrow">
+          <header class="section-head">
+            <h2>What your people get</h2>
+          </header>
+          <ul>
+            <li>A week of breakfasts, lunches, evening meals and snacks for any budget, to the pound, for their household (adults and children's ages).</li>
+            <li>A shopping list split into what to buy and what's already in the cupboard, with estimated costs, and simple recipes.</li>
+            <li>Prices based on official UK shop prices by region, updated monthly. They're estimates: we always say actual prices vary.</li>
+            <li>Filters for vegetarian, vegan and foods they don't eat, and for the 14 main allergens (always check labels).</li>
+            <li>A fresh plan every week, a printable PDF, and it works on any phone. No app to download.</li>
+          </ul>
+          <p class="small muted">
+            It's general healthy eating on a budget: every plan is for keeping weight steady, and it isn't medical or dietary advice. It's built on clear
+            rules, not AI.
+          </p>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="wrap">
+          <header class="section-head">
+            <h2>How a partnership works</h2>
+          </header>
+          <ol class="kitchen-steps">
+            <li class="card">
+              <h3>1. We set up your code</h3>
+              <p>You get your own partner code and a link to share by email, text, newsletter or a printed leaflet.</p>
+            </li>
+            <li class="card">
+              <h3>2. People join free</h3>
+              <p>They enter their email and the code. No card, no cost to them. You choose how many places.</p>
+            </li>
+            <li class="card">
+              <h3>3. You see the take-up</h3>
+              <p>Each month: how many have joined and how many used it in the last 30 days. Numbers only: we never share anyone's details with you.</p>
+            </li>
+          </ol>
+          <p class="center">
+            <Text copy={placeholder("Partner pricing, e.g. a monthly fee per organisation or per place")} />
+          </p>
+        </div>
+      </section>
+
+      <section class="band band-quiet">
+        <div class="wrap narrow center">
+          <h2>Let's talk</h2>
+          <p>Tell us a little about your organisation and the people you support, and we'll set up a free trial code so your team can try it first.</p>
+          <a class="btn btn-primary" href="/contact?about=partners">
+            Get in touch
+          </a>
+          <p class="small muted">
+            Body Regeneration Kitchen is part of <a href="/">The Body Regeneration Method</a>.
+          </p>
+        </div>
+      </section>
     </Layout>
   );
 }

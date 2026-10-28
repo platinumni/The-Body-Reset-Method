@@ -413,6 +413,23 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Pricing on hold; CH 1-4 (owner, 2026-10-28):** "unsure pricing yet, and wanna wait till cook book has good meal photos in". No prices until the recipe photos are good. CH'd: (1) the site installs like an app (home screen); (2) speed up and check the recipe photos; (3) build Kitchen refer-a-friend (friend 50% off joining, 1 friend joins = a year free, 2 = lifetime; amounts follow whatever prices are set later); (4) a partner pitch page for housing associations, councils and charities.
 
+**Built 2026-10-28 (owner CH 1-4), on the test site:**
+- **(1) Home-screen app:** `/manifest.webmanifest`, icons (`src/assets/icon-192/512.png`, `apple-touch-icon.png`, drawn from the favicon; swap when there's a real logo), head tags, and a "Put it on your phone" card on `/account` (iPhone and Android steps). It opens full screen at `/account`. There's no service worker (no offline mode), so there's no risk of stale pages.
+- **(2) Recipe photos:** of the 31 photos for current recipes, about half were the wrong dish (e.g. bread rolls for chilli beef, pizza for gnocchi). Now:
+  - every recipe has a short hand-written Pixabay search (`content/meal-plans/photo-searches.json` → `searches`);
+  - the picker only takes a photo whose tags share a word with the search, best-liked first;
+  - photos checked and rejected are listed in `photo_rejects` and never picked again; the 17 bad ones were removed from staging to be re-picked;
+  - on Pixabay's "too many requests" it waits a minute and carries on (12 minutes per hourly run, 3 in the daily job) instead of stopping.
+
+  Cause of the slowness: Pixabay throttles Cloudflare's shared servers (about 1 photo per hourly run before). The sandbox's own `PIXABAY_API_KEY` is rejected by Pixabay ("invalid key"), so Claude can't pick and check photos directly from the chat. If the owner re-adds the right key to the environment (new session needed), Claude can hand-check every photo.
+- **(3) Kitchen refer-a-friend** (migration 0021):
+  - Every Kitchen member gets an invite link `/kitchen/friend/CODE` on `/account/membership`, with text to send. The invite page says "A friend" unless the member chooses to show their first name.
+  - The friend pays **half the joining fee** (rounded down: £19.99 → £9.99), with their email fixed at Stripe. It's for new members only and you can't use your own link.
+  - A friend **counts 14 days after joining** if not refunded and still a member (daily job `kitchen-friends`). 1 counted friend = **a year free** (Stripe coupon `bodyregen-friend-year`, 100% off for 12 months); 2 = **lifetime** (`bodyregen-friend-lifetime`, forever), with an email each time.
+  - Terms ("Kitchen refer-a-friend": lifetime = for as long as the Kitchen runs; ends if they cancel; no cash value) and privacy updated; included in export and deletion.
+  - Claude's choices for the owner to confirm: the 14-day wait (covers refunds), and that the reward ends if the member cancels.
+- **(4) Partner pitch:** a public page `/kitchen/partners` for housing associations, councils, charities and employers (in the sitemap). "Talk to us" opens the contact form with a pre-filled enquiry (`/contact?about=partners`). The partner price is a `[PLACEHOLDER]`. The outreach email template and who to approach are in `docs/marketing/partner-pitch.md`, for the owner to send by hand.
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).
