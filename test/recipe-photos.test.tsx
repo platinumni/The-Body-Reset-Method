@@ -4,7 +4,7 @@ import { app } from "../src/index";
 import { hashPassword } from "../src/lib/crypto";
 import { RECIPES } from "../src/lib/meal-plans/recipes";
 import { currentStep, totpAt } from "../src/lib/totp";
-import { searchTerms } from "../src/services/recipe-photos";
+import { bestMatch, photoSearchesFor, searchTerms } from "../src/services/recipe-photos";
 import { TestClient } from "./helpers";
 
 const KEY = btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(32))));
@@ -23,7 +23,7 @@ beforeEach(() => {
       expect(u.searchParams.get("key")).toBe("pix_test");
       if (empty.has(q)) return Response.json({ hits: [] });
       const n = Number(u.searchParams.get("per_page"));
-      return Response.json({ hits: Array.from({ length: n }, (_, i) => ({ id: 1000 + i, pageURL: `https://pixabay.com/photos/x-${1000 + i}/`, previewURL: `https://cdn.pixabay.com/p/${i}_150.jpg`, webformatURL: `https://cdn.pixabay.com/p/${i}_640.jpg`, largeImageURL: `https://pixabay.com/get/${i}_1280.jpg`, user: "Cook", tags: "soup, food" })) });
+      return Response.json({ hits: Array.from({ length: n }, (_, i) => ({ id: 1000 + i, pageURL: `https://pixabay.com/photos/x-${1000 + i}/`, previewURL: `https://cdn.pixabay.com/p/${i}_150.jpg`, webformatURL: `https://cdn.pixabay.com/p/${i}_640.jpg`, largeImageURL: `https://pixabay.com/get/${i}_1280.jpg`, user: "Cook", tags: `${q}, food` })) });
     }
     if (u.hostname.endsWith("pixabay.com")) return new Response(new Uint8Array([0xff, 0xd8, 0xff, 1, 2, 3]), { headers: { "Content-Type": "image/jpeg" } });
     throw new Error("unexpected fetch " + u);
@@ -49,8 +49,19 @@ describe("recipe photos", () => {
     expect(searchTerms({ name: "Pasta e ceci (Italian chickpea pasta)" })).toEqual(["pasta e ceci"]);
   });
 
+  it("searches with the short hand-written search first, and only picks a photo of the right dish", () => {
+    expect(photoSearchesFor({ id: "039", name: "Crispy chilli beef with sesame greens" })[0]).toBe("chilli beef");
+    expect(RECIPES.every((r) => photoSearchesFor(r).length > 0)).toBe(true);
+    const hit = (id: string, tags: string, likes = 0) => ({ id, pageUrl: "", previewUrl: "", largeUrl: "", user: "", tags, likes });
+    // bread rolls never win a "chilli beef" search; the best-liked matching photo does
+    expect(bestMatch("x", "chilli beef", [hit("1", "bread, rolls, bakery", 900), hit("2", "beef, chili, stew", 5), hit("3", "beef, chilli, rice", 50)])?.id).toBe("3");
+    expect(bestMatch("x", "chilli beef", [hit("1", "bread, rolls")])).toBeNull();
+    // a photo checked and rejected for this recipe is never picked again
+    expect(bestMatch("039", "chilli beef", [hit("8447394", "chilli, beef")])).toBeNull();
+  });
+
   it("auto-picks a batch, copies the image into our storage, records the licence, and serves it publicly", async () => {
-    empty = new Set([searchTerms(RECIPES[1]!)].flat());
+    empty = new Set(photoSearchesFor(RECIPES[1]!));
     await admin.post("/admin/photos/auto");
     const rows = await env.DB.prepare("SELECT recipe_id, licence, chosen_by FROM recipe_photos").all<any>();
     expect(rows.results.length).toBe(11); // one of 12 found nothing
@@ -63,7 +74,7 @@ describe("recipe photos", () => {
     // the next batch moves on rather than retrying the no-match recipe
     searches = [];
     await admin.post("/admin/photos/auto");
-    expect(searches).not.toContain(searchTerms(RECIPES[1]!)[0]);
+    expect(searches).not.toContain(photoSearchesFor(RECIPES[1]!)[0]);
   });
 
   it("the owner can choose a different photo or remove it", async () => {
@@ -104,7 +115,7 @@ describe("Pixabay limits", () => {
       const u = new URL(String(input));
       if (u.pathname === "/api/") {
         if (++calls > 1) return new Response("slow down", { status: 429 });
-        return Response.json({ hits: [{ id: 9, pageURL: "https://pixabay.com/photos/q-9/", previewURL: "https://cdn.pixabay.com/a.jpg", webformatURL: "https://cdn.pixabay.com/a.jpg", largeImageURL: "https://pixabay.com/get/a.jpg", user: "U", tags: "" }] });
+        return Response.json({ hits: [{ id: 9, pageURL: "https://pixabay.com/photos/q-9/", previewURL: "https://cdn.pixabay.com/a.jpg", webformatURL: "https://cdn.pixabay.com/a.jpg", largeImageURL: "https://pixabay.com/get/a.jpg", user: "U", tags: u.searchParams.get("q")! }] });
       }
       return new Response(new Uint8Array([1]), { headers: { "Content-Type": "image/jpeg" } });
     });

@@ -106,7 +106,7 @@ export async function scheduled(controller: ScheduledController, env: Env): Prom
     await backupDatabase(env.DB, env.BACKUPS, "weekly");
     await pruneRateLimits(env.DB);
   }
-  if (controller.cron === PHOTO_CRON) console.log("Photo job", { result: await dailyPhotoPick(env).catch((err) => String(err)) });
+  if (controller.cron === PHOTO_CRON) console.log("Photo job", { result: await dailyPhotoPick(env, 12 * 60_000).catch((err) => String(err)) });
   if (controller.cron === DAILY_CRON) {
     const steps: [string, () => Promise<unknown>][] = [
       ["commission", async () => notifyReleasedCommission(env, await releaseHeldCommissions(env.DB))],
@@ -115,7 +115,7 @@ export async function scheduled(controller: ScheduledController, env: Env): Prom
       ["review-requests", () => sendReviewRequests(env)],
       ["email-series", () => runSequences(env)],
       ["kitchen-follow-ups", () => sendFreeWeekFollowUps(env)],
-      ["recipe-photos", () => dailyPhotoPick(env)],
+      ["recipe-photos", () => dailyPhotoPick(env, 3 * 60_000)],
       ["growth-engine", () => sendEngineEvents(env)],
       ["usage", async () => checkUsage(env, await adminEmails(env.DB))],
       ["morning-report", () => sendMorningReport(env)],

@@ -1,0 +1,211 @@
+{
+  "_about": "Short Pixabay searches for recipe photos (recipe id -> search). The picker only accepts a photo whose tags share a word with the search. photo_rejects lists Pixabay photo ids checked and found to be the wrong dish, so they are never picked again.",
+  "searches": {
+    "002": "paella",
+    "010": "salmon wellington",
+    "011": "eggplant parmigiana",
+    "012": "steak tagliata",
+    "013": "sea bass fillet",
+    "015": "short ribs",
+    "024": "shakshuka",
+    "031": "green curry",
+    "032": "bibimbap",
+    "033": "jerk chicken",
+    "034": "chicken pomegranate rice",
+    "035": "lamb tagine",
+    "036": "fish curry",
+    "039": "chilli beef",
+    "040": "tandoori salmon",
+    "041": "shawarma bowl",
+    "042": "paneer tikka masala",
+    "044": "shrimp tacos",
+    "045": "chicken traybake lemon",
+    "046": "katsu curry",
+    "047": "gnocchi tomato",
+    "049": "laksa",
+    "050": "couscous vegetables",
+    "051": "falafel pita",
+    "052": "peanut noodle salad",
+    "053": "halloumi wrap",
+    "054": "nicoise salad",
+    "055": "banh mi",
+    "056": "bruschetta beans",
+    "057": "shrimp rice bowl avocado",
+    "058": "lentil salad carrot",
+    "059": "souvlaki pita",
+    "061": "turkish eggs cilbir",
+    "063": "breakfast burrito",
+    "065": "baked oats blueberry",
+    "066": "egg muffins",
+    "067": "avocado toast egg",
+    "069": "bircher muesli",
+    "070": "masala omelette",
+    "071": "roasted chickpeas",
+    "074": "energy balls dates",
+    "075": "caprese skewers",
+    "076": "roasted nuts",
+    "081": "bean chili",
+    "082": "dal",
+    "083": "chickpea curry",
+    "084": "butter bean stew",
+    "085": "egg fried rice",
+    "086": "pasta peas lemon",
+    "087": "chickpea spinach stew",
+    "088": "sausage bean casserole",
+    "090": "potato tacos",
+    "091": "chicken thighs potatoes roasted",
+    "092": "tuna pasta bake",
+    "093": "lentil bolognese",
+    "095": "sweet potato peanut stew",
+    "096": "couscous carrots chickpeas",
+    "097": "shakshuka",
+    "099": "baked potato broccoli cheese",
+    "100": "chicken noodle soup",
+    "101": "pasta chickpeas",
+    "102": "samosa",
+    "104": "mackerel rice",
+    "105": "stuffed peppers",
+    "109": "lentil soup",
+    "110": "jacket potato tuna",
+    "111": "sesame noodles",
+    "112": "quesadilla",
+    "114": "minestrone",
+    "116": "hummus pita vegetables",
+    "118": "carrot soup",
+    "119": "loaded potato chili",
+    "120": "pasta salad pesto",
+    "121": "porridge apple cinnamon",
+    "122": "overnight oats banana",
+    "124": "oats yogurt berries",
+    "126": "banana pancakes",
+    "131": "popcorn",
+    "134": "flapjack",
+    "138": "potato wedges",
+    "141": "spaghetti bolognese",
+    "142": "chili con carne",
+    "143": "cottage pie",
+    "144": "sausage mash gravy",
+    "145": "toad in the hole",
+    "146": "chicken curry",
+    "147": "fajitas",
+    "148": "beef stew",
+    "149": "pasta bake sausage",
+    "150": "chicken pie",
+    "152": "carbonara peas",
+    "153": "chicken rice one pot",
+    "154": "spaghetti meatballs",
+    "156": "chicken wrap",
+    "159": "chicken pasta salad",
+    "163": "butter chicken",
+    "164": "salt pepper chicken",
+    "165": "sweet sour chicken",
+    "166": "chow mein",
+    "167": "chicken kebab flatbread",
+    "168": "burger fries",
+    "169": "peri peri chicken",
+    "170": "chili cheese fries",
+    "171": "flatbread pizza",
+    "172": "chicken burger",
+    "173": "beef broccoli",
+    "174": "chicken tikka masala",
+    "175": "honey garlic chicken",
+    "176": "korean beef bowl",
+    "177": "stuffed sweet potato",
+    "178": "lasagna",
+    "179": "mac and cheese",
+    "180": "creamy garlic chicken",
+    "181": "orzo chicken",
+    "182": "roast chicken legs potatoes",
+    "183": "stew dumplings",
+    "184": "enchiladas",
+    "185": "meatball sub",
+    "186": "pulled pork burger",
+    "187": "cajun chicken",
+    "188": "sausage traybake",
+    "189": "pork noodles",
+    "190": "fish tacos",
+    "191": "chicken broccoli pasta bake",
+    "192": "chicken pasta creamy tomato",
+    "193": "caesar wrap",
+    "194": "beef quesadilla",
+    "195": "potato skins",
+    "196": "chicken noodles peanut",
+    "197": "jacket potato chili",
+    "198": "tuna melt",
+    "199": "sausage rolls",
+    "200": "chicken sweetcorn soup",
+    "201": "bagel pizza",
+    "202": "pesto pasta chicken",
+    "203": "breakfast burrito",
+    "204": "pancakes berries",
+    "205": "french toast banana",
+    "206": "breakfast muffin egg sausage",
+    "207": "overnight oats jam",
+    "208": "huevos rancheros",
+    "209": "sweet potato hash egg",
+    "210": "bagel cream cheese bacon",
+    "211": "granola yogurt",
+    "212": "breakfast quesadilla",
+    "213": "garlic bread",
+    "214": "nachos",
+    "215": "oat cookies",
+    "216": "scones",
+    "217": "ice lolly berries",
+    "219": "pinwheels",
+    "220": "popcorn cinnamon",
+    "223": "pita chips hummus"
+  },
+  "photo_rejects": {
+    "010": [
+      "7216960"
+    ],
+    "011": [
+      "2364221"
+    ],
+    "013": [
+      "5326159"
+    ],
+    "015": [
+      "712665"
+    ],
+    "024": [
+      "5619887"
+    ],
+    "031": [
+      "5997310"
+    ],
+    "033": [
+      "4073884"
+    ],
+    "039": [
+      "8447394"
+    ],
+    "040": [
+      "1442034"
+    ],
+    "041": [
+      "8667981"
+    ],
+    "044": [
+      "569156"
+    ],
+    "047": [
+      "5275191"
+    ],
+    "049": [
+      "4773380"
+    ],
+    "050": [
+      "8027678"
+    ],
+    "053": [
+      "8027678"
+    ],
+    "057": [
+      "4773380"
+    ],
+    "058": [
+      "8031138"
+    ]
+  }
+}

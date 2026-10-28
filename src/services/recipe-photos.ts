@@ -1,3 +1,4 @@
+import photoSearches from "../../content/meal-plans/photo-searches.json";
 import { RECIPES, recipeById, type Recipe } from "../lib/meal-plans/recipes";
 import type { Actor } from "./admin-content";
 import { recordAudit } from "./audit";
@@ -11,7 +12,7 @@ const API = "https://pixabay.com/api/";
 /** Pixabay said "too many requests": stop for now and try again on the next run. */
 export class RateLimited extends Error {}
 
-export type Candidate = { id: string; pageUrl: string; previewUrl: string; largeUrl: string; user: string; tags: string };
+export type Candidate = { id: string; pageUrl: string; previewUrl: string; largeUrl: string; user: string; tags: string; likes?: number };
 export type RecipePhoto = { recipe_id: string; r2_key: string; source_id: string; page_url: string; photographer: string | null; chosen_by: "auto" | "owner"; version: number };
 
 /** What to search for: the dish name without brackets and side dishes, e.g. "Spiced carrot soup with yoghurt swirl" → "spiced carrot soup". */
@@ -21,20 +22,49 @@ export function searchTerms(r: Pick<Recipe, "name">): string[] {
   return [...new Set([plain, main].filter((t) => t.length > 2))].map((t) => t.slice(0, 100));
 }
 
+const SEARCHES = (photoSearches as { searches: Record<string, string> }).searches;
+const REJECTS = (photoSearches as { photo_rejects: Record<string, string[]> }).photo_rejects;
+
+/** Searches for the auto-picker: the short hand-written search first (content/meal-plans/photo-searches.json), then the dish name. */
+export function photoSearchesFor(r: Pick<Recipe, "id" | "name">): string[] {
+  return [...new Set([SEARCHES[r.id], ...searchTerms(r)].filter((t): t is string => !!t))];
+}
+
+const STOP = new Set(["and", "with", "the", "style", "homemade", "easy", "proper", "ultimate", "crispy", "creamy", "spiced", "one", "pot"]);
+const stem = (w: string) => w.replace(/(ies)$/, "y").replace(/(es|s)$/, "");
+const words = (t: string) => t.toLowerCase().split(/[^\p{L}]+/u).filter((w) => w.length > 2 && !STOP.has(w)).map(stem);
+
+/** The best photo for a recipe from one search: it must share a word with the search in its tags (so a "chilli beef" search can't pick bread rolls), it must not be a photo already rejected for this recipe, then the most matching words and likes win. */
+export function bestMatch(recipeId: string, query: string, hits: Candidate[]): Candidate | null {
+  const want = new Set(words(query));
+  const rejected = new Set(REJECTS[recipeId] ?? []);
+  let best: Candidate | null = null;
+  let bestScore = 0;
+  for (const h of hits) {
+    if (rejected.has(h.id)) continue;
+    const tags = new Set(words(h.tags));
+    const matched = [...want].filter((w) => tags.has(w)).length;
+    if (!matched) continue;
+    const score = matched * 1000 + Math.min(h.likes ?? 0, 999);
+    if (score > bestScore) [best, bestScore] = [h, score];
+  }
+  return best;
+}
+
 /** Pixabay food photos for one search. */
 export async function searchPixabay(key: string, query: string, perPage = 6): Promise<Candidate[]> {
   const url = `${API}?${new URLSearchParams({ key, q: query, image_type: "photo", category: "food", safesearch: "true", orientation: "horizontal", per_page: String(Math.max(3, perPage)) })}`;
   const res = await fetch(url);
   if (res.status === 429) throw new RateLimited("Pixabay rate limit");
   if (!res.ok) throw new Error(`Pixabay HTTP ${res.status}`);
-  const body = (await res.json()) as { hits?: { id: number; pageURL: string; previewURL: string; largeImageURL: string; webformatURL: string; user: string; tags: string }[] };
-  return (body.hits ?? []).map((h) => ({ id: String(h.id), pageUrl: h.pageURL, previewUrl: h.webformatURL || h.previewURL, largeUrl: h.largeImageURL || h.webformatURL, user: h.user, tags: h.tags }));
+  const body = (await res.json()) as { hits?: { id: number; pageURL: string; previewURL: string; largeImageURL: string; webformatURL: string; user: string; tags: string; likes?: number }[] };
+  return (body.hits ?? []).map((h) => ({ id: String(h.id), pageUrl: h.pageURL, previewUrl: h.webformatURL || h.previewURL, largeUrl: h.largeImageURL || h.webformatURL, user: h.user, tags: h.tags, likes: h.likes }));
 }
 
-/** Candidates for a recipe: the full name first, then the main dish if that finds nothing. */
+/** Candidates for a recipe: the short search first, then the dish name, then the main dish if that finds nothing. */
 export async function candidatesFor(key: string, r: Recipe, perPage = 6): Promise<{ query: string; hits: Candidate[] }> {
   let last = "";
-  for (const q of searchTerms(r)) {
+  for (const q of photoSearchesFor(r)) {
     last = q;
     const hits = await searchPixabay(key, q, perPage);
     if (hits.length) return { query: q, hits };
@@ -83,8 +113,11 @@ export async function photoUrls(db: D1Database): Promise<Record<string, string>>
   return out;
 }
 
-/** Auto-pick the top match for recipes that don't have a photo yet, a batch at a time. Returns how many were done and how many are left. */
-export async function autoPickBatch(env: Env, batch = 12, pauseMs = 0): Promise<{ done: number; none: string[]; left: number; limited: boolean }> {
+/** Auto-pick the best match for recipes that don't have a photo yet, a batch at a time. Returns how many were done and how many are left.
+ *  If Pixabay says "too many requests", it waits a minute and carries on while there's time left (budgetMs), otherwise it stops and the next run carries on. */
+export async function autoPickBatch(env: Env, batch = 12, pauseMs = 0, budgetMs = 0): Promise<{ done: number; none: string[]; left: number; limited: boolean }> {
+  const deadline = Date.now() + budgetMs;
+  const sleep = (ms: number) => new Promise((ok) => setTimeout(ok, ms));
   const have = await listPhotos(env.DB);
   // Recipes with no match last time are skipped (choose those by hand), so the batches keep moving.
   const { results } = await env.DB.prepare("SELECT ref FROM automation_sent WHERE kind = 'photo-no-match'").all<{ ref: string }>();
@@ -93,18 +126,28 @@ export async function autoPickBatch(env: Env, batch = 12, pauseMs = 0): Promise<
   let done = 0;
   const none: string[] = [];
   for (const r of missing.slice(0, batch)) {
-    // Pixabay allows 100 searches a minute; the daily job paces itself.
-    if (pauseMs) await new Promise((ok) => setTimeout(ok, pauseMs));
-    let found: Awaited<ReturnType<typeof candidatesFor>>;
-    try {
-      found = await candidatesFor(env.PIXABAY_API_KEY!, r, 3);
-    } catch (err) {
-      // Keep what's done so far; the next run carries on from here.
-      if (err instanceof RateLimited) return { done, none, left: missing.length - done - none.length, limited: true };
-      throw err;
+    let pick: { query: string; hit: Candidate } | null = null;
+    for (const query of photoSearchesFor(r)) {
+      let hits: Candidate[] | null = null;
+      while (!hits) {
+        // Pixabay allows 100 searches a minute; the scheduled jobs pace themselves.
+        if (pauseMs) await sleep(pauseMs);
+        try {
+          hits = await searchPixabay(env.PIXABAY_API_KEY!, query, 20);
+        } catch (err) {
+          if (!(err instanceof RateLimited)) throw err;
+          // Keep what's done so far; wait a minute if there's time, else the next run carries on from here.
+          if (Date.now() + 61_000 > deadline) return { done, none, left: missing.length - done - none.length, limited: true };
+          await sleep(61_000);
+        }
+      }
+      const hit = bestMatch(r.id, query, hits);
+      if (hit) {
+        pick = { query, hit };
+        break;
+      }
     }
-    const { query, hits } = found;
-    if (hits[0] && (await savePhoto(env, r.id, hits[0], query, "auto"))) done++;
+    if (pick && (await savePhoto(env, r.id, pick.hit, pick.query, "auto"))) done++;
     else {
       none.push(r.id);
       await env.DB.prepare("INSERT INTO automation_sent (kind, ref) VALUES ('photo-no-match', ?1) ON CONFLICT DO NOTHING").bind(r.id).run();
@@ -117,9 +160,9 @@ export async function noMatchCount(db: D1Database): Promise<number> {
   return (await db.prepare("SELECT COUNT(*) AS n FROM automation_sent a WHERE a.kind = 'photo-no-match' AND NOT EXISTS (SELECT 1 FROM recipe_photos p WHERE p.recipe_id = a.ref)").first<number>("n")) ?? 0;
 }
 
-/** Daily job: if the Pixabay key is set, picks photos for any recipes still without one (all of them, paced). */
-export async function dailyPhotoPick(env: Env): Promise<string> {
+/** Scheduled job: if the Pixabay key is set, picks photos for any recipes still without one (all of them, paced, for up to budgetMs). */
+export async function dailyPhotoPick(env: Env, budgetMs = 0): Promise<string> {
   if (!env.PIXABAY_API_KEY) return "no key";
-  const r = await autoPickBatch(env, 200, 1500);
+  const r = await autoPickBatch(env, 200, 1500, budgetMs);
   return `${r.done} picked, ${r.none.length} no match, ${r.left} left${r.limited ? " (Pixabay asked us to slow down; carries on next run)" : ""}`;
 }
