@@ -82,6 +82,19 @@ export function AccountPage(props: {
           <AffiliateCard {...props.affiliate} />
 
           <div class="card">
+            <h2 class="h3">Put it on your phone</h2>
+            <p>Add this site to your home screen and it opens like an app, straight to your programmes.</p>
+            <ul class="small">
+              <li>
+                <strong>iPhone:</strong> open this page in Safari, tap Share, then "Add to Home Screen".
+              </li>
+              <li>
+                <strong>Android:</strong> open this page in Chrome, tap the ⋮ menu, then "Add to Home screen" or "Install app".
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
             <h2 class="h3">Your details</h2>
             <p>
               <strong>Email:</strong> {user.email}

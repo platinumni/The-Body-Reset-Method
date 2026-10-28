@@ -76,6 +76,11 @@ export function Layout(props: { meta: PageMeta; children: Child }) {
         <meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#151b18" media="(prefers-color-scheme: dark)" />
         <link rel="icon" href={assetUrl("/favicon.svg")} type="image/svg+xml" />
+        <link rel="manifest" href={assetUrl("/manifest.webmanifest")} />
+        <link rel="apple-touch-icon" href={assetUrl("/apple-touch-icon.png")} />
+        <meta name="apple-mobile-web-app-title" content="Body Regen" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
         <link rel="preload" href="/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin="" />
         <link rel="stylesheet" href={assetUrl("/styles.css")} />
         {meta.signup && <script src={assetUrl("/app.js")} defer />}

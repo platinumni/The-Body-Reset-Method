@@ -86,6 +86,17 @@ describe("static files", () => {
     expect(res.headers.get("Content-Type")).toBe("image/svg+xml");
     expect(res.headers.get("Cache-Control")).toBe("public, max-age=300");
   });
+
+  it("can be added to a phone's home screen like an app", async () => {
+    const page = await (await get("/")).text();
+    expect(page).toMatch(/<link rel="manifest" href="\/manifest\.webmanifest\?v=/);
+    expect(page).toContain('rel="apple-touch-icon"');
+    const res = await get("/manifest.webmanifest");
+    expect(res.headers.get("Content-Type")).toBe("application/manifest+json");
+    const m = (await res.json()) as { display: string; start_url: string; icons: { src: string }[] };
+    expect(m).toMatchObject({ display: "standalone", start_url: "/account" });
+    for (const i of m.icons) expect((await get(i.src)).headers.get("Content-Type")).toBe("image/png");
+  });
 });
 
 describe("scheduled jobs", () => {

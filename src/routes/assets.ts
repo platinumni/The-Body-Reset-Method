@@ -6,8 +6,27 @@ import favicon from "../assets/favicon.svg";
 import frauncesItalic from "../assets/fonts/fraunces-latin-wght-italic.woff2";
 import fraunces from "../assets/fonts/fraunces-latin-wght-normal.woff2";
 import inter from "../assets/fonts/inter-latin-wght-normal.woff2";
+import appleTouchIcon from "../assets/apple-touch-icon.png";
+import icon192 from "../assets/icon-192.png";
+import icon512 from "../assets/icon-512.png";
 import ogImage from "../assets/og.png";
 import styles from "../assets/styles.css";
+
+// The web app manifest: lets members add the site to their phone's home screen, where it opens full screen like an app.
+const manifest = JSON.stringify({
+  name: "The Body Regeneration Method",
+  short_name: "Body Regen",
+  description: "Your programmes and meal plans.",
+  start_url: "/account",
+  scope: "/",
+  display: "standalone",
+  background_color: "#f4efe6",
+  theme_color: "#f4efe6",
+  icons: [
+    { src: "/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any maskable" },
+    { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" },
+  ],
+});
 
 // Static files bundled into the Worker. URLs carry a content hash (?v=...) so
 // browsers can cache them for a year and still pick up changes immediately.
@@ -28,6 +47,10 @@ const FILES = {
   "/fonts/fraunces-italic.woff2": { body: frauncesItalic, type: "font/woff2" },
   "/fonts/inter.woff2": { body: inter, type: "font/woff2" },
   "/og.png": { body: ogImage, type: "image/png" },
+  "/manifest.webmanifest": { body: manifest, type: "application/manifest+json" },
+  "/icon-192.png": { body: icon192, type: "image/png" },
+  "/icon-512.png": { body: icon512, type: "image/png" },
+  "/apple-touch-icon.png": { body: appleTouchIcon, type: "image/png" },
 } as const;
 
 export type AssetPath = keyof typeof FILES;
