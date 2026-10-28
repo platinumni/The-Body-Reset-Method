@@ -444,6 +444,14 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
     - £100 for later years is more than 12 × £3.99 (£47.88), so needs a reason.
     - The currency ($ or £) needs confirming.
   - Awaiting the owner's clarification.
+  - **Clarified (owner, 2026-10-28, still an idea, not CH'd):** a **sales closer** sells a £300-£350 product and gets **£200-£250 per close**. Customers renew at **£100 a year**; the closer gets **50% (£50) of each renewal for as long as the closer stays** with the business, and loses it on leaving. Owner's example: 200 closes in a year = 200 × £250 = £50,000 to the closer; if all renew, 200 × £50 = £10,000 the next year.
+    - Claude's maths: the owner keeps about £45-£145 per close after Stripe, and about £48 per renewal.
+    - Flags:
+      - this conflicts with the "lifetime access" decision (a yearly renewal is a new model);
+      - commission must be held 90 days for the movement guarantee (already built);
+      - phone or DM selling must follow UK consumer rules (no pressure, 14-day cancellation, no health claims, only approved wording);
+      - the closer needs a written contract as self-employed;
+      - renewal commission "for as long as the closer stays" isn't built (now 12 months), about 1-2 hours.
 
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
