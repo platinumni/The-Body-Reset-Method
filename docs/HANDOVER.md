@@ -455,6 +455,18 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **UK business counts (owner asked, 2026-10-28, for partner and closer sales):** DBT Business Population Estimates 2025 (secondary sources quoting it): about 5.7m private businesses. 4.27m have no employees, 1.15m have 1-9, about 220,000 have 10-49, about 38,000 have 50-249 and about 8,300 have 250+. Businesses with 5-9 employees: roughly 300,000 (Claude's recollection of ONS counts, not checked). So about 1.4m businesses in total have 1-49 employees, or about 560,000 with 5-49.
 
+- **Business (B2B) model idea (owner, 2026-10-28, not CH'd, not built):** salesmen sell yearly access to **businesses** at "$399" (currency to confirm; probably £) for the first year, with **75% or 50% commission** to the salesman, then a **£199 yearly renewal**. Plan for the worst case: 1,000 businesses × 50 employees = **50,000 users, all active**. Run it the cheapest way.
+  - Claude's estimate (cheapest setup: YouTube videos, no marketing emails, Cloudflare):
+    - Running costs about £10-£50 a month (about £120-£600 a year). The first month needs about 50,000 set-up emails (about £16-£20).
+    - Year 1 gross £399,000. Stripe fees about £6,200.
+    - Keeps about £93,000 at 75% commission, or about £192,000 at 50%.
+    - Year 2, if all renew at £199: about £195,000 with no salesman cut, or about £96,000 if the salesman gets 50% of renewals.
+  - Flags:
+    - **VAT:** turnover over £90k means VAT registration and 20% VAT (businesses can usually reclaim it). Price ex-VAT.
+    - At this size, an accountant, and probably the owner's Ltd, rather than a sole trader.
+    - Commission should only be paid once the business has paid.
+  - Already built: organisation partner codes with a maximum number of places (e.g. 50), take-up reports, and links to a salesman for commission. Not built: a business self-serve yearly checkout, and automatic commission on business payments (about half a day to 1 day).
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).
