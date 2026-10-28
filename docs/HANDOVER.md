@@ -435,6 +435,16 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - Owner: "no emails" (2026-10-28). Re-estimated without marketing emails: about £10-£50 a month on YouTube video. Account emails (receipts, setup links, password resets) are still needed; the Resend free tier or about £16 a month covers them. Taken as an assumption for the cost estimate only. Nothing changed in the site; ask the owner before turning any emails off.
   - Full running costs at 50,000 members (owner asked, 2026-10-28; estimates from remembered list prices). Assumes about 10,000-25,000 people watch 1-3 hours of video a month. YouTube and no marketing email: £10-£50. Bunny Stream instead: £60-£350. Bunny plus 1 email a month: £80-£420. Bunny plus 1 email a week: £210-£600. Very heavy viewing could reach about £1,000.
 
+- **Pricing and partner commission idea (owner voice note, 2026-10-28, not decided, not built):** "$3.99 a month, or for the year, and then every subsequent year after that, £100. I could give the person, say, 75% commission on the clothes [likely "the close", i.e. the first sale; to confirm], and then 50% commission on any, obviously for the year, when the year ends. If he sticks with us for the year, and when he leaves he loses the commission benefit."
+  - Claude's reading: a big partner gets 75% of the first payment, then 50% of that customer's payments for 12 months. The partner's commission stops when the partner leaves.
+  - Already built: a custom rate per partner, 12 months of repeat commission, and suspending a partner stops new commission. Not built: a different rate for the first sale and for repeat payments (about 1-2 hours).
+  - Claude flagged:
+    - At £3.99 with 75% commission and Stripe's 20p fee, you keep about 75p on the first month.
+    - Monthly £3.99 loses about 6-7% to Stripe; yearly payments lose less.
+    - £100 for later years is more than 12 × £3.99 (£47.88), so needs a reason.
+    - The currency ($ or £) needs confirming.
+  - Awaiting the owner's clarification.
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).
