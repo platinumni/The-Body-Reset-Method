@@ -467,6 +467,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
     - Commission should only be paid once the business has paid.
   - Already built: organisation partner codes with a maximum number of places (e.g. 50), take-up reports, and links to a salesman for commission. Not built: a business self-serve yearly checkout, and automatic commission on business payments (about half a day to 1 day).
 
+- **Backups (owner, 2026-10-30):** "all backups in here at 7pm, no fresh chat necessary. Send backup regardless of new update." The task `trig_01WmGnTBmH51tfdGv4qPAJ8m` (18:48 UK, into this chat) now sends a bundle every day, and the caption says when nothing changed.
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).
