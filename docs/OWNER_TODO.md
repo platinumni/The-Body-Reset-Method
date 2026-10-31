@@ -53,6 +53,10 @@ These are things only you can do. None of them block the build until go-live unl
 - [ ] **Partner page** (`/kitchen/partners`) and the email in `docs/marketing/partner-pitch.md`: read them, and decide a partner price when you're ready (a monthly fee per organisation, or per place).
 - [ ] *(Optional, speeds up photos)* **Pixabay key for Claude:** the key in the environment settings is rejected by Pixabay. Copy it again from pixabay.com/api/docs into the environment as `PIXABAY_API_KEY` (never in chat). It takes effect in a new chat. Then Claude can hand-check every photo.
 
+## Platinum Life (2026-10-31)
+- [ ] Paste the prompt in `docs/platinum-life-handover/MASTER_PROMPT.md` into the Platinum NI chat. It reads the rest of the handover from this repo (read-only).
+- [ ] Confirm Platinum Life may reuse the recipes (they're your business's, written for you).
+
 ## Before go-live
 - [ ] *(Later)* Change the Body Regen Resend account's login email from your Gmail to a bodyregen address.
 - [x] **Done 2026-10-26:** Stripe account activated, 2FA reset with backup codes saved, sandbox test passed. ~~Stripe two-step login:** your Stripe 2FA is from years ago. Remove the old one and set it up again on your current phone (Stripe → Profile/Settings → Security), then **save the new backup (recovery) codes** somewhere safe offline. Do this before activating live payments.

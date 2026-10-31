@@ -469,6 +469,8 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Backups (owner, 2026-10-30):** "all backups in here at 7pm, no fresh chat necessary. Send backup regardless of new update." The task `trig_01WmGnTBmH51tfdGv4qPAJ8m` (18:48 UK, into this chat) now sends a bundle every day, and the caption says when nothing changed.
 
+- **Platinum Life handover (owner, 2026-10-31):** the owner is building **Platinum Life** (part of Platinum NI) and wants this meal planner rebuilt there under Platinum Life branding, on Platinum Life accounts and membership, as part of its PWA, with this project left unchanged. Claude inspected the project and wrote `docs/platinum-life-handover/`: README, features, architecture, schema, logic, admin and services, licensing, security, implementation plan, tests, and **MASTER_PROMPT.md** (paste into the Platinum NI chat). Source code is pinned at commit `b8904433`. No code here was changed. Not verified: anything about the Platinum NI codebase.
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).
