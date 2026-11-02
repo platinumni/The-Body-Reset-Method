@@ -471,6 +471,19 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Platinum Life handover (owner, 2026-10-31):** the owner is building **Platinum Life** (part of Platinum NI) and wants this meal planner rebuilt there under Platinum Life branding, on Platinum Life accounts and membership, as part of its PWA, with this project left unchanged. Claude inspected the project and wrote `docs/platinum-life-handover/`: README, features, architecture, schema, logic, admin and services, licensing, security, implementation plan, tests, and **MASTER_PROMPT.md** (paste into the Platinum NI chat). Source code is pinned at commit `b8904433`. No code here was changed. Not verified: anything about the Platinum NI codebase.
 
+- **Business platform idea (owner, 2026-11-02, not CH'd, nothing built):** the business (B2B) model would be **a separate platform for businesses**:
+  - its own members area for employees, with access to the courses (follow-along) and the meal planner, plus more content;
+  - salesmen sell yearly business packages;
+  - keep the owner's own course and diet products separate from it.
+
+  Claude agreed and suggested:
+  - build it as a separate site from the same tested code (its own Worker, database, brand and domain), with the course and meal-plan content shared as copies so this site is unaffected;
+  - business admin: places, invites, staff list and usage report (numbers only);
+  - salesman commission;
+  - otherwise consider housing it inside Platinum Life, if that's meant as the business/wellbeing brand.
+
+  Rough time: about 4-7 days for the first version, worst case 2 weeks. Owner to decide the name and brand, which content employees get, prices, and whether it's standalone or part of Platinum Life.
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).
