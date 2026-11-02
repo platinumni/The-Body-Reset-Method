@@ -483,6 +483,12 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - otherwise consider housing it inside Platinum Life, if that's meant as the business/wellbeing brand.
 
   Rough time: about 4-7 days for the first version, worst case 2 weeks. Owner to decide the name and brand, which content employees get, prices, and whether it's standalone or part of Platinum Life.
+  - Owner asked (2026-11-02): "why a fully separate domain? Platinum Life is off an NI domain; why not on Body Regen?"
+    - Claude: a separate domain isn't needed. Recommended putting it **on Body Regen** as a business section (`bodyregenerationmethod.com/business`, or `work.` / `teams.` subdomain), same site and same code. Employees get normal member accounts, with access through the business's code (the access codes are already built), and businesses get their own admin view.
+    - Why: one platform to run, the courses and meal planner already there, the cheapest option, about 2-4 days (worst case a week).
+    - Cons: same brand and legal entity for both; harder to sell separately later.
+    - Platinum Life on platinumni.co.uk could look Northern Ireland-only to businesses elsewhere in the UK.
+    - Awaiting the owner's choice.
 
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
