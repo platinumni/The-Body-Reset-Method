@@ -153,3 +153,31 @@ describe("team wellbeing: mood, week planner and diary", () => {
     for (const path of ["/account/team/week", "/account/team/diary"]) expect((await client.get(path)).headers.get("location")).toBe("/account");
   });
 });
+
+describe("team wellbeing: today's thought and daily words", () => {
+  it("shows a daily thought that changes each day", async () => {
+    const { thoughtForDay, REFLECTIONS } = await import("../src/content/reflections");
+    expect(REFLECTIONS.length).toBeGreaterThanOrEqual(30);
+    expect(thoughtForDay("2026-11-10", null).reflection).not.toBe(thoughtForDay("2026-11-11", null).reflection);
+    const { client } = await member(["teams"]);
+    const html = await (await client.get("/account/team")).text();
+    expect(html).toContain("Today&#39;s thought");
+    expect(html).toContain("Add words from your faith or belief (optional)");
+  });
+
+  it("saves a faith or belief only with explicit consent, records the consent, and removes it on 'None'", async () => {
+    const { client, userId, email } = await member(["teams"]);
+    const refused = await client.post("/account/team/words", { tradition: "christian" });
+    expect(refused.headers.get("location")).toContain("words=consent");
+    expect(await env.DB.prepare("SELECT COUNT(*) AS n FROM wellbeing_prefs WHERE user_id = ?1").bind(userId).first("n")).toBe(0);
+    await client.post("/account/team/words", { tradition: "christian", consent: "yes" });
+    expect(await env.DB.prepare("SELECT tradition FROM wellbeing_prefs WHERE user_id = ?1").bind(userId).first("tradition")).toBe("christian");
+    expect(await env.DB.prepare("SELECT granted FROM consents WHERE email = ?1 AND kind = 'belief_preference' ORDER BY id DESC").bind(email).first("granted")).toBe(1);
+    const html = await (await client.get("/account/team")).text();
+    expect(html).toContain("Your daily words: Christian");
+    expect(html).toContain("are being prepared and checked"); // no unverified quotes are ever shown
+    await client.post("/account/team/words", { tradition: "none" });
+    expect(await env.DB.prepare("SELECT COUNT(*) AS n FROM wellbeing_prefs WHERE user_id = ?1").bind(userId).first("n")).toBe(0);
+    expect(await env.DB.prepare("SELECT granted FROM consents WHERE email = ?1 AND kind = 'belief_preference' ORDER BY id DESC").bind(email).first("granted")).toBe(0);
+  });
+});

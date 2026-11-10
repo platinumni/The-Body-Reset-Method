@@ -1,4 +1,5 @@
-import { MOODS, PLAN_KINDS, type DiaryEntry, type Plan } from "../services/wellbeing";
+import { thoughtForDay, TRADITIONS, type Tradition } from "../content/reflections";
+import { BELIEF_CONSENT, MOODS, PLAN_KINDS, type DiaryEntry, type Plan } from "../services/wellbeing";
 import { CsrfField, Layout, type PageMeta } from "./layout";
 
 const addDays = (day: string, n: number) => new Date(Date.parse(`${day}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
@@ -295,5 +296,54 @@ export function DiaryPage(props: { meta: PageMeta; csrfToken: string; today: str
         </div>
       </section>
     </Layout>
+  );
+}
+
+/** Today's thought: a reflection from the Method, plus words from their chosen faith or belief once verified ones exist. */
+export function ThoughtCard(props: { csrfToken: string; today: string; tradition: Tradition | null; needConsent?: boolean }) {
+  const t = thoughtForDay(props.today, props.tradition);
+  return (
+    <article class="card thought" id="thought">
+      <p class="eyebrow">Today's thought</p>
+      <blockquote class="thought-text">{t.reflection}</blockquote>
+      {t.words ? (
+        <blockquote class="thought-words">
+          {t.words.text}
+          <footer class="small muted">{t.words.source}</footer>
+        </blockquote>
+      ) : (
+        props.tradition &&
+        props.tradition !== "other" && <p class="small muted">Daily words for {TRADITIONS[props.tradition]} are being prepared and checked. They'll appear here.</p>
+      )}
+      <details class="thought-choose">
+        <summary>{props.tradition ? `Your daily words: ${TRADITIONS[props.tradition]}` : "Add words from your faith or belief (optional)"}</summary>
+        <form method="post" action="/account/team/words">
+          <CsrfField token={props.csrfToken} />
+          <div class="field">
+            <label for="tw-tradition">Daily words from</label>
+            <select id="tw-tradition" name="tradition">
+              {(Object.entries(TRADITIONS) as [Tradition, string][]).map(([k, v]) => (
+                <option value={k} selected={(props.tradition ?? "none") === k}>
+                  {v}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div class="check">
+            <input type="checkbox" id="tw-consent" name="consent" value="yes" />
+            <label for="tw-consent">{BELIEF_CONSENT.label}</label>
+          </div>
+          {props.needConsent && (
+            <p class="form-errors" role="alert">
+              Please tick the box to save your choice, or choose "None".
+            </p>
+          )}
+          <button class="btn btn-ghost btn-small" type="submit">
+            Save
+          </button>
+          <p class="small muted">Optional, and never shown to your employer. Choose "None" to remove it.</p>
+        </form>
+      </details>
+    </article>
   );
 }

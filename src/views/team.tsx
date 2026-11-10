@@ -1,7 +1,7 @@
 import { TEAM_SAFETY, type TeamSession } from "../content/team-sessions";
 import type { TeamDashboard, WeekBar } from "../services/team";
 import { Button } from "./components";
-import { MoodCard, TodayPlans } from "./wellbeing";
+import { MoodCard, ThoughtCard, TodayPlans } from "./wellbeing";
 import { CsrfField, Layout, type PageMeta } from "./layout";
 
 const shortDate = (day: string) => new Date(`${day}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
@@ -77,7 +77,7 @@ function Stat(props: { value: string; label: string }) {
 }
 
 /** The employee's dashboard: today's session, their numbers, their courses and the meal planner. */
-export function TeamDashboardPage(props: { meta: PageMeta; csrfToken: string; name: string | null; d: TeamDashboard; session: TeamSession; done?: boolean }) {
+export function TeamDashboardPage(props: { meta: PageMeta; csrfToken: string; name: string | null; d: TeamDashboard; session: TeamSession; done?: boolean; needWordsConsent?: boolean }) {
   const { d, session } = props;
   const doneToday = d.doneToday.includes(session.id);
   const thisWeek = d.weeks[d.weeks.length - 1]!;
@@ -130,6 +130,8 @@ export function TeamDashboardPage(props: { meta: PageMeta; csrfToken: string; na
             </div>
             <WeeklyChart weeks={d.weeks} />
           </article>
+
+          <ThoughtCard csrfToken={props.csrfToken} today={d.today} tradition={d.tradition} needConsent={props.needWordsConsent} />
 
           <MoodCard csrfToken={props.csrfToken} today={d.today} mood={d.moods[d.today] ?? null} moods={d.moods} />
 

@@ -12,7 +12,7 @@ import { MembershipPage } from "../views/membership";
 import { TeamDashboardPage } from "../views/team";
 import { canUseTeam, logSession, teamDashboard, ukDay, weekStart } from "../services/team";
 import { sessionForDay } from "../content/team-sessions";
-import { addDiary, addPlan, checkIn, deleteDiary, deletePlan, listDiary, moods, plansBetween, sessionsBetween, setPlanDone, validDay, wellbeingDataFor, addDays } from "../services/wellbeing";
+import { setTradition, addDiary, addPlan, checkIn, deleteDiary, deletePlan, listDiary, moods, plansBetween, sessionsBetween, setPlanDone, validDay, wellbeingDataFor, addDays } from "../services/wellbeing";
 import { DiaryPage, WeekPage } from "../views/wellbeing";
 import { getProductsBySlugs, isOnSale } from "../services/products";
 import { MEAL_PLANS_SLUG } from "../services/meal-plans";
@@ -139,6 +139,7 @@ accountRoutes.get("/account/team", async (c) => {
       name={user.name ?? null}
       d={d}
       session={sessionForDay(d.today)}
+      needWordsConsent={c.req.query("words") === "consent"}
     />,
   );
 });
@@ -154,6 +155,14 @@ accountRoutes.post("/account/team/mood", rateLimit("team-mood", 30, 3600), async
   if (!user) return c.redirect("/account", 303);
   await checkIn(c.env.DB, user.id, ukDay(), Number((await c.req.parseBody()).mood));
   return c.redirect("/account/team#mood", 303);
+});
+
+accountRoutes.post("/account/team/words", rateLimit("team-words", 20, 3600), async (c) => {
+  const user = await teamOnly(c);
+  if (!user) return c.redirect("/account", 303);
+  const f = await c.req.parseBody();
+  const ok = await setTradition(c.env.DB, user, String(f.tradition ?? "none"), f.consent === "yes");
+  return c.redirect(ok ? "/account/team#thought" : "/account/team?words=consent#thought", 303);
 });
 
 accountRoutes.get("/account/team/week", async (c) => {

@@ -60,7 +60,10 @@ These are things only you can do. None of them block the build until go-live unl
 ## Team wellbeing (2026-11-10)
 - [ ] Look at the employee dashboard on the test site: log in with your preview account, then "Open your dashboard" on your account page.
 - [ ] Choose a name for the business package, and the address (`/business` or `teams.`).
-- [ ] CH the next stages (calendar and diary, daily quotes and spiritual choice, business admin and payments) and send prices and commission when ready.
+- [x] Stages 2 and 3 built (calendar, diary, mood check-in, daily thought, faith choice). Have a look on the test site.
+- [ ] Read the 30 daily reflections in `src/content/reflections.ts` (or ask Claude for the list) and change any.
+- [ ] Faith and belief daily words: decide whether you want them. If yes, Claude needs to be allowed to fetch public-domain texts (e.g. a public-domain Bible translation), or you supply the words you want; each is checked before going on.
+- [ ] Stage 4 (business admin, payments, salesmen): send prices and commission when ready.
 
 ## Before go-live
 - [ ] *(Later)* Change the Body Regen Resend account's login email from your Gmail to a bodyregen address.

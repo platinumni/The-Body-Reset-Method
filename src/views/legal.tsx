@@ -57,7 +57,8 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
           <li>
             <strong>If your workplace gave you team wellbeing:</strong> the sessions you mark as done (which, when, and how long), used to show your own
             progress and streaks; and, only if you use them, your daily mood check-ins, your diary (stored encrypted) and your planner. These are for
-            you alone, and you can delete diary entries and plans at any time. Your employer never sees your individual activity; they only ever see totals for everyone together, such as how many
+            you alone, and you can delete diary entries and plans at any time. If you choose daily words from a faith or belief, we save that choice only with your explicit
+            consent (it's special-category information); only you can see it, and choosing "None" removes it. Your employer never sees your individual activity; they only ever see totals for everyone together, such as how many
             people have joined.
           </li>
           <li>

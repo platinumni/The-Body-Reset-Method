@@ -1,6 +1,7 @@
 // Team wellbeing, stage 2: a private mood check-in, a private (encrypted) diary, and a simple planner.
 // Everything here is the employee's own. Employers never see it, not even as totals.
 
+import { TRADITIONS, type Tradition } from "../content/reflections";
 import { decryptText, encryptText } from "../lib/encryption";
 
 export const MOODS: { value: number; label: string }[] = [
@@ -106,6 +107,33 @@ export async function sessionsBetween(db: D1Database, userId: number, from: stri
 
 export { validDay };
 
+// --- Daily words: faith or belief (special-category data: optional, explicit consent, removable) ---
+
+export const BELIEF_CONSENT = {
+  version: "2026-11-10",
+  label: "Save my choice so I see matching daily words. I understand this tells you my faith or belief; only I can see it, and I can remove it any time.",
+};
+
+export async function getTradition(db: D1Database, userId: number): Promise<Tradition | null> {
+  const t = await db.prepare("SELECT tradition FROM wellbeing_prefs WHERE user_id = ?1").bind(userId).first<string>("tradition");
+  return t && t in TRADITIONS ? (t as Tradition) : null;
+}
+
+/** Save (with consent) or remove the choice. Returns false if consent wasn't given. */
+export async function setTradition(db: D1Database, user: { id: number; email: string }, tradition: string, consent: boolean): Promise<boolean> {
+  if (!(tradition in TRADITIONS) || tradition === "none") {
+    await db.prepare("DELETE FROM wellbeing_prefs WHERE user_id = ?1").bind(user.id).run();
+    await db.prepare("INSERT INTO consents (user_id, email, kind, granted, wording_version, source) VALUES (?1, ?2, 'belief_preference', 0, ?3, 'team-dashboard')").bind(user.id, user.email, BELIEF_CONSENT.version).run();
+    return true;
+  }
+  if (!consent) return false;
+  await db.batch([
+    db.prepare("INSERT INTO wellbeing_prefs (user_id, tradition) VALUES (?1, ?2) ON CONFLICT (user_id) DO UPDATE SET tradition = excluded.tradition, updated_at = datetime('now')").bind(user.id, tradition),
+    db.prepare("INSERT INTO consents (user_id, email, kind, granted, wording_version, source) VALUES (?1, ?2, 'belief_preference', 1, ?3, 'team-dashboard')").bind(user.id, user.email, BELIEF_CONSENT.version),
+  ]);
+  return true;
+}
+
 // --- UK GDPR ---
 
 export async function wellbeingDataFor(env: Env, userId: number): Promise<Record<string, unknown>> {
@@ -114,7 +142,8 @@ export async function wellbeingDataFor(env: Env, userId: number): Promise<Record
     moodCheckIns: await q("SELECT day, mood, created_at FROM wellbeing_checkins WHERE user_id = ?1 ORDER BY day"),
     diary: (await listDiary(env, userId, 10_000)).map((d) => ({ day: d.day, text: d.body, created_at: d.created_at })),
     plans: await q("SELECT day, time, kind, title, done_at, created_at FROM wellbeing_plans WHERE user_id = ?1 ORDER BY day, id"),
+    dailyWordsChoice: await q("SELECT tradition, updated_at FROM wellbeing_prefs WHERE user_id = ?1"),
   };
 }
 
-export const WELLBEING_DELETES = ["DELETE FROM wellbeing_checkins WHERE user_id = ?1", "DELETE FROM wellbeing_diary WHERE user_id = ?1", "DELETE FROM wellbeing_plans WHERE user_id = ?1"];
+export const WELLBEING_DELETES = ["DELETE FROM wellbeing_checkins WHERE user_id = ?1", "DELETE FROM wellbeing_diary WHERE user_id = ?1", "DELETE FROM wellbeing_plans WHERE user_id = ?1", "DELETE FROM wellbeing_prefs WHERE user_id = ?1"];

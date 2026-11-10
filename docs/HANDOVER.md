@@ -515,6 +515,19 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - The account page shows "Open your dashboard". Sessions are in the data export and deleted with the account. The privacy policy says employers never see individual activity.
   - Not built yet (next stages, each awaiting CH): stage 2 calendar, diary and mood check-in; stage 3 daily quote and spiritual choice; stage 4 business admin, payments and salesmen (needs prices). Name and address still to choose (`/account/team` for now).
 
+- **Team wellbeing, stages 2 and 3 built (owner CH, 2026-11-10), on staging:**
+  - **Stage 2** (migration 0023):
+    - private mood check-in on the dashboard (five buttons: Struggling, Low, Okay, Good, Great; changeable for the day), with a 14-day chart and Samaritans/GP signposting;
+    - **My week** `/account/team/week`: a week planner with 7 days, previous/next week, add a plan (what, day, optional time, kind), tick done, remove. Each day shows sessions done and mood; today's plans also show on the dashboard;
+    - **My diary** `/account/team/diary`: private entries, **encrypted at rest** (AES-GCM, ADMIN_ENC_KEY), delete any time.
+    - All private to the employee; the employer never sees any of it, not even totals.
+  - **Stage 3** (migration 0024): a "Today's thought" card.
+    - 30 original daily reflections written by Claude from `docs/METHOD.md` (drafts for the owner to check, no health claims), in `src/content/reflections.ts`.
+    - Optional "daily words from your faith or belief" (None, Christian, Muslim, Jewish, Hindu, Buddhist, Sikh, other). It's saved only with explicit consent (kind `belief_preference`, version 2026-11-10) and removed by choosing None.
+    - **No scripture or famous quotes yet:** `TRADITION_WORDS` is empty on purpose, until verified public-domain texts with exact references are supplied and checked (never quoted from memory). Until then members see the reflection plus "being prepared and checked".
+  - Export includes mood, diary (decrypted), plans and the faith choice; account deletion removes them. Privacy policy updated.
+  - Stage 4 (business admin, payments, salesmen) waits on prices and commission.
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).

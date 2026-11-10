@@ -654,3 +654,6 @@ fieldset.field { border: 0; padding: 0; margin-left: 0; margin-right: 0; } field
 .diary-entry { margin-top: 1rem; }
 .diary-text { white-space: pre-wrap; }
 .week-day .tag { font-family: var(--font-body); font-size: .75rem; padding: .1rem .5rem; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
+.thought-text { font-family: var(--font-display); font-size: 1.35rem; line-height: 1.35; margin: .25rem 0 1rem; padding: 0; border: 0; }
+.thought-words { margin: 0 0 1rem; padding-left: 1rem; border-left: 3px solid var(--accent-soft); font-style: italic; }
+.thought-choose summary { cursor: pointer; font-size: .9rem; color: var(--ink-soft); }
