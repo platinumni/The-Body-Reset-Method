@@ -1,5 +1,6 @@
 import { friendDataFor } from "./kitchen-friends";
 import { teamDataFor } from "./team";
+import { WELLBEING_DELETES } from "./wellbeing";
 import { CHECKOUT_CONSENTS } from "../content/consents";
 import { hashPassword, verifyPassword } from "../lib/crypto";
 import { recordAudit } from "./audit";
@@ -170,6 +171,7 @@ export async function deleteAccount(db: D1Database, userId: number, actor: { use
     db.prepare("DELETE FROM meal_plan_prefs WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM meal_plan_spend WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM wellbeing_activity WHERE user_id = ?1").bind(userId),
+    ...WELLBEING_DELETES.map((sql) => db.prepare(sql).bind(userId)),
     db.prepare("DELETE FROM reviews WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM contact_messages WHERE email = ?1").bind(user.email),
     // Kitchen refer-a-friend: their invite link stops working and their email is replaced (records of who counted stay, unnamed).

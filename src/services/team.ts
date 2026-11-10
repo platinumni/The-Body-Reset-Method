@@ -4,6 +4,7 @@
 import { teamSessionById } from "../content/team-sessions";
 import { listOwnedProgrammes, ownedProgrammeBySlug, type OwnedProgramme } from "./library";
 import { spendSummary, type SpendSummary } from "./meal-plans";
+import { moods, plansBetween, type Plan } from "./wellbeing";
 
 export const TEAM_SLUG = "teams";
 
@@ -35,6 +36,9 @@ export type TeamDashboard = {
   totalMinutes: number;
   programmes: OwnedProgramme[];
   meals: SpendSummary | null;
+  /** Mood check-ins for the last 14 days (day → 1-5), and today's plans. */
+  moods: Record<string, number>;
+  todayPlans: Plan[];
 };
 
 /** Monday of the week a day falls in. */
@@ -80,6 +84,8 @@ export async function teamDashboard(db: D1Database, userId: number, today = ukDa
     totalMinutes: totals?.m ?? 0,
     programmes,
     meals: hasMeals ? await spendSummary(db, userId) : null,
+    moods: await moods(db, userId, addDays(today, -13), today),
+    todayPlans: await plansBetween(db, userId, today, today),
   };
 }
 

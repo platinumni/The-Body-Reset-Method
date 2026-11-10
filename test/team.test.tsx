@@ -83,3 +83,73 @@ describe("team wellbeing dashboard", () => {
     expect(await env.DB.prepare("SELECT COUNT(*) AS n FROM wellbeing_activity WHERE user_id = ?1").bind(userId).first("n")).toBe(0);
   });
 });
+
+describe("team wellbeing: mood, week planner and diary", () => {
+  const KEY = btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(32))));
+
+  async function employee() {
+    const m = await member(["teams"]);
+    // The diary needs the encryption key, as on the real site.
+    (m.client as unknown as { env: Env }).env = { ...env, ADMIN_ENC_KEY: KEY } as Env;
+    return m;
+  }
+
+  it("records today's mood (changeable), shows it on the dashboard chart, and keeps it private", async () => {
+    const { client, userId } = await employee();
+    await client.post("/account/team/mood", { mood: "2" });
+    await client.post("/account/team/mood", { mood: "4" }); // changed their mind
+    await client.post("/account/team/mood", { mood: "9" }); // nonsense is ignored
+    const rows = await env.DB.prepare("SELECT mood FROM wellbeing_checkins WHERE user_id = ?1").bind(userId).all<{ mood: number }>();
+    expect(rows.results).toEqual([{ mood: 4 }]);
+    const html = await (await client.get("/account/team")).text();
+    expect(html).toContain('aria-pressed="true"');
+    expect(html).toContain("Your mood over the last 14 days");
+    expect(html).toContain("Your employer never does");
+    expect(html).toContain("116 123");
+  });
+
+  it("plans the week: add, tick done, remove, and today's plans show on the dashboard", async () => {
+    const { client, userId } = await employee();
+    const today = ukDay();
+    await client.post("/account/team/plan", { action: "add", day: today, time: "07:30", kind: "session", title: "Toe yoga before work" });
+    const bad = await client.post("/account/team/plan", { action: "add", day: today, time: "25:99", kind: "session", title: "x" });
+    expect(bad.headers.get("location")).toContain("error=");
+    const week = await (await client.get("/account/team/week")).text();
+    expect(week).toContain("07:30");
+    expect(week).toContain("Toe yoga before work");
+    expect(await (await client.get("/account/team")).text()).toContain("Toe yoga before work");
+    const id = await env.DB.prepare("SELECT id FROM wellbeing_plans WHERE user_id = ?1").bind(userId).first<number>("id");
+    await client.post("/account/team/plan", { action: "done", id: String(id), day: today });
+    expect(await env.DB.prepare("SELECT done_at IS NOT NULL AS d FROM wellbeing_plans WHERE id = ?1").bind(id).first("d")).toBe(1);
+    await client.post("/account/team/plan", { action: "delete", id: String(id), day: today });
+    expect(await env.DB.prepare("SELECT COUNT(*) AS n FROM wellbeing_plans WHERE user_id = ?1").bind(userId).first("n")).toBe(0);
+  });
+
+  it("someone else's plan can't be changed", async () => {
+    const a = await employee();
+    const b = await employee();
+    await a.client.post("/account/team/plan", { action: "add", day: ukDay(), time: "", kind: "other", title: "Mine" });
+    const id = await env.DB.prepare("SELECT id FROM wellbeing_plans WHERE user_id = ?1").bind(a.userId).first<number>("id");
+    await b.client.post("/account/team/plan", { action: "delete", id: String(id), day: ukDay() });
+    expect(await env.DB.prepare("SELECT COUNT(*) AS n FROM wellbeing_plans WHERE id = ?1").bind(id).first("n")).toBe(1);
+  });
+
+  it("keeps a private diary, stored encrypted, in the export, deleted with the account", async () => {
+    const { client, userId } = await employee();
+    await client.post("/account/team/diary", { day: ukDay(), body: "Let go of the grip in my toes today." });
+    const stored = await env.DB.prepare("SELECT body_enc FROM wellbeing_diary WHERE user_id = ?1").bind(userId).first<string>("body_enc");
+    expect(stored).toMatch(/^v1\./);
+    expect(stored).not.toContain("grip");
+    expect(await (await client.get("/account/team/diary")).text()).toContain("Let go of the grip in my toes today.");
+    const data = (await (await client.get("/account/export")).json()) as Record<string, any[]>;
+    expect(data.diary![0].text).toBe("Let go of the grip in my toes today.");
+    const { deleteAccount } = await import("../src/services/accounts");
+    await deleteAccount(env.DB, userId, { userId });
+    expect(await env.DB.prepare("SELECT COUNT(*) AS n FROM wellbeing_diary WHERE user_id = ?1").bind(userId).first("n")).toBe(0);
+  });
+
+  it("is only for employees with team wellbeing", async () => {
+    const { client } = await member(["hips"]);
+    for (const path of ["/account/team/week", "/account/team/diary"]) expect((await client.get(path)).headers.get("location")).toBe("/account");
+  });
+});

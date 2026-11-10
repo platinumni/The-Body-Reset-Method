@@ -1,6 +1,7 @@
 import { TEAM_SAFETY, type TeamSession } from "../content/team-sessions";
 import type { TeamDashboard, WeekBar } from "../services/team";
 import { Button } from "./components";
+import { MoodCard, TodayPlans } from "./wellbeing";
 import { CsrfField, Layout, type PageMeta } from "./layout";
 
 const shortDate = (day: string) => new Date(`${day}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
@@ -129,6 +130,10 @@ export function TeamDashboardPage(props: { meta: PageMeta; csrfToken: string; na
             </div>
             <WeeklyChart weeks={d.weeks} />
           </article>
+
+          <MoodCard csrfToken={props.csrfToken} today={d.today} mood={d.moods[d.today] ?? null} moods={d.moods} />
+
+          <TodayPlans plans={d.todayPlans} csrfToken={props.csrfToken} />
 
           <article class="card">
             <h2 class="h3">Your courses</h2>

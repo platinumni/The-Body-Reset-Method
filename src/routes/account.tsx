@@ -10,8 +10,10 @@ import { setCancelAtPeriodEnd } from "../services/payments/stripe";
 import { kitchenMembership, kitchenProduct, markCancelRequested } from "../services/subscriptions";
 import { MembershipPage } from "../views/membership";
 import { TeamDashboardPage } from "../views/team";
-import { canUseTeam, logSession, teamDashboard } from "../services/team";
+import { canUseTeam, logSession, teamDashboard, ukDay, weekStart } from "../services/team";
 import { sessionForDay } from "../content/team-sessions";
+import { addDiary, addPlan, checkIn, deleteDiary, deletePlan, listDiary, moods, plansBetween, sessionsBetween, setPlanDone, validDay, wellbeingDataFor, addDays } from "../services/wellbeing";
+import { DiaryPage, WeekPage } from "../views/wellbeing";
 import { getProductsBySlugs, isOnSale } from "../services/products";
 import { MEAL_PLANS_SLUG } from "../services/meal-plans";
 import { friendStatus, setShowName } from "../services/kitchen-friends";
@@ -139,6 +141,81 @@ accountRoutes.get("/account/team", async (c) => {
       session={sessionForDay(d.today)}
     />,
   );
+});
+
+// Stage 2: mood check-in, the week planner (calendar) and the diary. All private to the employee.
+const teamOnly = async (c: Context<AppEnv>) => {
+  const user = c.get("user")!;
+  return user.role === "admin" || (await canUseTeam(c.env.DB, user.id)) ? user : null;
+};
+
+accountRoutes.post("/account/team/mood", rateLimit("team-mood", 30, 3600), async (c) => {
+  const user = await teamOnly(c);
+  if (!user) return c.redirect("/account", 303);
+  await checkIn(c.env.DB, user.id, ukDay(), Number((await c.req.parseBody()).mood));
+  return c.redirect("/account/team#mood", 303);
+});
+
+accountRoutes.get("/account/team/week", async (c) => {
+  const user = await teamOnly(c);
+  if (!user) return c.redirect("/account", 302);
+  const today = ukDay();
+  const asked = c.req.query("from") ?? "";
+  const from = validDay(asked) ? weekStart(asked) : weekStart(today);
+  const to = addDays(from, 6);
+  return c.html(
+    <WeekPage
+      meta={pageMeta(c, { title: "My week", description: "Plan your sessions, courses and meals for the week.", path: "/account/team/week", noindex: true })}
+      csrfToken={c.get("csrfToken")}
+      from={from}
+      today={today}
+      plans={await plansBetween(c.env.DB, user.id, from, to)}
+      sessions={await sessionsBetween(c.env.DB, user.id, from, to)}
+      moods={await moods(c.env.DB, user.id, from, to)}
+      error={c.req.query("error") ?? null}
+    />,
+  );
+});
+
+accountRoutes.post("/account/team/plan", rateLimit("team-plan", 60, 3600), async (c) => {
+  const user = await teamOnly(c);
+  if (!user) return c.redirect("/account", 303);
+  const f = await c.req.parseBody();
+  const day = String(f.day ?? "");
+  const back = `/account/team/week?from=${validDay(day) ? weekStart(day) : weekStart(ukDay())}`;
+  if (f.action === "add") {
+    const error = await addPlan(c.env.DB, user.id, { day, time: String(f.time ?? ""), kind: String(f.kind ?? ""), title: String(f.title ?? "") });
+    if (error) return c.redirect(`${back}&error=${encodeURIComponent(error)}#add`, 303);
+  } else if (f.action === "done" || f.action === "undo") await setPlanDone(c.env.DB, user.id, Number(f.id), f.action === "done");
+  else if (f.action === "delete") await deletePlan(c.env.DB, user.id, Number(f.id));
+  return c.redirect(`${back}#d-${day}`, 303);
+});
+
+accountRoutes.get("/account/team/diary", async (c) => {
+  const user = await teamOnly(c);
+  if (!user) return c.redirect("/account", 302);
+  return c.html(
+    <DiaryPage
+      meta={pageMeta(c, { title: "My diary", description: "Your private diary.", path: "/account/team/diary", noindex: true })}
+      csrfToken={c.get("csrfToken")}
+      today={ukDay()}
+      entries={await listDiary(c.env, user.id)}
+      available={!!c.env.ADMIN_ENC_KEY}
+      notice={c.req.query("saved") !== undefined ? "Saved. Only you can see it." : null}
+    />,
+  );
+});
+
+accountRoutes.post("/account/team/diary", rateLimit("team-diary", 60, 3600), async (c) => {
+  const user = await teamOnly(c);
+  if (!user) return c.redirect("/account", 303);
+  const f = await c.req.parseBody();
+  if (f.action === "delete") {
+    await deleteDiary(c.env.DB, user.id, Number(f.id));
+    return c.redirect("/account/team/diary", 303);
+  }
+  const result = await addDiary(c.env, user.id, String(f.day ?? ukDay()), String(f.body ?? ""));
+  return c.redirect(result === "saved" ? "/account/team/diary?saved" : "/account/team/diary", 303);
 });
 
 accountRoutes.post("/account/team/done", rateLimit("team-done", 30, 3600), async (c) => {
@@ -333,7 +410,7 @@ accountRoutes.post("/account/affiliate/payout", async (c) => {
 
 accountRoutes.get("/account/export", async (c) => {
   const user = c.get("user")!;
-  const data = await exportUserData(c.env.DB, user.id);
+  const data = { ...(await exportUserData(c.env.DB, user.id)), ...(await wellbeingDataFor(c.env, user.id)) };
   c.header("Content-Disposition", `attachment; filename="my-data-${new Date().toISOString().slice(0, 10)}.json"`);
   c.header("Cache-Control", "no-store");
   return c.json(data);
