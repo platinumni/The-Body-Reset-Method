@@ -541,6 +541,11 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - Plan: phases 0-7, about 10-12 weeks of build (worst case about 5 months) plus content.
   - Awaiting the owner's decisions and CH.
 
+- **Everyday Life Hub: CH (owner, 2026-11-10):** "CH it all, just a one stop hub, looks slick." Feedback on the team dashboard: "looks shit". On training programmes: "follow along, blow people's heads off".
+  - Taken as yes to the proposal's recommendations: a separate product and repo; **the Hub is the one business product** (Platinum Life meal-planner rebuild and Body Regen team stage 4 paused); Claude drafts the content for owner approval.
+  - The design must be genuinely premium, and the follow-along training must be a standout: full-screen, step by step, timers, voice cues, keeps the screen awake.
+  - Blocker: Claude can't create GitHub repositories (403). The owner needs to create the private repo `everyday-life-hub` and give the Claude GitHub app access. The build starts locally meanwhile.
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).
