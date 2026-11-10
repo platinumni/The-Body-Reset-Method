@@ -528,6 +528,19 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
   - Export includes mood, diary (decrypted), plans and the faith choice; account deletion removes them. Privacy policy updated.
   - Stage 4 (business admin, payments, salesmen) waits on prices and commission.
 
+- **Team dashboard checked (2026-11-10):** rendered at phone width (390 px), light and dark, with sample data. It fits with no sideways scroll and all cards show correctly. (The test site itself can't be opened from Claude's sandbox.)
+- **Everyday Life Hub (owner brief, 2026-11-10, proposal only, nothing built):** a premium mobile-first PWA covering five areas (Save Money, Feel Better, Save Time, Reduce Stress, Earn & Grow), free for individuals, with annual business partner packages (invite links and QR codes, co-branded pages, aggregated dashboards, tiers, attribution).
+  - Claude's proposal is in `docs/everyday-life-hub/PROPOSAL.md`: a separate product, repo and `lifehub-*` resources, built by copying the proven parts of this repo.
+  - Claude's challenges:
+    - three overlapping B2B products: pick one;
+    - no live price comparison: use official data and links instead;
+    - money is guidance not advice (FCA);
+    - iOS push only for the installed app;
+    - partners see counts only, nothing for groups under 10;
+    - content is the bottleneck.
+  - Plan: phases 0-7, about 10-12 weeks of build (worst case about 5 months) plus content.
+  - Awaiting the owner's decisions and CH.
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).
