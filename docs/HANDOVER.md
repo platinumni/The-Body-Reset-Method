@@ -492,6 +492,18 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
 
 - **Pexels check (9 Nov 2026, as asked):** still paused. The Pexels API page and help centre say new API keys can't be requested, and the help centre (updated 6 Nov) says rate-limit increases are paused too. No restart date. We stay on Pixabay.
 
+- **Employee wellbeing dashboard idea (owner voice note, 2026-11-10, not CH'd, nothing built):** the business package should "bolster up the courses for employers". It should look like a dashboard with data charts, follow-along content, maybe a calendar or diary, and cover mental, physical and spiritual wellbeing, e.g. "choose your religion", quote of the day.
+  - Claude's brief:
+    - employee dashboard: progress charts, streaks, follow-along sessions, a calendar/diary, daily quote or reflection, meal planner;
+    - business admin: anonymous numbers only.
+  - Flags:
+    - mental health and religion are UK GDPR special-category data, so religion or belief is an optional content preference with explicit consent (or kept on the phone only);
+    - employers must never see any individual's data;
+    - education and wellbeing only, no therapy or medical claims, with signposting to the GP, Samaritans and Mind;
+    - quotes only from public-domain or properly licensed sources;
+    - spiritual content inclusive, including "none / secular".
+  - Rough time: first version about 1.5-3 weeks (worst case about 5), plus content writing.
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).
