@@ -55,6 +55,11 @@ export const LEGAL_PAGES: Record<LegalSlug, { title: string; description: string
             about £X a week less than their usual shop"), which never identify anyone.
           </li>
           <li>
+            <strong>If your workplace gave you team wellbeing:</strong> the sessions you mark as done (which, when, and how long), used to show your own
+            progress and streaks. Your employer never sees your individual activity; they only ever see totals for everyone together, such as how many
+            people have joined.
+          </li>
+          <li>
             <strong>If you share the Kitchen with friends:</strong> your invite code, which friends joined with it (their email address, kept so each friend
             only counts once) and the reward you've earned. Your invite page says "A friend" unless you choose to show your first name.
           </li>

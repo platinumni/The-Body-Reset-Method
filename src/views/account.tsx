@@ -50,7 +50,9 @@ export function AccountPage(props: {
               {props.programmes.map((p) => (
                 <li class="card library-card">
                   <h3>{p.title}</h3>
-                  {p.slug === "meal-plans" ? (
+                  {p.slug === "teams" ? (
+                    <p class="small muted">Today's session, your courses, the meal planner and your progress, in one place.</p>
+                  ) : p.slug === "meal-plans" ? (
                     <p class="small muted">Set your budget and household for a week of meals, recipes and a shopping list.</p>
                   ) : p.lessons > 0 ? (
                     <p class="small muted">
@@ -59,12 +61,14 @@ export function AccountPage(props: {
                   ) : (
                     <p class="small muted">Content is being added. We'll email you when it's ready.</p>
                   )}
-                  {p.lessons > 0 && (
+                  {p.lessons > 0 && p.slug !== "teams" && (
                     <div class="progress" role="img" aria-label={`${p.done} of ${p.lessons} done`}>
                       <span class={`progress-bar w-${Math.round((p.done / p.lessons) * 20) * 5}`} />
                     </div>
                   )}
-                  <Button href={p.slug === "meal-plans" ? "/account/meal-plans" : `/account/programmes/${p.slug}`}>{p.done ? "Continue" : "Start here"}</Button>
+                  <Button href={p.slug === "teams" ? "/account/team" : p.slug === "meal-plans" ? "/account/meal-plans" : `/account/programmes/${p.slug}`}>
+                    {p.slug === "teams" ? "Open your dashboard" : p.done ? "Continue" : "Start here"}
+                  </Button>
                 </li>
               ))}
             </ul>

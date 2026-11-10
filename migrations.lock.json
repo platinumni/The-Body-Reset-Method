@@ -19,5 +19,6 @@
   "0018_access_codes.sql": "0adf3b185961a5cbeead58f57ef9aa8ebb267d084f05f5d38344e57cbdd932d5",
   "0019_subscriptions.sql": "d792da13fc5c0c4b9e0f746dd4ac74bf6618c68047193c839e1fedefcc8e75fc",
   "0020_recipe_photos.sql": "2c119843ae9ab861c3daf264a9581309774101f7371e9c9a4ccf237e91fc2d98",
-  "0021_kitchen_friends.sql": "0b795f9759a648af14293d10853fe31dd5cd960a545f89f55e9bc843e397e16d"
+  "0021_kitchen_friends.sql": "0b795f9759a648af14293d10853fe31dd5cd960a545f89f55e9bc843e397e16d",
+  "0022_team_wellbeing.sql": "b0bd8b1155766dd70d4650f4b7f2a96d23b7b417e50add899825f862a77d1242"
 }

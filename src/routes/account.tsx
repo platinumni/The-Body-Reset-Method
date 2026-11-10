@@ -9,6 +9,9 @@ import { sendEmail } from "../services/email";
 import { setCancelAtPeriodEnd } from "../services/payments/stripe";
 import { kitchenMembership, kitchenProduct, markCancelRequested } from "../services/subscriptions";
 import { MembershipPage } from "../views/membership";
+import { TeamDashboardPage } from "../views/team";
+import { canUseTeam, logSession, teamDashboard } from "../services/team";
+import { sessionForDay } from "../content/team-sessions";
 import { getProductsBySlugs, isOnSale } from "../services/products";
 import { MEAL_PLANS_SLUG } from "../services/meal-plans";
 import { friendStatus, setShowName } from "../services/kitchen-friends";
@@ -119,6 +122,31 @@ accountRoutes.post("/account/review", rateLimit("review", 5, 3600), async (c) =>
 });
 
 accountRoutes.get("/account/programmes/meal-plans", (c) => c.redirect("/account/meal-plans", 302));
+accountRoutes.get("/account/programmes/teams", (c) => c.redirect("/account/team", 302));
+
+// --- Team wellbeing: the employee dashboard (business package) ---
+
+accountRoutes.get("/account/team", async (c) => {
+  const user = c.get("user")!;
+  if (user.role !== "admin" && !(await canUseTeam(c.env.DB, user.id))) return c.redirect("/account", 302);
+  const d = await teamDashboard(c.env.DB, user.id);
+  return c.html(
+    <TeamDashboardPage
+      meta={pageMeta(c, { title: "Your wellbeing dashboard", description: "Today's session, your courses, the meal planner and your progress.", path: "/account/team", noindex: true })}
+      csrfToken={c.get("csrfToken")}
+      name={user.name ?? null}
+      d={d}
+      session={sessionForDay(d.today)}
+    />,
+  );
+});
+
+accountRoutes.post("/account/team/done", rateLimit("team-done", 30, 3600), async (c) => {
+  const user = c.get("user")!;
+  if (user.role !== "admin" && !(await canUseTeam(c.env.DB, user.id))) return c.redirect("/account", 303);
+  await logSession(c.env.DB, user.id, String((await c.req.parseBody()).session ?? ""));
+  return c.redirect("/account/team#today", 303);
+});
 
 accountRoutes.get("/account/meal-plans", async (c) => {
   const user = c.get("user")!;
@@ -147,6 +175,7 @@ accountRoutes.get("/account/meal-plans", async (c) => {
       regions={{ uk: regionsFor(prices, "uk"), us: regionsFor(prices, "us"), ca: regionsFor(prices, "ca") }}
       favourites={favourites}
       hasMembership={!!membership}
+      hasTeam={await canUseTeam(c.env.DB, user.id)}
       view={c.req.query("view") ?? null}
       photos={await photoUrls(c.env.DB)}
     />,

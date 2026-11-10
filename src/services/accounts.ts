@@ -1,4 +1,5 @@
 import { friendDataFor } from "./kitchen-friends";
+import { teamDataFor } from "./team";
 import { CHECKOUT_CONSENTS } from "../content/consents";
 import { hashPassword, verifyPassword } from "../lib/crypto";
 import { recordAudit } from "./audit";
@@ -150,6 +151,7 @@ export async function exportUserData(db: D1Database, userId: number): Promise<Re
     commissions: await q("SELECT c.amount_pence, c.status, c.created_at FROM commissions c JOIN affiliates a ON a.id = c.affiliate_id WHERE a.user_id = ?1 ORDER BY c.id", userId),
     contactMessages: await q("SELECT name, message, created_at FROM contact_messages WHERE email = ?1 ORDER BY id", user.email),
     ...(await friendDataFor(db, user.email)),
+    ...(await teamDataFor(db, userId)),
     payouts: await q("SELECT p.amount_pence, p.method, p.created_at FROM payouts p JOIN affiliates a ON a.id = p.affiliate_id WHERE a.user_id = ?1 ORDER BY p.id", userId),
   };
 }
@@ -167,6 +169,7 @@ export async function deleteAccount(db: D1Database, userId: number, actor: { use
     db.prepare("DELETE FROM lesson_progress WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM meal_plan_prefs WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM meal_plan_spend WHERE user_id = ?1").bind(userId),
+    db.prepare("DELETE FROM wellbeing_activity WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM reviews WHERE user_id = ?1").bind(userId),
     db.prepare("DELETE FROM contact_messages WHERE email = ?1").bind(user.email),
     // Kitchen refer-a-friend: their invite link stops working and their email is replaced (records of who counted stay, unnamed).

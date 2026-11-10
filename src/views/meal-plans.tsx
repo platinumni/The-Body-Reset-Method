@@ -445,6 +445,8 @@ export function MealPlannerPage(props: {
   regions: { uk?: string[]; us: string[]; ca: string[] };
   favourites?: string[];
   hasMembership?: boolean;
+  /** Team wellbeing members: the planner is a page of their dashboard. */
+  hasTeam?: boolean;
   photos?: Record<string, string>;
   /** "days" shows Monday to Sunday; otherwise the week is shown as a menu. */
   view?: string | null;
@@ -470,7 +472,7 @@ export function MealPlannerPage(props: {
       <section class="page-hero no-print">
         <div class="wrap narrow">
           <p class="small">
-            <a href="/account">← My programmes</a>
+            {props.hasTeam ? <a href="/account/team">← Your dashboard</a> : <a href="/account">← My programmes</a>}
             {props.hasMembership && (
               <>
                 {" · "}

@@ -504,6 +504,17 @@ The sandbox can't open `*.workers.dev`, so deploy with `SKIP_HEALTH_CHECK=1 npm 
     - spiritual content inclusive, including "none / secular".
   - Rough time: first version about 1.5-3 weeks (worst case about 5), plus content writing.
 
+- **Team wellbeing, stage 1 built (owner: "build it and confirm meal planner into it like a separate page", 2026-11-10), on staging:**
+  - Migration 0022: product `teams` ("Team wellbeing", draft, not sold publicly) and `wellbeing_activity` (sessions done, once per session per UK day).
+  - Employees get access through their business's **access code** (Admin → Access codes: tick "Team wellbeing" plus any courses and Budget Meal Plans).
+  - **`/account/team`**, the employee dashboard:
+    - today's follow-along session (rotating daily; stage 1 uses the three approved Stage 1 exercises: short foot, toe yoga, single-leg balance, from `src/content/team-sessions.ts`; `[PLACEHOLDER]` for more), with an "I've done it" button and the safety note;
+    - stats (days in a row, sessions this week, total minutes) and a bar chart of sessions over 8 weeks (SVG, hover tooltips, a hidden table for screen readers);
+    - their courses with progress, and a Meal planner card.
+  - **The meal planner is its own page** (`/account/meal-plans`). Team members can use it, with "← Your dashboard" as the back link.
+  - The account page shows "Open your dashboard". Sessions are in the data export and deleted with the account. The privacy policy says employers never see individual activity.
+  - Not built yet (next stages, each awaiting CH): stage 2 calendar, diary and mood check-in; stage 3 daily quote and spiritual choice; stage 4 business admin, payments and salesmen (needs prices). Name and address still to choose (`/account/team` for now).
+
 **Follow-ups for the daily drop or the next chat (moved from reminders tied to the old chat):**
 - **Recipe photos:** Pixabay is rate-limiting Cloudflare's shared servers. A temporary `*/10` cron on staging (`PHOTO_CRON` in `src/cron.ts`, plus the staging `triggers`) keeps picking the missing photos; recipe changes added about 85 more. Check progress (`SELECT COUNT(*) FROM recipe_photos` on bodyregen-staging). Review a sample from R2 (`recipe-photos/<id>.jpg`) for bad matches. **Remove the `*/10` cron once all are done.** Optionally the owner adds `PIXABAY_API_KEY` as a workspace env var for a fast one-off fetch.
 - **On or after 9 Nov 2026:** check whether Pexels has reopened API keys (pexels.com/api) and tell the owner in one line (owner's request).

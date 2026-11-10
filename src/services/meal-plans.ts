@@ -7,7 +7,9 @@ import { ownedProgrammeBySlug } from "./library";
 
 export const MEAL_PLANS_SLUG = "meal-plans";
 
-export const canUseMealPlans = async (db: D1Database, userId: number) => !!(await ownedProgrammeBySlug(db, userId, MEAL_PLANS_SLUG));
+/** Members who own the meal plans, or whose workplace gave them team wellbeing (it includes the meal planner). */
+export const canUseMealPlans = async (db: D1Database, userId: number) =>
+  !!(await ownedProgrammeBySlug(db, userId, MEAL_PLANS_SLUG)) || !!(await ownedProgrammeBySlug(db, userId, "teams"));
 
 /** Choices that are remembered between visits (not the budget or which recipes were picked). */
 export type MealPrefs = Pick<PlanInput, "country" | "store" | "adults" | "childAges" | "diet" | "exclude" | "avoidAllergens" | "snacks" | "have"> & { budget: number; usual: number | null; region: string; styles: FoodStyle[]; adultSizes: number[] };

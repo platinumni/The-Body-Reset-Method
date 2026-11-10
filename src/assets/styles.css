@@ -614,3 +614,21 @@ fieldset.field { border: 0; padding: 0; margin-left: 0; margin-right: 0; } field
 .menu-section li { padding: .45rem 0; border-top: 1px solid var(--line); }
 .menu-section li:first-child { border-top: 0; }
 .menu-tagline { display: block; font-style: italic; }
+
+/* Team wellbeing dashboard */
+.team-grid { display: grid; gap: 1.25rem; }
+@media (min-width: 52rem) { .team-grid { grid-template-columns: 3fr 2fr; } .team-today { grid-row: span 2; } }
+.team-grid .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin-bottom: 1rem; }
+.team-grid .stat { padding: .5rem 0; gap: .1rem; }
+.stat-value { font-family: var(--font-display); font-size: 2rem; line-height: 1; margin: 0; color: var(--ink); }
+.stat-label { font-size: .85rem; color: var(--ink-soft); margin: 0; }
+.team-courses { list-style: none; padding: 0; margin: 0; display: grid; gap: .75rem; }
+.team-courses .progress { margin: .35rem 0 0; }
+.chart { margin: 0; }
+.chart-svg { width: 100%; height: auto; display: block; }
+.chart-baseline { stroke: var(--line); stroke-width: 1; }
+.chart-mark { fill: var(--accent); }
+.chart-hit { fill: transparent; }
+.chart-bar:hover .chart-mark, .chart-bar:focus .chart-mark { opacity: .8; }
+.chart-value { fill: var(--ink); font: 600 11px var(--font-body); }
+.chart-label { fill: var(--muted); font: 10px var(--font-body); }
