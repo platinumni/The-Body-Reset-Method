@@ -82,6 +82,9 @@ describe("morning report", () => {
   });
 
   it("runs as part of the daily job without failing", async () => {
+    // Tests never go online: once the bundled food prices are 25+ days old the job tries its monthly refresh,
+    // so outside sites answer "unavailable" here (the job then keeps the previous prices).
+    vi.spyOn(globalThis, "fetch").mockImplementation(async () => new Response("unavailable", { status: 503 }));
     await scheduled({ cron: DAILY_CRON, scheduledTime: Date.now(), noRetry() {} } as ScheduledController, env);
   });
 });
